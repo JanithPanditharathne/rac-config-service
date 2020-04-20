@@ -1,4 +1,4 @@
-package com.zone24x7.rac.racconfigservice;
+package com.zone24x7.rac.configservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
