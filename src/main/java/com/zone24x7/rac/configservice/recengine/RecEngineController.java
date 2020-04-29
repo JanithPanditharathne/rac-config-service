@@ -49,4 +49,18 @@ public class RecEngineController {
 
         return new ResponseEntity<>(messageDTO, HttpStatus.OK);
     }
+
+    /**
+     * Add rec JSON.
+     *
+     * @param recJson Rec JSON
+     * @return        Response entity
+     */
+    @PostMapping(path = "/v1/recEngine/recs", consumes = "application/json")
+    public ResponseEntity<Object> addRecJsonForRecEngine(@RequestBody String recJson) {
+
+        MessageDTO messageDTO = recEngineService.addRecJson(recJson);
+
+        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+    }
 }

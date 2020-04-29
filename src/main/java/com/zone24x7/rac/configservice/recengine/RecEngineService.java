@@ -4,9 +4,7 @@ import com.zone24x7.rac.configservice.utils.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.zone24x7.rac.configservice.utils.Strings.BUNDLES;
-import static com.zone24x7.rac.configservice.utils.Strings.RULES;
-import static com.zone24x7.rac.configservice.utils.Strings.SUCCESS;
+import static com.zone24x7.rac.configservice.utils.Strings.*;
 
 /**
  * Service class relating to Rec Engine.
@@ -52,5 +50,21 @@ public class RecEngineService {
         recEngineRepository.save(recEngineModel);
 
         return new MessageDTO(SUCCESS, "Rule JSON successfully added");
+    }
+
+    /**
+     * Add rec Json.
+     *
+     * @param recJson Rec Json
+     * @return        Message DTO
+     */
+    MessageDTO addRecJson(String recJson) {
+
+        RecEngineModel recEngineModel = recEngineRepository.findByKey(RECS);
+        recEngineModel.setValue(recJson);
+
+        recEngineRepository.save(recEngineModel);
+
+        return new MessageDTO(SUCCESS, "Recommendation JSON successfully added");
     }
 }
