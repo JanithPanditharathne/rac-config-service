@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.zone24x7.rac.configservice.utils.Strings.BUNDLES;
+import static com.zone24x7.rac.configservice.utils.Strings.RULES;
 import static com.zone24x7.rac.configservice.utils.Strings.SUCCESS;
 
 /**
@@ -35,5 +36,21 @@ public class RecEngineService {
         recEngineRepository.save(recEngineModel);
 
         return new MessageDTO(SUCCESS, "Bundle JSON successfully added");
+    }
+
+    /**
+     * Add rule Json.
+     *
+     * @param ruleJson Rule Json
+     * @return         Message DTO
+     */
+    MessageDTO addRuleJson(String ruleJson) {
+
+        RecEngineModel recEngineModel = recEngineRepository.findByKey(RULES);
+        recEngineModel.setValue(ruleJson);
+
+        recEngineRepository.save(recEngineModel);
+
+        return new MessageDTO(SUCCESS, "Rule JSON successfully added");
     }
 }

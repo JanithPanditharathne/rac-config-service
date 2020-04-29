@@ -35,4 +35,18 @@ public class RecEngineController {
 
         return new ResponseEntity<>(messageDTO, HttpStatus.OK);
     }
+
+    /**
+     * Add rule JSON.
+     *
+     * @param ruleJson Rule JSON
+     * @return         Response entity
+     */
+    @PostMapping(path = "/v1/recEngine/rules", consumes = "application/json")
+    public ResponseEntity<Object> addRuleJsonForRecEngine(@RequestBody String ruleJson) {
+
+        MessageDTO messageDTO = recEngineService.addRuleJson(ruleJson);
+
+        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+    }
 }
