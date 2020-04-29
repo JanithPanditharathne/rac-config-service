@@ -63,4 +63,18 @@ public class RecEngineController {
 
         return new ResponseEntity<>(messageDTO, HttpStatus.OK);
     }
+
+    /**
+     * Add rec slot JSON.
+     *
+     * @param recSlotJson Rec slot JSON
+     * @return            Response entity
+     */
+    @PostMapping(path = "/v1/recEngine/recSlots", consumes = "application/json")
+    public ResponseEntity<Object> addRecSlotsJsonForRecEngine(@RequestBody String recSlotJson) {
+
+        MessageDTO messageDTO = recEngineService.addRecSlotJson(recSlotJson);
+
+        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+    }
 }

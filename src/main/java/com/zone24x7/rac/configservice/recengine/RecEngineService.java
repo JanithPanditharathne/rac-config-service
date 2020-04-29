@@ -67,4 +67,20 @@ public class RecEngineService {
 
         return new MessageDTO(SUCCESS, "Recommendation JSON successfully added");
     }
+
+    /**
+     * Add rec slot Json.
+     *
+     * @param recSlotJson Rec slot Json
+     * @return            Message DTO
+     */
+    MessageDTO addRecSlotJson(String recSlotJson) {
+
+        RecEngineModel recEngineModel = recEngineRepository.findByKey(RECSLOTS);
+        recEngineModel.setValue(recSlotJson);
+
+        recEngineRepository.save(recEngineModel);
+
+        return new MessageDTO(SUCCESS, "Recommendation slots JSON successfully added");
+    }
 }
