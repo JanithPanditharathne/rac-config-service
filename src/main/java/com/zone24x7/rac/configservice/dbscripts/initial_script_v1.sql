@@ -2,13 +2,14 @@
 -- use database --
 use ibraccs;
 
--- rec engine table --
+-- create rec engine table --
 CREATE TABLE `rec_engine` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `config_type` varchar(45) DEFAULT NULL,
   `config_json` longtext DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
+
 
 -- create algorithm table --
 CREATE TABLE `algorithm` (
