@@ -1,6 +1,6 @@
 package com.zone24x7.rac.configservice.recengine;
 
-import com.zone24x7.rac.configservice.utils.MessageDTO;
+import com.zone24x7.rac.configservice.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +26,14 @@ public class RecEngineService {
      * @param bundleJson Bundle Json
      * @return           Message DTO
      */
-    MessageDTO addBundleJson(String bundleJson) {
+    Response addBundleJson(String bundleJson) {
 
-        RecEngineModel recEngineModel = recEngineRepository.findByKey(BUNDLES);
-        recEngineModel.setValue(bundleJson);
+        RecEngine recEngine = recEngineRepository.findByConfigType(BUNDLES);
+        recEngine.setConfigJson(bundleJson);
 
-        recEngineRepository.save(recEngineModel);
+        recEngineRepository.save(recEngine);
 
-        return new MessageDTO(SUCCESS, "Bundle JSON successfully added");
+        return new Response(SUCCESS,"N/A", "Bundle JSON successfully added");
     }
 
     /**
@@ -42,14 +42,14 @@ public class RecEngineService {
      * @param ruleJson Rule Json
      * @return         Message DTO
      */
-    MessageDTO addRuleJson(String ruleJson) {
+    Response addRuleJson(String ruleJson) {
 
-        RecEngineModel recEngineModel = recEngineRepository.findByKey(RULES);
-        recEngineModel.setValue(ruleJson);
+        RecEngine recEngine = recEngineRepository.findByConfigType(RULES);
+        recEngine.setConfigJson(ruleJson);
 
-        recEngineRepository.save(recEngineModel);
+        recEngineRepository.save(recEngine);
 
-        return new MessageDTO(SUCCESS, "Rule JSON successfully added");
+        return new Response(SUCCESS,"N/A", "Rule JSON successfully added");
     }
 
     /**
@@ -58,14 +58,14 @@ public class RecEngineService {
      * @param recJson Rec Json
      * @return        Message DTO
      */
-    MessageDTO addRecJson(String recJson) {
+    Response addRecJson(String recJson) {
 
-        RecEngineModel recEngineModel = recEngineRepository.findByKey(RECS);
-        recEngineModel.setValue(recJson);
+        RecEngine recEngine = recEngineRepository.findByConfigType(RECS);
+        recEngine.setConfigJson(recJson);
 
-        recEngineRepository.save(recEngineModel);
+        recEngineRepository.save(recEngine);
 
-        return new MessageDTO(SUCCESS, "Recommendation JSON successfully added");
+        return new Response(SUCCESS,"N/A", "Recommendation JSON successfully added");
     }
 
     /**
@@ -74,13 +74,13 @@ public class RecEngineService {
      * @param recSlotJson Rec slot Json
      * @return            Message DTO
      */
-    MessageDTO addRecSlotJson(String recSlotJson) {
+    Response addRecSlotJson(String recSlotJson) {
 
-        RecEngineModel recEngineModel = recEngineRepository.findByKey(RECSLOTS);
-        recEngineModel.setValue(recSlotJson);
+        RecEngine recEngine = recEngineRepository.findByConfigType(REC_SLOTS);
+        recEngine.setConfigJson(recSlotJson);
 
-        recEngineRepository.save(recEngineModel);
+        recEngineRepository.save(recEngine);
 
-        return new MessageDTO(SUCCESS, "Recommendation slots JSON successfully added");
+        return new Response(SUCCESS,"N/A", "Recommendation slots JSON successfully added");
     }
 }

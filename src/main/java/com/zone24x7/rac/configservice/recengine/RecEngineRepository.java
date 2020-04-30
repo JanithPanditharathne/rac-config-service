@@ -7,13 +7,13 @@ import org.springframework.data.repository.CrudRepository;
  * Repository for RecEngine.
  *
  */
-public interface RecEngineRepository extends JpaRepository<RecEngineModel, Integer>, CrudRepository<RecEngineModel, Integer> {
+public interface RecEngineRepository extends JpaRepository<RecEngine, Integer>, CrudRepository<RecEngine, Integer> {
 
     /**
      * Get rec engine model by key.
      *
-     * @param key Key
-     * @return    RecEngineModel
+     * @param configType Config type
+     * @return           RecEngine
      */
-    RecEngineModel findByKey(String key);
+    RecEngine findByConfigType(String configType);
 }

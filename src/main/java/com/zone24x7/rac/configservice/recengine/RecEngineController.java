@@ -1,11 +1,12 @@
 package com.zone24x7.rac.configservice.recengine;
 
-import com.zone24x7.rac.configservice.utils.MessageDTO;
+import com.zone24x7.rac.configservice.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
+@RequestMapping("/v1")
 public class RecEngineController {
 
     private RecEngineService recEngineService;
@@ -28,12 +30,12 @@ public class RecEngineController {
      * @param bundleJson Bundle JSON
      * @return           Response entity
      */
-    @PostMapping(path = "/v1/recEngine/bundles", consumes = "application/json")
+    @RequestMapping(path = "/recEngine/bundles", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<Object> addBundleJsonForRecEngine(@RequestBody String bundleJson) {
 
-        MessageDTO messageDTO = recEngineService.addBundleJson(bundleJson);
+        Response response = recEngineService.addBundleJson(bundleJson);
 
-        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -42,12 +44,12 @@ public class RecEngineController {
      * @param ruleJson Rule JSON
      * @return         Response entity
      */
-    @PostMapping(path = "/v1/recEngine/rules", consumes = "application/json")
+    @RequestMapping(path = "/recEngine/rules", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<Object> addRuleJsonForRecEngine(@RequestBody String ruleJson) {
 
-        MessageDTO messageDTO = recEngineService.addRuleJson(ruleJson);
+        Response response = recEngineService.addRuleJson(ruleJson);
 
-        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -56,12 +58,12 @@ public class RecEngineController {
      * @param recJson Rec JSON
      * @return        Response entity
      */
-    @PostMapping(path = "/v1/recEngine/recs", consumes = "application/json")
+    @RequestMapping(path = "/recEngine/recs", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<Object> addRecJsonForRecEngine(@RequestBody String recJson) {
 
-        MessageDTO messageDTO = recEngineService.addRecJson(recJson);
+        Response response = recEngineService.addRecJson(recJson);
 
-        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -70,11 +72,11 @@ public class RecEngineController {
      * @param recSlotJson Rec slot JSON
      * @return            Response entity
      */
-    @PostMapping(path = "/v1/recEngine/recSlots", consumes = "application/json")
+    @RequestMapping(path = "/recEngine/recSlots", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<Object> addRecSlotsJsonForRecEngine(@RequestBody String recSlotJson) {
 
-        MessageDTO messageDTO = recEngineService.addRecSlotJson(recSlotJson);
+        Response response = recEngineService.addRecSlotJson(recSlotJson);
 
-        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
