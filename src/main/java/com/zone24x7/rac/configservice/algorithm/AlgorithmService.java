@@ -1,5 +1,6 @@
 package com.zone24x7.rac.configservice.algorithm;
 
+import com.zone24x7.rac.configservice.util.CSResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +24,15 @@ public class AlgorithmService {
        return algorithmRepository.findById(id).get();
     }
 
-    public String addAlgorithm(Algorithm algorithm) {
+    public CSResponse addAlgorithm(Algorithm algorithm) {
         algorithmRepository.save(algorithm);
-        return "algorithm added!";
+        return new CSResponse("SUCCESS", "CS-1001: Algorithm added successfully");
     }
 
-    public String updateAlgorithm(Algorithm algorithm, int id) {
+    public CSResponse updateAlgorithm(Algorithm algorithm, int id) {
         algorithm.setId(id);
         algorithmRepository.save(algorithm);
-        return "algorithm updated!";
+        return new CSResponse("FAIL", "CS-1010: Algorithm update failed");
     }
 
 

@@ -83,7 +83,7 @@ class AlgorithmControllerTest {
         String expected = "algorithm added!";
 
         // Mock service call
-        Mockito.when(algorithmService.addAlgorithm(Mockito.any())).thenReturn("algorithm added!");
+        Mockito.when(algorithmService.addAlgorithm(Mockito.any())).thenReturn(Mockito.any());
         String algorithmJson = "{\"id\":100,\"name\":\"Top Trending\",\"description\":\"TT description\"," +
                 "\"defaultDisplayText\":\"Top Trending\"}";
 
@@ -108,7 +108,7 @@ class AlgorithmControllerTest {
         String expected = "algorithm updated!";
 
         // Mock service call
-        Mockito.when(algorithmService.updateAlgorithm(Mockito.any(), Mockito.anyInt())).thenReturn("algorithm updated!");
+        Mockito.when(algorithmService.updateAlgorithm(Mockito.any(), Mockito.anyInt())).thenReturn(Mockito.any());
         String algorithmJson = "{\"id\":100,\"name\":\"Top Trending\",\"description\":\"TT description\"," +
                 "\"defaultDisplayText\":\"Top Trending\"}";
 
