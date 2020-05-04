@@ -19,10 +19,11 @@ public class Algorithm {
     public Algorithm() {
     }
 
-    public Algorithm(int id, String name, String description) {
+    public Algorithm(int id, String name, String description, String defaultDisplayText) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.defaultDisplayText = defaultDisplayText;
     }
 
 

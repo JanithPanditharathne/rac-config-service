@@ -15,9 +15,7 @@ public class AlgorithmService {
     public AlgorithmList getAllAlgorithms() {
 
         List<Algorithm> algorithms = new ArrayList<>();
-        algorithmRepository.findAll()
-                .forEach(algorithms::add);
-
+        algorithmRepository.findAll().forEach(algorithms::add);
         return new AlgorithmList(algorithms);
     }
 
