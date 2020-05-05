@@ -7,11 +7,9 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table(name = "rec_engine", schema = "ibraccs")
 public class RecEngine {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "config_type", nullable = false)

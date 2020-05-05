@@ -1,10 +1,14 @@
 package com.zone24x7.rac.configservice.recengine;
 
-import com.zone24x7.rac.configservice.utils.Response;
+import com.zone24x7.rac.configservice.util.CSResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLES;
+import static com.zone24x7.rac.configservice.util.Strings.RECS;
+import static com.zone24x7.rac.configservice.util.Strings.REC_SLOTS;
+import static com.zone24x7.rac.configservice.util.Strings.RULES;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 
 /**
  * Service class relating to Rec Engine.
@@ -13,74 +17,59 @@ import static com.zone24x7.rac.configservice.util.Strings.*;
 @Service
 public class RecEngineService {
 
+    @Autowired
     private RecEngineRepository recEngineRepository;
 
-    @Autowired
-    public RecEngineService(RecEngineRepository recEngineRepository) {
-        this.recEngineRepository = recEngineRepository;
-    }
 
     /**
-     * Add bundle Json.
+     * Add bundle config json.
      *
-     * @param bundleJson Bundle Json
-     * @return           Message DTO
+     * @param bundleConfig Bundle Json
+     * @return Response
      */
-    Response addBundleJson(String bundleJson) {
-
+    CSResponse addBundleConfig(String bundleConfig) {
         RecEngine recEngine = recEngineRepository.findByConfigType(BUNDLES);
-        recEngine.setConfigJson(bundleJson);
-
+        recEngine.setConfigJson(bundleConfig);
         recEngineRepository.save(recEngine);
-
-        return new Response(SUCCESS,"N/A", "Bundle JSON successfully added");
+        return new CSResponse(SUCCESS,"CS-0000: Bundle config json successfully added");
     }
 
     /**
-     * Add rule Json.
+     * Add rule config json.
      *
-     * @param ruleJson Rule Json
-     * @return         Message DTO
+     * @param ruleJson Rule config json
+     * @return  Response
      */
-    Response addRuleJson(String ruleJson) {
-
+    CSResponse addRuleConfig(String ruleJson) {
         RecEngine recEngine = recEngineRepository.findByConfigType(RULES);
         recEngine.setConfigJson(ruleJson);
-
         recEngineRepository.save(recEngine);
-
-        return new Response(SUCCESS,"N/A", "Rule JSON successfully added");
+        return new CSResponse(SUCCESS,"CS-0000: Rule config json successfully added");
     }
 
     /**
      * Add rec Json.
      *
-     * @param recJson Rec Json
-     * @return        Message DTO
+     * @param recJson Rec config json
+     * @return Response
      */
-    Response addRecJson(String recJson) {
-
+    CSResponse addRecConfig(String recJson) {
         RecEngine recEngine = recEngineRepository.findByConfigType(RECS);
         recEngine.setConfigJson(recJson);
-
         recEngineRepository.save(recEngine);
-
-        return new Response(SUCCESS,"N/A", "Recommendation JSON successfully added");
+        return new CSResponse(SUCCESS,"CS-0000: Rec config json successfully added");
     }
 
     /**
-     * Add rec slot Json.
+     * Add rec slot config json.
      *
-     * @param recSlotJson Rec slot Json
-     * @return            Message DTO
+     * @param recSlotJson Rec slot config json
+     * @return  Response
      */
-    Response addRecSlotJson(String recSlotJson) {
-
+    CSResponse addRecSlotConfig(String recSlotJson) {
         RecEngine recEngine = recEngineRepository.findByConfigType(REC_SLOTS);
         recEngine.setConfigJson(recSlotJson);
-
         recEngineRepository.save(recEngine);
-
-        return new Response(SUCCESS,"N/A", "Recommendation slots JSON successfully added");
+        return new CSResponse(SUCCESS,"CS-0000: Rec slot config json successfully added");
     }
 }
