@@ -27,7 +27,7 @@ public class CSExceptionHandler {
         String[] arr = exception.getMessage().split(":");
 
         // Return response.
-        return new CSResponse("ERROR", arr[0], arr[1]);
+        return new CSResponse("ERROR", arr[0], arr[1].trim());
     }
 
 
@@ -49,7 +49,7 @@ public class CSExceptionHandler {
         String[] arr = exception.getMessage().split(":");
 
         // Return response.
-        return new CSResponse("ERROR", arr[0], arr[1]);
+        return new CSResponse("ERROR", arr[0], arr[1].trim());
     }
 
 

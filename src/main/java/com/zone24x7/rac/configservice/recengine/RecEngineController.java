@@ -2,6 +2,7 @@ package com.zone24x7.rac.configservice.recengine;
 
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,5 +62,45 @@ public class RecEngineController {
     @RequestMapping(path = "/recEngine/recSlots", method = RequestMethod.POST)
     public CSResponse addRecSlotConfig(@RequestBody String recSlotJson) {
         return recEngineService.addRecSlotConfig(recSlotJson);
+    }
+
+    /**
+     * Get bundle config.
+     *
+     * @return Bundle config
+     */
+    @RequestMapping(path = "/recEngine/bundles", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getBundleConfig() {
+        return recEngineService.getBundleConfig();
+    }
+
+    /**
+     * Get rule config.
+     *
+     * @return Rule config
+     */
+    @RequestMapping(path = "/recEngine/rules", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getRuleConfig() {
+        return recEngineService.getRuleConfig();
+    }
+
+    /**
+     * Get recs config.
+     *
+     * @return Recs config
+     */
+    @RequestMapping(path = "/recEngine/recs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getRecConfig() {
+        return recEngineService.getRecsConfig();
+    }
+
+    /**
+     * Get rec slots config.
+     *
+     * @return Rec slots config
+     */
+    @RequestMapping(path = "/recEngine/recSlots", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getRecSlotConfig() {
+        return recEngineService.getRecSlotsConfig();
     }
 }
