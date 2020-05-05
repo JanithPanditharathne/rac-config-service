@@ -18,6 +18,10 @@ public class RecEngine {
     @Column(name = "config_json")
     private String configJson;
 
+
+    public RecEngine() {
+    }
+
     public int getId() {
         return id;
     }

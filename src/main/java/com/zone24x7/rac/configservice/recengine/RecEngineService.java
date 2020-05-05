@@ -37,12 +37,12 @@ public class RecEngineService {
     /**
      * Add rule config json.
      *
-     * @param ruleJson Rule config json
+     * @param ruleConfig Rule config json
      * @return  Response
      */
-    CSResponse addRuleConfig(String ruleJson) {
+    CSResponse addRuleConfig(String ruleConfig) {
         RecEngine recEngine = recEngineRepository.findByConfigType(RULES);
-        recEngine.setConfigJson(ruleJson);
+        recEngine.setConfigJson(ruleConfig);
         recEngineRepository.save(recEngine);
         return new CSResponse(SUCCESS,"CS-0000: Rule config json successfully added");
     }
@@ -50,12 +50,12 @@ public class RecEngineService {
     /**
      * Add rec Json.
      *
-     * @param recJson Rec config json
+     * @param recConfig Rec config json
      * @return Response
      */
-    CSResponse addRecConfig(String recJson) {
+    CSResponse addRecConfig(String recConfig) {
         RecEngine recEngine = recEngineRepository.findByConfigType(RECS);
-        recEngine.setConfigJson(recJson);
+        recEngine.setConfigJson(recConfig);
         recEngineRepository.save(recEngine);
         return new CSResponse(SUCCESS,"CS-0000: Rec config json successfully added");
     }
@@ -63,12 +63,12 @@ public class RecEngineService {
     /**
      * Add rec slot config json.
      *
-     * @param recSlotJson Rec slot config json
+     * @param recSlotConfig Rec slot config json
      * @return  Response
      */
-    CSResponse addRecSlotConfig(String recSlotJson) {
+    CSResponse addRecSlotConfig(String recSlotConfig) {
         RecEngine recEngine = recEngineRepository.findByConfigType(REC_SLOTS);
-        recEngine.setConfigJson(recSlotJson);
+        recEngine.setConfigJson(recSlotConfig);
         recEngineRepository.save(recEngine);
         return new CSResponse(SUCCESS,"CS-0000: Rec slot config json successfully added");
     }
