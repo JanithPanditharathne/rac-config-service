@@ -4,7 +4,7 @@ import com.zone24x7.rac.configservice.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.zone24x7.rac.configservice.utils.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.*;
 
 /**
  * Service class relating to Rec Engine.

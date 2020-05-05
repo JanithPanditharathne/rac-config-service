@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static com.zone24x7.rac.configservice.utils.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 
