@@ -1,5 +1,6 @@
 package com.zone24x7.rac.configservice.recengine;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -29,18 +30,19 @@ class RecEngineControllerTest {
     void addBundleConfig() throws Exception {
 
         // Expected
-        CSResponse expected = new CSResponse(SUCCESS,"CS-0000: Bundle config json successfully added");
+        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000: Bundle config json successfully added");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
 
         // Mock service call
-        Mockito.when(recEngineService.addBundleConfig(Mockito.any())).thenReturn(Mockito.any());
-        String algorithmJson = "{\"id\":100,\"name\":\"Top Trending\",\"description\":\"TT description\"," +
-                "\"defaultDisplayText\":\"Top Trending\"}";
+        Mockito.when(recEngineService.addBundleConfig(Mockito.any())).thenReturn(csResponse);
+        String bundleConfig = "{}";
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/v1/recEngine/bundles")
                 .accept(MediaType.APPLICATION_JSON)
-                .content(algorithmJson)
+                .content(bundleConfig)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
@@ -50,14 +52,77 @@ class RecEngineControllerTest {
     }
 
     @Test
-    void addRuleConfig() {
+    void addRuleConfig() throws Exception {
+
+        // Expected
+        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000: Rule config json successfully added");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        // Mock service call
+        Mockito.when(recEngineService.addRuleConfig(Mockito.any())).thenReturn(csResponse);
+        String ruleConfig = "{}";
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/v1/recEngine/rules")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(ruleConfig)
+                .contentType(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
     }
 
     @Test
-    void addRecConfig() {
+    void addRecConfig() throws Exception {
+
+        // Expected
+        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000: Rec config json successfully added");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        // Mock service call
+        Mockito.when(recEngineService.addRecConfig(Mockito.any())).thenReturn(csResponse);
+        String recConfig = "{}";
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/v1/recEngine/recs")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(recConfig)
+                .contentType(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
     }
 
     @Test
-    void addRecSlotConfig() {
+    void addRecSlotConfig() throws Exception {
+
+        // Expected
+        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000: Rec slot config json successfully added");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        // Mock service call
+        Mockito.when(recEngineService.addRecSlotConfig(Mockito.any())).thenReturn(csResponse);
+        String recSlotConfig = "{}";
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/v1/recEngine/recSlots")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(recSlotConfig)
+                .contentType(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
     }
 }

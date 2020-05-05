@@ -1,5 +1,7 @@
 package com.zone24x7.rac.configservice.algorithm;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.util.CSResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -80,10 +83,12 @@ class AlgorithmControllerTest {
     void addAlgorithm() throws Exception {
 
         // Expected
-        String expected = "algorithm added!";
+        CSResponse csResponse = new CSResponse(SUCCESS,"CS-1001: Algorithm added successfully");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
 
         // Mock service call
-        Mockito.when(algorithmService.addAlgorithm(Mockito.any())).thenReturn(Mockito.any());
+        Mockito.when(algorithmService.addAlgorithm(Mockito.any())).thenReturn(csResponse);
         String algorithmJson = "{\"id\":100,\"name\":\"Top Trending\",\"description\":\"TT description\"," +
                 "\"defaultDisplayText\":\"Top Trending\"}";
 
@@ -105,10 +110,12 @@ class AlgorithmControllerTest {
     void updateAlgorithm() throws Exception {
 
         // Expected
-        String expected = "algorithm updated!";
+        CSResponse csResponse = new CSResponse(SUCCESS,"CS-1009: Algorithm updated successfully");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
 
         // Mock service call
-        Mockito.when(algorithmService.updateAlgorithm(Mockito.any(), Mockito.anyInt())).thenReturn(Mockito.any());
+        Mockito.when(algorithmService.updateAlgorithm(Mockito.any(), Mockito.anyInt())).thenReturn(csResponse);
         String algorithmJson = "{\"id\":100,\"name\":\"Top Trending\",\"description\":\"TT description\"," +
                 "\"defaultDisplayText\":\"Top Trending\"}";
 

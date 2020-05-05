@@ -1,7 +1,6 @@
 package com.zone24x7.rac.configservice.algorithm;
 
 import com.zone24x7.rac.configservice.util.CSResponse;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -60,11 +59,12 @@ class AlgorithmServiceTest {
     }
 
     @Test
-    @Disabled
     void addAlgorithm() {
 
         // Expected
-        String expected = "algorithm added!";
+        CSResponse expected = new CSResponse("SUCCESS", "CS-1001: Algorithm added successfully");
+
+        // Mock
         Algorithm algorithm = new Algorithm(100, "Top Trending", "TT algorithm description", "");
         algorithmRepository.save(algorithm);
 
@@ -75,14 +75,16 @@ class AlgorithmServiceTest {
         CSResponse actual = algorithmService.addAlgorithm(algorithm);
 
         // Assert
-        assertEquals(expected, actual);
+        assertEquals(expected.getStatus(), actual.getStatus());
+        assertEquals(expected.getCode(), actual.getCode());
+        assertEquals(expected.getMessage(), actual.getMessage());
     }
 
     @Test
     void updateAlgorithm() {
 
         // Expected
-        String expected = "algorithm updated!";
+        CSResponse expected = new CSResponse("SUCCESS", "CS-1009: Algorithm updated successfully");;
         Algorithm algorithm = new Algorithm(100, "Top Trending", "TT algorithm description", "");
         algorithmRepository.save(algorithm);
 
@@ -93,7 +95,9 @@ class AlgorithmServiceTest {
         CSResponse actual = algorithmService.updateAlgorithm(algorithm, 100);
 
         // Assert
-        assertEquals(expected, actual);
+        assertEquals(expected.getStatus(), actual.getStatus());
+        assertEquals(expected.getCode(), actual.getCode());
+        assertEquals(expected.getMessage(), actual.getMessage());
     }
 
     @Test

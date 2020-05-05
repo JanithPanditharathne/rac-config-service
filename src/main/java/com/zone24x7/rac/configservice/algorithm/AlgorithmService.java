@@ -32,7 +32,7 @@ public class AlgorithmService {
     public CSResponse updateAlgorithm(Algorithm algorithm, int id) {
         algorithm.setId(id);
         algorithmRepository.save(algorithm);
-        return new CSResponse("FAIL", "CS-1010: Algorithm update failed");
+        return new CSResponse("SUCCESS", "CS-1009: Algorithm updated successfully");
     }
 
 
