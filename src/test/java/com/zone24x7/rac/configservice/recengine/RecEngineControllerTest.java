@@ -26,11 +26,116 @@ class RecEngineControllerTest {
     private RecEngineService recEngineService;
 
 
+
+    @Test
+    void getBundleConfig() throws Exception {
+
+        // Expected
+        String expected = "{\"bundles\":[{\"id\":\"1\",\"name\":\"Bundle 1\",\"type\":null,\"defaultLimit\":5," +
+                "\"algorithms\":[{\"rank\":0,\"algorithm\":{\"id\":\"100\",\"name\":\"TopTrending\"," +
+                "\"type\":\"FLAT_ALGO\",\"defaultDisplayText\":\"Top Trending\",\"customDisplayText\":\"Top Trending " +
+                "Products\"}},{\"rank\":1,\"algorithm\":{\"id\":\"101\",\"name\":\"BestSellers\"," +
+                "\"type\":\"FLAT_ALGO\",\"defaultDisplayText\":\"Best Sellers\",\"customDisplayText\":null}}]," +
+                "\"algoCombineInfo\":{\"enableCombine\":false,\"combineDisplayText\":null}}]}";
+
+        // Mock service call.
+        Mockito.when(recEngineService.getBundleConfig()).thenReturn(expected);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/v1/recEngine/bundles")
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+
+    }
+
+
+    @Test
+    void getRuleConfig() throws Exception {
+
+        // Expected
+        String expected = "{\"rules\":[{\"id\":\"133\",\"name\":\"Test Rule 1\",\"type\":\"BOOST\"," +
+                "\"isGlobal\":false,\"matchingCondition\":\"(department == \\\"Shoes\\\" || (department == " +
+                "\\\"Clothing\\\" && brand == \\\"Tommy\\\"))\",\"actionCondition\":\"(brand == \\\"Nike\\\")\"}]}";
+
+        // Mock service call.
+        Mockito.when(recEngineService.getRuleConfig()).thenReturn(expected);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/v1/recEngine/rules")
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    void getRecConfig() throws Exception {
+
+        // Expected
+        String expected = "{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"type\":\"REGULAR\"," +
+                "\"matchingCondition\":null,\"regularConfig\":{\"bundleId\":\"1201\"},\"testConfig\":null}]}";
+
+        // Mock service call.
+        Mockito.when(recEngineService.getRecsConfig()).thenReturn(expected);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/v1/recEngine/recs")
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+
+    }
+
+
+    @Test
+    void getRecSlotConfig() throws Exception {
+
+        // Expected
+        String expected = "{\"recSlots\":[{\"channel\":\"TCom\",\"page\":\"PDP\",\"placeholder\":\"Grid\"," +
+                "\"ruleIds\":[\"700\",\"701\"],\"recIds\":[\"100\"]}]}";
+
+        // Mock service call.
+        Mockito.when(recEngineService.getRecSlotsConfig()).thenReturn(expected);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/v1/recEngine/recSlots")
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+
+    }
+
+
+
+
+
+
+
+
+
+
     @Test
     void addBundleConfig() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000: Bundle config json successfully added");
+        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000:Bundle config json successfully added");
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -55,7 +160,7 @@ class RecEngineControllerTest {
     void addRuleConfig() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000: Rule config json successfully added");
+        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000:Rule config json successfully added");
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -80,7 +185,7 @@ class RecEngineControllerTest {
     void addRecConfig() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000: Rec config json successfully added");
+        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000:Rec config json successfully added");
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -105,7 +210,7 @@ class RecEngineControllerTest {
     void addRecSlotConfig() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000: Rec slot config json successfully added");
+        CSResponse csResponse = new CSResponse(SUCCESS,"CS-0000:Rec slot config json successfully added");
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 

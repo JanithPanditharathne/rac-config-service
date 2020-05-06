@@ -28,6 +28,90 @@ class RecEngineServiceTest {
     private RecEngineService recEngineService;
 
 
+    @Test
+    void getBundleConfig() {
+
+        // Expected
+        String expected = "{}";
+
+        // Set mock rec engine.
+        RecEngine recEngine = new RecEngine();
+        recEngine.setConfigJson(expected);
+
+        // Setup repository method findAll() return value.
+        when(recEngineRepository.findByConfigType(BUNDLES)).thenReturn(recEngine);
+
+        // Actual
+        String actual = recEngineService.getBundleConfig();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getRuleConfig() {
+
+        // Expected
+        String expected = "{}";
+
+        // Set mock rec engine.
+        RecEngine recEngine = new RecEngine();
+        recEngine.setConfigJson(expected);
+
+        // Setup repository method findAll() return value.
+        when(recEngineRepository.findByConfigType(RULES)).thenReturn(recEngine);
+
+        // Actual
+        String actual = recEngineService.getRuleConfig();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getRecsConfig() {
+
+        // Expected
+        String expected = "{}";
+
+        // Set mock rec engine.
+        RecEngine recEngine = new RecEngine();
+        recEngine.setConfigJson(expected);
+
+        // Setup repository method findAll() return value.
+        when(recEngineRepository.findByConfigType(RECS)).thenReturn(recEngine);
+
+        // Actual
+        String actual = recEngineService.getRecsConfig();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getRecSlotsConfig() {
+
+        // Expected
+        String expected = "{}";
+
+        // Set mock rec engine.
+        RecEngine recEngine = new RecEngine();
+        recEngine.setConfigJson(expected);
+
+        // Setup repository method findAll() return value.
+        when(recEngineRepository.findByConfigType(REC_SLOTS)).thenReturn(recEngine);
+
+        // Actual
+        String actual = recEngineService.getRecSlotsConfig();
+
+        // Assert
+        assertEquals(expected, actual);
+
+    }
+
+
+
+
 
     @Test
     void addBundleConfig() {

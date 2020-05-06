@@ -20,7 +20,7 @@ public class CSResponse {
 
         String[] arr = messageWithCode.split(":");
         this.code = arr[0];
-        this.message = arr[1].trim();
+        this.message = arr[1];
     }
 
     public String getStatus() {

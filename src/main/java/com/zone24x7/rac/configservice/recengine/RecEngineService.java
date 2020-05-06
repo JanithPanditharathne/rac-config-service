@@ -21,6 +21,52 @@ public class RecEngineService {
     private RecEngineRepository recEngineRepository;
 
 
+
+    /**
+     * Get bundle config json.
+     *
+     * @return Bundle config json
+     */
+    String getBundleConfig() {
+        return recEngineRepository.findByConfigType(BUNDLES).getConfigJson();
+    }
+
+    /**
+     * Get rule config json.
+     *
+     * @return Rule config json
+     */
+    String getRuleConfig() {
+        return recEngineRepository.findByConfigType(RULES).getConfigJson();
+    }
+
+    /**
+     * Get recs config json.
+     *
+     * @return Recs config json
+     */
+    String getRecsConfig() {
+        return recEngineRepository.findByConfigType(RECS).getConfigJson();
+    }
+
+    /**
+     * Get rec slots config json.
+     *
+     * @return Rec slots config json
+     */
+    String getRecSlotsConfig() {
+        return recEngineRepository.findByConfigType(REC_SLOTS).getConfigJson();
+    }
+
+
+
+
+
+
+
+
+
+
     /**
      * Add bundle config json.
      *
@@ -73,39 +119,5 @@ public class RecEngineService {
         return new CSResponse(SUCCESS,"CS-0000: Rec slot config json successfully added");
     }
 
-    /**
-     * Get bundle config json.
-     *
-     * @return Bundle config json
-     */
-    String getBundleConfig() {
-        return recEngineRepository.findByConfigType(BUNDLES).getConfigJson();
-    }
 
-    /**
-     * Get rule config json.
-     *
-     * @return Rule config json
-     */
-    String getRuleConfig() {
-        return recEngineRepository.findByConfigType(RULES).getConfigJson();
-    }
-
-    /**
-     * Get recs config json.
-     *
-     * @return Recs config json
-     */
-    String getRecsConfig() {
-        return recEngineRepository.findByConfigType(RECS).getConfigJson();
-    }
-
-    /**
-     * Get rec slots config json.
-     *
-     * @return Rec slots config json
-     */
-    String getRecSlotsConfig() {
-        return recEngineRepository.findByConfigType(REC_SLOTS).getConfigJson();
-    }
 }

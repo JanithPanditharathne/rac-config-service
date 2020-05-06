@@ -26,6 +26,6 @@ public class Strings {
     // Response messages.
     //
     // -------------------------------------------------------
-    public static final String INVALID_ALGORITHM_ID = "CS-1000: Invalid algorithm id";
+    public static final String INVALID_ALGORITHM_ID = "CS-1000:Invalid algorithm id";
 
 }
