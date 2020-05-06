@@ -18,6 +18,7 @@ public class AlgorithmController {
     private AlgorithmService algorithmService;
 
 
+
     @RequestMapping("/algorithms")
     public AlgorithmList getAllAlgorithms() {
         return algorithmService.getAllAlgorithms();

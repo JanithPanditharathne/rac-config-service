@@ -1,6 +1,8 @@
 package com.zone24x7.rac.configservice.algorithm;
 
 import com.zone24x7.rac.configservice.util.CSResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,18 @@ public class AlgorithmService {
     @Autowired
     private AlgorithmRepository algorithmRepository;
 
+    // Logger
+    Logger logger = LoggerFactory.getLogger(AlgorithmService.class);
+
+
+
     public AlgorithmList getAllAlgorithms() {
 
         List<Algorithm> algorithms = new ArrayList<>();
         algorithmRepository.findAll().forEach(algorithms::add);
+
+        logger.error("count: " + algorithms.size());
+
         return new AlgorithmList(algorithms);
     }
 
