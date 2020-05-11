@@ -4,10 +4,7 @@ import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Rest controller for metadata.
@@ -33,5 +30,15 @@ public class MetadataController {
         Channel channel = modelMapper.map(channelDTO, Channel.class);
 
         return metadataService.addChannel(channel);
+    }
+
+    /**
+     * Get all channels.
+     *
+     * @return All channels
+     */
+    @GetMapping(path = "/metadata/channels", produces = "application/json")
+    public ChannelListDTO getChannels() {
+        return metadataService.getAllChannels();
     }
 }

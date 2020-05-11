@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Service class relating to metadata.
  *
@@ -51,5 +54,29 @@ public class MetadataService {
         }
 
         return new CSResponse("SUCCESS", "CS-6002: Channel added successfully");
+    }
+
+    /**
+     * Get all channels.
+     *
+     * @return Channel list DTO
+     */
+    ChannelListDTO getAllChannels() {
+        List<ChannelDTO> channels = new ArrayList<>();
+
+        List<Channel> channelList = channelRepository.findAll();
+
+        for (Channel channel : channelList) {
+            ChannelDTO channelDTO = new ChannelDTO();
+            channelDTO.setId(channel.getId());
+            channelDTO.setName(channel.getName());
+
+            channels.add(channelDTO);
+        }
+
+        ChannelListDTO channelListDTO = new ChannelListDTO();
+        channelListDTO.setChannels(channels);
+
+        return channelListDTO;
     }
 }
