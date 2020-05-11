@@ -3,10 +3,7 @@ package com.zone24x7.rac.configservice.recengine;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Rest controller for rec engine.
@@ -25,7 +22,7 @@ public class RecEngineController {
      *
      * @return Bundle config
      */
-    @RequestMapping(path = "/recEngine/bundles", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/recEngine/bundles", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getBundleConfig() {
         return recEngineService.getBundleConfig();
     }
@@ -35,7 +32,7 @@ public class RecEngineController {
      *
      * @return Rule config
      */
-    @RequestMapping(path = "/recEngine/rules", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/recEngine/rules", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getRuleConfig() {
         return recEngineService.getRuleConfig();
     }
@@ -45,7 +42,7 @@ public class RecEngineController {
      *
      * @return Recs config
      */
-    @RequestMapping(path = "/recEngine/recs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/recEngine/recs", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getRecConfig() {
         return recEngineService.getRecsConfig();
     }
@@ -55,7 +52,7 @@ public class RecEngineController {
      *
      * @return Rec slots config
      */
-    @RequestMapping(path = "/recEngine/recSlots", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/recEngine/recSlots", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getRecSlotConfig() {
         return recEngineService.getRecSlotsConfig();
     }
@@ -73,7 +70,7 @@ public class RecEngineController {
      * @param config Bundle config json
      * @return Response
      */
-    @RequestMapping(path = "/recEngine/bundles", method = RequestMethod.POST)
+    @PostMapping(path = "/recEngine/bundles")
     public CSResponse addBundleConfig(@RequestBody String config) {
         return recEngineService.addBundleConfig(config);
     }
@@ -84,7 +81,7 @@ public class RecEngineController {
      * @param ruleJson Rule config json
      * @return Response
      */
-    @RequestMapping(path = "/recEngine/rules", method = RequestMethod.POST)
+    @PostMapping(path = "/recEngine/rules")
     public CSResponse addRuleConfig(@RequestBody String ruleJson) {
         return recEngineService.addRuleConfig(ruleJson);
     }
@@ -95,7 +92,7 @@ public class RecEngineController {
      * @param recJson Rec config json
      * @return Response
      */
-    @RequestMapping(path = "/recEngine/recs", method = RequestMethod.POST)
+    @PostMapping(path = "/recEngine/recs")
     public CSResponse addRecConfig(@RequestBody String recJson) {
         return recEngineService.addRecConfig(recJson);
     }
@@ -106,7 +103,7 @@ public class RecEngineController {
      * @param recSlotJson Rec slot config json
      * @return Response
      */
-    @RequestMapping(path = "/recEngine/recSlots", method = RequestMethod.POST)
+    @PostMapping(path = "/recEngine/recSlots")
     public CSResponse addRecSlotConfig(@RequestBody String recSlotJson) {
         return recEngineService.addRecSlotConfig(recSlotJson);
     }
