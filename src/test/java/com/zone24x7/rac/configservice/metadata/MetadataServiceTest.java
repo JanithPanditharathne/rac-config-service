@@ -28,6 +28,9 @@ class MetadataServiceTest {
     private ChannelRepository channelRepository;
 
     @Mock
+    private PageRepository pageRepository;
+
+    @Mock
     private ModelMapper modelMapper;
 
     @InjectMocks
@@ -120,5 +123,94 @@ class MetadataServiceTest {
         ChannelListDTO actualChannels = metadataService.getAllChannels();
 
         assertEquals(expectedChannels.size(), actualChannels.getChannels().size());
+    }
+
+    @Nested
+    @DisplayName("Add page")
+    class AddPage {
+
+        /**
+         * Unit test to add page successfully.
+         *
+         * @throws ValidationException Validation exception to throw
+         */
+        @Test
+        void successful() throws ValidationException {
+
+            CSResponse expected = new CSResponse(SUCCESS, "CS-6005: Page added successfully");
+
+            Page page = mock(Page.class);
+            when(page.getName()).thenReturn("Test");
+
+            CSResponse actual = metadataService.addPage(page);
+
+            assertEquals(expected.getStatus(), actual.getStatus());
+            assertEquals(expected.getCode(), actual.getCode());
+            assertEquals(expected.getMessage(), actual.getMessage());
+        }
+
+        /**
+         * Unit test when page name is missing.
+         *
+         */
+        @Test
+        void missingPageName() {
+
+            CSResponse expected = new CSResponse(ERROR, "CS-6003: Page name field is missing");
+
+            Page page = mock(Page.class);
+            when(page.getName()).thenReturn(null);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                metadataService.addPage(page);
+            });
+
+            String actual = validationException.getMessage();
+
+            assertTrue(actual.contains(expected.getCode()));
+            assertTrue(actual.contains(expected.getMessage()));
+        }
+
+        /**
+         * Unit test when page name is already in use.
+         *
+         */
+        @Test
+        void existingPageName() {
+
+            CSResponse expected = new CSResponse(ERROR, "CS-6004: Page name already in use");
+
+            Page page = mock(Page.class);
+            when(page.getName()).thenReturn("Test");
+            when(pageRepository.findByNameIgnoreCase(anyString())).thenReturn(page);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                metadataService.addPage(page);
+            });
+
+            String actual = validationException.getMessage();
+
+            assertTrue(actual.contains(expected.getCode()));
+            assertTrue(actual.contains(expected.getMessage()));
+        }
+    }
+
+    /**
+     * Unit test to get all pages.
+     *
+     */
+    @Test
+    void getAllPages() {
+        List<Page> expectedPages = new ArrayList<>();
+        Page page = new Page();
+
+        when(modelMapper.map(any(), any())).thenReturn(new MetadataDTO());
+        expectedPages.add(page);
+
+        when(pageRepository.findAll()).thenReturn(expectedPages);
+
+        PageListDTO actualPage = metadataService.getAllPages();
+
+        assertEquals(expectedPages.size(), actualPage.getPages().size());
     }
 }

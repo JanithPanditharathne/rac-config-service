@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 @WebMvcTest(value = MetadataController.class)
-public class MetadataControllerTest {
+class MetadataControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -73,6 +73,58 @@ public class MetadataControllerTest {
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                                                       .get("/v1/metadata/channels")
+                                                      .accept(MediaType.APPLICATION_JSON)).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test when adding a page.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void addPage() throws Exception {
+
+        CSResponse csResponse = new CSResponse(SUCCESS, "CS-6003: Page name field is missing");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        Mockito.when(metadataService.addPage(any())).thenReturn(csResponse);
+        String inputJson = "{\"name\":\"Home\"}";
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                                                      .post("/v1/metadata/pages")
+                                                      .accept(MediaType.APPLICATION_JSON)
+                                                      .content(inputJson)
+                                                      .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test when retrieving all pages.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void getAllPages() throws Exception {
+
+        PageListDTO pageListDTO = new PageListDTO();
+        List<MetadataDTO> metadataDTOList = new ArrayList<>();
+        pageListDTO.setPages(metadataDTOList);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(pageListDTO);
+
+        Mockito.when(metadataService.getAllPages()).thenReturn(pageListDTO);
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                                                      .get("/v1/metadata/pages")
                                                       .accept(MediaType.APPLICATION_JSON)).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
 
