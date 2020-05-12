@@ -17,6 +17,9 @@ public class MetadataController {
     @Autowired
     private MetadataService metadataService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     /**
      * Add channel.
      *
@@ -26,10 +29,7 @@ public class MetadataController {
      */
     @PostMapping(path = "/metadata/channels", consumes = "application/json")
     public CSResponse addChannel(@RequestBody ChannelDTO channelDTO) throws ValidationException {
-        ModelMapper modelMapper = new ModelMapper();
-        Channel channel = modelMapper.map(channelDTO, Channel.class);
-
-        return metadataService.addChannel(channel);
+        return metadataService.addChannel(modelMapper.map(channelDTO, Channel.class));
     }
 
     /**

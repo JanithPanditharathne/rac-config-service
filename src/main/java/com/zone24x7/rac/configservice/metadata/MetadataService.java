@@ -2,6 +2,7 @@ package com.zone24x7.rac.configservice.metadata;
 
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 
 /**
  * Service class relating to metadata.
@@ -19,6 +22,9 @@ public class MetadataService {
 
     @Autowired
     private ChannelRepository channelRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     Logger logger = LoggerFactory.getLogger(MetadataService.class);
 
@@ -53,7 +59,7 @@ public class MetadataService {
             logger.info("Channel added successfully");
         }
 
-        return new CSResponse("SUCCESS", "CS-6002: Channel added successfully");
+        return new CSResponse(SUCCESS, "CS-6002: Channel added successfully");
     }
 
     /**
@@ -67,10 +73,7 @@ public class MetadataService {
         List<Channel> channelList = channelRepository.findAll();
 
         for (Channel channel : channelList) {
-            ChannelDTO channelDTO = new ChannelDTO();
-            channelDTO.setId(channel.getId());
-            channelDTO.setName(channel.getName());
-
+            ChannelDTO channelDTO = modelMapper.map(channel, ChannelDTO.class);
             channels.add(channelDTO);
         }
 
