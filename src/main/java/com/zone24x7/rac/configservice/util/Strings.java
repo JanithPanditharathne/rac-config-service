@@ -26,6 +26,14 @@ public class Strings {
     // Response messages.
     //
     // -------------------------------------------------------
-    public static final String INVALID_ALGORITHM_ID = "CS-1000:Invalid algorithm id";
+    public static final String ALGORITHM_ID_INVALID = "CS-1000:Invalid algorithm id";
+    public static final String ALGORITHM_ADD_SUCCESS = "CS-1001:Algorithm added successfully";
+    public static final String ALGORITHM_UPDATE_SUCCESS = "CS-1002:Algorithm updated successfully";
+    public static final String ALGORITHM_ID_ALREADY_EXISTS = "CS-1003:Algorithm id already exists";
+    public static final String ALGORITHM_NAME_CANNOT_BE_NULL = "CS-1004:Algorithm name cannot be null";
+    public static final String ALGORITHM_NAME_CANNOT_BE_EMPTY = "CS-1005:Algorithm name cannot be empty";
+    public static final String ALGORITHM_DELETE_SUCCESS = "CS-1006:Algorithm deleted successfully";
+
+
 
 }

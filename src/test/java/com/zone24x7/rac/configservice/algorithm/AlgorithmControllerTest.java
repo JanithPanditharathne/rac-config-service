@@ -2,6 +2,7 @@ package com.zone24x7.rac.configservice.algorithm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +84,7 @@ class AlgorithmControllerTest {
     void addAlgorithm() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS,"CS-1001: Algorithm added successfully");
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.ALGORITHM_ADD_SUCCESS);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -110,7 +111,7 @@ class AlgorithmControllerTest {
     void updateAlgorithm() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS,"CS-1009: Algorithm updated successfully");
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.ALGORITHM_UPDATE_SUCCESS);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -132,14 +133,17 @@ class AlgorithmControllerTest {
         assertEquals(expected, actual);
     }
 
+
     @Test
     void deleteAlgorithm() throws Exception {
 
         // Expected
-        String expected = "algorithm deleted!";
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.ALGORITHM_DELETE_SUCCESS);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
 
         // Mock service call
-        Mockito.when(algorithmService.deleteAlgorithm(Mockito.anyInt())).thenReturn("algorithm deleted!");
+        Mockito.when(algorithmService.deleteAlgorithm(Mockito.anyInt())).thenReturn(csResponse);
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders

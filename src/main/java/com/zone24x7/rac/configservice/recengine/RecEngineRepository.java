@@ -1,13 +1,12 @@
 package com.zone24x7.rac.configservice.recengine;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 /**
  * Repository for rec_engine.
  *
  */
-public interface RecEngineRepository extends JpaRepository<RecEngine, Integer>, CrudRepository<RecEngine, Integer> {
+public interface RecEngineRepository extends JpaRepository<RecEngine, Integer> {
 
     /**
      * Get rec_engine model by key.
