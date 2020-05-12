@@ -119,4 +119,25 @@ public class MetadataService {
 
         return new CSResponse(SUCCESS, "CS-6005: Page added successfully");
     }
+
+    /**
+     * Get all pages.
+     *
+     * @return Page list DTO
+     */
+    PageListDTO getAllPages() {
+        List<MetadataDTO> pages = new ArrayList<>();
+
+        List<Page> pageList = pageRepository.findAll();
+
+        for (Page page : pageList) {
+            MetadataDTO metadataDTO = modelMapper.map(page, MetadataDTO.class);
+            pages.add(metadataDTO);
+        }
+
+        PageListDTO pageListDTO = new PageListDTO();
+        pageListDTO.setPages(pages);
+
+        return pageListDTO;
+    }
 }

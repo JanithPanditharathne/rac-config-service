@@ -53,4 +53,14 @@ public class MetadataController {
     public CSResponse addPage(@RequestBody MetadataDTO metadataDTO) throws ValidationException {
         return metadataService.addPage(modelMapper.map(metadataDTO, Page.class));
     }
+
+    /**
+     * Get all pages.
+     *
+     * @return All pages
+     */
+    @GetMapping(path = "/metadata/pages", produces = "application/json")
+    public PageListDTO getPages() {
+        return metadataService.getAllPages();
+    }
 }
