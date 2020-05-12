@@ -24,6 +24,9 @@ public class MetadataService {
     private ChannelRepository channelRepository;
 
     @Autowired
+    private PageRepository pageRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     Logger logger = LoggerFactory.getLogger(MetadataService.class);
@@ -68,18 +71,52 @@ public class MetadataService {
      * @return Channel list DTO
      */
     ChannelListDTO getAllChannels() {
-        List<ChannelDTO> channels = new ArrayList<>();
+        List<MetadataDTO> channels = new ArrayList<>();
 
         List<Channel> channelList = channelRepository.findAll();
 
         for (Channel channel : channelList) {
-            ChannelDTO channelDTO = modelMapper.map(channel, ChannelDTO.class);
-            channels.add(channelDTO);
+            MetadataDTO metadataDTO = modelMapper.map(channel, MetadataDTO.class);
+            channels.add(metadataDTO);
         }
 
         ChannelListDTO channelListDTO = new ChannelListDTO();
         channelListDTO.setChannels(channels);
 
         return channelListDTO;
+    }
+
+    /**
+     * Add channel.
+     *
+     * @param page Page
+     * @return     CS Response
+     * @throws ValidationException Validation exception to throw
+     */
+    CSResponse addPage(Page page) throws ValidationException {
+
+        // Validate whether page name exists in request.
+        if (page.getName() == null) {
+            logger.error("Page name field is missing");
+            throw new ValidationException("CS-6003: Page name field is missing");
+        }
+
+        // Retrieve page from DB.
+        Page existingPage = pageRepository.findByNameIgnoreCase(page.getName());
+
+        // Validate whether page name exists in DB.
+        if (existingPage != null) {
+            logger.error("Page name already in use");
+            throw new ValidationException("CS-6004: Page name already in use");
+
+        } else {
+
+            // Save page.
+            pageRepository.save(page);
+
+            logger.info("Page added successfully");
+        }
+
+        return new CSResponse(SUCCESS, "CS-6005: Page added successfully");
     }
 }

@@ -1,10 +1,10 @@
 package com.zone24x7.rac.configservice.metadata;
 
 /**
- * Class representing a channel DTO.
+ * Class representing a metadata DTO.
  *
  */
-public class ChannelDTO {
+public class MetadataDTO {
 
     private int id;
     private String name;

@@ -63,8 +63,8 @@ public class MetadataControllerTest {
     void getAllChannels() throws Exception {
 
         ChannelListDTO channelListDTO = new ChannelListDTO();
-        List<ChannelDTO> channelDTOList = new ArrayList<>();
-        channelListDTO.setChannels(channelDTOList);
+        List<MetadataDTO> metadataDTOList = new ArrayList<>();
+        channelListDTO.setChannels(metadataDTOList);
 
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(channelListDTO);

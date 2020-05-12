@@ -23,13 +23,13 @@ public class MetadataController {
     /**
      * Add channel.
      *
-     * @param channelDTO Channel DTO
-     * @return           CS Response
+     * @param metadataDTO Channel DTO
+     * @return            CS Response
      * @throws ValidationException Validation exception to throw
      */
     @PostMapping(path = "/metadata/channels", consumes = "application/json")
-    public CSResponse addChannel(@RequestBody ChannelDTO channelDTO) throws ValidationException {
-        return metadataService.addChannel(modelMapper.map(channelDTO, Channel.class));
+    public CSResponse addChannel(@RequestBody MetadataDTO metadataDTO) throws ValidationException {
+        return metadataService.addChannel(modelMapper.map(metadataDTO, Channel.class));
     }
 
     /**
@@ -40,5 +40,17 @@ public class MetadataController {
     @GetMapping(path = "/metadata/channels", produces = "application/json")
     public ChannelListDTO getChannels() {
         return metadataService.getAllChannels();
+    }
+
+    /**
+     * Add page.
+     *
+     * @param metadataDTO Channel DTO
+     * @return            CS Response
+     * @throws ValidationException Validation exception to throw
+     */
+    @PostMapping(path = "/metadata/pages", consumes = "application/json")
+    public CSResponse addPage(@RequestBody MetadataDTO metadataDTO) throws ValidationException {
+        return metadataService.addPage(modelMapper.map(metadataDTO, Page.class));
     }
 }

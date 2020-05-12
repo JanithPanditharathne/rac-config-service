@@ -112,7 +112,7 @@ class MetadataServiceTest {
         List<Channel> expectedChannels = new ArrayList<>();
         Channel channel = new Channel();
 
-        when(modelMapper.map(any(), any())).thenReturn(new ChannelDTO());
+        when(modelMapper.map(any(), any())).thenReturn(new MetadataDTO());
         expectedChannels.add(channel);
 
         when(channelRepository.findAll()).thenReturn(expectedChannels);

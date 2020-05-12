@@ -8,13 +8,13 @@ import java.util.List;
  */
 public class ChannelListDTO {
 
-    private List<ChannelDTO> channels;
+    private List<MetadataDTO> channels;
 
-    public List<ChannelDTO> getChannels() {
+    public List<MetadataDTO> getChannels() {
         return channels;
     }
 
-    public void setChannels(List<ChannelDTO> channels) {
+    public void setChannels(List<MetadataDTO> channels) {
         this.channels = channels;
     }
 }
