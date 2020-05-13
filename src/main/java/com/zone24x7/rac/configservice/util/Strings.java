@@ -36,4 +36,16 @@ public class Strings {
 
 
 
+    public static final String CHANNEL_NAME_FIELD_MISSING = "CS-6000: Channel name field is missing";
+    public static final String CHANNEL_NAME_IN_USE = "CS-6001: Channel name already in use";
+    public static final String CHANNEL_ADDED_SUCCESSFULLY = "CS-6002: Channel added successfully";
+
+    public static final String PAGE_NAME_FIELD_MISSING = "CS-6003: Page name field is missing";
+    public static final String PAGE_NAME_IN_USE = "CS-6004: Page name already in use";
+    public static final String PAGE_ADDED_SUCCESSFULLY = "CS-6005: Page added successfully";
+
+    public static final String PLACEHOLDER_NAME_FIELD_MISSING = "CS-6006: Placeholder name field is missing";
+    public static final String PLACEHOLDER_NAME_IN_USE = "CS-6007: Placeholder name already in use";
+    public static final String PLACEHOLDER_ADDED_SUCCESSFULLY = "CS-6008: Placeholder added successfully";
+
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.*;
 
 /**
  * Service class relating to metadata.
@@ -46,7 +46,7 @@ public class MetadataService {
         // Validate whether channel name exists in request.
         if (channel.getName() == null) {
             logger.error("Channel name field is missing");
-            throw new ValidationException("CS-6000: Channel name field is missing");
+            throw new ValidationException(CHANNEL_NAME_FIELD_MISSING);
         }
 
         // Retrieve channel from DB.
@@ -55,7 +55,7 @@ public class MetadataService {
         // Validate whether channel name exists in DB.
         if (existingChannel != null) {
             logger.error("Channel name already in use");
-            throw new ValidationException("CS-6001: Channel name already in use");
+            throw new ValidationException(CHANNEL_NAME_IN_USE);
 
         } else {
 
@@ -65,7 +65,7 @@ public class MetadataService {
             logger.info("Channel added successfully");
         }
 
-        return new CSResponse(SUCCESS, "CS-6002: Channel added successfully");
+        return new CSResponse(SUCCESS, CHANNEL_ADDED_SUCCESSFULLY);
     }
 
     /**
@@ -101,7 +101,7 @@ public class MetadataService {
         // Validate whether page name exists in request.
         if (page.getName() == null) {
             logger.error("Page name field is missing");
-            throw new ValidationException("CS-6003: Page name field is missing");
+            throw new ValidationException(PAGE_NAME_FIELD_MISSING);
         }
 
         // Retrieve page from DB.
@@ -110,7 +110,7 @@ public class MetadataService {
         // Validate whether page name exists in DB.
         if (existingPage != null) {
             logger.error("Page name already in use");
-            throw new ValidationException("CS-6004: Page name already in use");
+            throw new ValidationException(PAGE_NAME_IN_USE);
 
         } else {
 
@@ -120,7 +120,7 @@ public class MetadataService {
             logger.info("Page added successfully");
         }
 
-        return new CSResponse(SUCCESS, "CS-6005: Page added successfully");
+        return new CSResponse(SUCCESS, PAGE_ADDED_SUCCESSFULLY);
     }
 
     /**
@@ -156,7 +156,7 @@ public class MetadataService {
         // Validate whether placeholder name exists in request.
         if (placeholder.getName() == null) {
             logger.error("Placeholder name field is missing");
-            throw new ValidationException("CS-6006: Placeholder name field is missing");
+            throw new ValidationException(PLACEHOLDER_NAME_FIELD_MISSING);
         }
 
         // Retrieve placeholder from DB.
@@ -165,7 +165,7 @@ public class MetadataService {
         // Validate whether placeholder name exists in DB.
         if (existingPlaceholder != null) {
             logger.error("Placeholder name already in use");
-            throw new ValidationException("CS-6007: Placeholder name already in use");
+            throw new ValidationException(PLACEHOLDER_NAME_IN_USE);
 
         } else {
 
@@ -175,7 +175,7 @@ public class MetadataService {
             logger.info("Placeholder added successfully");
         }
 
-        return new CSResponse(SUCCESS, "CS-6008: Placeholder added successfully");
+        return new CSResponse(SUCCESS, PLACEHOLDER_ADDED_SUCCESSFULLY);
     }
 
     /**
