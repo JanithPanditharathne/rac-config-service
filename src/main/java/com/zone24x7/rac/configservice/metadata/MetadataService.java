@@ -177,4 +177,25 @@ public class MetadataService {
 
         return new CSResponse(SUCCESS, "CS-6008: Placeholder added successfully");
     }
+
+    /**
+     * Get all placeholders.
+     *
+     * @return Placeholder list DTO
+     */
+    PlaceholderListDTO getAllPlaceholders() {
+        List<MetadataDTO> placeholders = new ArrayList<>();
+
+        List<Placeholder> placeholderList = placeholderRepository.findAll();
+
+        for (Placeholder placeholder : placeholderList) {
+            MetadataDTO metadataDTO = modelMapper.map(placeholder, MetadataDTO.class);
+            placeholders.add(metadataDTO);
+        }
+
+        PlaceholderListDTO placeholderListDTO = new PlaceholderListDTO();
+        placeholderListDTO.setPlaceholders(placeholders);
+
+        return placeholderListDTO;
+    }
 }

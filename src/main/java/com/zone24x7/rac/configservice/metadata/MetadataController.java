@@ -75,4 +75,14 @@ public class MetadataController {
     public CSResponse addPlaceholder(@RequestBody MetadataDTO metadataDTO) throws ValidationException {
         return metadataService.addPlaceholder(modelMapper.map(metadataDTO, Placeholder.class));
     }
+
+    /**
+     * Get all placeholders.
+     *
+     * @return All placeholders
+     */
+    @GetMapping(path = "/metadata/placeholders", produces = "application/json")
+    public PlaceholderListDTO getPlaceholders() {
+        return metadataService.getAllPlaceholders();
+    }
 }
