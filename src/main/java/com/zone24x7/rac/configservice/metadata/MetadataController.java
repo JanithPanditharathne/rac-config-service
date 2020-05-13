@@ -63,4 +63,16 @@ public class MetadataController {
     public PageListDTO getPages() {
         return metadataService.getAllPages();
     }
+
+    /**
+     * Add placeholder.
+     *
+     * @param metadataDTO Placeholder DTO
+     * @return            CS Response
+     * @throws ValidationException Validation exception to throw
+     */
+    @PostMapping(path = "/metadata/placeholders", consumes = "application/json")
+    public CSResponse addPlaceholder(@RequestBody MetadataDTO metadataDTO) throws ValidationException {
+        return metadataService.addPlaceholder(modelMapper.map(metadataDTO, Placeholder.class));
+    }
 }

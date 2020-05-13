@@ -27,6 +27,9 @@ public class MetadataService {
     private PageRepository pageRepository;
 
     @Autowired
+    private PlaceholderRepository placeholderRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     Logger logger = LoggerFactory.getLogger(MetadataService.class);
@@ -139,5 +142,39 @@ public class MetadataService {
         pageListDTO.setPages(pages);
 
         return pageListDTO;
+    }
+
+    /**
+     * Add placeholder.
+     *
+     * @param placeholder Placeholder
+     * @return            CS Response
+     * @throws ValidationException Validation exception to throw
+     */
+    CSResponse addPlaceholder(Placeholder placeholder) throws ValidationException {
+
+        // Validate whether placeholder name exists in request.
+        if (placeholder.getName() == null) {
+            logger.error("Placeholder name field is missing");
+            throw new ValidationException("CS-6006: Placeholder name field is missing");
+        }
+
+        // Retrieve placeholder from DB.
+        Placeholder existingPlaceholder = placeholderRepository.findByNameIgnoreCase(placeholder.getName());
+
+        // Validate whether placeholder name exists in DB.
+        if (existingPlaceholder != null) {
+            logger.error("Placeholder name already in use");
+            throw new ValidationException("CS-6007: Placeholder name already in use");
+
+        } else {
+
+            // Save placeholder.
+            placeholderRepository.save(placeholder);
+
+            logger.info("Placeholder added successfully");
+        }
+
+        return new CSResponse(SUCCESS, "CS-6008: Placeholder added successfully");
     }
 }
