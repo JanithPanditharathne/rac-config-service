@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -36,7 +36,7 @@ class MetadataControllerTest {
     @Test
     void addChannel() throws Exception {
 
-        CSResponse csResponse = new CSResponse(SUCCESS, "CS-6000: Channel name field is missing");
+        CSResponse csResponse = new CSResponse(SUCCESS, CHANNEL_NAME_FIELD_MISSING);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -88,7 +88,7 @@ class MetadataControllerTest {
     @Test
     void addPage() throws Exception {
 
-        CSResponse csResponse = new CSResponse(SUCCESS, "CS-6003: Page name field is missing");
+        CSResponse csResponse = new CSResponse(SUCCESS, PAGE_NAME_FIELD_MISSING);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -125,6 +125,58 @@ class MetadataControllerTest {
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                                                       .get("/v1/metadata/pages")
+                                                      .accept(MediaType.APPLICATION_JSON)).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test when adding a placeholder.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void addPlaceholder() throws Exception {
+
+        CSResponse csResponse = new CSResponse(SUCCESS, PLACEHOLDER_NAME_FIELD_MISSING);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        Mockito.when(metadataService.addPlaceholder(any())).thenReturn(csResponse);
+        String inputJson = "{\"name\":\"Vertical\"}";
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                                                      .post("/v1/metadata/placeholders")
+                                                      .accept(MediaType.APPLICATION_JSON)
+                                                      .content(inputJson)
+                                                      .contentType(MediaType.APPLICATION_JSON)).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test when retrieving all placeholders.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void getAllPlaceholders() throws Exception {
+
+        PlaceholderListDTO placeholderListDTO = new PlaceholderListDTO();
+        List<MetadataDTO> metadataDTOList = new ArrayList<>();
+        placeholderListDTO.setPlaceholders(metadataDTOList);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(placeholderListDTO);
+
+        Mockito.when(metadataService.getAllPlaceholders()).thenReturn(placeholderListDTO);
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                                                      .get("/v1/metadata/placeholders")
                                                       .accept(MediaType.APPLICATION_JSON)).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
 
