@@ -344,9 +344,13 @@ class AlgorithmServiceTest {
             CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_DELETE_SUCCESS);
 
             // Mock
+            Algorithm algorithm = new Algorithm(100, "Top Trending", "TT algorithm description", "");
+            when(algorithmRepository.findById(100)).thenReturn(Optional.of(algorithm));
+
+            // Call deleteById method.
             algorithmRepository.deleteById(100);
 
-            // Verify deleteById method is called.
+            // Verify deleteById method is actually called.
             verify(algorithmRepository, times(1)).deleteById(100);
 
             // Actual
