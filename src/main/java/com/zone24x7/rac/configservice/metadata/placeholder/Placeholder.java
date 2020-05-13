@@ -1,21 +1,26 @@
-package com.zone24x7.rac.configservice.metadata;
+package com.zone24x7.rac.configservice.metadata.placeholder;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- * Class representing the channel model.
- *
- */
+
 @Entity
-public class Channel {
+public class Placeholder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    public Placeholder() {
+    }
+
+    public Placeholder(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public int getId() {
         return id;

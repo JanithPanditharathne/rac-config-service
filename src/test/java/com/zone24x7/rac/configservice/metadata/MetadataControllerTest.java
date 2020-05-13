@@ -1,7 +1,14 @@
 package com.zone24x7.rac.configservice.metadata;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.metadata.channel.Channel;
+import com.zone24x7.rac.configservice.metadata.channel.ChannelList;
+import com.zone24x7.rac.configservice.metadata.page.Page;
+import com.zone24x7.rac.configservice.metadata.page.PageList;
+import com.zone24x7.rac.configservice.metadata.placeholder.Placeholder;
+import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderList;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +17,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -36,7 +43,7 @@ class MetadataControllerTest {
     @Test
     void addChannel() throws Exception {
 
-        CSResponse csResponse = new CSResponse(SUCCESS, CHANNEL_NAME_FIELD_MISSING);
+        CSResponse csResponse = new CSResponse(Strings.SUCCESS, Strings.CHANNEL_ADDED_SUCCESSFULLY);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -62,18 +69,22 @@ class MetadataControllerTest {
     @Test
     void getAllChannels() throws Exception {
 
-        ChannelListDTO channelListDTO = new ChannelListDTO();
-        List<MetadataDTO> metadataDTOList = new ArrayList<>();
-        channelListDTO.setChannels(metadataDTOList);
+        // Mock
+        List<Channel> channels = new ArrayList<>();
+        channels.add(new Channel(1, "Web"));
+        channels.add(new Channel(2, "Mobile"));
+        ChannelList channelList = new ChannelList(channels);
+        Mockito.when(metadataService.getAllChannels()).thenReturn(channelList);
 
+        // Expected
         ObjectMapper objectMapper = new ObjectMapper();
-        String expected = objectMapper.writeValueAsString(channelListDTO);
+        String expected = objectMapper.writeValueAsString(channelList);
 
-        Mockito.when(metadataService.getAllChannels()).thenReturn(channelListDTO);
-
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
-                                                      .get("/v1/metadata/channels")
-                                                      .accept(MediaType.APPLICATION_JSON)).andReturn();
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/v1/metadata/channels")
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
 
         // Assert
@@ -88,7 +99,7 @@ class MetadataControllerTest {
     @Test
     void addPage() throws Exception {
 
-        CSResponse csResponse = new CSResponse(SUCCESS, PAGE_NAME_FIELD_MISSING);
+        CSResponse csResponse = new CSResponse(Strings.SUCCESS, Strings.PAGE_ADDED_SUCCESSFULLY);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -114,15 +125,18 @@ class MetadataControllerTest {
     @Test
     void getAllPages() throws Exception {
 
-        PageListDTO pageListDTO = new PageListDTO();
-        List<MetadataDTO> metadataDTOList = new ArrayList<>();
-        pageListDTO.setPages(metadataDTOList);
+        // Mock
+        List<Page> pages = new ArrayList<>();
+        pages.add(new Page(1, "Web"));
+        pages.add(new Page(2, "Mobile"));
+        PageList pageList = new PageList(pages);
+        Mockito.when(metadataService.getAllPages()).thenReturn(pageList);
 
+        // Expected
         ObjectMapper objectMapper = new ObjectMapper();
-        String expected = objectMapper.writeValueAsString(pageListDTO);
+        String expected = objectMapper.writeValueAsString(pageList);
 
-        Mockito.when(metadataService.getAllPages()).thenReturn(pageListDTO);
-
+        // Actual
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                                                       .get("/v1/metadata/pages")
                                                       .accept(MediaType.APPLICATION_JSON)).andReturn();
@@ -140,7 +154,7 @@ class MetadataControllerTest {
     @Test
     void addPlaceholder() throws Exception {
 
-        CSResponse csResponse = new CSResponse(SUCCESS, PLACEHOLDER_NAME_FIELD_MISSING);
+        CSResponse csResponse = new CSResponse(Strings.SUCCESS, Strings.PLACEHOLDER_ADDED_SUCCESSFULLY);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -166,15 +180,18 @@ class MetadataControllerTest {
     @Test
     void getAllPlaceholders() throws Exception {
 
-        PlaceholderListDTO placeholderListDTO = new PlaceholderListDTO();
-        List<MetadataDTO> metadataDTOList = new ArrayList<>();
-        placeholderListDTO.setPlaceholders(metadataDTOList);
+        // Mock
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder(1, "Web"));
+        placeholders.add(new Placeholder(2, "Mobile"));
+        PlaceholderList placeholderList = new PlaceholderList(placeholders);
+        Mockito.when(metadataService.getAllPlaceholders()).thenReturn(placeholderList);
 
+        // Expected
         ObjectMapper objectMapper = new ObjectMapper();
-        String expected = objectMapper.writeValueAsString(placeholderListDTO);
+        String expected = objectMapper.writeValueAsString(placeholderList);
 
-        Mockito.when(metadataService.getAllPlaceholders()).thenReturn(placeholderListDTO);
-
+        // Actual
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                                                       .get("/v1/metadata/placeholders")
                                                       .accept(MediaType.APPLICATION_JSON)).andReturn();

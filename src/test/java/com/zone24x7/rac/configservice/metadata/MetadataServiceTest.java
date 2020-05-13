@@ -1,6 +1,18 @@
 package com.zone24x7.rac.configservice.metadata;
 
 import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.metadata.channel.Channel;
+import com.zone24x7.rac.configservice.metadata.channel.ChannelDTO;
+import com.zone24x7.rac.configservice.metadata.channel.ChannelList;
+import com.zone24x7.rac.configservice.metadata.channel.ChannelRepository;
+import com.zone24x7.rac.configservice.metadata.page.Page;
+import com.zone24x7.rac.configservice.metadata.page.PageDTO;
+import com.zone24x7.rac.configservice.metadata.page.PageList;
+import com.zone24x7.rac.configservice.metadata.page.PageRepository;
+import com.zone24x7.rac.configservice.metadata.placeholder.Placeholder;
+import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderDTO;
+import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderList;
+import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -39,16 +51,13 @@ class MetadataServiceTest {
     private MetadataService metadataService;
 
     @Nested
-    @DisplayName("Add channel")
+    @DisplayName("add channel method")
     class AddChannel {
 
-        /**
-         * Unit test to add channel successfully.
-         *
-         * @throws ValidationException Validation exception to throw
-         */
+
         @Test
-        void successful() throws ValidationException {
+        @DisplayName("test for correct values")
+        void testAddChannelForCorrectValues() throws ValidationException {
 
             CSResponse expected = new CSResponse(SUCCESS, CHANNEL_ADDED_SUCCESSFULLY);
 
@@ -62,14 +71,12 @@ class MetadataServiceTest {
             assertEquals(expected.getMessage(), actual.getMessage());
         }
 
-        /**
-         * Unit test when channel name is missing.
-         *
-         */
-        @Test
-        void missingChannelName() {
 
-            CSResponse expected = new CSResponse(ERROR, CHANNEL_NAME_FIELD_MISSING);
+        @Test
+        @DisplayName("test for missing channel name")
+        void testAddChannelForMissingChannelName() {
+
+            CSResponse expected = new CSResponse(ERROR, CHANNEL_NAME_CANNOT_BE_NULL);
 
             Channel channel = mock(Channel.class);
             when(channel.getName()).thenReturn(null);
@@ -84,14 +91,12 @@ class MetadataServiceTest {
             assertTrue(actual.contains(expected.getMessage()));
         }
 
-        /**
-         * Unit test when channel name is already in use.
-         *
-         */
-        @Test
-        void existingChannelName() {
 
-            CSResponse expected = new CSResponse(ERROR, CHANNEL_NAME_IN_USE);
+        @Test
+        @DisplayName("test for existing channel name")
+        void testAddChannelForExistingChannelName() {
+
+            CSResponse expected = new CSResponse(ERROR, CHANNEL_NAME_ALREADY_EXISTS);
 
             Channel channel = mock(Channel.class);
             when(channel.getName()).thenReturn("Test");
@@ -108,36 +113,31 @@ class MetadataServiceTest {
         }
     }
 
-    /**
-     * Unit test to get all channels.
-     *
-     */
+
     @Test
+    @DisplayName("get all channels method")
     void getAllChannels() {
         List<Channel> expectedChannels = new ArrayList<>();
         Channel channel = new Channel();
 
-        when(modelMapper.map(any(), any())).thenReturn(new MetadataDTO());
+        when(modelMapper.map(any(), any())).thenReturn(new ChannelDTO());
         expectedChannels.add(channel);
 
         when(channelRepository.findAll()).thenReturn(expectedChannels);
 
-        ChannelListDTO actualChannels = metadataService.getAllChannels();
+        ChannelList actualChannels = metadataService.getAllChannels();
 
         assertEquals(expectedChannels.size(), actualChannels.getChannels().size());
     }
 
     @Nested
-    @DisplayName("Add page")
+    @DisplayName("add page method")
     class AddPage {
 
-        /**
-         * Unit test to add page successfully.
-         *
-         * @throws ValidationException Validation exception to throw
-         */
+
         @Test
-        void successful() throws ValidationException {
+        @DisplayName("test for correct values")
+        void testAddPageForCorrectValues() throws ValidationException {
 
             CSResponse expected = new CSResponse(SUCCESS, PAGE_ADDED_SUCCESSFULLY);
 
@@ -151,14 +151,12 @@ class MetadataServiceTest {
             assertEquals(expected.getMessage(), actual.getMessage());
         }
 
-        /**
-         * Unit test when page name is missing.
-         *
-         */
-        @Test
-        void missingPageName() {
 
-            CSResponse expected = new CSResponse(ERROR, PAGE_NAME_FIELD_MISSING);
+        @Test
+        @DisplayName("test for missing page name")
+        void testAddPageForMissingPageName() {
+
+            CSResponse expected = new CSResponse(ERROR, PAGE_NAME_CANNOT_BE_NULL);
 
             Page page = mock(Page.class);
             when(page.getName()).thenReturn(null);
@@ -173,14 +171,12 @@ class MetadataServiceTest {
             assertTrue(actual.contains(expected.getMessage()));
         }
 
-        /**
-         * Unit test when page name is already in use.
-         *
-         */
-        @Test
-        void existingPageName() {
 
-            CSResponse expected = new CSResponse(ERROR, PAGE_NAME_IN_USE);
+        @Test
+        @DisplayName("test for existing page name")
+        void testAddPageForExistingPageName() {
+
+            CSResponse expected = new CSResponse(ERROR, PAGE_NAME_ALREADY_EXISTS);
 
             Page page = mock(Page.class);
             when(page.getName()).thenReturn("Test");
@@ -197,36 +193,31 @@ class MetadataServiceTest {
         }
     }
 
-    /**
-     * Unit test to get all pages.
-     *
-     */
+
     @Test
+    @DisplayName("get all pages method")
     void getAllPages() {
         List<Page> expectedPages = new ArrayList<>();
         Page page = new Page();
 
-        when(modelMapper.map(any(), any())).thenReturn(new MetadataDTO());
+        when(modelMapper.map(any(), any())).thenReturn(new PageDTO());
         expectedPages.add(page);
 
         when(pageRepository.findAll()).thenReturn(expectedPages);
 
-        PageListDTO actualPage = metadataService.getAllPages();
+        PageList actualPage = metadataService.getAllPages();
 
         assertEquals(expectedPages.size(), actualPage.getPages().size());
     }
 
     @Nested
-    @DisplayName("Add placeholder")
+    @DisplayName("add placeholder method")
     class AddPlaceholder {
 
-        /**
-         * Unit test to add placeholder successfully.
-         *
-         * @throws ValidationException Validation exception to throw
-         */
+
         @Test
-        void successful() throws ValidationException {
+        @DisplayName("test for correct values")
+        void testAddPlaceholderForCorrectValues() throws ValidationException {
 
             CSResponse expected = new CSResponse(SUCCESS, PLACEHOLDER_ADDED_SUCCESSFULLY);
 
@@ -240,14 +231,12 @@ class MetadataServiceTest {
             assertEquals(expected.getMessage(), actual.getMessage());
         }
 
-        /**
-         * Unit test when placeholder name is missing.
-         *
-         */
-        @Test
-        void missingPlaceholderName() {
 
-            CSResponse expected = new CSResponse(ERROR, PLACEHOLDER_NAME_FIELD_MISSING);
+        @Test
+        @DisplayName("test for missing placeholder name")
+        void testAddPlaceholderForMissingPlaceholderName() {
+
+            CSResponse expected = new CSResponse(ERROR, PLACEHOLDER_NAME_CANNOT_BE_NULL);
 
             Placeholder placeholder = mock(Placeholder.class);
             when(placeholder.getName()).thenReturn(null);
@@ -262,14 +251,12 @@ class MetadataServiceTest {
             assertTrue(actual.contains(expected.getMessage()));
         }
 
-        /**
-         * Unit test when placeholder name is already in use.
-         *
-         */
-        @Test
-        void existingPlaceholderName() {
 
-            CSResponse expected = new CSResponse(ERROR, PLACEHOLDER_NAME_IN_USE);
+        @Test
+        @DisplayName("test for existing placeholder name")
+        void testAddPlaceholderForExistingPlaceholderName() {
+
+            CSResponse expected = new CSResponse(ERROR, PLACEHOLDER_NAME_ALREADY_EXISTS);
 
             Placeholder placeholder = mock(Placeholder.class);
             when(placeholder.getName()).thenReturn("Test");
@@ -286,21 +273,19 @@ class MetadataServiceTest {
         }
     }
 
-    /**
-     * Unit test to get all placeholder.
-     *
-     */
+
     @Test
+    @DisplayName("get all placeholder method")
     void getAllPlaceholders() {
         List<Placeholder> expectedPlcehoders = new ArrayList<>();
         Placeholder placeholder = new Placeholder();
 
-        when(modelMapper.map(any(), any())).thenReturn(new MetadataDTO());
+        when(modelMapper.map(any(), any())).thenReturn(new PlaceholderDTO());
         expectedPlcehoders.add(placeholder);
 
         when(placeholderRepository.findAll()).thenReturn(expectedPlcehoders);
 
-        PlaceholderListDTO actualPlaceholders = metadataService.getAllPlaceholders();
+        PlaceholderList actualPlaceholders = metadataService.getAllPlaceholders();
 
         assertEquals(expectedPlcehoders.size(), actualPlaceholders.getPlaceholders().size());
     }

@@ -1,13 +1,17 @@
-package com.zone24x7.rac.configservice.metadata;
+package com.zone24x7.rac.configservice.metadata.placeholder;
 
-/**
- * Class representing a metadata DTO.
- *
- */
-public class MetadataDTO {
+public class PlaceholderDTO {
 
     private int id;
     private String name;
+
+    public PlaceholderDTO() {
+    }
+
+    public PlaceholderDTO(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public int getId() {
         return id;

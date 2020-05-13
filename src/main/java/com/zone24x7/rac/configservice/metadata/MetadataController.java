@@ -1,15 +1,25 @@
 package com.zone24x7.rac.configservice.metadata;
 
 import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.metadata.channel.Channel;
+import com.zone24x7.rac.configservice.metadata.channel.ChannelDTO;
+import com.zone24x7.rac.configservice.metadata.channel.ChannelList;
+import com.zone24x7.rac.configservice.metadata.page.Page;
+import com.zone24x7.rac.configservice.metadata.page.PageDTO;
+import com.zone24x7.rac.configservice.metadata.page.PageList;
+import com.zone24x7.rac.configservice.metadata.placeholder.Placeholder;
+import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderDTO;
+import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderList;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Rest controller for metadata.
- *
- */
+
 @RestController
 @RequestMapping("/v1")
 public class MetadataController {
@@ -20,69 +30,82 @@ public class MetadataController {
     @Autowired
     private ModelMapper modelMapper;
 
-    /**
-     * Add channel.
-     *
-     * @param metadataDTO Channel DTO
-     * @return            CS Response
-     * @throws ValidationException Validation exception to throw
-     */
-    @PostMapping(path = "/metadata/channels", consumes = "application/json")
-    public CSResponse addChannel(@RequestBody MetadataDTO metadataDTO) throws ValidationException {
-        return metadataService.addChannel(modelMapper.map(metadataDTO, Channel.class));
-    }
+
 
     /**
      * Get all channels.
      *
      * @return All channels
      */
-    @GetMapping(path = "/metadata/channels", produces = "application/json")
-    public ChannelListDTO getChannels() {
+    @GetMapping("/metadata/channels")
+    public ChannelList getChannels() {
         return metadataService.getAllChannels();
     }
 
+
     /**
-     * Add page.
+     * Add channel.
      *
-     * @param metadataDTO Channel DTO
+     * @param channelDTO Channel DTO
      * @return            CS Response
      * @throws ValidationException Validation exception to throw
      */
-    @PostMapping(path = "/metadata/pages", consumes = "application/json")
-    public CSResponse addPage(@RequestBody MetadataDTO metadataDTO) throws ValidationException {
-        return metadataService.addPage(modelMapper.map(metadataDTO, Page.class));
+    @PostMapping("/metadata/channels")
+    public CSResponse addChannel(@RequestBody ChannelDTO channelDTO) throws ValidationException {
+        return metadataService.addChannel(modelMapper.map(channelDTO, Channel.class));
     }
+
+
+
 
     /**
      * Get all pages.
      *
      * @return All pages
      */
-    @GetMapping(path = "/metadata/pages", produces = "application/json")
-    public PageListDTO getPages() {
+    @GetMapping("/metadata/pages")
+    public PageList getPages() {
         return metadataService.getAllPages();
     }
 
     /**
-     * Add placeholder.
+     * Add page.
      *
-     * @param metadataDTO Placeholder DTO
-     * @return            CS Response
+     * @param pageDTO page DTO
+     * @return CS Response
      * @throws ValidationException Validation exception to throw
      */
-    @PostMapping(path = "/metadata/placeholders", consumes = "application/json")
-    public CSResponse addPlaceholder(@RequestBody MetadataDTO metadataDTO) throws ValidationException {
-        return metadataService.addPlaceholder(modelMapper.map(metadataDTO, Placeholder.class));
+    @PostMapping("/metadata/pages")
+    public CSResponse addPage(@RequestBody PageDTO pageDTO) throws ValidationException {
+        return metadataService.addPage(modelMapper.map(pageDTO, Page.class));
     }
+
+
+
+
 
     /**
      * Get all placeholders.
      *
      * @return All placeholders
      */
-    @GetMapping(path = "/metadata/placeholders", produces = "application/json")
-    public PlaceholderListDTO getPlaceholders() {
+    @GetMapping("/metadata/placeholders")
+    public PlaceholderList getPlaceholders() {
         return metadataService.getAllPlaceholders();
     }
+
+
+    /**
+     * Add placeholder.
+     *
+     * @param placeholderDTO Placeholder DTO
+     * @return            CS Response
+     * @throws ValidationException Validation exception to throw
+     */
+    @PostMapping("/metadata/placeholders")
+    public CSResponse addPlaceholder(@RequestBody PlaceholderDTO placeholderDTO) throws ValidationException {
+        return metadataService.addPlaceholder(modelMapper.map(placeholderDTO, Placeholder.class));
+    }
+
+
 }

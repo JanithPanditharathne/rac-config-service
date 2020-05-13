@@ -1,4 +1,4 @@
-package com.zone24x7.rac.configservice.metadata;
+package com.zone24x7.rac.configservice.metadata.channel;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

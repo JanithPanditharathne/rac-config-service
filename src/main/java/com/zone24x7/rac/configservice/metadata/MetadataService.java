@@ -1,8 +1,17 @@
 package com.zone24x7.rac.configservice.metadata;
 
 import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.metadata.channel.Channel;
+import com.zone24x7.rac.configservice.metadata.channel.ChannelList;
+import com.zone24x7.rac.configservice.metadata.channel.ChannelRepository;
+import com.zone24x7.rac.configservice.metadata.page.Page;
+import com.zone24x7.rac.configservice.metadata.page.PageList;
+import com.zone24x7.rac.configservice.metadata.page.PageRepository;
+import com.zone24x7.rac.configservice.metadata.placeholder.Placeholder;
+import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderList;
+import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
-import org.modelmapper.ModelMapper;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
 
-/**
- * Service class relating to metadata.
- *
- */
 @Service
 public class MetadataService {
 
@@ -29,10 +33,24 @@ public class MetadataService {
     @Autowired
     private PlaceholderRepository placeholderRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
 
+    // Logger.
     Logger logger = LoggerFactory.getLogger(MetadataService.class);
+
+
+
+
+    /**
+     * Get all channels.
+     *
+     * @return Channel list DTO
+     */
+    ChannelList getAllChannels() {
+        List<Channel> channels = new ArrayList<>();
+        channelRepository.findAll().forEach(channels::add);
+        return new ChannelList(channels);
+    }
+
 
     /**
      * Add channel.
@@ -43,10 +61,14 @@ public class MetadataService {
      */
     CSResponse addChannel(Channel channel) throws ValidationException {
 
-        // Validate whether channel name exists in request.
+        // Validate channel name for null.
         if (channel.getName() == null) {
-            logger.error("Channel name field is missing");
-            throw new ValidationException(CHANNEL_NAME_FIELD_MISSING);
+            throw new ValidationException(Strings.CHANNEL_NAME_CANNOT_BE_NULL);
+        }
+
+        // Validate channel name for empty.
+        if (channel.getName().isEmpty()) {
+            throw new ValidationException(Strings.CHANNEL_NAME_CANNOT_BE_EMPTY);
         }
 
         // Retrieve channel from DB.
@@ -54,43 +76,36 @@ public class MetadataService {
 
         // Validate whether channel name exists in DB.
         if (existingChannel != null) {
-            logger.error("Channel name already in use");
-            throw new ValidationException(CHANNEL_NAME_IN_USE);
-
-        } else {
-
-            // Save channel
-            channelRepository.save(channel);
-
-            logger.info("Channel added successfully");
+            throw new ValidationException(Strings.CHANNEL_NAME_ALREADY_EXISTS);
         }
 
-        return new CSResponse(SUCCESS, CHANNEL_ADDED_SUCCESSFULLY);
+        // Save channel.
+        channelRepository.save(channel);
+
+        // Return status response.
+        return new CSResponse(Strings.SUCCESS, Strings.CHANNEL_ADDED_SUCCESSFULLY);
     }
 
+
+
+
+
+
+
     /**
-     * Get all channels.
+     * Get all pages.
      *
-     * @return Channel list DTO
+     * @return Page list DTO
      */
-    ChannelListDTO getAllChannels() {
-        List<MetadataDTO> channels = new ArrayList<>();
-
-        List<Channel> channelList = channelRepository.findAll();
-
-        for (Channel channel : channelList) {
-            MetadataDTO metadataDTO = modelMapper.map(channel, MetadataDTO.class);
-            channels.add(metadataDTO);
-        }
-
-        ChannelListDTO channelListDTO = new ChannelListDTO();
-        channelListDTO.setChannels(channels);
-
-        return channelListDTO;
+    PageList getAllPages() {
+        List<Page> pages = new ArrayList<>();
+        pageRepository.findAll().forEach(pages::add);
+        return new PageList(pages);
     }
 
+
     /**
-     * Add channel.
+     * Add page.
      *
      * @param page Page
      * @return     CS Response
@@ -98,10 +113,14 @@ public class MetadataService {
      */
     CSResponse addPage(Page page) throws ValidationException {
 
-        // Validate whether page name exists in request.
+        // Validate page name for null.
         if (page.getName() == null) {
-            logger.error("Page name field is missing");
-            throw new ValidationException(PAGE_NAME_FIELD_MISSING);
+            throw new ValidationException(Strings.PAGE_NAME_CANNOT_BE_NULL);
+        }
+
+        // Validate page name for empty.
+        if (page.getName().isEmpty()) {
+            throw new ValidationException(Strings.PAGE_NAME_CANNOT_BE_EMPTY);
         }
 
         // Retrieve page from DB.
@@ -109,40 +128,33 @@ public class MetadataService {
 
         // Validate whether page name exists in DB.
         if (existingPage != null) {
-            logger.error("Page name already in use");
-            throw new ValidationException(PAGE_NAME_IN_USE);
-
-        } else {
-
-            // Save page.
-            pageRepository.save(page);
-
-            logger.info("Page added successfully");
+            throw new ValidationException(Strings.PAGE_NAME_ALREADY_EXISTS);
         }
 
-        return new CSResponse(SUCCESS, PAGE_ADDED_SUCCESSFULLY);
+        // Save page.
+        pageRepository.save(page);
+
+        // Return status response.
+        return new CSResponse(Strings.SUCCESS, Strings.PAGE_ADDED_SUCCESSFULLY);
     }
+
+
+
+
 
     /**
-     * Get all pages.
+     * Get all placeholders.
      *
-     * @return Page list DTO
+     * @return Placeholder list DTO
      */
-    PageListDTO getAllPages() {
-        List<MetadataDTO> pages = new ArrayList<>();
-
-        List<Page> pageList = pageRepository.findAll();
-
-        for (Page page : pageList) {
-            MetadataDTO metadataDTO = modelMapper.map(page, MetadataDTO.class);
-            pages.add(metadataDTO);
-        }
-
-        PageListDTO pageListDTO = new PageListDTO();
-        pageListDTO.setPages(pages);
-
-        return pageListDTO;
+    PlaceholderList getAllPlaceholders() {
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholderRepository.findAll().forEach(placeholders::add);
+        return new PlaceholderList(placeholders);
     }
+
+
+
 
     /**
      * Add placeholder.
@@ -153,10 +165,14 @@ public class MetadataService {
      */
     CSResponse addPlaceholder(Placeholder placeholder) throws ValidationException {
 
-        // Validate whether placeholder name exists in request.
+        // Validate placeholder name for null.
         if (placeholder.getName() == null) {
-            logger.error("Placeholder name field is missing");
-            throw new ValidationException(PLACEHOLDER_NAME_FIELD_MISSING);
+            throw new ValidationException(Strings.PLACEHOLDER_NAME_CANNOT_BE_NULL);
+        }
+
+        // Validate placeholder name for empty.
+        if (placeholder.getName().isEmpty()) {
+            throw new ValidationException(Strings.PLACEHOLDER_NAME_CANNOT_BE_EMPTY);
         }
 
         // Retrieve placeholder from DB.
@@ -164,38 +180,14 @@ public class MetadataService {
 
         // Validate whether placeholder name exists in DB.
         if (existingPlaceholder != null) {
-            logger.error("Placeholder name already in use");
-            throw new ValidationException(PLACEHOLDER_NAME_IN_USE);
-
-        } else {
-
-            // Save placeholder.
-            placeholderRepository.save(placeholder);
-
-            logger.info("Placeholder added successfully");
+            throw new ValidationException(Strings.PLACEHOLDER_NAME_ALREADY_EXISTS);
         }
 
-        return new CSResponse(SUCCESS, PLACEHOLDER_ADDED_SUCCESSFULLY);
+        // Save placeholder.
+        placeholderRepository.save(placeholder);
+
+        return new CSResponse(Strings.SUCCESS, Strings.PLACEHOLDER_ADDED_SUCCESSFULLY);
     }
 
-    /**
-     * Get all placeholders.
-     *
-     * @return Placeholder list DTO
-     */
-    PlaceholderListDTO getAllPlaceholders() {
-        List<MetadataDTO> placeholders = new ArrayList<>();
 
-        List<Placeholder> placeholderList = placeholderRepository.findAll();
-
-        for (Placeholder placeholder : placeholderList) {
-            MetadataDTO metadataDTO = modelMapper.map(placeholder, MetadataDTO.class);
-            placeholders.add(metadataDTO);
-        }
-
-        PlaceholderListDTO placeholderListDTO = new PlaceholderListDTO();
-        placeholderListDTO.setPlaceholders(placeholders);
-
-        return placeholderListDTO;
-    }
 }

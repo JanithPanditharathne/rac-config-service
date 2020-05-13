@@ -1,11 +1,8 @@
-package com.zone24x7.rac.configservice.metadata;
+package com.zone24x7.rac.configservice.metadata.page;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-/**
- * Repository for page.
- *
- */
+
 public interface PageRepository extends JpaRepository<Page, Integer> {
 
     /**

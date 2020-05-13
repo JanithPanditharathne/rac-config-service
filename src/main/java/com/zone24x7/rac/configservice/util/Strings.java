@@ -26,6 +26,7 @@ public class Strings {
     // Response messages.
     //
     // -------------------------------------------------------
+    // Algorithms
     public static final String ALGORITHM_ID_INVALID = "CS-1000:Invalid algorithm id";
     public static final String ALGORITHM_ADD_SUCCESS = "CS-1001:Algorithm added successfully";
     public static final String ALGORITHM_UPDATE_SUCCESS = "CS-1002:Algorithm updated successfully";
@@ -35,17 +36,18 @@ public class Strings {
     public static final String ALGORITHM_DELETE_SUCCESS = "CS-1006:Algorithm deleted successfully";
 
 
-
-    public static final String CHANNEL_NAME_FIELD_MISSING = "CS-6000: Channel name field is missing";
-    public static final String CHANNEL_NAME_IN_USE = "CS-6001: Channel name already in use";
-    public static final String CHANNEL_ADDED_SUCCESSFULLY = "CS-6002: Channel added successfully";
-
-    public static final String PAGE_NAME_FIELD_MISSING = "CS-6003: Page name field is missing";
-    public static final String PAGE_NAME_IN_USE = "CS-6004: Page name already in use";
-    public static final String PAGE_ADDED_SUCCESSFULLY = "CS-6005: Page added successfully";
-
-    public static final String PLACEHOLDER_NAME_FIELD_MISSING = "CS-6006: Placeholder name field is missing";
-    public static final String PLACEHOLDER_NAME_IN_USE = "CS-6007: Placeholder name already in use";
-    public static final String PLACEHOLDER_ADDED_SUCCESSFULLY = "CS-6008: Placeholder added successfully";
+    // Metadata
+    public static final String CHANNEL_NAME_CANNOT_BE_NULL = "CS-6000:Channel name cannot be null";
+    public static final String CHANNEL_NAME_CANNOT_BE_EMPTY = "CS-6001:Channel name cannot be empty";
+    public static final String CHANNEL_NAME_ALREADY_EXISTS = "CS-6002:Channel name already exists";
+    public static final String CHANNEL_ADDED_SUCCESSFULLY = "CS-6003:Channel added successfully";
+    public static final String PAGE_NAME_CANNOT_BE_NULL = "CS-6004:Page name field cannot be null";
+    public static final String PAGE_NAME_CANNOT_BE_EMPTY = "CS-6005:Page name field cannot be empty";
+    public static final String PAGE_NAME_ALREADY_EXISTS = "CS-6006:Page name already exists";
+    public static final String PAGE_ADDED_SUCCESSFULLY = "CS-6007:Page added successfully";
+    public static final String PLACEHOLDER_NAME_CANNOT_BE_NULL = "CS-6008:Placeholder name cannot be null";
+    public static final String PLACEHOLDER_NAME_CANNOT_BE_EMPTY = "CS-6009:Placeholder name cannot be empty";
+    public static final String PLACEHOLDER_NAME_ALREADY_EXISTS = "CS-6010:Placeholder name already exists";
+    public static final String PLACEHOLDER_ADDED_SUCCESSFULLY = "CS-6011:Placeholder added successfully";
 
 }

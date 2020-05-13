@@ -1,21 +1,26 @@
-package com.zone24x7.rac.configservice.metadata;
+package com.zone24x7.rac.configservice.metadata.page;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- * Class representing the placeholder model.
- *
- */
+
 @Entity
-public class Placeholder {
+public class Page {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    public Page() {
+    }
+
+    public Page(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public int getId() {
         return id;
