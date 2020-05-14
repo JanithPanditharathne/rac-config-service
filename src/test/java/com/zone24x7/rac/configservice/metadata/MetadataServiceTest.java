@@ -91,6 +91,25 @@ class MetadataServiceTest {
             assertTrue(actual.contains(expected.getMessage()));
         }
 
+        @Test
+        @DisplayName("test for empty channel name")
+        void testAddChannelForEmptyChannelName() {
+
+            CSResponse expected = new CSResponse(ERROR, CHANNEL_NAME_CANNOT_BE_EMPTY);
+
+            Channel channel = mock(Channel.class);
+            when(channel.getName()).thenReturn("");
+
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                metadataService.addChannel(channel);
+            });
+
+            String actual = validationException.getMessage();
+
+            assertTrue(actual.contains(expected.getCode()));
+            assertTrue(actual.contains(expected.getMessage()));
+        }
+
 
         @Test
         @DisplayName("test for existing channel name")
@@ -171,6 +190,25 @@ class MetadataServiceTest {
             assertTrue(actual.contains(expected.getMessage()));
         }
 
+        @Test
+        @DisplayName("test for empty page name")
+        void testAddPageForEmptyPageName() {
+
+            CSResponse expected = new CSResponse(ERROR, PAGE_NAME_CANNOT_BE_EMPTY);
+
+            Page page = mock(Page.class);
+            when(page.getName()).thenReturn("");
+
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                metadataService.addPage(page);
+            });
+
+            String actual = validationException.getMessage();
+
+            assertTrue(actual.contains(expected.getCode()));
+            assertTrue(actual.contains(expected.getMessage()));
+        }
+
 
         @Test
         @DisplayName("test for existing page name")
@@ -240,6 +278,25 @@ class MetadataServiceTest {
 
             Placeholder placeholder = mock(Placeholder.class);
             when(placeholder.getName()).thenReturn(null);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                metadataService.addPlaceholder(placeholder);
+            });
+
+            String actual = validationException.getMessage();
+
+            assertTrue(actual.contains(expected.getCode()));
+            assertTrue(actual.contains(expected.getMessage()));
+        }
+
+        @Test
+        @DisplayName("test for empty placeholder name")
+        void testAddPlaceholderForEmptyPlaceholderName() {
+
+            CSResponse expected = new CSResponse(ERROR, PLACEHOLDER_NAME_CANNOT_BE_EMPTY);
+
+            Placeholder placeholder = mock(Placeholder.class);
+            when(placeholder.getName()).thenReturn("");
 
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
                 metadataService.addPlaceholder(placeholder);
