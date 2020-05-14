@@ -6,6 +6,10 @@ public class BundleSummaryListDTO {
 
     private List<BundleSummaryDTO> bundles;
 
+    public BundleSummaryListDTO(List<BundleSummaryDTO> bundles) {
+        this.bundles = bundles;
+    }
+
     public List<BundleSummaryDTO> getBundles() {
         return bundles;
     }

@@ -36,9 +36,6 @@ public class BundleService {
             bundleSummaryDTOList.add(bundleSummaryDTO);
         }
 
-        BundleSummaryListDTO bundleSummaryListDTO = new BundleSummaryListDTO();
-        bundleSummaryListDTO.setBundles(bundleSummaryDTOList);
-
-        return bundleSummaryListDTO;
+        return new BundleSummaryListDTO(bundleSummaryDTOList);
     }
 }
