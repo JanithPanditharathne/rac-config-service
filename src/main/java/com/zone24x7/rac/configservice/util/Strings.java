@@ -36,6 +36,9 @@ public class Strings {
     public static final String ALGORITHM_DELETE_SUCCESS = "CS-1006:Algorithm deleted successfully";
     public static final String ALGORITHM_ID_ALREADY_USE_IN_BUNDLES = "CS-1007:Algorithm id already use in bundles";
 
+    // Bundles
+    public static final String BUNDLE_ID_INVALID = "CS-2000:Invalid bundle id";
+
 
     // Metadata
     public static final String CHANNEL_NAME_CANNOT_BE_NULL = "CS-6000:Channel name cannot be null";
