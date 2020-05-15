@@ -12,8 +12,6 @@ import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderList;
 import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,9 +32,6 @@ public class MetadataService {
     private PlaceholderRepository placeholderRepository;
 
 
-    // Logger.
-    Logger logger = LoggerFactory.getLogger(MetadataService.class);
-
 
 
 
@@ -46,8 +41,7 @@ public class MetadataService {
      * @return Channel list DTO
      */
     ChannelList getAllChannels() {
-        List<Channel> channels = new ArrayList<>();
-        channelRepository.findAll().forEach(channels::add);
+        List<Channel> channels = new ArrayList<>(channelRepository.findAll());
         return new ChannelList(channels);
     }
 
@@ -98,8 +92,7 @@ public class MetadataService {
      * @return Page list DTO
      */
     PageList getAllPages() {
-        List<Page> pages = new ArrayList<>();
-        pageRepository.findAll().forEach(pages::add);
+        List<Page> pages = new ArrayList<>(pageRepository.findAll());
         return new PageList(pages);
     }
 
@@ -148,8 +141,7 @@ public class MetadataService {
      * @return Placeholder list DTO
      */
     PlaceholderList getAllPlaceholders() {
-        List<Placeholder> placeholders = new ArrayList<>();
-        placeholderRepository.findAll().forEach(placeholders::add);
+        List<Placeholder> placeholders = new ArrayList<>(placeholderRepository.findAll());
         return new PlaceholderList(placeholders);
     }
 
