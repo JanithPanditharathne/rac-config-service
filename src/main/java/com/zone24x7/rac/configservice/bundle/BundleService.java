@@ -78,7 +78,7 @@ public class BundleService {
             Bundle bundle = bundleOptional.get();
 
             BundleDetailDTO bundleDetailDTO = new BundleDetailDTO();
-            bundleDetailDTO.setId(bundleID);
+            bundleDetailDTO.setId(String.valueOf(bundleID));
             bundleDetailDTO.setName(bundle.getName());
             bundleDetailDTO.setDefaultLimit(bundle.getDefaultLimit());
             bundleDetailDTO.setCombineEnabled(bundle.isCombineEnabled());

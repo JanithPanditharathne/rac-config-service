@@ -4,18 +4,31 @@ import java.util.List;
 
 public class BundleDetailDTO {
 
-    private int id;
+    private String id;
     private String name;
     private int defaultLimit;
     private boolean combineEnabled;
     private String combineDisplayText;
     private List<BundleAlgorithmDTO> algorithms;
 
-    public int getId() {
+    public BundleDetailDTO() {
+    }
+
+    public BundleDetailDTO(String id, String name, int defaultLimit, boolean combineEnabled, String combineDisplayText,
+                           List<BundleAlgorithmDTO> algorithms) {
+        this.id = id;
+        this.name = name;
+        this.defaultLimit = defaultLimit;
+        this.combineEnabled = combineEnabled;
+        this.combineDisplayText = combineDisplayText;
+        this.algorithms = algorithms;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -8,6 +8,17 @@ public class BundleAlgorithmDTO {
     private String defaultDisplayText;
     private String customDisplayText;
 
+    public BundleAlgorithmDTO() {
+    }
+
+    public BundleAlgorithmDTO(int id, String name, int rank, String defaultDisplayText, String customDisplayText) {
+        this.id = id;
+        this.name = name;
+        this.rank = rank;
+        this.defaultDisplayText = defaultDisplayText;
+        this.customDisplayText = customDisplayText;
+    }
+
     public int getId() {
         return id;
     }

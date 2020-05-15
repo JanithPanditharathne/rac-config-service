@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,6 +50,41 @@ public class BundleControllerTest {
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/v1/bundles")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test when retrieving bundle details.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void getBundleDetails() throws Exception {
+
+        // Expected
+        String expected = "{\"id\":\"1\",\"name\":\"Bundle 1\",\"defaultLimit\":5,\"combineEnabled\":false," +
+                "\"combineDisplayText\":\"Test\",\"algorithms\":[{\"id\":100,\"name\":\"Top Trending\",\"rank\":0," +
+                "\"defaultDisplayText\":\"Top Trending\",\"customDisplayText\":\"Top Trending Products\"}]}";
+
+        // Mock
+        BundleAlgorithmDTO bundleAlgorithmDTO = new BundleAlgorithmDTO(100, "Top Trending", 0,
+                                                                       "Top Trending",
+                                                                       "Top Trending Products");
+
+        BundleDetailDTO bundleDetailDTO = new BundleDetailDTO("1", "Bundle 1", 5,
+                                                              false, "Test",
+                                                              Arrays.asList(bundleAlgorithmDTO));
+        Mockito.when(bundleService.getBundle(100)).thenReturn(bundleDetailDTO);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/v1/bundles/100")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
