@@ -20,6 +20,8 @@ public class BundleAlgorithm {
 
     private int rank;
 
+    public BundleAlgorithm() {
+    }
 
     public BundleAlgorithm(int bundleID, int algorithmID, String customDisplayText, int rank) {
         this.bundleID = bundleID;

@@ -64,4 +64,9 @@ public class Strings {
     public static final String PLACEHOLDER_NAME_ALREADY_EXISTS = "CS-6010:Placeholder name already exists";
     public static final String PLACEHOLDER_ADDED_SUCCESSFULLY = "CS-6011:Placeholder added successfully";
 
+
+
+    // Rec Engine
+    public static final String REC_ENGINE_BUNDLE_CONFIG_UPDATE_FAILED = "CS-7000:Rec engine bundle config update failed";
+
 }

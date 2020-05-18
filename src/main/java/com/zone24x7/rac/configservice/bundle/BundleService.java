@@ -35,7 +35,7 @@ public class BundleService {
      *
      * @return All bundles
      */
-    BundleSummaryListDTO getAllBundles() {
+    public BundleSummaryListDTO getAllBundles() {
 
         logger.info("Retrieving all bundles");
 
@@ -64,7 +64,7 @@ public class BundleService {
      * @return         Bundle details
      * @throws ValidationException Exception to throw
      */
-    BundleDetailDTO getBundle(int bundleID) throws ValidationException {
+    public BundleDetailDTO getBundle(int bundleID) throws ValidationException {
 
         logger.info("Finding bundle ID from database");
 

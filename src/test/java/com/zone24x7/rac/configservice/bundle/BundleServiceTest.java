@@ -3,6 +3,7 @@ package com.zone24x7.rac.configservice.bundle;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zone24x7.rac.configservice.algorithm.Algorithm;
 import com.zone24x7.rac.configservice.algorithm.AlgorithmRepository;
+import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
@@ -42,7 +43,7 @@ class BundleServiceTest {
 
     @Test
     @DisplayName("get all bundles method")
-    void getAllBundles() {
+    void getAllBundles() throws ServerException {
         List<Bundle> expectedBundles = new ArrayList<>();
         Bundle bundle = new Bundle();
 
