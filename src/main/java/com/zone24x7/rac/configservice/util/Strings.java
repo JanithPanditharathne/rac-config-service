@@ -34,6 +34,7 @@ public class Strings {
     public static final String ALGORITHM_NAME_CANNOT_BE_NULL = "CS-1004:Algorithm name cannot be null";
     public static final String ALGORITHM_NAME_CANNOT_BE_EMPTY = "CS-1005:Algorithm name cannot be empty";
     public static final String ALGORITHM_DELETE_SUCCESS = "CS-1006:Algorithm deleted successfully";
+    public static final String ALGORITHM_ID_ALREADY_USE_IN_BUNDLES = "CS-1007:Algorithm id already use in bundles";
 
 
     // Metadata

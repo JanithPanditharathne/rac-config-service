@@ -1,5 +1,7 @@
 package com.zone24x7.rac.configservice.algorithm;
 
+import com.zone24x7.rac.configservice.bundle.BundleAlgorithm;
+import com.zone24x7.rac.configservice.bundle.BundleAlgorithmRepository;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
@@ -25,6 +27,9 @@ class AlgorithmServiceTest {
 
     @Mock
     private AlgorithmRepository algorithmRepository;
+
+    @Mock
+    private BundleAlgorithmRepository bundleAlgorithmRepository;
 
     @InjectMocks
     private AlgorithmService algorithmService;
@@ -326,6 +331,37 @@ class AlgorithmServiceTest {
 
             // Expected
             String expected = Strings.ALGORITHM_ID_INVALID;
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+
+
+        @Test
+        @DisplayName("test for already used algorithm id")
+        void testDeleteAlgorithmForAlreadyUsedAlgorithmID() {
+            Exception exception = assertThrows(ValidationException.class, () -> {
+                // Mock
+                Algorithm algorithm = new Algorithm(100, "Top Trending", "TT algorithm description", "");
+
+                // Setup repository method findById() return value.
+                when(algorithmRepository.findById(algorithm.getId())).thenReturn(Optional.of(algorithm));
+
+                // Setup repository method findAllByAlgorithmID() return value.
+                List<BundleAlgorithm> bundleAlgorithmList = new ArrayList<>();
+                bundleAlgorithmList.add(new BundleAlgorithm(1, 100, "", 0));
+                when(bundleAlgorithmRepository.findAllByAlgorithmID(algorithm.getId())).thenReturn(bundleAlgorithmList);
+
+                // Delete algorithm
+                algorithmService.deleteAlgorithm(algorithm.getId());
+            });
+
+            // Expected
+            String expected = Strings.ALGORITHM_ID_ALREADY_USE_IN_BUNDLES;
 
             // Actual
             String actual = exception.getMessage();

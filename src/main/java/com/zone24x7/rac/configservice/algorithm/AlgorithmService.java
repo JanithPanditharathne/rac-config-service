@@ -1,5 +1,7 @@
 package com.zone24x7.rac.configservice.algorithm;
 
+import com.zone24x7.rac.configservice.bundle.BundleAlgorithm;
+import com.zone24x7.rac.configservice.bundle.BundleAlgorithmRepository;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
@@ -15,6 +17,9 @@ public class AlgorithmService {
 
     @Autowired
     private AlgorithmRepository algorithmRepository;
+
+    @Autowired
+    private BundleAlgorithmRepository bundleAlgorithmRepository;
 
 
     /**
@@ -121,6 +126,12 @@ public class AlgorithmService {
         Optional<Algorithm> optionalAlgorithm = algorithmRepository.findById(id);
         if(!optionalAlgorithm.isPresent()) {
             throw new ValidationException(Strings.ALGORITHM_ID_INVALID);
+        }
+
+        // Check algorithm id is in use.
+        List<BundleAlgorithm> bundleAlgorithms = bundleAlgorithmRepository.findAllByAlgorithmID(id);
+        if(!bundleAlgorithms.isEmpty()) {
+            throw new ValidationException(Strings.ALGORITHM_ID_ALREADY_USE_IN_BUNDLES);
         }
 
         // Delete algorithm.

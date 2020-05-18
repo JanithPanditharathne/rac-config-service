@@ -7,4 +7,6 @@ import java.util.List;
 public interface BundleAlgorithmRepository extends JpaRepository<BundleAlgorithm, Integer> {
 
     List<BundleAlgorithm> findAllByBundleID(int bundleID);
+
+    List<BundleAlgorithm> findAllByAlgorithmID(int algorithmID);
 }
