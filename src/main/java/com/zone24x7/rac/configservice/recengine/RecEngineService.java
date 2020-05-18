@@ -22,12 +22,14 @@ public class RecEngineService {
 
 
 
+
+
     /**
      * Get bundle config json.
      *
      * @return Bundle config json
      */
-    String getBundleConfig() {
+    public String getBundleConfig() {
         return recEngineRepository.findByConfigType(BUNDLES).getConfigJson();
     }
 
@@ -36,7 +38,7 @@ public class RecEngineService {
      *
      * @return Rule config json
      */
-    String getRuleConfig() {
+    public String getRuleConfig() {
         return recEngineRepository.findByConfigType(RULES).getConfigJson();
     }
 
@@ -45,7 +47,7 @@ public class RecEngineService {
      *
      * @return Recs config json
      */
-    String getRecsConfig() {
+    public String getRecsConfig() {
         return recEngineRepository.findByConfigType(RECS).getConfigJson();
     }
 
@@ -54,9 +56,18 @@ public class RecEngineService {
      *
      * @return Rec slots config json
      */
-    String getRecSlotsConfig() {
+    public String getRecSlotsConfig() {
         return recEngineRepository.findByConfigType(REC_SLOTS).getConfigJson();
     }
+
+
+    /**
+     * Update bundle configs with the latest values.
+     */
+    public void updateBundleConfig() {
+
+    }
+
 
 
 
@@ -73,7 +84,7 @@ public class RecEngineService {
      * @param bundleConfig Bundle Json
      * @return Response
      */
-    CSResponse addBundleConfig(String bundleConfig) {
+    public CSResponse addBundleConfig(String bundleConfig) {
         RecEngine recEngine = recEngineRepository.findByConfigType(BUNDLES);
         recEngine.setConfigJson(bundleConfig);
         recEngineRepository.save(recEngine);
@@ -86,7 +97,7 @@ public class RecEngineService {
      * @param ruleConfig Rule config json
      * @return  Response
      */
-    CSResponse addRuleConfig(String ruleConfig) {
+    public CSResponse addRuleConfig(String ruleConfig) {
         RecEngine recEngine = recEngineRepository.findByConfigType(RULES);
         recEngine.setConfigJson(ruleConfig);
         recEngineRepository.save(recEngine);
@@ -99,7 +110,7 @@ public class RecEngineService {
      * @param recConfig Rec config json
      * @return Response
      */
-    CSResponse addRecConfig(String recConfig) {
+    public CSResponse addRecConfig(String recConfig) {
         RecEngine recEngine = recEngineRepository.findByConfigType(RECS);
         recEngine.setConfigJson(recConfig);
         recEngineRepository.save(recEngine);
@@ -112,7 +123,7 @@ public class RecEngineService {
      * @param recSlotConfig Rec slot config json
      * @return  Response
      */
-    CSResponse addRecSlotConfig(String recSlotConfig) {
+    public CSResponse addRecSlotConfig(String recSlotConfig) {
         RecEngine recEngine = recEngineRepository.findByConfigType(REC_SLOTS);
         recEngine.setConfigJson(recSlotConfig);
         recEngineRepository.save(recEngine);
