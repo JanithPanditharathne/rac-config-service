@@ -57,18 +57,48 @@ class AlgorithmServiceTest {
 
 
 
+    @Nested
+    @DisplayName("get algorithm method")
+    class GetAlgorithm {
 
-    @Test
-    @DisplayName("get algorithm by id method")
-    void testGetAlgorithm() throws Exception {
+        @Test
+        @DisplayName("test for invalid algorithm id")
+        void testGetAlgorithmForInvalidAlgorithmID() throws Exception {
+            Exception exception = assertThrows(ValidationException.class, () -> {
+                // Mock (invalid algorithm id)
+                Algorithm algorithm = new Algorithm(999, "Invalid algorithm", "", "");
+                when(algorithmRepository.findById(algorithm.getId())).thenReturn(Optional.empty());
 
-        // Expected
-        Algorithm expected = new Algorithm(100, "Top Trending", "TT algorithm description", "");
-        when(algorithmRepository.findById(100)).thenReturn(Optional.of(expected));
+                // Add algorithm
+                algorithmService.getAlgorithm(algorithm.getId());
+            });
 
-        // Assert
-        assertEquals(expected, algorithmService.getAlgorithm(100));
+            // Expected
+            String expected = Strings.ALGORITHM_ID_INVALID;
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("test for valid algorithm id")
+        void testGetAlgorithmForValidAlgorithmID() throws Exception {
+
+            // Expected
+            Algorithm expected = new Algorithm(100, "Top Trending", "TT algorithm description", "");
+            when(algorithmRepository.findById(100)).thenReturn(Optional.of(expected));
+
+            // Assert
+            assertEquals(expected, algorithmService.getAlgorithm(100));
+        }
+
     }
+
+
+
 
 
 
@@ -324,6 +354,32 @@ class AlgorithmServiceTest {
             Exception exception = assertThrows(ValidationException.class, () -> {
                 // Mock (zero algorithm id)
                 Algorithm algorithm = new Algorithm(0, "Top Trending", "TT algorithm description", "");
+
+                // Delete algorithm
+                algorithmService.deleteAlgorithm(algorithm.getId());
+            });
+
+            // Expected
+            String expected = Strings.ALGORITHM_ID_INVALID;
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+
+
+        @Test
+        @DisplayName("test for invalid algorithm id")
+        void testDeleteAlgorithmForInvalidAlgorithmID() {
+            Exception exception = assertThrows(ValidationException.class, () -> {
+                // Mock (invalid algorithm id)
+                Algorithm algorithm = new Algorithm(999, "Invalid algorithm", "", "");
+
+                // Setup repository method findById() return value.
+                when(algorithmRepository.findById(algorithm.getId())).thenReturn(Optional.empty());
 
                 // Delete algorithm
                 algorithmService.deleteAlgorithm(algorithm.getId());
