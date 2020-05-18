@@ -8,14 +8,14 @@ public class RecEngineBundle {
     private String name;
     private String type;
     private int defaultLimit;
-    private List<RecEngineBundleAlgorithmList> algorithms;
+    private List<RecEngineBundleAlgorithm> algorithms;
     private RecEngineBundleAlgorithmCombineInfo algoCombineInfo;
 
     public RecEngineBundle() {
     }
 
     public RecEngineBundle(int id, String name, String type, int defaultLimit,
-                           List<RecEngineBundleAlgorithmList> algorithms,
+                           List<RecEngineBundleAlgorithm> algorithms,
                            RecEngineBundleAlgorithmCombineInfo algoCombineInfo) {
         this.id = id;
         this.name = name;
@@ -57,11 +57,11 @@ public class RecEngineBundle {
         this.defaultLimit = defaultLimit;
     }
 
-    public List<RecEngineBundleAlgorithmList> getAlgorithms() {
+    public List<RecEngineBundleAlgorithm> getAlgorithms() {
         return algorithms;
     }
 
-    public void setAlgorithms(List<RecEngineBundleAlgorithmList> algorithms) {
+    public void setAlgorithms(List<RecEngineBundleAlgorithm> algorithms) {
         this.algorithms = algorithms;
     }
 

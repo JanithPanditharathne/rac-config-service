@@ -8,15 +8,16 @@ import com.zone24x7.rac.configservice.bundle.BundleSummaryListDTO;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundle;
-import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleAlgorithm;
+import com.zone24x7.rac.configservice.recengine.algorithm.RecEngineAlgorithm;
 import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleAlgorithmCombineInfo;
-import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleAlgorithmList;
+import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleAlgorithm;
 import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleList;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,6 +41,11 @@ public class RecEngineService {
 
     @Autowired
     private BundleService bundleService;
+
+    private static final int BUNDLE_CONFIG_ID = 1;
+    private static final int RULE_CONFIG_ID = 2;
+    private static final int REC_CONFIG_ID = 3;
+    private static final int REC_SLOT_CONFIG_ID = 4;
 
 
     // Logger.
@@ -89,6 +95,7 @@ public class RecEngineService {
      *
      * @throws ServerException when bundle config update failed.
      */
+    @Async("bundleTaskExecutor")
     public void updateBundleConfig() throws ServerException {
 
         // Get all bundles.
@@ -111,16 +118,16 @@ public class RecEngineService {
                 algorithmCombineInfo.setCombineDisplayText(bundleDetail.getCombineDisplayText());
 
                 // Bundle algorithm list.
-                List<RecEngineBundleAlgorithmList> algorithms = new ArrayList<>();
+                List<RecEngineBundleAlgorithm> algorithms = new ArrayList<>();
 
                 // Add details for each algorithm.
-                bundleDetail.getAlgorithms().forEach(a -> {
-                    algorithms.add(new RecEngineBundleAlgorithmList(
+                bundleDetail.getAlgorithms().forEach(a ->
+                    algorithms.add(new RecEngineBundleAlgorithm(
                             a.getRank(),
-                            new RecEngineBundleAlgorithm(a.getId(), a.getName(), "FLAT_ALGO", a.getDefaultDisplayText(), a.getCustomDisplayText())
-                    ));
+                            new RecEngineAlgorithm(a.getId(), a.getName(), "FLAT_ALGO", a.getDefaultDisplayText(), a.getCustomDisplayText())
+                    ))
 
-                });
+                );
 
                 // Add rec engine bundle config to the list.
                 bundleList.add(new RecEngineBundle(b.getId(), b.getName(), null, bundleDetail.getDefaultLimit(), algorithms, algorithmCombineInfo));
@@ -136,14 +143,13 @@ public class RecEngineService {
 
         try {
 
+            // Get bundle config string.
             RecEngineBundleList recEngineBundleList = new RecEngineBundleList(bundleList);
             ObjectMapper objectMapper = new ObjectMapper();
             String bundleConfigString = objectMapper.writeValueAsString(recEngineBundleList);
 
-            RecEngine recEngine = recEngineRepository.findByConfigType(BUNDLES);
-            recEngine.setConfigJson(bundleConfigString);
-            recEngineRepository.save(recEngine);
-
+            // Update bundle config.
+            recEngineRepository.save(new RecEngine(BUNDLE_CONFIG_ID, BUNDLES, bundleConfigString));
 
         } catch (JsonProcessingException e) {
             LOGGER.error(e.getMessage(), e);
@@ -169,9 +175,7 @@ public class RecEngineService {
      * @return Response
      */
     public CSResponse addBundleConfig(String bundleConfig) {
-        RecEngine recEngine = recEngineRepository.findByConfigType(BUNDLES);
-        recEngine.setConfigJson(bundleConfig);
-        recEngineRepository.save(recEngine);
+        recEngineRepository.save(new RecEngine(BUNDLE_CONFIG_ID, BUNDLES, bundleConfig));
         return new CSResponse(SUCCESS,"CS-0000: Bundle config json successfully added");
     }
 
@@ -182,9 +186,7 @@ public class RecEngineService {
      * @return  Response
      */
     public CSResponse addRuleConfig(String ruleConfig) {
-        RecEngine recEngine = recEngineRepository.findByConfigType(RULES);
-        recEngine.setConfigJson(ruleConfig);
-        recEngineRepository.save(recEngine);
+        recEngineRepository.save(new RecEngine(RULE_CONFIG_ID, RULES, ruleConfig));
         return new CSResponse(SUCCESS,"CS-0000: Rule config json successfully added");
     }
 
@@ -195,9 +197,7 @@ public class RecEngineService {
      * @return Response
      */
     public CSResponse addRecConfig(String recConfig) {
-        RecEngine recEngine = recEngineRepository.findByConfigType(RECS);
-        recEngine.setConfigJson(recConfig);
-        recEngineRepository.save(recEngine);
+        recEngineRepository.save(new RecEngine(REC_CONFIG_ID, RECS, recConfig));
         return new CSResponse(SUCCESS,"CS-0000: Rec config json successfully added");
     }
 
@@ -208,9 +208,7 @@ public class RecEngineService {
      * @return  Response
      */
     public CSResponse addRecSlotConfig(String recSlotConfig) {
-        RecEngine recEngine = recEngineRepository.findByConfigType(REC_SLOTS);
-        recEngine.setConfigJson(recSlotConfig);
-        recEngineRepository.save(recEngine);
+        recEngineRepository.save(new RecEngine(REC_SLOT_CONFIG_ID, REC_SLOTS, recSlotConfig));
         return new CSResponse(SUCCESS,"CS-0000: Rec slot config json successfully added");
     }
 

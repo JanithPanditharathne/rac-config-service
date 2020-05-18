@@ -1,62 +1,33 @@
 package com.zone24x7.rac.configservice.recengine.bundle;
 
+import com.zone24x7.rac.configservice.recengine.algorithm.RecEngineAlgorithm;
+
 public class RecEngineBundleAlgorithm {
 
-    private int id;
-    private String name;
-    private String type;
-    private String defaultDisplayText;
-    private String customDisplayText;
+    private int rank;
+    private RecEngineAlgorithm algorithm;
 
     public RecEngineBundleAlgorithm() {
     }
 
-    public RecEngineBundleAlgorithm(int id, String name, String type, String defaultDisplayText,
-                                    String customDisplayText) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.defaultDisplayText = defaultDisplayText;
-        this.customDisplayText = customDisplayText;
+    public RecEngineBundleAlgorithm(int rank, RecEngineAlgorithm algorithm) {
+        this.rank = rank;
+        this.algorithm = algorithm;
     }
 
-    public int getId() {
-        return id;
+    public int getRank() {
+        return rank;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
-    public String getName() {
-        return name;
+    public RecEngineAlgorithm getAlgorithm() {
+        return algorithm;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getDefaultDisplayText() {
-        return defaultDisplayText;
-    }
-
-    public void setDefaultDisplayText(String defaultDisplayText) {
-        this.defaultDisplayText = defaultDisplayText;
-    }
-
-    public String getCustomDisplayText() {
-        return customDisplayText;
-    }
-
-    public void setCustomDisplayText(String customDisplayText) {
-        this.customDisplayText = customDisplayText;
+    public void setAlgorithm(RecEngineAlgorithm algorithm) {
+        this.algorithm = algorithm;
     }
 }
