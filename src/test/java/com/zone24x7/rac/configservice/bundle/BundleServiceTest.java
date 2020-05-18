@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zone24x7.rac.configservice.algorithm.Algorithm;
 import com.zone24x7.rac.configservice.algorithm.AlgorithmRepository;
 import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,10 +18,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ADD_SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class BundleServiceTest {
@@ -119,6 +122,273 @@ class BundleServiceTest {
 
             // Assert
             assertEquals(expected, actual);
+        }
+    }
+
+    @Nested
+    @DisplayName("add bundle")
+    class AddBundle {
+
+        @Test
+        @DisplayName("missing bundle name")
+        void testAddBundleWithMissingName() {
+
+            // Expected
+            String expected = Strings.BUNDLE_NAME_CANNOT_BE_NULL;
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleAlgorithmDTO bundleAlgorithmDTO = new BundleAlgorithmDTO(100, "Top Trending", 0,
+                                                                               "Top Trending",
+                                                                               "Top Trending Products");
+
+                BundleDetailDTO bundleDetailDTO = new BundleDetailDTO(null, null, 2,
+                                                                              false, "Test",
+                                                                              Arrays.asList(bundleAlgorithmDTO));
+
+                bundleService.addBundle(bundleDetailDTO);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("empty bundle name")
+        void testAddBundleWithEmptyName() {
+
+            // Expected
+            String expected = Strings.BUNDLE_NAME_CANNOT_BE_EMPTY;
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleAlgorithmDTO bundleAlgorithmDTO = new BundleAlgorithmDTO(100, "Top Trending", 0,
+                                                                               "Top Trending",
+                                                                               "Top Trending Products");
+
+                BundleDetailDTO bundleDetailDTO = new BundleDetailDTO(null, "", 2,
+                                                                      false, "Test",
+                                                                      Arrays.asList(bundleAlgorithmDTO));
+
+                bundleService.addBundle(bundleDetailDTO);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("missing combined display text")
+        void testAddBundleWithMissingCombinedDisplayTextWhenCombinedEnabled() {
+
+            // Expected
+            String expected = Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_NULL;
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleAlgorithmDTO bundleAlgorithmDTO = new BundleAlgorithmDTO(100, "Top Trending", 0,
+                                                                               "Top Trending",
+                                                                               "Top Trending Products");
+
+                BundleDetailDTO bundleDetailDTO = new BundleDetailDTO(null, "Bundle 1", 2,
+                                                                      true, null,
+                                                                      Arrays.asList(bundleAlgorithmDTO));
+
+                bundleService.addBundle(bundleDetailDTO);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("empty combined display text")
+        void testAddBundleWithEmptyCombinedDisplayTextWhenCombinedEnabled() {
+
+            // Expected
+            String expected = Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_EMPTY;
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleAlgorithmDTO bundleAlgorithmDTO = new BundleAlgorithmDTO(100, "Top Trending", 0,
+                                                                               "Top Trending",
+                                                                               "Top Trending Products");
+
+                BundleDetailDTO bundleDetailDTO = new BundleDetailDTO(null, "Bundle 1", 2,
+                                                                      true, "",
+                                                                      Arrays.asList(bundleAlgorithmDTO));
+
+                bundleService.addBundle(bundleDetailDTO);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("missing algorithms")
+        void testAddBundleWithMissingAlgorithms() {
+
+            // Expected
+            String expected = Strings.ALGORITHMS_CANNOT_BE_NULL;
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleDetailDTO bundleDetailDTO = new BundleDetailDTO(null, "Bundle 1", 2,
+                                                                      true, "Test 1",
+                                                                      null);
+
+                bundleService.addBundle(bundleDetailDTO);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("empty algorithms")
+        void testAddBundleWithEmptyAlgorithms() {
+
+            // Expected
+            String expected = Strings.ALGORITHMS_CANNOT_BE_EMPTY;
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleDetailDTO bundleDetailDTO = new BundleDetailDTO(null, "Bundle 1", 2,
+                                                                      true, "Test 1",
+                                                                      new ArrayList<>());
+
+                bundleService.addBundle(bundleDetailDTO);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("missing custom display text")
+        void testAddBundleWithMissingCustomDisplayText() {
+
+            // Expected
+            String expected = Strings.BUNDLE_CUSTOM_DISPLAY_TEXT_CANNOT_BE_NULL;
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleAlgorithmDTO bundleAlgorithmDTO = new BundleAlgorithmDTO(100, "Top Trending", 0,
+                                                                               "Top Trending",null);
+
+                BundleDetailDTO bundleDetailDTO = new BundleDetailDTO(null, "Bundle 1", 2,
+                                                                      true, "Test 1",
+                                                                      Arrays.asList(bundleAlgorithmDTO));
+
+                bundleService.addBundle(bundleDetailDTO);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("empty custom display text")
+        void testAddBundleWithEmptyCustomDisplayText() {
+
+            // Expected
+            String expected = Strings.BUNDLE_CUSTOM_DISPLAY_TEXT_CANNOT_BE_EMPTY;
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleAlgorithmDTO bundleAlgorithmDTO = new BundleAlgorithmDTO(100, "Top Trending", 0,
+                                                                               "Top Trending","");
+
+                BundleDetailDTO bundleDetailDTO = new BundleDetailDTO(null, "Bundle 1", 2,
+                                                                      true, "Test 1",
+                                                                      Arrays.asList(bundleAlgorithmDTO));
+
+                bundleService.addBundle(bundleDetailDTO);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("invalid algorithm id")
+        void testAddBundleWithInvalidAlgorithmID() {
+
+            // Expected
+            String expected = Strings.ALGORITHM_DOES_NOT_EXIST + " (1001)";
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleAlgorithmDTO bundleAlgorithmDTO = new BundleAlgorithmDTO(1001, "Top Trending", 0,
+                                                                               "Top Trending","Custom");
+
+                BundleDetailDTO bundleDetailDTO = new BundleDetailDTO(null, "Bundle 1", 2,
+                                                                      true, "Test 1",
+                                                                      Arrays.asList(bundleAlgorithmDTO));
+
+                bundleService.addBundle(bundleDetailDTO);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("correct values")
+        void testAddBundleWithCorrectValues() throws ValidationException {
+
+            // Mock
+            Algorithm algorithm = mock(Algorithm.class);
+            when(algorithmRepository.findById(anyInt())).thenReturn(Optional.of(algorithm));
+
+            // Expected
+            CSResponse expected = new CSResponse(SUCCESS, BUNDLE_ADD_SUCCESS);
+
+
+            BundleAlgorithmDTO bundleAlgorithmDTO = new BundleAlgorithmDTO(11, "Top Trending", 0,
+                                                                           "Top Trending", "Custom");
+
+            BundleDetailDTO bundleDetailDTO = new BundleDetailDTO(null, "Bundle 1", 2,
+                                                                  true, "Test 1",
+                                                                  Arrays.asList(bundleAlgorithmDTO));
+
+            // Actual
+            CSResponse actual = bundleService.addBundle(bundleDetailDTO);
+
+            // Assert
+            assertEquals(expected.getStatus(), actual.getStatus());
+            assertEquals(expected.getCode(), actual.getCode());
+            assertEquals(expected.getMessage(), actual.getMessage());
+            verify(bundleRepository, times(1)).save(any());
+            verify(bundleAlgorithmRepository, times(1)).save(any());
         }
     }
 }

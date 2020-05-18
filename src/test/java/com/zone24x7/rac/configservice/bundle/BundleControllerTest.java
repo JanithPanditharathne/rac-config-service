@@ -1,6 +1,8 @@
 package com.zone24x7.rac.configservice.bundle;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.util.CSResponse;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @WebMvcTest(value = BundleController.class)
@@ -86,6 +89,40 @@ public class BundleControllerTest {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/v1/bundles/100")
                 .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test when adding a bundle.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void addBundle() throws Exception {
+
+        // Expected
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.BUNDLE_ADD_SUCCESS);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        // Mock service call
+        Mockito.when(bundleService.addBundle(Mockito.any())).thenReturn(csResponse);
+        String bundleJson = "{\"name\":\"Bundle 1\",\"defaultLimit\":\"5\",\"combineEnabled\":true,\"combineDisplayText" +
+                "\":\"Sample\",\"algorithms\":[{\"id\":11,\"name\":\"Top Trending\",\"rank\":0,\"defaultDisplayText\":" +
+                "\"Top Trending\",\"customDisplayText\":\"Top Trending Products\"},{\"id\":33,\"name\":\"Best Sellers\"," +
+                "\"rank\":1,\"defaultDisplayText\":\"Best Sellers\",\"customDisplayText\":\"Sample\"}]}";
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/v1/bundles")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(bundleJson)
+                .contentType(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
