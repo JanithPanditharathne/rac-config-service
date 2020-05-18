@@ -1,8 +1,6 @@
 package com.zone24x7.rac.configservice.algorithm;
 
-import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
-import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +23,6 @@ public class AlgorithmController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private RecEngineService recEngineService;
 
 
     /**
@@ -35,8 +31,7 @@ public class AlgorithmController {
      * @return algorithm list.
      */
     @GetMapping("/algorithms")
-    public AlgorithmList getAllAlgorithms() throws ServerException {
-        recEngineService.updateBundleConfig();
+    public AlgorithmList getAllAlgorithms() {
         return algorithmService.getAllAlgorithms();
     }
 

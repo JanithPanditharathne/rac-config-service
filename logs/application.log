@@ -752,3 +752,62 @@ com.zone24x7.rac.configservice.exception.ValidationException: CS-1007:Algorithm 
 2020-05-18 18:42:52.989  INFO 11091 --- [http-nio-8081-exec-10] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
 2020-05-18 18:42:52.995  INFO 11091 --- [http-nio-8081-exec-10] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
 2020-05-18 18:42:53.019  INFO 11091 --- [http-nio-8081-exec-10] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-18 18:48:45.925  INFO 11309 --- [main] c.z.r.c.RacConfigServiceApplication      : Starting RacConfigServiceApplication on DINESH-W with PID 11309 (/Users/dineshw/Drive/Projects/RAC/Code/rac-config-service/target/classes started by dineshw in /Users/dineshw/Drive/Projects/RAC/Code/rac-config-service)
+2020-05-18 18:48:45.928  INFO 11309 --- [main] c.z.r.c.RacConfigServiceApplication      : No active profile set, falling back to default profiles: default
+2020-05-18 18:48:46.825  INFO 11309 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-05-18 18:48:46.940  INFO 11309 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 107ms. Found 7 JPA repository interfaces.
+2020-05-18 18:48:47.457  INFO 11309 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2020-05-18 18:48:47.464  INFO 11309 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-05-18 18:48:47.464  INFO 11309 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.33]
+2020-05-18 18:48:47.532  INFO 11309 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-05-18 18:48:47.532  INFO 11309 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1569 ms
+2020-05-18 18:48:47.802  INFO 11309 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-05-18 18:48:47.882  INFO 11309 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-05-18 18:48:47.976  INFO 11309 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-05-18 18:48:48.030  INFO 11309 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.12.Final
+2020-05-18 18:48:48.119  INFO 11309 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-05-18 18:48:48.202  INFO 11309 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2020-05-18 18:48:48.700  INFO 11309 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-05-18 18:48:48.707  INFO 11309 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-05-18 18:48:49.107  WARN 11309 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-05-18 18:48:49.164  INFO 11309 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-05-18 18:48:49.449  INFO 11309 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2020-05-18 18:48:49.507  INFO 11309 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2020-05-18 18:48:49.509  INFO 11309 --- [main] c.z.r.c.RacConfigServiceApplication      : Started RacConfigServiceApplication in 3.849 seconds (JVM running for 4.362)
+2020-05-18 18:48:49.944  INFO 11309 --- [RMI TCP Connection(2)-192.168.1.4] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-05-18 18:48:49.944  INFO 11309 --- [RMI TCP Connection(2)-192.168.1.4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-05-18 18:48:49.949  INFO 11309 --- [RMI TCP Connection(2)-192.168.1.4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2020-05-18 18:49:14.623  INFO 11309 --- [http-nio-8081-exec-2] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-18 18:49:14.715  INFO 11309 --- [http-nio-8081-exec-2] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-18 18:49:14.716  INFO 11309 --- [http-nio-8081-exec-2] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-18 18:49:14.961  INFO 11309 --- [http-nio-8081-exec-2] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-18 18:49:14.987  INFO 11309 --- [http-nio-8081-exec-2] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-18 18:49:42.635  INFO 11309 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-05-18 18:49:42.637  INFO 11309 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-05-18 18:49:42.638  INFO 11309 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2020-05-18 18:49:42.676  INFO 11309 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2020-05-18 18:49:45.984  INFO 11344 --- [main] c.z.r.c.RacConfigServiceApplication      : Starting RacConfigServiceApplication on DINESH-W with PID 11344 (/Users/dineshw/Drive/Projects/RAC/Code/rac-config-service/target/classes started by dineshw in /Users/dineshw/Drive/Projects/RAC/Code/rac-config-service)
+2020-05-18 18:49:45.987  INFO 11344 --- [main] c.z.r.c.RacConfigServiceApplication      : No active profile set, falling back to default profiles: default
+2020-05-18 18:49:46.809  INFO 11344 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-05-18 18:49:46.890  INFO 11344 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 74ms. Found 7 JPA repository interfaces.
+2020-05-18 18:49:47.285  INFO 11344 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2020-05-18 18:49:47.291  INFO 11344 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-05-18 18:49:47.291  INFO 11344 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.33]
+2020-05-18 18:49:47.356  INFO 11344 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-05-18 18:49:47.356  INFO 11344 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1331 ms
+2020-05-18 18:49:47.616  INFO 11344 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-05-18 18:49:47.717  INFO 11344 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-05-18 18:49:47.817  INFO 11344 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-05-18 18:49:47.868  INFO 11344 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.12.Final
+2020-05-18 18:49:47.951  INFO 11344 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-05-18 18:49:48.032  INFO 11344 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2020-05-18 18:49:48.522  INFO 11344 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-05-18 18:49:48.528  INFO 11344 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-05-18 18:49:48.942  WARN 11344 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-05-18 18:49:49.001  INFO 11344 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-05-18 18:49:49.289  INFO 11344 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2020-05-18 18:49:49.348  INFO 11344 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2020-05-18 18:49:49.350  INFO 11344 --- [main] c.z.r.c.RacConfigServiceApplication      : Started RacConfigServiceApplication in 3.661 seconds (JVM running for 4.2)
+2020-05-18 18:49:49.400  INFO 11344 --- [RMI TCP Connection(1)-192.168.1.4] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-05-18 18:49:49.400  INFO 11344 --- [RMI TCP Connection(1)-192.168.1.4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-05-18 18:49:49.418  INFO 11344 --- [RMI TCP Connection(1)-192.168.1.4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 18 ms
