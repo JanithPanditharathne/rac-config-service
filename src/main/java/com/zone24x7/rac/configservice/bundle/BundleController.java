@@ -1,11 +1,9 @@
 package com.zone24x7.rac.configservice.bundle;
 
 import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.util.CSResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1")
@@ -34,5 +32,17 @@ public class BundleController {
     @GetMapping("/bundles/{id}")
     public BundleDetailDTO getBundle(@PathVariable int id) throws ValidationException {
         return bundleService.getBundle(id);
+    }
+
+    /**
+     * Add new bundle.
+     *
+     * @param bundleDetailDTO Bundle details to add
+     * @return                CS Response
+     * @throws ValidationException Exception to throw
+     */
+    @PostMapping("/bundles")
+    public CSResponse addBundle(@RequestBody BundleDetailDTO bundleDetailDTO) throws ValidationException {
+        return bundleService.addBundle(bundleDetailDTO);
     }
 }

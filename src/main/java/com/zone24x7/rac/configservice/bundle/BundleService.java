@@ -3,7 +3,7 @@ package com.zone24x7.rac.configservice.bundle;
 import com.zone24x7.rac.configservice.algorithm.Algorithm;
 import com.zone24x7.rac.configservice.algorithm.AlgorithmRepository;
 import com.zone24x7.rac.configservice.exception.ValidationException;
-import com.zone24x7.rac.configservice.util.Strings;
+import com.zone24x7.rac.configservice.util.CSResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.zone24x7.rac.configservice.util.Strings.*;
 
 @Service
 public class BundleService {
@@ -93,7 +95,7 @@ public class BundleService {
 
             // Bundle not found in db.
             // Return invalid bundle ID error.
-            throw new ValidationException(Strings.BUNDLE_ID_INVALID);
+            throw new ValidationException(BUNDLE_ID_INVALID);
         }
     }
 
@@ -139,5 +141,60 @@ public class BundleService {
         }
 
         return bundleAlgorithmDTOList;
+    }
+
+    CSResponse addBundle(BundleDetailDTO bundleDetailDTO) throws ValidationException {
+
+        // Validate bundle name.
+        BundleValidations.validateName(bundleDetailDTO.getName());
+
+        // Validate combine display text when combine enabled.
+        if (bundleDetailDTO.isCombineEnabled()) {
+
+            // Validate combined display text.
+            BundleValidations.validateCombinedDisplayText(bundleDetailDTO.getCombineDisplayText());
+        }
+
+        List<BundleAlgorithmDTO> algorithms = bundleDetailDTO.getAlgorithms();
+
+        // Validate algorithms.
+        BundleValidations.validateAlgorithms(algorithms);
+
+        // Validate whether algorithms are valid.
+        for (BundleAlgorithmDTO bundleAlgorithmDTO : algorithms) {
+
+            Optional<Algorithm> algorithmOptional = algorithmRepository.findById(bundleAlgorithmDTO.getId());
+
+            if (!algorithmOptional.isPresent()) {
+                throw new ValidationException(ALGORITHM_DOES_NOT_EXIST + " (" + bundleAlgorithmDTO.getId() + ")");
+            }
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.setName(bundleDetailDTO.getName());
+        bundle.setDefaultLimit(bundleDetailDTO.getDefaultLimit());
+        bundle.setCombineEnabled(bundleDetailDTO.isCombineEnabled());
+        bundle.setCombineDisplayText(bundleDetailDTO.getCombineDisplayText());
+
+        // Save bundle.
+        bundleRepository.save(bundle);
+        logger.info("Bundle saved to db");
+
+        // Iterate through algorithms.
+        for (BundleAlgorithmDTO bundleAlgorithmDTO : algorithms) {
+
+            BundleAlgorithm bundleAlgorithm = new BundleAlgorithm();
+            bundleAlgorithm.setBundleID(bundle.getId());
+            bundleAlgorithm.setAlgorithmID(bundleAlgorithmDTO.getId());
+            bundleAlgorithm.setCustomDisplayText(bundleAlgorithmDTO.getCustomDisplayText());
+            bundleAlgorithm.setRank(bundleAlgorithmDTO.getRank());
+
+            // Save bundle - algorithm associations.
+            bundleAlgorithmRepository.save(bundleAlgorithm);
+        }
+
+        logger.info("Bundle - algorithm associations saved to db");
+
+        return new CSResponse(SUCCESS, BUNDLE_ADD_SUCCESS);
     }
 }
