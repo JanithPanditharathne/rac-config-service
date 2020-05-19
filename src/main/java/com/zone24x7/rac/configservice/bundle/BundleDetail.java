@@ -2,20 +2,20 @@ package com.zone24x7.rac.configservice.bundle;
 
 import java.util.List;
 
-public class BundleDetails {
+public class BundleDetail {
 
     private int id;
     private String name;
     private int defaultLimit;
     private boolean combineEnabled;
     private String combineDisplayText;
-    private List<BundleAlgorithmDetails> algorithms;
+    private List<BundleAlgorithmDetail> algorithms;
 
-    public BundleDetails() {
+    public BundleDetail() {
     }
 
-    public BundleDetails(int id, String name, int defaultLimit, boolean combineEnabled, String combineDisplayText,
-                         List<BundleAlgorithmDetails> algorithms) {
+    public BundleDetail(int id, String name, int defaultLimit, boolean combineEnabled, String combineDisplayText,
+                        List<BundleAlgorithmDetail> algorithms) {
         this.id = id;
         this.name = name;
         this.defaultLimit = defaultLimit;
@@ -64,11 +64,11 @@ public class BundleDetails {
         this.combineDisplayText = combineDisplayText;
     }
 
-    public List<BundleAlgorithmDetails> getAlgorithms() {
+    public List<BundleAlgorithmDetail> getAlgorithms() {
         return algorithms;
     }
 
-    public void setAlgorithms(List<BundleAlgorithmDetails> algorithms) {
+    public void setAlgorithms(List<BundleAlgorithmDetail> algorithms) {
         this.algorithms = algorithms;
     }
 }

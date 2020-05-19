@@ -109,20 +109,20 @@ class BundleServiceTest {
             when(algorithmRepository.findById(100)).thenReturn(Optional.of(algorithm));
 
             // Expected
-            BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+            BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                        "Top Trending",
                                                                                        "Top Trending Products");
 
-            BundleDetails expectedBundleDetails = new BundleDetails(1, "Bundle1", 2,
+            BundleDetail expectedBundleDetail = new BundleDetail(1, "Bundle1", 2,
                                                                     false, "Test",
-                                                                    Arrays.asList(bundleAlgorithmDetails));
+                                                                    Arrays.asList(bundleAlgorithmDetail));
 
             ObjectMapper objectMapper = new ObjectMapper();
-            String expected = objectMapper.writeValueAsString(expectedBundleDetails);
+            String expected = objectMapper.writeValueAsString(expectedBundleDetail);
 
             // Actual
-            BundleDetails bundleDetails = bundleService.getBundle(1);
-            String actual = objectMapper.writeValueAsString(bundleDetails);
+            BundleDetail bundleDetail = bundleService.getBundle(1);
+            String actual = objectMapper.writeValueAsString(bundleDetail);
 
             // Assert
             assertEquals(expected, actual);
@@ -142,15 +142,15 @@ class BundleServiceTest {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
-                BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                            "Top Trending",
                                                                                            "Top Trending Products");
 
-                BundleDetails bundleDetails = new BundleDetails(0, null, 2,
+                BundleDetail bundleDetail = new BundleDetail(0, null, 2,
                                                                 false, "Test",
-                                                                Arrays.asList(bundleAlgorithmDetails));
+                                                                Arrays.asList(bundleAlgorithmDetail));
 
-                bundleService.addBundle(bundleDetails);
+                bundleService.addBundle(bundleDetail);
             });
 
             // Actual
@@ -169,15 +169,15 @@ class BundleServiceTest {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
-                BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                            "Top Trending",
                                                                                            "Top Trending Products");
 
-                BundleDetails bundleDetails = new BundleDetails(0, "", 2,
+                BundleDetail bundleDetail = new BundleDetail(0, "", 2,
                                                                 false, "Test",
-                                                                Arrays.asList(bundleAlgorithmDetails));
+                                                                Arrays.asList(bundleAlgorithmDetail));
 
-                bundleService.addBundle(bundleDetails);
+                bundleService.addBundle(bundleDetail);
             });
 
             // Actual
@@ -196,15 +196,15 @@ class BundleServiceTest {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
-                BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                            "Top Trending",
                                                                                            "Top Trending Products");
 
-                BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                 true, null,
-                                                                Arrays.asList(bundleAlgorithmDetails));
+                                                                Arrays.asList(bundleAlgorithmDetail));
 
-                bundleService.addBundle(bundleDetails);
+                bundleService.addBundle(bundleDetail);
             });
 
             // Actual
@@ -223,15 +223,15 @@ class BundleServiceTest {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
-                BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                            "Top Trending",
                                                                                            "Top Trending Products");
 
-                BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                 true, "",
-                                                                Arrays.asList(bundleAlgorithmDetails));
+                                                                Arrays.asList(bundleAlgorithmDetail));
 
-                bundleService.addBundle(bundleDetails);
+                bundleService.addBundle(bundleDetail);
             });
 
             // Actual
@@ -250,11 +250,11 @@ class BundleServiceTest {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
-                BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                 true, "Test 1",
                                                                 null);
 
-                bundleService.addBundle(bundleDetails);
+                bundleService.addBundle(bundleDetail);
             });
 
             // Actual
@@ -273,11 +273,11 @@ class BundleServiceTest {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
-                BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                 true, "Test 1",
                                                                 new ArrayList<>());
 
-                bundleService.addBundle(bundleDetails);
+                bundleService.addBundle(bundleDetail);
             });
 
             // Actual
@@ -296,14 +296,14 @@ class BundleServiceTest {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
-                BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                            "Top Trending", null);
 
-                BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                 true, "Test 1",
-                                                                Arrays.asList(bundleAlgorithmDetails));
+                                                                Arrays.asList(bundleAlgorithmDetail));
 
-                bundleService.addBundle(bundleDetails);
+                bundleService.addBundle(bundleDetail);
             });
 
             // Actual
@@ -322,14 +322,14 @@ class BundleServiceTest {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
-                BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                            "Top Trending", "");
 
-                BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                 true, "Test 1",
-                                                                Arrays.asList(bundleAlgorithmDetails));
+                                                                Arrays.asList(bundleAlgorithmDetail));
 
-                bundleService.addBundle(bundleDetails);
+                bundleService.addBundle(bundleDetail);
             });
 
             // Actual
@@ -348,14 +348,14 @@ class BundleServiceTest {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
-                BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(1001, "Top Trending", 0,
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(1001, "Top Trending", 0,
                                                                                            "Top Trending", "Custom");
 
-                BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                 true, "Test 1",
-                                                                Arrays.asList(bundleAlgorithmDetails));
+                                                                Arrays.asList(bundleAlgorithmDetail));
 
-                bundleService.addBundle(bundleDetails);
+                bundleService.addBundle(bundleDetail);
             });
 
             // Actual
@@ -377,15 +377,15 @@ class BundleServiceTest {
             CSResponse expected = new CSResponse(SUCCESS, BUNDLE_ADD_SUCCESS);
 
 
-            BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(11, "Top Trending", 0,
+            BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(11, "Top Trending", 0,
                                                                                        "Top Trending", "Custom");
 
-            BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+            BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                             true, "Test 1",
-                                                            Arrays.asList(bundleAlgorithmDetails));
+                                                            Arrays.asList(bundleAlgorithmDetail));
 
             // Actual
-            CSResponse actual = bundleService.addBundle(bundleDetails);
+            CSResponse actual = bundleService.addBundle(bundleDetail);
 
             // Assert
             assertEquals(expected.getStatus(), actual.getStatus());
@@ -409,15 +409,15 @@ class BundleServiceTest {
 
                 Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                                "Top Trending",
                                                                                                "Top Trending Products");
 
-                    BundleDetails bundleDetails = new BundleDetails(0, null, 2,
+                    BundleDetail bundleDetail = new BundleDetail(0, null, 2,
                                                                     false, "Test",
-                                                                    Arrays.asList(bundleAlgorithmDetails));
+                                                                    Arrays.asList(bundleAlgorithmDetail));
 
-                    bundleService.editBundle(1, bundleDetails);
+                    bundleService.editBundle(1, bundleDetail);
                 });
 
                 // Actual
@@ -440,15 +440,15 @@ class BundleServiceTest {
 
                 Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                                "Top Trending",
                                                                                                "Top Trending Products");
 
-                    BundleDetails bundleDetails = new BundleDetails(0, null, 2,
+                    BundleDetail bundleDetail = new BundleDetail(0, null, 2,
                                                                     false, "Test",
-                                                                    Arrays.asList(bundleAlgorithmDetails));
+                                                                    Arrays.asList(bundleAlgorithmDetail));
 
-                    bundleService.editBundle(1, bundleDetails);
+                    bundleService.editBundle(1, bundleDetail);
                 });
 
                 // Actual
@@ -471,15 +471,15 @@ class BundleServiceTest {
 
                 Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                                "Top Trending",
                                                                                                "Top Trending Products");
 
-                    BundleDetails bundleDetails = new BundleDetails(0, "", 2,
+                    BundleDetail bundleDetail = new BundleDetail(0, "", 2,
                                                                     false, "Test",
-                                                                    Arrays.asList(bundleAlgorithmDetails));
+                                                                    Arrays.asList(bundleAlgorithmDetail));
 
-                    bundleService.editBundle(1, bundleDetails);
+                    bundleService.editBundle(1, bundleDetail);
                 });
 
                 // Actual
@@ -502,15 +502,15 @@ class BundleServiceTest {
 
                 Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                                "Top Trending",
                                                                                                "Top Trending Products");
 
-                    BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                    BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                     true, null,
-                                                                    Arrays.asList(bundleAlgorithmDetails));
+                                                                    Arrays.asList(bundleAlgorithmDetail));
 
-                    bundleService.editBundle(1, bundleDetails);
+                    bundleService.editBundle(1, bundleDetail);
                 });
 
                 // Actual
@@ -533,15 +533,15 @@ class BundleServiceTest {
 
                 Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                                "Top Trending",
                                                                                                "Top Trending Products");
 
-                    BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                    BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                     true, "",
-                                                                    Arrays.asList(bundleAlgorithmDetails));
+                                                                    Arrays.asList(bundleAlgorithmDetail));
 
-                    bundleService.editBundle(1, bundleDetails);
+                    bundleService.editBundle(1, bundleDetail);
                 });
 
                 // Actual
@@ -564,11 +564,11 @@ class BundleServiceTest {
 
                 Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                    BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                     true, "Test 1",
                                                                     null);
 
-                    bundleService.editBundle(1, bundleDetails);
+                    bundleService.editBundle(1, bundleDetail);
                 });
 
                 // Actual
@@ -591,11 +591,11 @@ class BundleServiceTest {
 
                 Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                    BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                     true, "Test 1",
                                                                     new ArrayList<>());
 
-                    bundleService.editBundle(1, bundleDetails);
+                    bundleService.editBundle(1, bundleDetail);
                 });
 
                 // Actual
@@ -618,14 +618,14 @@ class BundleServiceTest {
 
                 Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(1001, "Top Trending", 0,
+                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(1001, "Top Trending", 0,
                                                                                                "Top Trending", "Custom");
 
-                    BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                    BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                     true, "Test 1",
-                                                                    Arrays.asList(bundleAlgorithmDetails));
+                                                                    Arrays.asList(bundleAlgorithmDetail));
 
-                    bundleService.editBundle(1, bundleDetails);
+                    bundleService.editBundle(1, bundleDetail);
                 });
 
                 // Actual
@@ -654,15 +654,15 @@ class BundleServiceTest {
                 CSResponse expected = new CSResponse(SUCCESS, BUNDLE_UPDATE_SUCCESS);
 
 
-                BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(11, "Top Trending", 0,
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(11, "Top Trending", 0,
                                                                                            "Top Trending", "Custom");
 
-                BundleDetails bundleDetails = new BundleDetails(0, "Bundle 1", 2,
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                 true, "Test 1",
-                                                                Arrays.asList(bundleAlgorithmDetails));
+                                                                Arrays.asList(bundleAlgorithmDetail));
 
                 // Actual
-                CSResponse actual = bundleService.editBundle(1, bundleDetails);
+                CSResponse actual = bundleService.editBundle(1, bundleDetail);
 
                 // Assert
                 assertEquals(expected.getStatus(), actual.getStatus());

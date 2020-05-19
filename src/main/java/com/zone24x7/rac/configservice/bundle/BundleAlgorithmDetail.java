@@ -1,6 +1,6 @@
 package com.zone24x7.rac.configservice.bundle;
 
-public class BundleAlgorithmDTO {
+public class BundleAlgorithmDetail {
 
     private int id;
     private String name;
@@ -8,10 +8,10 @@ public class BundleAlgorithmDTO {
     private String defaultDisplayText;
     private String customDisplayText;
 
-    public BundleAlgorithmDTO() {
+    public BundleAlgorithmDetail() {
     }
 
-    public BundleAlgorithmDTO(int id, String name, int rank, String defaultDisplayText, String customDisplayText) {
+    public BundleAlgorithmDetail(int id, String name, int rank, String defaultDisplayText, String customDisplayText) {
         this.id = id;
         this.name = name;
         this.rank = rank;

@@ -31,34 +31,34 @@ public class BundleController {
      * @throws ValidationException Exception to throw
      */
     @GetMapping("/bundles/{id}")
-    public BundleDetails getBundle(@PathVariable int id) throws ValidationException {
+    public BundleDetail getBundle(@PathVariable int id) throws ValidationException {
         return bundleService.getBundle(id);
     }
 
     /**
      * Add new bundle.
      *
-     * @param bundleDetails Bundle details to add
+     * @param bundleDetail Bundle details to add
      * @return              CS Response
      * @throws ValidationException Validation exception to throw
      * @throws ServerException     Server exception to throw
      */
     @PostMapping("/bundles")
-    public CSResponse addBundle(@RequestBody BundleDetails bundleDetails) throws ValidationException, ServerException {
-        return bundleService.addBundle(bundleDetails);
+    public CSResponse addBundle(@RequestBody BundleDetail bundleDetail) throws ValidationException, ServerException {
+        return bundleService.addBundle(bundleDetail);
     }
 
     /**
      * Edit bundle.
      *
      * @param id            Bundle ID
-     * @param bundleDetails Bundle details to edit
+     * @param bundleDetail Bundle details to edit
      * @return              CS Response
      * @throws ValidationException Exception to throw
      */
     @PutMapping("/bundles/{id}")
-    public CSResponse editBundle(@PathVariable int id, @RequestBody BundleDetails bundleDetails) throws ValidationException, ServerException {
-        return bundleService.editBundle(id, bundleDetails);
+    public CSResponse editBundle(@PathVariable int id, @RequestBody BundleDetail bundleDetail) throws ValidationException, ServerException {
+        return bundleService.editBundle(id, bundleDetail);
     }
 
     /**

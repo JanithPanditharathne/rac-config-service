@@ -2,7 +2,7 @@ package com.zone24x7.rac.configservice.recengine;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zone24x7.rac.configservice.bundle.BundleDetails;
+import com.zone24x7.rac.configservice.bundle.BundleDetail;
 import com.zone24x7.rac.configservice.bundle.BundleList;
 import com.zone24x7.rac.configservice.bundle.BundleService;
 import com.zone24x7.rac.configservice.exception.ServerException;
@@ -118,7 +118,7 @@ public class RecEngineService {
             try {
 
                 // Get bundle details.
-                BundleDetails bundleDetail = bundleService.getBundle(b.getId());
+                BundleDetail bundleDetail = bundleService.getBundle(b.getId());
 
                 // Algorithm combine info.
                 RecEngineBundleAlgorithmCombineInfo algorithmCombineInfo = new RecEngineBundleAlgorithmCombineInfo();

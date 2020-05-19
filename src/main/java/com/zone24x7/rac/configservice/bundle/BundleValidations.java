@@ -79,7 +79,7 @@ public class BundleValidations {
      * @param algorithms Algorithms
      * @throws ValidationException Exception to throw
      */
-    public static void validateAlgorithms(List<BundleAlgorithmDetails> algorithms) throws ValidationException {
+    public static void validateAlgorithms(List<BundleAlgorithmDetail> algorithms) throws ValidationException {
 
         // Validate for null.
         if (algorithms == null) {
@@ -92,13 +92,13 @@ public class BundleValidations {
         }
 
         // Iterate algorithms list.
-        for (BundleAlgorithmDetails bundleAlgorithmDetails : algorithms) {
+        for (BundleAlgorithmDetail bundleAlgorithmDetail : algorithms) {
 
             // Validate ID.
-            AlgorithmValidations.validateID(bundleAlgorithmDetails.getId());
+            AlgorithmValidations.validateID(bundleAlgorithmDetail.getId());
 
             // Validate custom display text.
-            validateCustomDisplayText(bundleAlgorithmDetails.getCustomDisplayText());
+            validateCustomDisplayText(bundleAlgorithmDetail.getCustomDisplayText());
         }
     }
 

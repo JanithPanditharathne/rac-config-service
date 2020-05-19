@@ -56,7 +56,7 @@ public class BundleService {
      * @return         Bundle details
      * @throws ValidationException Exception to throw
      */
-    public BundleDetails getBundle(int bundleID) throws ValidationException {
+    public BundleDetail getBundle(int bundleID) throws ValidationException {
 
         logger.info("Finding bundle ID from database");
 
@@ -71,15 +71,15 @@ public class BundleService {
             // Retrieve bundle.
             Bundle bundle = bundleOptional.get();
 
-            BundleDetails bundleDetails = new BundleDetails();
-            bundleDetails.setId(bundleID);
-            bundleDetails.setName(bundle.getName());
-            bundleDetails.setDefaultLimit(bundle.getDefaultLimit());
-            bundleDetails.setCombineEnabled(bundle.isCombineEnabled());
-            bundleDetails.setCombineDisplayText(bundle.getCombineDisplayText());
-            bundleDetails.setAlgorithms(getAssignedAlgorithms(bundleID));
+            BundleDetail bundleDetail = new BundleDetail();
+            bundleDetail.setId(bundleID);
+            bundleDetail.setName(bundle.getName());
+            bundleDetail.setDefaultLimit(bundle.getDefaultLimit());
+            bundleDetail.setCombineEnabled(bundle.isCombineEnabled());
+            bundleDetail.setCombineDisplayText(bundle.getCombineDisplayText());
+            bundleDetail.setAlgorithms(getAssignedAlgorithms(bundleID));
 
-            return bundleDetails;
+            return bundleDetail;
 
         } else {
 
@@ -97,8 +97,8 @@ public class BundleService {
      * @param bundleID Bundle ID
      * @return         Assigned algorithms
      */
-    private List<BundleAlgorithmDetails> getAssignedAlgorithms(int bundleID) {
-        List<BundleAlgorithmDetails> bundleAlgorithmDetailsList = new ArrayList<>();
+    private List<BundleAlgorithmDetail> getAssignedAlgorithms(int bundleID) {
+        List<BundleAlgorithmDetail> bundleAlgorithmDetailList = new ArrayList<>();
 
         logger.info("Retrieve algorithms associated to bundle ID");
 
@@ -120,61 +120,61 @@ public class BundleService {
 
                 Algorithm algorithm = algorithmOptional.get();
 
-                BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails();
-                bundleAlgorithmDetails.setId(algorithmID);
-                bundleAlgorithmDetails.setName(algorithm.getName());
-                bundleAlgorithmDetails.setRank(bundleAlgorithm.getRank());
-                bundleAlgorithmDetails.setDefaultDisplayText(algorithm.getDefaultDisplayText());
-                bundleAlgorithmDetails.setCustomDisplayText(bundleAlgorithm.getCustomDisplayText());
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail();
+                bundleAlgorithmDetail.setId(algorithmID);
+                bundleAlgorithmDetail.setName(algorithm.getName());
+                bundleAlgorithmDetail.setRank(bundleAlgorithm.getRank());
+                bundleAlgorithmDetail.setDefaultDisplayText(algorithm.getDefaultDisplayText());
+                bundleAlgorithmDetail.setCustomDisplayText(bundleAlgorithm.getCustomDisplayText());
 
                 // Add to list
-                bundleAlgorithmDetailsList.add(bundleAlgorithmDetails);
+                bundleAlgorithmDetailList.add(bundleAlgorithmDetail);
             }
         }
 
-        return bundleAlgorithmDetailsList;
+        return bundleAlgorithmDetailList;
     }
 
     /**
      * Add new bundle.
      *
-     * @param bundleDetails Bundle details to add
+     * @param bundleDetail Bundle details to add
      * @return              CS Response
      * @throws ValidationException Exception to throw
      */
-    public CSResponse addBundle(BundleDetails bundleDetails) throws ValidationException, ServerException {
+    public CSResponse addBundle(BundleDetail bundleDetail) throws ValidationException, ServerException {
 
         // Validate bundle name.
-        BundleValidations.validateName(bundleDetails.getName());
+        BundleValidations.validateName(bundleDetail.getName());
 
         // Validate combine display text when combine enabled.
-        if (bundleDetails.isCombineEnabled()) {
+        if (bundleDetail.isCombineEnabled()) {
 
             // Validate combined display text.
-            BundleValidations.validateCombinedDisplayText(bundleDetails.getCombineDisplayText());
+            BundleValidations.validateCombinedDisplayText(bundleDetail.getCombineDisplayText());
         }
 
         // Get algorithms.
-        List<BundleAlgorithmDetails> algorithms = bundleDetails.getAlgorithms();
+        List<BundleAlgorithmDetail> algorithms = bundleDetail.getAlgorithms();
 
         // Validate algorithms.
         BundleValidations.validateAlgorithms(algorithms);
 
         // Validate whether algorithms are valid.
-        for (BundleAlgorithmDetails bundleAlgorithmDetails : algorithms) {
+        for (BundleAlgorithmDetail bundleAlgorithmDetail : algorithms) {
 
-            Optional<Algorithm> algorithmOptional = algorithmRepository.findById(bundleAlgorithmDetails.getId());
+            Optional<Algorithm> algorithmOptional = algorithmRepository.findById(bundleAlgorithmDetail.getId());
 
             if (!algorithmOptional.isPresent()) {
-                throw new ValidationException(ALGORITHM_DOES_NOT_EXIST + " (" + bundleAlgorithmDetails.getId() + ")");
+                throw new ValidationException(ALGORITHM_DOES_NOT_EXIST + " (" + bundleAlgorithmDetail.getId() + ")");
             }
         }
 
         Bundle bundle = new Bundle();
-        bundle.setName(bundleDetails.getName());
-        bundle.setDefaultLimit(bundleDetails.getDefaultLimit());
-        bundle.setCombineEnabled(bundleDetails.isCombineEnabled());
-        bundle.setCombineDisplayText(bundleDetails.getCombineDisplayText());
+        bundle.setName(bundleDetail.getName());
+        bundle.setDefaultLimit(bundleDetail.getDefaultLimit());
+        bundle.setCombineEnabled(bundleDetail.isCombineEnabled());
+        bundle.setCombineDisplayText(bundleDetail.getCombineDisplayText());
 
         // Save bundle.
         bundleRepository.save(bundle);
@@ -197,12 +197,12 @@ public class BundleService {
      * Edit bundle.
      *
      * @param bundleID      Bundle ID
-     * @param bundleDetails Bundle details to edit
+     * @param bundleDetail Bundle details to edit
      * @return              CS Response
      * @throws ValidationException Exception to throw
      * @throws ServerException     Server exception to throw
      */
-    public CSResponse editBundle(int bundleID, BundleDetails bundleDetails) throws ValidationException, ServerException {
+    public CSResponse editBundle(int bundleID, BundleDetail bundleDetail) throws ValidationException, ServerException {
 
         // Retrieve bundle for the given ID.
         Optional<Bundle> bundleOptional = bundleRepository.findById(bundleID);
@@ -213,39 +213,39 @@ public class BundleService {
         }
 
         // Set bundle ID.
-        bundleDetails.setId(bundleID);
+        bundleDetail.setId(bundleID);
 
         // Validate bundle name.
-        BundleValidations.validateName(bundleDetails.getName());
+        BundleValidations.validateName(bundleDetail.getName());
 
         // Validate combine display text when combine enabled.
-        if (bundleDetails.isCombineEnabled()) {
+        if (bundleDetail.isCombineEnabled()) {
 
             // Validate combined display text.
-            BundleValidations.validateCombinedDisplayText(bundleDetails.getCombineDisplayText());
+            BundleValidations.validateCombinedDisplayText(bundleDetail.getCombineDisplayText());
         }
 
         // Get algorithms.
-        List<BundleAlgorithmDetails> algorithms = bundleDetails.getAlgorithms();
+        List<BundleAlgorithmDetail> algorithms = bundleDetail.getAlgorithms();
 
         // Validate algorithms.
         BundleValidations.validateAlgorithms(algorithms);
 
         // Validate whether algorithms are valid.
-        for (BundleAlgorithmDetails bundleAlgorithmDetails : algorithms) {
+        for (BundleAlgorithmDetail bundleAlgorithmDetail : algorithms) {
 
-            Optional<Algorithm> algorithmOptional = algorithmRepository.findById(bundleAlgorithmDetails.getId());
+            Optional<Algorithm> algorithmOptional = algorithmRepository.findById(bundleAlgorithmDetail.getId());
 
             if (!algorithmOptional.isPresent()) {
-                throw new ValidationException(ALGORITHM_DOES_NOT_EXIST + " (" + bundleAlgorithmDetails.getId() + ")");
+                throw new ValidationException(ALGORITHM_DOES_NOT_EXIST + " (" + bundleAlgorithmDetail.getId() + ")");
             }
         }
 
         Bundle bundle = bundleOptional.get();
-        bundle.setName(bundleDetails.getName());
-        bundle.setDefaultLimit(bundleDetails.getDefaultLimit());
-        bundle.setCombineEnabled(bundleDetails.isCombineEnabled());
-        bundle.setCombineDisplayText(bundleDetails.getCombineDisplayText());
+        bundle.setName(bundleDetail.getName());
+        bundle.setDefaultLimit(bundleDetail.getDefaultLimit());
+        bundle.setCombineEnabled(bundleDetail.isCombineEnabled());
+        bundle.setCombineDisplayText(bundleDetail.getCombineDisplayText());
 
         // Save bundle.
         bundleRepository.save(bundle);
@@ -282,15 +282,15 @@ public class BundleService {
      * @param algorithms Algorithms
      * @param bundleID   Bundle ID
      */
-    private void saveBundleAlgorithms(List<BundleAlgorithmDetails> algorithms, int bundleID) {
+    private void saveBundleAlgorithms(List<BundleAlgorithmDetail> algorithms, int bundleID) {
 
-        for (BundleAlgorithmDetails bundleAlgorithmDetails : algorithms) {
+        for (BundleAlgorithmDetail bundleAlgorithmDetail : algorithms) {
 
             BundleAlgorithm bundleAlgorithm = new BundleAlgorithm();
             bundleAlgorithm.setBundleID(bundleID);
-            bundleAlgorithm.setAlgorithmID(bundleAlgorithmDetails.getId());
-            bundleAlgorithm.setCustomDisplayText(bundleAlgorithmDetails.getCustomDisplayText());
-            bundleAlgorithm.setRank(bundleAlgorithmDetails.getRank());
+            bundleAlgorithm.setAlgorithmID(bundleAlgorithmDetail.getId());
+            bundleAlgorithm.setCustomDisplayText(bundleAlgorithmDetail.getCustomDisplayText());
+            bundleAlgorithm.setRank(bundleAlgorithmDetail.getRank());
 
             // Save bundle - algorithm associations.
             bundleAlgorithmRepository.save(bundleAlgorithm);

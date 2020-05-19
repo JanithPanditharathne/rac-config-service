@@ -73,14 +73,14 @@ class BundleControllerTest {
                 "\"defaultDisplayText\":\"Top Trending\",\"customDisplayText\":\"Top Trending Products\"}]}";
 
         // Mock
-        BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+        BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                    "Top Trending",
                                                                                    "Top Trending Products");
 
-        BundleDetails bundleDetails = new BundleDetails(1, "Bundle 1", 5,
+        BundleDetail bundleDetail = new BundleDetail(1, "Bundle 1", 5,
                                                         false, "Test",
-                                                        Arrays.asList(bundleAlgorithmDetails));
-        Mockito.when(bundleService.getBundle(100)).thenReturn(bundleDetails);
+                                                        Arrays.asList(bundleAlgorithmDetail));
+        Mockito.when(bundleService.getBundle(100)).thenReturn(bundleDetail);
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
