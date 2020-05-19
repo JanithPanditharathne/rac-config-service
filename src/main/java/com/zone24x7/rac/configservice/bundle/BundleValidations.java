@@ -1,5 +1,6 @@
 package com.zone24x7.rac.configservice.bundle;
 
+import com.zone24x7.rac.configservice.algorithm.AlgorithmValidations;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 
 import java.util.List;
@@ -13,6 +14,25 @@ import static com.zone24x7.rac.configservice.util.Strings.*;
 public class BundleValidations {
 
     private BundleValidations() {
+    }
+
+    /**
+     * Validate bundle ID.
+     *
+     * @param name Bundle ID
+     * @throws ValidationException Exception to throw
+     */
+    public static void validateID(String name) throws ValidationException {
+
+        // Validate for null.
+        if (name == null) {
+            throw new ValidationException(BUNDLE_NAME_CANNOT_BE_NULL);
+        }
+
+        // Validate for empty.
+        if (name.isEmpty()) {
+            throw new ValidationException(BUNDLE_NAME_CANNOT_BE_EMPTY);
+        }
     }
 
     /**
@@ -59,7 +79,7 @@ public class BundleValidations {
      * @param algorithms Algorithms
      * @throws ValidationException Exception to throw
      */
-    public static void validateAlgorithms(List<BundleAlgorithmDTO> algorithms) throws ValidationException {
+    public static void validateAlgorithms(List<BundleAlgorithmDetails> algorithms) throws ValidationException {
 
         // Validate for null.
         if (algorithms == null) {
@@ -72,10 +92,13 @@ public class BundleValidations {
         }
 
         // Iterate algorithms list.
-        for (BundleAlgorithmDTO bundleAlgorithmDTO : algorithms) {
+        for (BundleAlgorithmDetails bundleAlgorithmDetails : algorithms) {
+
+            // Validate ID.
+            AlgorithmValidations.validateID(bundleAlgorithmDetails.getId());
 
             // Validate custom display text.
-            validateCustomDisplayText(bundleAlgorithmDTO.getCustomDisplayText());
+            validateCustomDisplayText(bundleAlgorithmDetails.getCustomDisplayText());
         }
     }
 

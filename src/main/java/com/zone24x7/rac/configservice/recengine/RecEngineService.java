@@ -2,9 +2,9 @@ package com.zone24x7.rac.configservice.recengine;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zone24x7.rac.configservice.bundle.BundleDetailDTO;
+import com.zone24x7.rac.configservice.bundle.BundleDetails;
+import com.zone24x7.rac.configservice.bundle.BundleList;
 import com.zone24x7.rac.configservice.bundle.BundleService;
-import com.zone24x7.rac.configservice.bundle.BundleSummaryListDTO;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.algorithm.RecEngineAlgorithm;
@@ -107,7 +107,7 @@ public class RecEngineService {
     public void updateBundleConfig() throws ServerException {
 
         // Get all bundles.
-        BundleSummaryListDTO allBundles = bundleService.getAllBundles();
+        BundleList allBundles = bundleService.getAllBundles();
 
         // Bundle list for rec engine.
         List<RecEngineBundle> bundleList = new ArrayList<>();
@@ -118,7 +118,7 @@ public class RecEngineService {
             try {
 
                 // Get bundle details.
-                BundleDetailDTO bundleDetail = bundleService.getBundle(b.getId());
+                BundleDetails bundleDetail = bundleService.getBundle(b.getId());
 
                 // Algorithm combine info.
                 RecEngineBundleAlgorithmCombineInfo algorithmCombineInfo = new RecEngineBundleAlgorithmCombineInfo();

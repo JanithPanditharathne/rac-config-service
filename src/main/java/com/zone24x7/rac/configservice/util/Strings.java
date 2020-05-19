@@ -34,8 +34,8 @@ public class Strings {
     public static final String ALGORITHM_NAME_CANNOT_BE_NULL = "CS-1004:Algorithm name cannot be null";
     public static final String ALGORITHM_NAME_CANNOT_BE_EMPTY = "CS-1005:Algorithm name cannot be empty";
     public static final String ALGORITHM_DELETE_SUCCESS = "CS-1006:Algorithm deleted successfully";
-    public static final String ALGORITHM_DOES_NOT_EXIST = "CS-1007:Algorithm does not exist";
-    public static final String ALGORITHM_ID_ALREADY_USE_IN_BUNDLES = "CS-1008:Algorithm id already use in bundles";
+    public static final String ALGORITHM_ID_ALREADY_USE_IN_BUNDLES = "CS-1007:Algorithm id already use in bundles";
+    public static final String ALGORITHM_DOES_NOT_EXIST = "CS-1008:Algorithm does not exist";
 
     // Bundles
     public static final String BUNDLE_ID_INVALID = "CS-2000:Invalid bundle id";
@@ -48,6 +48,8 @@ public class Strings {
     public static final String ALGORITHMS_CANNOT_BE_EMPTY = "CS-2007:Bundle algorithms cannot be empty";
     public static final String BUNDLE_CUSTOM_DISPLAY_TEXT_CANNOT_BE_NULL = "CS-2008:Bundle custom display text field is missing";
     public static final String BUNDLE_CUSTOM_DISPLAY_TEXT_CANNOT_BE_EMPTY = "CS-2009:Bundle custom display text cannot be empty";
+    public static final String BUNDLE_UPDATE_SUCCESS = "CS-2010:Bundle updated successfully";
+    public static final String BUNDLE_DELETE_SUCCESS = "CS-2011:Bundle deleted successfully";
 
 
     // Metadata

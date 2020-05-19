@@ -16,13 +16,14 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 
 @WebMvcTest(value = BundleController.class)
-public class BundleControllerTest {
+class BundleControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -39,16 +40,12 @@ public class BundleControllerTest {
     void getAllBundles() throws Exception {
 
         // Mock
-        List<BundleSummaryDTO> bundleSummaryDTOList = new ArrayList<>();
-        bundleSummaryDTOList.add(new BundleSummaryDTO(1, "Bundle 1"));
-        bundleSummaryDTOList.add(new BundleSummaryDTO(2, "Bundle 2"));
-
-        BundleSummaryListDTO bundleSummaryListDTO = new BundleSummaryListDTO(bundleSummaryDTOList);
-        Mockito.when(bundleService.getAllBundles()).thenReturn(bundleSummaryListDTO);
+        BundleList bundleList = new BundleList(new ArrayList<>());
+        Mockito.when(bundleService.getAllBundles()).thenReturn(bundleList);
 
         // Expected
         ObjectMapper objectMapper = new ObjectMapper();
-        String expected = objectMapper.writeValueAsString(bundleSummaryListDTO);
+        String expected = objectMapper.writeValueAsString(bundleList);
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -71,19 +68,19 @@ public class BundleControllerTest {
     void getBundleDetails() throws Exception {
 
         // Expected
-        String expected = "{\"id\":\"1\",\"name\":\"Bundle 1\",\"defaultLimit\":5,\"combineEnabled\":false," +
+        String expected = "{\"id\":1,\"name\":\"Bundle 1\",\"defaultLimit\":5,\"combineEnabled\":false," +
                 "\"combineDisplayText\":\"Test\",\"algorithms\":[{\"id\":100,\"name\":\"Top Trending\",\"rank\":0," +
                 "\"defaultDisplayText\":\"Top Trending\",\"customDisplayText\":\"Top Trending Products\"}]}";
 
         // Mock
-        BundleAlgorithmDTO bundleAlgorithmDTO = new BundleAlgorithmDTO(100, "Top Trending", 0,
-                                                                       "Top Trending",
-                                                                       "Top Trending Products");
+        BundleAlgorithmDetails bundleAlgorithmDetails = new BundleAlgorithmDetails(100, "Top Trending", 0,
+                                                                                   "Top Trending",
+                                                                                   "Top Trending Products");
 
-        BundleDetailDTO bundleDetailDTO = new BundleDetailDTO("1", "Bundle 1", 5,
-                                                              false, "Test",
-                                                              Arrays.asList(bundleAlgorithmDTO));
-        Mockito.when(bundleService.getBundle(100)).thenReturn(bundleDetailDTO);
+        BundleDetails bundleDetails = new BundleDetails(1, "Bundle 1", 5,
+                                                        false, "Test",
+                                                        Arrays.asList(bundleAlgorithmDetails));
+        Mockito.when(bundleService.getBundle(100)).thenReturn(bundleDetails);
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -111,7 +108,7 @@ public class BundleControllerTest {
         String expected = objectMapper.writeValueAsString(csResponse);
 
         // Mock service call
-        Mockito.when(bundleService.addBundle(Mockito.any())).thenReturn(csResponse);
+        Mockito.when(bundleService.addBundle(any())).thenReturn(csResponse);
         String bundleJson = "{\"name\":\"Bundle 1\",\"defaultLimit\":\"5\",\"combineEnabled\":true,\"combineDisplayText" +
                 "\":\"Sample\",\"algorithms\":[{\"id\":11,\"name\":\"Top Trending\",\"rank\":0,\"defaultDisplayText\":" +
                 "\"Top Trending\",\"customDisplayText\":\"Top Trending Products\"},{\"id\":33,\"name\":\"Best Sellers\"," +
@@ -122,6 +119,69 @@ public class BundleControllerTest {
                 .post("/v1/bundles")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(bundleJson)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test when editing a bundle.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void editBundle() throws Exception {
+
+        // Expected
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.BUNDLE_UPDATE_SUCCESS);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        // Mock service call
+        Mockito.when(bundleService.editBundle(anyInt(), any())).thenReturn(csResponse);
+        String bundleJson = "{\"name\":\"Bundle 1\",\"defaultLimit\":\"5\",\"combineEnabled\":true,\"combineDisplayText" +
+                "\":\"Sample\",\"algorithms\":[{\"id\":11,\"name\":\"Top Trending\",\"rank\":0,\"defaultDisplayText\":" +
+                "\"Top Trending\",\"customDisplayText\":\"Top Trending Products\"},{\"id\":33,\"name\":\"Best Sellers\"," +
+                "\"rank\":1,\"defaultDisplayText\":\"Best Sellers\",\"customDisplayText\":\"Sample\"}]}";
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put("/v1/bundles/1")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(bundleJson)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test when deleting a bundle.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void deleteBundle() throws Exception {
+
+        // Expected
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.BUNDLE_DELETE_SUCCESS);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        // Mock service call
+        Mockito.when(bundleService.deleteBundle(anyInt())).thenReturn(csResponse);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete("/v1/bundles/1")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();

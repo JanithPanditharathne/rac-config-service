@@ -4,6 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+/**
+ * Repository for bundle algorithm.
+ *
+ */
 public interface BundleAlgorithmRepository extends JpaRepository<BundleAlgorithm, Integer> {
 
     List<BundleAlgorithm> findAllByBundleID(int bundleID);
