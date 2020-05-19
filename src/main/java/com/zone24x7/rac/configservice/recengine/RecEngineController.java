@@ -90,6 +90,9 @@ public class RecEngineController {
         // Update rec configs.
         recEngineService.updateRecConfig();
 
+        // Update rec slot configs.
+        recEngineService.updateRecSlotConfig();
+
         // Return status.
         return new CSResponse(Strings.SUCCESS, Strings.REC_ENGINE_CONFIG_UPDATE_PROCESS_STARTED);
     }

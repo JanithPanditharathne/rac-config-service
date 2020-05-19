@@ -15,6 +15,8 @@ import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleList;
 import com.zone24x7.rac.configservice.recengine.rec.RecEngineRec;
 import com.zone24x7.rac.configservice.recengine.rec.RecEngineRecList;
 import com.zone24x7.rac.configservice.recengine.rec.RecEngineRecRegularConfig;
+import com.zone24x7.rac.configservice.recengine.recslot.RecEngineRecSlot;
+import com.zone24x7.rac.configservice.recengine.recslot.RecEngineRecSlotList;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRule;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRuleList;
 import com.zone24x7.rac.configservice.util.CSResponse;
@@ -26,6 +28,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.zone24x7.rac.configservice.util.Strings.BUNDLES;
@@ -246,6 +249,43 @@ public class RecEngineService {
 
 
 
+
+
+
+
+
+
+
+    /**
+     * Update rec slot config json.
+     *
+     * @throws ServerException when rec slot config update failed.
+     */
+    @Async("recSlotTaskExecutor")
+    public void updateRecSlotConfig() throws ServerException {
+
+
+        List<RecEngineRecSlot> recSlotList = new ArrayList<>();
+        recSlotList.add(new RecEngineRecSlot("Web", "Home", "Horizontal", new ArrayList<>(Arrays.asList(700, 701)), new ArrayList<>(Arrays.asList(43))));
+        recSlotList.add(new RecEngineRecSlot("Mobile", "Home", "Horizontal", new ArrayList<>(Arrays.asList(700, 701)), new ArrayList<>(Arrays.asList(43))));
+        recSlotList.add(new RecEngineRecSlot("Web", "PDP", "Horizontal2", new ArrayList<>(Arrays.asList(700, 701)), new ArrayList<>(Arrays.asList(43))));
+
+
+        try {
+
+            // Get rec slot config string.
+            RecEngineRecSlotList recEngineRecSlotList = new RecEngineRecSlotList(recSlotList);
+            ObjectMapper objectMapper = new ObjectMapper();
+            String recSlotConfigString = objectMapper.writeValueAsString(recEngineRecSlotList);
+
+            // Update rec slot config.
+            recEngineRepository.save(new RecEngine(REC_SLOT_CONFIG_ID, REC_SLOTS, recSlotConfigString));
+
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new ServerException(Strings.REC_ENGINE_REC_SLOT_CONFIG_UPDATE_FAILED);
+        }
+    }
 
 
 
