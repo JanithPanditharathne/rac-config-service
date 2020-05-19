@@ -33,7 +33,7 @@ public class BundleService {
     private RecEngineService recEngineService;
 
     // Logger.
-    Logger logger = LoggerFactory.getLogger(BundleService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BundleService.class);
 
     private static final String BUNDLE_CONFIG_UPDATE = "Updating bundles for rec engine";
 
@@ -43,9 +43,6 @@ public class BundleService {
      * @return All bundles
      */
     public BundleList getAllBundles() {
-        logger.info("Retrieving all bundles");
-
-        // Retrieve all bundles.
         return new BundleList(bundleRepository.findAll());
     }
 
@@ -58,82 +55,42 @@ public class BundleService {
      */
     public BundleDetail getBundle(int bundleID) throws ValidationException {
 
-        logger.info("Finding bundle ID from database");
-
         // Find given bundle ID from DB.
         Optional<Bundle> bundleOptional = bundleRepository.findById(bundleID);
 
-        // If bundle ID found, return values.
-        if (bundleOptional.isPresent()) {
-
-            logger.info("Bundle ID found");
-
-            // Retrieve bundle.
-            Bundle bundle = bundleOptional.get();
-
-            BundleDetail bundleDetail = new BundleDetail();
-            bundleDetail.setId(bundleID);
-            bundleDetail.setName(bundle.getName());
-            bundleDetail.setDefaultLimit(bundle.getDefaultLimit());
-            bundleDetail.setCombineEnabled(bundle.isCombineEnabled());
-            bundleDetail.setCombineDisplayText(bundle.getCombineDisplayText());
-            bundleDetail.setAlgorithms(getAssignedAlgorithms(bundleID));
-
-            return bundleDetail;
-
-        } else {
-
-            logger.info("Bundle ID not found");
-
-            // Bundle not found in db.
-            // Return invalid bundle ID error.
+        // If bundle not found in db, return invalid bundle id error.
+        if (!bundleOptional.isPresent()) {
             throw new ValidationException(BUNDLE_ID_INVALID);
         }
-    }
 
-    /**
-     * Get algorithms assigned to bundles.
-     *
-     * @param bundleID Bundle ID
-     * @return         Assigned algorithms
-     */
-    private List<BundleAlgorithmDetail> getAssignedAlgorithms(int bundleID) {
-        List<BundleAlgorithmDetail> bundleAlgorithmDetailList = new ArrayList<>();
+        // Algorithm details list.
+        List<BundleAlgorithmDetail> algorithmDetails = new ArrayList<>();
 
-        logger.info("Retrieve algorithms associated to bundle ID");
-
-        // Retrieve algorithms associated to given bundle
+        // Retrieve algorithms associated to given bundle.
         List<BundleAlgorithm> bundleAlgorithmList = bundleAlgorithmRepository.findAllByBundleID(bundleID);
 
-        // Associated algorithms exist.
-        if (!bundleAlgorithmList.isEmpty()) {
+        // Set algorithm details for each algorithm.
+        bundleAlgorithmList.forEach(a -> {
 
-            // Iterate through list.
-            for (BundleAlgorithm bundleAlgorithm : bundleAlgorithmList) {
-
-                int algorithmID = bundleAlgorithm.getAlgorithmID();
-
-                logger.info("Retrieve algorithms details");
-
-                // Retrieve algorithm details.
-                Optional<Algorithm> algorithmOptional = algorithmRepository.findById(algorithmID);
-
+            // Retrieve additional details from algorithm table.
+            Optional<Algorithm> algorithmOptional = algorithmRepository.findById(a.getAlgorithmID());
+            if(algorithmOptional.isPresent()) {
                 Algorithm algorithm = algorithmOptional.get();
-
-                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail();
-                bundleAlgorithmDetail.setId(algorithmID);
-                bundleAlgorithmDetail.setName(algorithm.getName());
-                bundleAlgorithmDetail.setRank(bundleAlgorithm.getRank());
-                bundleAlgorithmDetail.setDefaultDisplayText(algorithm.getDefaultDisplayText());
-                bundleAlgorithmDetail.setCustomDisplayText(bundleAlgorithm.getCustomDisplayText());
-
-                // Add to list
-                bundleAlgorithmDetailList.add(bundleAlgorithmDetail);
+                algorithmDetails.add(new BundleAlgorithmDetail(a.getAlgorithmID(), algorithm.getName(), a.getRank(),
+                        algorithm.getDefaultDisplayText(), a.getCustomDisplayText()));
             }
-        }
 
-        return bundleAlgorithmDetailList;
+        });
+
+
+        // Get bundle.
+        Bundle bundle = bundleOptional.get();
+
+        // Return bundle details.
+        return new BundleDetail(bundleID, bundle.getName(), bundle.getDefaultLimit(), bundle.isCombineEnabled(),
+                bundle.getCombineDisplayText(), algorithmDetails);
     }
+
 
     /**
      * Add new bundle.
@@ -178,14 +135,14 @@ public class BundleService {
 
         // Save bundle.
         bundleRepository.save(bundle);
-        logger.info("Bundle saved to db");
+        LOGGER.info("Bundle saved to db");
 
         // Iterate through algorithms.
         saveBundleAlgorithms(algorithms, bundle.getId());
 
-        logger.info("Bundle - algorithm associations saved to db");
+        LOGGER.info("Bundle - algorithm associations saved to db");
 
-        logger.info(BUNDLE_CONFIG_UPDATE);
+        LOGGER.info(BUNDLE_CONFIG_UPDATE);
 
         // Update rec engine bundle list.
         recEngineService.updateBundleConfig();
@@ -249,7 +206,7 @@ public class BundleService {
 
         // Save bundle.
         bundleRepository.save(bundle);
-        logger.info("Bundle saved to db");
+        LOGGER.info("Bundle saved to db");
 
         // Get all bundle - algorithm associations.
         List<BundleAlgorithm> allBundleAlgorithms = bundleAlgorithmRepository.findAllByBundleID(bundleID);
@@ -261,14 +218,14 @@ public class BundleService {
             bundleAlgorithmRepository.delete(bundleAlgorithm);
         }
 
-        logger.info("Existing bundle - algorithm associations removed from db");
+        LOGGER.info("Existing bundle - algorithm associations removed from db");
 
         // Iterate through algorithms.
         saveBundleAlgorithms(algorithms, bundleID);
 
-        logger.info("New bundle - algorithm associations saved to db");
+        LOGGER.info("New bundle - algorithm associations saved to db");
 
-        logger.info(BUNDLE_CONFIG_UPDATE);
+        LOGGER.info(BUNDLE_CONFIG_UPDATE);
 
         // Update rec engine bundle list.
         recEngineService.updateBundleConfig();
@@ -321,7 +278,7 @@ public class BundleService {
         // Delete bundle - algorithm associations
         allBundleAlgorithms.forEach(bundleAlgorithm -> bundleAlgorithmRepository.delete(bundleAlgorithm));
 
-        logger.info("Deleted all bundle - algorithm associations");
+        LOGGER.info("Deleted all bundle - algorithm associations");
 
         // Retrieve bundle.
         Bundle bundle = bundleOptional.get();
@@ -329,9 +286,9 @@ public class BundleService {
         // Remove bundle from DB.
         bundleRepository.delete(bundle);
 
-        logger.info("Deleted bundle");
+        LOGGER.info("Deleted bundle");
 
-        logger.info(BUNDLE_CONFIG_UPDATE);
+        LOGGER.info(BUNDLE_CONFIG_UPDATE);
 
         // Update rec engine bundle list.
         recEngineService.updateBundleConfig();

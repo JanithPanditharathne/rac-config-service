@@ -2,9 +2,9 @@ package com.zone24x7.rac.configservice.bundle;
 
 public class BundleAlgorithmDetail {
 
+    private int rank;
     private int id;
     private String name;
-    private int rank;
     private String defaultDisplayText;
     private String customDisplayText;
 

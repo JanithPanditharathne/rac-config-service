@@ -6,6 +6,9 @@ public class BundleList {
 
     private List<Bundle> bundles;
 
+    public BundleList() {
+    }
+
     public BundleList(List<Bundle> bundles) {
         this.bundles = bundles;
     }
