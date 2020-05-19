@@ -87,6 +87,9 @@ public class RecEngineController {
         // Update rule configs.
         recEngineService.updateRuleConfig();
 
+        // Update rec configs.
+        recEngineService.updateRecConfig();
+
         // Return status.
         return new CSResponse(Strings.SUCCESS, Strings.REC_ENGINE_CONFIG_UPDATE_PROCESS_STARTED);
     }

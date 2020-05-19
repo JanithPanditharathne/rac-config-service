@@ -69,6 +69,9 @@ public class Strings {
     // Rec Engine
     public static final String REC_ENGINE_CONFIG_UPDATE_PROCESS_STARTED = "CS-7000:Rec engine config update process started";
     public static final String REC_ENGINE_BUNDLE_CONFIG_UPDATE_FAILED = "CS-7002:Rec engine bundle config update failed";
+    public static final String REC_ENGINE_RULE_CONFIG_UPDATE_FAILED = "CS-7003:Rec engine rule config update failed";
+    public static final String REC_ENGINE_REC_CONFIG_UPDATE_FAILED = "CS-7004:Rec engine rec config update failed";
+    public static final String REC_ENGINE_REC_SLOT_CONFIG_UPDATE_FAILED = "CS-7005:Rec engine rec slot config update failed";
 
 
 }

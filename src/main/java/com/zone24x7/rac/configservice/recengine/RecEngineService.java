@@ -12,6 +12,9 @@ import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundle;
 import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleAlgorithm;
 import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleAlgorithmCombineInfo;
 import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleList;
+import com.zone24x7.rac.configservice.recengine.rec.RecEngineRec;
+import com.zone24x7.rac.configservice.recengine.rec.RecEngineRecList;
+import com.zone24x7.rac.configservice.recengine.rec.RecEngineRecRegularConfig;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRule;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRuleList;
 import com.zone24x7.rac.configservice.util.CSResponse;
@@ -187,23 +190,59 @@ public class RecEngineService {
 
         try {
 
-            // Get bundle config string.
+            // Get rule config string.
             RecEngineRuleList recEngineRuleList = new RecEngineRuleList(ruleList);
             ObjectMapper objectMapper = new ObjectMapper();
             String ruleConfigString = objectMapper.writeValueAsString(recEngineRuleList);
 
-            // Update bundle config.
+            // Update rule config.
             recEngineRepository.save(new RecEngine(RULE_CONFIG_ID, RULES, ruleConfigString));
 
         } catch (JsonProcessingException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new ServerException(Strings.REC_ENGINE_BUNDLE_CONFIG_UPDATE_FAILED);
+            throw new ServerException(Strings.REC_ENGINE_RULE_CONFIG_UPDATE_FAILED);
         }
 
     }
 
 
 
+
+
+
+
+
+    /**
+     * Update rec config json.
+     *
+     * @throws ServerException when rec config update failed.
+     */
+    @Async("recTaskExecutor")
+    public void updateRecConfig() throws ServerException {
+
+
+        List<RecEngineRec> recList = new ArrayList<>();
+        recList.add(new RecEngineRec(1, "Rec 1", "REGULAR", null, new RecEngineRecRegularConfig(11), null));
+        recList.add(new RecEngineRec(2, "Rec 2", "REGULAR", null, new RecEngineRecRegularConfig(22), null));
+        recList.add(new RecEngineRec(3, "Rec 3", "REGULAR", null, new RecEngineRecRegularConfig(33), null));
+
+
+
+        try {
+
+            // Get rec config string.
+            RecEngineRecList recEngineRecList = new RecEngineRecList(recList);
+            ObjectMapper objectMapper = new ObjectMapper();
+            String recConfigString = objectMapper.writeValueAsString(recEngineRecList);
+
+            // Update rec config.
+            recEngineRepository.save(new RecEngine(REC_CONFIG_ID, RECS, recConfigString));
+
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new ServerException(Strings.REC_ENGINE_REC_CONFIG_UPDATE_FAILED);
+        }
+    }
 
 
 
