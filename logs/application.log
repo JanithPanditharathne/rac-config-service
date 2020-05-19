@@ -7850,3 +7850,1018 @@ org.springframework.web.HttpRequestMethodNotSupportedException: Request method '
 2020-05-19 14:54:20.475  INFO 7216 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
 2020-05-19 14:54:20.482  INFO 7216 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
 2020-05-19 14:54:20.505  INFO 7216 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 14:57:55.388  INFO 7216 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'recSlotTaskExecutor'
+2020-05-19 14:57:55.389  INFO 7216 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'recTaskExecutor'
+2020-05-19 14:57:55.389  INFO 7216 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'ruleTaskExecutor'
+2020-05-19 14:57:55.389  INFO 7216 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'bundleTaskExecutor'
+2020-05-19 14:57:55.390  INFO 7216 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-05-19 14:57:55.391  INFO 7216 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2020-05-19 14:57:55.429  INFO 7216 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2020-05-19 15:40:42.010  INFO 8029 --- [main] c.z.r.c.RacConfigServiceApplication      : Starting RacConfigServiceApplication on DINESH-W with PID 8029 (/Users/dineshw/Drive/Projects/RAC/Code/rac-config-service/target/classes started by dineshw in /Users/dineshw/Drive/Projects/RAC/Code/rac-config-service)
+2020-05-19 15:40:42.012  INFO 8029 --- [main] c.z.r.c.RacConfigServiceApplication      : No active profile set, falling back to default profiles: default
+2020-05-19 15:40:42.838  INFO 8029 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-05-19 15:40:42.923  INFO 8029 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 77ms. Found 7 JPA repository interfaces.
+2020-05-19 15:40:43.405  INFO 8029 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2020-05-19 15:40:43.412  INFO 8029 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-05-19 15:40:43.412  INFO 8029 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.33]
+2020-05-19 15:40:43.483  INFO 8029 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-05-19 15:40:43.484  INFO 8029 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1441 ms
+2020-05-19 15:40:43.778  INFO 8029 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-05-19 15:40:43.845  INFO 8029 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-05-19 15:40:43.960  INFO 8029 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-05-19 15:40:44.023  INFO 8029 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.12.Final
+2020-05-19 15:40:44.124  INFO 8029 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-05-19 15:40:44.221  INFO 8029 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2020-05-19 15:40:44.772  INFO 8029 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-05-19 15:40:44.779  INFO 8029 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-05-19 15:40:45.171  INFO 8029 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2020-05-19 15:40:45.172  INFO 8029 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'bundleTaskExecutor'
+2020-05-19 15:40:45.174  INFO 8029 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2020-05-19 15:40:45.175  INFO 8029 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'ruleTaskExecutor'
+2020-05-19 15:40:45.175  INFO 8029 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2020-05-19 15:40:45.175  INFO 8029 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'recTaskExecutor'
+2020-05-19 15:40:45.175  INFO 8029 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService
+2020-05-19 15:40:45.176  INFO 8029 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'recSlotTaskExecutor'
+2020-05-19 15:40:45.249  WARN 8029 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-05-19 15:40:45.648  INFO 8029 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2020-05-19 15:40:45.730  INFO 8029 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2020-05-19 15:40:45.732  INFO 8029 --- [main] c.z.r.c.RacConfigServiceApplication      : Started RacConfigServiceApplication in 3.997 seconds (JVM running for 4.498)
+2020-05-19 15:40:45.895  INFO 8029 --- [RMI TCP Connection(2)-192.168.1.5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-05-19 15:40:45.896  INFO 8029 --- [RMI TCP Connection(2)-192.168.1.5] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-05-19 15:40:45.901  INFO 8029 --- [RMI TCP Connection(2)-192.168.1.5] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2020-05-19 15:41:40.284  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieving all bundles
+2020-05-19 15:41:40.400  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:40.439  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:40.439  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:40.462  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.503  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.529  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:40.554  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:40.554  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:40.561  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.587  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.611  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:40.637  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:40.638  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:40.645  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.676  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.700  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:40.726  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:40.726  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:40.733  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.757  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.782  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:40.807  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:40.807  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:40.815  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.841  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.868  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:40.895  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:40.895  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:40.902  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.928  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:40.956  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:40.982  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:40.982  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:40.989  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.029  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.059  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:41.083  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:41.084  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:41.091  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.116  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.141  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:41.176  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:41.176  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:41.183  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.212  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.238  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:41.268  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:41.268  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:41.275  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.299  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.323  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:41.348  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:41.349  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:41.356  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.383  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.409  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:41.434  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:41.434  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:41.442  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.469  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.496  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:41.520  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:41.520  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:41.527  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.551  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.580  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:41.606  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:41.606  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:41.613  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.637  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.676  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:41.705  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:41.705  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:41.712  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.735  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.761  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:41.787  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:41.787  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:41.795  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.822  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.851  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:41.878  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:41.878  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:41.885  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.910  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.935  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:41.960  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:41.961  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:41.969  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:41.994  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.020  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:42.046  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:42.046  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:42.053  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.077  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.158  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:42.185  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:42.185  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:42.191  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.216  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.243  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:42.272  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:42.272  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:42.282  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.320  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.346  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:42.371  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:42.371  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:42.379  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.407  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.432  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:42.457  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:42.457  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:42.464  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.488  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.514  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:42.537  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:42.537  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:42.545  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.569  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.594  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:42.621  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:42.621  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:42.628  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.652  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.675  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:42.704  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:42.704  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:42.711  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.735  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.759  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:42.783  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:42.783  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:42.790  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.816  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.842  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:42.866  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:42.866  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:42.873  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.898  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:42.937  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:42.972  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:42.972  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:42.979  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.004  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.027  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.054  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.054  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.060  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.084  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.108  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.133  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.133  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.139  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.165  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.191  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.216  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.217  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.223  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.248  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.274  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.297  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.297  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.305  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.331  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.356  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.380  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.380  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.387  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.414  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.438  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.462  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.462  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.468  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.493  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.523  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.550  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.550  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.558  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.605  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.632  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.656  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.656  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.662  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.686  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.711  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.737  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.738  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.746  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.772  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.796  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.822  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.822  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.828  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.855  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.880  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.905  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.905  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.911  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.939  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:43.965  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:43.990  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:43.990  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:43.997  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.022  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.048  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:44.074  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:44.074  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:44.081  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.106  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.132  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:44.157  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:44.158  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:44.164  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.189  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.227  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:44.254  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:44.254  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:44.263  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.287  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.313  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:44.346  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:44.346  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:44.353  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.379  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.404  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:44.433  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:44.433  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:44.441  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.467  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.495  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:44.521  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:44.522  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:44.528  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.552  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.576  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:44.601  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:44.602  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:44.610  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.637  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.663  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:44.689  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:44.690  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:44.696  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.721  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.746  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:44.772  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:44.772  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:44.779  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.804  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.830  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:44.871  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:44.871  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:44.878  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.904  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.930  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:44.957  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:44.957  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:44.964  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:44.988  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.013  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:45.040  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:45.040  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:45.050  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.078  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.102  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:45.126  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:45.126  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:45.132  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.157  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.188  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:45.214  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:45.214  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:45.234  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.258  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.283  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:45.307  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:45.307  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:45.314  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.339  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.366  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:45.390  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:45.391  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:45.397  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.421  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.447  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:45.477  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:45.477  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:45.495  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.529  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.554  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:45.579  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:45.579  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:45.585  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.609  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.634  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:45.661  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:45.661  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:45.668  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.704  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.729  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:45.753  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:45.753  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:45.760  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.787  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.811  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:45.836  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:45.836  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:45.843  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.870  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.894  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:45.920  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:45.920  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:45.928  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.955  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:45.981  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.005  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.005  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.012  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.037  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.065  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.090  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.090  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.097  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.132  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.163  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.190  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.190  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.198  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.223  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.247  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.272  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.272  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.280  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.304  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.333  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.358  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.358  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.365  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.392  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.419  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.444  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.444  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.451  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.476  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.503  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.528  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.528  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.535  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.560  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.588  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.613  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.613  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.620  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.645  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.669  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.697  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.697  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.703  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.728  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.753  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.799  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.799  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.806  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.830  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.856  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.884  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.884  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.892  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.917  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.941  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:46.967  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:46.967  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:46.974  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:46.998  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.022  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:47.047  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:47.047  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:47.053  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.077  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.102  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:47.128  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:47.129  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:47.135  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.161  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.186  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:47.210  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:47.210  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:47.217  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.241  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.264  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:47.289  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:47.289  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:47.296  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.325  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.349  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:47.373  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:47.373  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:47.380  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.411  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.446  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:47.472  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:47.472  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:47.478  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.504  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.529  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:47.553  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:47.553  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:47.561  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.620  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.645  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:47.670  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:47.670  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:47.677  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.704  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.732  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:47.757  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:47.757  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:47.766  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.800  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.826  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:47.853  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:47.853  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:47.859  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.885  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.910  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:47.937  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:47.937  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:47.945  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.971  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:47.996  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:48.023  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:48.024  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:48.032  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.104  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.130  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:48.155  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:48.155  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:48.163  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.188  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.212  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:48.241  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:48.241  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:48.248  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.273  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.298  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:48.329  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:48.329  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:48.338  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.364  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.388  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:48.415  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:48.415  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:48.422  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.448  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.473  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:48.497  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:48.497  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:48.503  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.528  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.555  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:48.580  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:48.580  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:48.586  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.610  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.636  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:48.660  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:48.660  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:48.667  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.708  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.735  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:48.760  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:48.760  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:48.767  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.792  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.816  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:48.841  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:48.841  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:48.847  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.872  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.896  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:48.921  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:48.921  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:48.927  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.951  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:48.976  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.001  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.001  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.008  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.036  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.062  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.086  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.086  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.092  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.116  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.143  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.168  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.168  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.174  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.198  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.223  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.251  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.251  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.257  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.281  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.306  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.347  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.347  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.353  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.377  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.403  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.431  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.431  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.439  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.470  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.498  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.532  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.533  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.539  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.564  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.590  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.617  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.617  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.625  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.649  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.678  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.703  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.703  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.710  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.737  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.767  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.792  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.792  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.799  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.825  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.851  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.880  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.880  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.888  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.915  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:49.941  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:49.981  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:49.981  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:49.988  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.016  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.041  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:50.068  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:50.068  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:50.075  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.101  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.126  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:50.153  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:50.153  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:50.160  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.184  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.209  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:50.235  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:50.235  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:50.243  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.322  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.354  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:50.385  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:50.385  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:50.392  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.416  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.441  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:50.468  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:50.468  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:50.475  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.503  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.528  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:50.554  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:50.554  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:50.561  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.589  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.634  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:50.660  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:50.660  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:50.668  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.693  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.720  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:50.745  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:50.745  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:50.752  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.778  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.807  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:50.834  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:50.835  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:50.841  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:50.873  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.021  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:51.051  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:51.051  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:51.057  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.081  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.106  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:51.130  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:51.130  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:51.138  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.165  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.190  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:51.216  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:51.216  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:51.222  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.260  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.288  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:51.312  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:51.312  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:51.319  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.346  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.372  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:51.397  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:51.397  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:51.403  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.427  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.451  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:51.476  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:51.476  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:51.482  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.508  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.531  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:51.555  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:51.555  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:51.562  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.586  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.614  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:51.638  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:51.638  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:51.645  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.670  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.695  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:51.721  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:51.721  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:51.728  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.766  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.794  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:51.820  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:51.820  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:51.828  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.854  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.887  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:51.920  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:51.920  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:51.926  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.953  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:51.977  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.002  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.002  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.010  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.037  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.062  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.087  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.087  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.094  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.119  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.146  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.172  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.172  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.178  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.203  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.233  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.261  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.261  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.269  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.293  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.318  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.343  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.343  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.349  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.376  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.402  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.428  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.428  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.436  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.464  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.490  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.528  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.528  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.541  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.565  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.589  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.614  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.614  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.621  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.648  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.674  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.697  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.698  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.704  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.731  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.757  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.781  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.781  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.787  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.812  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.840  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.865  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.865  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.872  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.899  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.924  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:52.949  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:52.949  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:52.957  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:52.981  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.004  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:53.033  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:53.033  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:53.039  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.065  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.089  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:53.115  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:53.115  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:53.122  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.151  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.197  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:53.223  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:53.223  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:53.229  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.259  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.286  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:53.313  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:53.313  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:53.320  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.347  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.372  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:53.399  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:53.400  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:53.407  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.431  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.455  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:53.482  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:53.482  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:53.489  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.513  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.538  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:53.564  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:53.564  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:53.573  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.596  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.622  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:53.648  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:53.648  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:53.655  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.681  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.708  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:53.734  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:53.734  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:53.741  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.771  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.807  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:53.837  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:53.837  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:53.844  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.871  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.898  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:53.925  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:53.925  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:53.932  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.960  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:53.985  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.011  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.011  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.018  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.042  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.071  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.096  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.096  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.103  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.128  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.155  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.181  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.181  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.187  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.234  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.262  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.288  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.288  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.295  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.320  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.347  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.377  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.377  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.385  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.412  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.448  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.479  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.479  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.487  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.510  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.535  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.560  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.561  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.570  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.593  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.617  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.642  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.642  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.648  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.677  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.702  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.728  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.728  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.736  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.762  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.788  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.813  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.813  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.822  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.845  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.869  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.901  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.901  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.909  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.935  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:54.964  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:54.992  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:54.992  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:54.998  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.023  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.047  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:55.072  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:55.072  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:55.097  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.122  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.147  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:55.174  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:55.174  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:55.186  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.215  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.239  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:55.264  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:55.265  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:55.273  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.299  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.325  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:55.352  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:55.352  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:55.359  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.383  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.409  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:55.435  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:55.435  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:55.441  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.467  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.491  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:55.518  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:55.518  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:55.525  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.551  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.577  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:55.605  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:55.605  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:55.612  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.637  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.661  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:55.685  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:55.685  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:55.691  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.726  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.760  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:55.787  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:55.787  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:55.793  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.821  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.845  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:55.869  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:55.869  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:55.876  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.901  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.926  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:55.951  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:55.951  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:55.959  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:55.984  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.010  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:56.034  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:56.034  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:56.040  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.067  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.098  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:56.124  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:56.124  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:56.131  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.162  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.189  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:56.217  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:56.217  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:56.224  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.249  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.278  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:56.303  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:56.303  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:56.311  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.337  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.376  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:56.400  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:56.400  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:56.407  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.432  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.457  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:56.483  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:56.483  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:56.519  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.543  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.567  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:56.593  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:56.593  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:56.599  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.625  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.648  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:56.673  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:56.673  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:56.679  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.703  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.728  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:56.754  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:56.754  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:56.760  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.783  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.807  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:56.839  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:56.839  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:56.847  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.873  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.898  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:56.925  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:56.925  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:56.932  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.958  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:56.984  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:57.028  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:57.028  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:57.037  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.066  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.091  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:57.118  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:57.118  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:57.126  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.155  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.181  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:57.206  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:57.206  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:57.213  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.238  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.264  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:57.288  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:57.288  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:57.294  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.338  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.371  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:57.396  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:57.396  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:57.403  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.429  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.456  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:57.481  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:57.481  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:57.488  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.513  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.539  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:57.565  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:57.565  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:57.572  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.597  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.624  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:57.696  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:57.696  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:57.704  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.730  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.758  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Finding bundle ID from database
+2020-05-19 15:41:57.783  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Bundle ID found
+2020-05-19 15:41:57.783  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms associated to bundle ID
+2020-05-19 15:41:57.791  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
+2020-05-19 15:41:57.816  INFO 8029 --- [bundleTaskExecutor-1] c.z.r.c.bundle.BundleService             : Retrieve algorithms details
