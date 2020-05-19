@@ -7,11 +7,13 @@ import com.zone24x7.rac.configservice.bundle.BundleService;
 import com.zone24x7.rac.configservice.bundle.BundleSummaryListDTO;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
-import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundle;
 import com.zone24x7.rac.configservice.recengine.algorithm.RecEngineAlgorithm;
-import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleAlgorithmCombineInfo;
+import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundle;
 import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleAlgorithm;
+import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleAlgorithmCombineInfo;
 import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleList;
+import com.zone24x7.rac.configservice.recengine.rule.RecEngineRule;
+import com.zone24x7.rac.configservice.recengine.rule.RecEngineRuleList;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.slf4j.Logger;
@@ -157,6 +159,51 @@ public class RecEngineService {
         }
 
     }
+
+
+
+
+
+    /**
+     * Update rule config json.
+     *
+     * @throws ServerException when rule config update failed.
+     */
+    @Async("ruleTaskExecutor")
+    public void updateRuleConfig() throws ServerException {
+
+
+
+        // rule list
+        List<RecEngineRule> ruleList = new ArrayList<>();
+        ruleList.add(new RecEngineRule(1, "Rule 1", "BOOST", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
+        ruleList.add(new RecEngineRule(2, "Rule 2", "BURY", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
+        ruleList.add(new RecEngineRule(3, "Rule 3", "ONLY_RECOMMEND", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
+        ruleList.add(new RecEngineRule(4, "Rule 4", "DO_NOT_RECOMMEND", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
+
+
+
+
+
+        try {
+
+            // Get bundle config string.
+            RecEngineRuleList recEngineRuleList = new RecEngineRuleList(ruleList);
+            ObjectMapper objectMapper = new ObjectMapper();
+            String ruleConfigString = objectMapper.writeValueAsString(recEngineRuleList);
+
+            // Update bundle config.
+            recEngineRepository.save(new RecEngine(RULE_CONFIG_ID, RULES, ruleConfigString));
+
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new ServerException(Strings.REC_ENGINE_BUNDLE_CONFIG_UPDATE_FAILED);
+        }
+
+    }
+
+
+
 
 
 

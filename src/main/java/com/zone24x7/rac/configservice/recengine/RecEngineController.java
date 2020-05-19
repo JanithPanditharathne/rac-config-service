@@ -1,9 +1,16 @@
 package com.zone24x7.rac.configservice.recengine;
 
+import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Rest controller for rec engine.
@@ -64,13 +71,41 @@ public class RecEngineController {
 
 
 
+
+    /**
+     * Update all configs.
+     *
+     * @return update process status.
+     * @throws ServerException if any server errors occurs.
+     */
+    @PutMapping("/recEngine/update/all")
+    public CSResponse updateAllConfigs() throws ServerException {
+
+        // Update bundle configs.
+        recEngineService.updateBundleConfig();
+
+        // Update rule configs.
+        recEngineService.updateRuleConfig();
+
+        // Return status.
+        return new CSResponse(Strings.SUCCESS, Strings.REC_ENGINE_CONFIG_UPDATE_PROCESS_STARTED);
+    }
+
+
+
+
+
+
+
+
+
     /**
      * Add bundle json.
      *
      * @param config Bundle config json
      * @return Response
      */
-    @PostMapping(path = "/recEngine/bundles")
+    @PostMapping("/recEngine/bundles")
     public CSResponse addBundleConfig(@RequestBody String config) {
         return recEngineService.addBundleConfig(config);
     }
@@ -81,7 +116,7 @@ public class RecEngineController {
      * @param ruleJson Rule config json
      * @return Response
      */
-    @PostMapping(path = "/recEngine/rules")
+    @PostMapping("/recEngine/rules")
     public CSResponse addRuleConfig(@RequestBody String ruleJson) {
         return recEngineService.addRuleConfig(ruleJson);
     }
@@ -92,7 +127,7 @@ public class RecEngineController {
      * @param recJson Rec config json
      * @return Response
      */
-    @PostMapping(path = "/recEngine/recs")
+    @PostMapping("/recEngine/recs")
     public CSResponse addRecConfig(@RequestBody String recJson) {
         return recEngineService.addRecConfig(recJson);
     }
@@ -103,7 +138,7 @@ public class RecEngineController {
      * @param recSlotJson Rec slot config json
      * @return Response
      */
-    @PostMapping(path = "/recEngine/recSlots")
+    @PostMapping("/recEngine/recSlots")
     public CSResponse addRecSlotConfig(@RequestBody String recSlotJson) {
         return recEngineService.addRecSlotConfig(recSlotJson);
     }

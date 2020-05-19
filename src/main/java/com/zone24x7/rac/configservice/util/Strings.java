@@ -67,6 +67,8 @@ public class Strings {
 
 
     // Rec Engine
-    public static final String REC_ENGINE_BUNDLE_CONFIG_UPDATE_FAILED = "CS-7000:Rec engine bundle config update failed";
+    public static final String REC_ENGINE_CONFIG_UPDATE_PROCESS_STARTED = "CS-7000:Rec engine config update process started";
+    public static final String REC_ENGINE_BUNDLE_CONFIG_UPDATE_FAILED = "CS-7002:Rec engine bundle config update failed";
+
 
 }
