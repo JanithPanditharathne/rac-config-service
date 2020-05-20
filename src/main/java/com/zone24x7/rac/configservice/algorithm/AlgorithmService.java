@@ -79,7 +79,7 @@ public class AlgorithmService {
         algorithmRepository.save(algorithm);
 
         // Return status response.
-        return new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_ADD_SUCCESS);
+        return new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_ADDED_SUCCESSFULLY);
 
     }
 
@@ -106,7 +106,7 @@ public class AlgorithmService {
         algorithmRepository.save(algorithm);
 
         // Return status response.
-        return new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_UPDATE_SUCCESS);
+        return new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_UPDATED_SUCCESSFULLY);
     }
 
 
@@ -138,6 +138,6 @@ public class AlgorithmService {
         algorithmRepository.deleteById(id);
 
         // Return status response.
-        return new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_DELETE_SUCCESS);
+        return new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_DELETED_SUCCESSFULLY);
     }
 }

@@ -6,7 +6,8 @@ import com.zone24x7.rac.configservice.util.Strings;
 import static com.zone24x7.rac.configservice.util.Strings.ALGORITHM_NAME_CANNOT_BE_EMPTY;
 import static com.zone24x7.rac.configservice.util.Strings.ALGORITHM_NAME_CANNOT_BE_NULL;
 
-public class AlgorithmValidations {
+public final class AlgorithmValidations {
+
 
     private AlgorithmValidations() {
     }

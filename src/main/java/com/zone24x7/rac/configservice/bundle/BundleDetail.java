@@ -7,9 +7,10 @@ public class BundleDetail {
     private int id;
     private String name;
     private int defaultLimit;
+    private List<BundleAlgorithmDetail> algorithms;
     private boolean combineEnabled;
     private String combineDisplayText;
-    private List<BundleAlgorithmDetail> algorithms;
+
 
     public BundleDetail() {
     }

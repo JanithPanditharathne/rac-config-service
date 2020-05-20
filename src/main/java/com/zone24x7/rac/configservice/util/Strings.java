@@ -28,28 +28,28 @@ public class Strings {
     // -------------------------------------------------------
     // Algorithms
     public static final String ALGORITHM_ID_INVALID = "CS-1000:Invalid algorithm id";
-    public static final String ALGORITHM_ADD_SUCCESS = "CS-1001:Algorithm added successfully";
-    public static final String ALGORITHM_UPDATE_SUCCESS = "CS-1002:Algorithm updated successfully";
+    public static final String ALGORITHM_ADDED_SUCCESSFULLY = "CS-1001:Algorithm added successfully";
+    public static final String ALGORITHM_UPDATED_SUCCESSFULLY = "CS-1002:Algorithm updated successfully";
     public static final String ALGORITHM_ID_ALREADY_EXISTS = "CS-1003:Algorithm id already exists";
     public static final String ALGORITHM_NAME_CANNOT_BE_NULL = "CS-1004:Algorithm name cannot be null";
     public static final String ALGORITHM_NAME_CANNOT_BE_EMPTY = "CS-1005:Algorithm name cannot be empty";
-    public static final String ALGORITHM_DELETE_SUCCESS = "CS-1006:Algorithm deleted successfully";
+    public static final String ALGORITHM_DELETED_SUCCESSFULLY = "CS-1006:Algorithm deleted successfully";
     public static final String ALGORITHM_ID_ALREADY_USE_IN_BUNDLES = "CS-1007:Algorithm id already use in bundles";
-    public static final String ALGORITHM_DOES_NOT_EXIST = "CS-1008:Algorithm does not exist";
+    public static final String ALGORITHM_ID_DOES_NOT_EXIST = "CS-1008:Algorithm id does not exist";
 
     // Bundles
     public static final String BUNDLE_ID_INVALID = "CS-2000:Invalid bundle id";
-    public static final String BUNDLE_ADD_SUCCESS = "CS-2001:Bundle added successfully";
-    public static final String BUNDLE_NAME_CANNOT_BE_NULL = "CS-2002:Bundle name field is missing";
+    public static final String BUNDLE_ADDED_SUCCESSFULLY = "CS-2001:Bundle added successfully";
+    public static final String BUNDLE_NAME_CANNOT_BE_NULL = "CS-2002:Bundle name cannot be null";
     public static final String BUNDLE_NAME_CANNOT_BE_EMPTY = "CS-2003:Bundle name cannot be empty";
-    public static final String BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_NULL = "CS-2004:Bundle combine display text field is missing";
+    public static final String BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_NULL = "CS-2004:Bundle combine display text cannot be null";
     public static final String BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_EMPTY = "CS-2005:Bundle combine display text cannot be empty";
-    public static final String ALGORITHMS_CANNOT_BE_NULL = "CS-2006:Bundle algorithms field is missing";
+    public static final String ALGORITHMS_CANNOT_BE_NULL = "CS-2006:Bundle algorithms cannot be null";
     public static final String ALGORITHMS_CANNOT_BE_EMPTY = "CS-2007:Bundle algorithms cannot be empty";
     public static final String BUNDLE_CUSTOM_DISPLAY_TEXT_CANNOT_BE_NULL = "CS-2008:Bundle custom display text field is missing";
     public static final String BUNDLE_CUSTOM_DISPLAY_TEXT_CANNOT_BE_EMPTY = "CS-2009:Bundle custom display text cannot be empty";
-    public static final String BUNDLE_UPDATE_SUCCESS = "CS-2010:Bundle updated successfully";
-    public static final String BUNDLE_DELETE_SUCCESS = "CS-2011:Bundle deleted successfully";
+    public static final String BUNDLE_UPDATED_SUCCESSFULLY = "CS-2010:Bundle updated successfully";
+    public static final String BUNDLE_DELETED_SUCCESSFULLY = "CS-2011:Bundle deleted successfully";
 
 
     // Metadata

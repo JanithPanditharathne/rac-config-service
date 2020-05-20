@@ -223,7 +223,7 @@ class AlgorithmServiceTest {
         void testAddAlgorithmForCorrectValues() throws Exception {
 
             // Expected
-            CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_ADD_SUCCESS);
+            CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_ADDED_SUCCESSFULLY);
 
             // Mock
             Algorithm algorithm = new Algorithm(100, "Top Trending", "TT algorithm description", "Top Trending");
@@ -323,7 +323,7 @@ class AlgorithmServiceTest {
         void testUpdateAlgorithmForCorrectValues() throws Exception {
 
             // Expected
-            CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_UPDATE_SUCCESS);
+            CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_UPDATED_SUCCESSFULLY);
 
             // Mock
             Algorithm algorithm = new Algorithm(100, "Top Trending", "TT algorithm description", "Top Trending");
@@ -433,7 +433,7 @@ class AlgorithmServiceTest {
         void testDeleteAlgorithm() throws Exception {
 
             // Expected
-            CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_DELETE_SUCCESS);
+            CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_DELETED_SUCCESSFULLY);
 
             // Mock
             Algorithm algorithm = new Algorithm(100, "Top Trending", "TT algorithm description", "");

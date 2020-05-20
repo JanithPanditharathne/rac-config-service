@@ -2,6 +2,7 @@ package com.zone24x7.rac.configservice.bundle;
 
 import com.zone24x7.rac.configservice.algorithm.Algorithm;
 import com.zone24x7.rac.configservice.algorithm.AlgorithmRepository;
+import com.zone24x7.rac.configservice.algorithm.AlgorithmValidations;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
@@ -43,7 +44,7 @@ public class BundleService {
      * @return All bundles
      */
     public BundleList getAllBundles() {
-        return new BundleList(bundleRepository.findAll());
+        return new BundleList(bundleRepository.findAllByOrderByIdDesc());
     }
 
     /**
@@ -101,53 +102,25 @@ public class BundleService {
      */
     public CSResponse addBundle(BundleDetail bundleDetail) throws ValidationException, ServerException {
 
-        // Validate bundle name.
-        BundleValidations.validateName(bundleDetail.getName());
+        // Validate bundle detail.
+        validateBundleDetail(bundleDetail);
 
-        // Validate combine display text when combine enabled.
-        if (bundleDetail.isCombineEnabled()) {
+        // Save new bundle.
+        Bundle bundle = bundleRepository.save(new Bundle(bundleDetail.getName(), bundleDetail.getDefaultLimit(),
+                bundleDetail.isCombineEnabled(), bundleDetail.getCombineDisplayText()));
 
-            // Validate combined display text.
-            BundleValidations.validateCombinedDisplayText(bundleDetail.getCombineDisplayText());
-        }
 
-        // Get algorithms.
-        List<BundleAlgorithmDetail> algorithms = bundleDetail.getAlgorithms();
+        // Save new bundle-algorithm associations.
+        bundleDetail.getAlgorithms().forEach(a -> {
+            BundleAlgorithm bundleAlgorithm = new BundleAlgorithm(bundle.getId(), a.getId(), a.getCustomDisplayText(), a.getRank());
+            bundleAlgorithmRepository.save(bundleAlgorithm);
+        });
 
-        // Validate algorithms.
-        BundleValidations.validateAlgorithms(algorithms);
-
-        // Validate whether algorithms are valid.
-        for (BundleAlgorithmDetail bundleAlgorithmDetail : algorithms) {
-
-            Optional<Algorithm> algorithmOptional = algorithmRepository.findById(bundleAlgorithmDetail.getId());
-
-            if (!algorithmOptional.isPresent()) {
-                throw new ValidationException(ALGORITHM_DOES_NOT_EXIST + " (" + bundleAlgorithmDetail.getId() + ")");
-            }
-        }
-
-        Bundle bundle = new Bundle();
-        bundle.setName(bundleDetail.getName());
-        bundle.setDefaultLimit(bundleDetail.getDefaultLimit());
-        bundle.setCombineEnabled(bundleDetail.isCombineEnabled());
-        bundle.setCombineDisplayText(bundleDetail.getCombineDisplayText());
-
-        // Save bundle.
-        bundleRepository.save(bundle);
-        LOGGER.info("Bundle saved to db");
-
-        // Iterate through algorithms.
-        saveBundleAlgorithms(algorithms, bundle.getId());
-
-        LOGGER.info("Bundle - algorithm associations saved to db");
-
-        LOGGER.info(BUNDLE_CONFIG_UPDATE);
-
-        // Update rec engine bundle list.
+        // Update rec engine bundle config.
         recEngineService.updateBundleConfig();
 
-        return new CSResponse(SUCCESS, BUNDLE_ADD_SUCCESS);
+        // Return status.
+        return new CSResponse(SUCCESS, BUNDLE_ADDED_SUCCESSFULLY);
     }
 
     /**
@@ -161,16 +134,48 @@ public class BundleService {
      */
     public CSResponse editBundle(int bundleID, BundleDetail bundleDetail) throws ValidationException, ServerException {
 
-        // Retrieve bundle for the given ID.
-        Optional<Bundle> bundleOptional = bundleRepository.findById(bundleID);
+        // Validate bundle id.
+        BundleValidations.validateID(bundleID);
 
-        // Validate bundle ID.
-        if (!bundleOptional.isPresent()) {
-            throw new ValidationException(BUNDLE_ID_INVALID);
-        }
+        // Validate bundle detail.
+        validateBundleDetail(bundleDetail);
 
-        // Set bundle ID.
-        bundleDetail.setId(bundleID);
+
+        // Update bundle details in db.
+        Bundle bundle = new Bundle(bundleDetail.getName(), bundleDetail.getDefaultLimit(), bundleDetail.isCombineEnabled(), bundleDetail.getCombineDisplayText());
+        bundle.setId(bundleID);
+        bundleRepository.save(bundle);
+
+
+        // Find all existing bundle-algorithm associations for given bundle id.
+        List<BundleAlgorithm> allBundleAlgorithms = bundleAlgorithmRepository.findAllByBundleID(bundleID);
+
+        // Delete all existing bundle-algorithm associations for given bundle id.
+        allBundleAlgorithms.forEach(bundleAlgorithm -> bundleAlgorithmRepository.delete(bundleAlgorithm));
+
+
+        // Save new bundle-algorithm associations.
+        bundleDetail.getAlgorithms().forEach(a -> {
+            BundleAlgorithm bundleAlgorithm = new BundleAlgorithm(bundleID, a.getId(), a.getCustomDisplayText(), a.getRank());
+            bundleAlgorithmRepository.save(bundleAlgorithm);
+        });
+
+
+        // Update rec engine bundle config.
+        recEngineService.updateBundleConfig();
+
+        // Return status.
+        return new CSResponse(SUCCESS, BUNDLE_UPDATED_SUCCESSFULLY);
+    }
+
+
+    /**
+     * Validate bundle details.
+     *
+     * @param bundleDetail bundle detail
+     * @throws ValidationException if validation fail
+     */
+    private void validateBundleDetail(BundleDetail bundleDetail) throws ValidationException {
 
         // Validate bundle name.
         BundleValidations.validateName(bundleDetail.getName());
@@ -185,53 +190,26 @@ public class BundleService {
         // Get algorithms.
         List<BundleAlgorithmDetail> algorithms = bundleDetail.getAlgorithms();
 
-        // Validate algorithms.
+        // Validate algorithms array.
         BundleValidations.validateAlgorithms(algorithms);
 
-        // Validate whether algorithms are valid.
+        // Validate each algorithms are valid.
         for (BundleAlgorithmDetail bundleAlgorithmDetail : algorithms) {
 
-            Optional<Algorithm> algorithmOptional = algorithmRepository.findById(bundleAlgorithmDetail.getId());
+            // Check algorithm id.
+            AlgorithmValidations.validateID(bundleAlgorithmDetail.getId());
 
+            // Check algorithm id is exists.
+            Optional<Algorithm> algorithmOptional = algorithmRepository.findById(bundleAlgorithmDetail.getId());
             if (!algorithmOptional.isPresent()) {
-                throw new ValidationException(ALGORITHM_DOES_NOT_EXIST + " (" + bundleAlgorithmDetail.getId() + ")");
+                throw new ValidationException(ALGORITHM_ID_DOES_NOT_EXIST + " (" + bundleAlgorithmDetail.getId() + ")");
             }
         }
-
-        Bundle bundle = bundleOptional.get();
-        bundle.setName(bundleDetail.getName());
-        bundle.setDefaultLimit(bundleDetail.getDefaultLimit());
-        bundle.setCombineEnabled(bundleDetail.isCombineEnabled());
-        bundle.setCombineDisplayText(bundleDetail.getCombineDisplayText());
-
-        // Save bundle.
-        bundleRepository.save(bundle);
-        LOGGER.info("Bundle saved to db");
-
-        // Get all bundle - algorithm associations.
-        List<BundleAlgorithm> allBundleAlgorithms = bundleAlgorithmRepository.findAllByBundleID(bundleID);
-
-        // Iterate through list.
-        for (BundleAlgorithm bundleAlgorithm : allBundleAlgorithms) {
-
-            // Delete association from DB.
-            bundleAlgorithmRepository.delete(bundleAlgorithm);
-        }
-
-        LOGGER.info("Existing bundle - algorithm associations removed from db");
-
-        // Iterate through algorithms.
-        saveBundleAlgorithms(algorithms, bundleID);
-
-        LOGGER.info("New bundle - algorithm associations saved to db");
-
-        LOGGER.info(BUNDLE_CONFIG_UPDATE);
-
-        // Update rec engine bundle list.
-        recEngineService.updateBundleConfig();
-
-        return new CSResponse(SUCCESS, BUNDLE_UPDATE_SUCCESS);
     }
+
+
+
+
 
     /**
      * Save bundle - algorithm associations.
@@ -293,6 +271,6 @@ public class BundleService {
         // Update rec engine bundle list.
         recEngineService.updateBundleConfig();
 
-        return new CSResponse(SUCCESS, BUNDLE_DELETE_SUCCESS);
+        return new CSResponse(SUCCESS, BUNDLE_DELETED_SUCCESSFULLY);
     }
 }

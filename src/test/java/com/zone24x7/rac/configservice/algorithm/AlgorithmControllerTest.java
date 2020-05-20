@@ -84,7 +84,7 @@ class AlgorithmControllerTest {
     void addAlgorithm() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS, Strings.ALGORITHM_ADD_SUCCESS);
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.ALGORITHM_ADDED_SUCCESSFULLY);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -111,7 +111,7 @@ class AlgorithmControllerTest {
     void updateAlgorithm() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS, Strings.ALGORITHM_UPDATE_SUCCESS);
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.ALGORITHM_UPDATED_SUCCESSFULLY);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -138,7 +138,7 @@ class AlgorithmControllerTest {
     void deleteAlgorithm() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS, Strings.ALGORITHM_DELETE_SUCCESS);
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.ALGORITHM_DELETED_SUCCESSFULLY);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 

@@ -344,7 +344,7 @@ class BundleServiceTest {
         void testAddBundleWithInvalidAlgorithmID() {
 
             // Expected
-            String expected = Strings.ALGORITHM_DOES_NOT_EXIST + " (1001)";
+            String expected = Strings.ALGORITHM_ID_DOES_NOT_EXIST + " (1001)";
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -374,7 +374,7 @@ class BundleServiceTest {
             when(algorithmRepository.findById(anyInt())).thenReturn(Optional.of(algorithm));
 
             // Expected
-            CSResponse expected = new CSResponse(SUCCESS, BUNDLE_ADD_SUCCESS);
+            CSResponse expected = new CSResponse(SUCCESS, BUNDLE_ADDED_SUCCESSFULLY);
 
 
             BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(11, "Top Trending", 0,
@@ -610,7 +610,7 @@ class BundleServiceTest {
             void testEditBundleWithInvalidAlgorithmID() {
 
                 // Expected
-                String expected = Strings.ALGORITHM_DOES_NOT_EXIST + " (1001)";
+                String expected = Strings.ALGORITHM_ID_DOES_NOT_EXIST + " (1001)";
 
                 // Mock
                 Bundle bundle = mock(Bundle.class);
@@ -651,7 +651,7 @@ class BundleServiceTest {
                 when(bundleAlgorithmRepository.findAllByBundleID(anyInt())).thenReturn(allBundleAlgorithms);
 
                 // Expected
-                CSResponse expected = new CSResponse(SUCCESS, BUNDLE_UPDATE_SUCCESS);
+                CSResponse expected = new CSResponse(SUCCESS, BUNDLE_UPDATED_SUCCESSFULLY);
 
 
                 BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(11, "Top Trending", 0,
@@ -709,7 +709,7 @@ class BundleServiceTest {
             when(bundleAlgorithmRepository.findAllByBundleID(anyInt())).thenReturn(allBundleAlgorithms);
 
             // Expected
-            CSResponse expected = new CSResponse(SUCCESS, BUNDLE_DELETE_SUCCESS);
+            CSResponse expected = new CSResponse(SUCCESS, BUNDLE_DELETED_SUCCESSFULLY);
 
             // Actual
             CSResponse actual = bundleService.deleteBundle(1);

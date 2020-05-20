@@ -103,7 +103,7 @@ class BundleControllerTest {
     void addBundle() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS, Strings.BUNDLE_ADD_SUCCESS);
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.BUNDLE_ADDED_SUCCESSFULLY);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -137,7 +137,7 @@ class BundleControllerTest {
     void editBundle() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS, Strings.BUNDLE_UPDATE_SUCCESS);
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.BUNDLE_UPDATED_SUCCESSFULLY);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
@@ -171,7 +171,7 @@ class BundleControllerTest {
     void deleteBundle() throws Exception {
 
         // Expected
-        CSResponse csResponse = new CSResponse(SUCCESS, Strings.BUNDLE_DELETE_SUCCESS);
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.BUNDLE_DELETED_SUCCESSFULLY);
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 

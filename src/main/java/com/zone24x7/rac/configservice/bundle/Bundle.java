@@ -19,6 +19,17 @@ public class Bundle {
     @Column(name = "combine_display_text")
     private String combineDisplayText;
 
+
+    public Bundle() {
+    }
+
+    public Bundle(String name, int defaultLimit, boolean combineEnabled, String combineDisplayText) {
+        this.name = name;
+        this.defaultLimit = defaultLimit;
+        this.combineEnabled = combineEnabled;
+        this.combineDisplayText = combineDisplayText;
+    }
+
     public int getId() {
         return id;
     }
