@@ -138,7 +138,7 @@ public class RecEngineService {
                 );
 
                 // Add rec engine bundle config to the list.
-                bundleList.add(new RecEngineBundle(b.getId(), b.getName(), null, bundleDetail.getDefaultLimit(), algorithms, algorithmCombineInfo));
+                bundleList.add(new RecEngineBundle(b.getId(), b.getName(), "FLAT", bundleDetail.getDefaultLimit(), algorithms, algorithmCombineInfo));
 
 
             } catch (ValidationException e) {
