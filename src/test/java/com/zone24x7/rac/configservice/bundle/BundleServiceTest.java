@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,44 +47,51 @@ class BundleServiceTest {
 
     @Test
     @DisplayName("get all bundles method")
-    void getAllBundles() {
-        List<Bundle> expectedBundles = new ArrayList<>();
-        Bundle bundle = new Bundle();
+    void testGetAllBundles() {
 
-        expectedBundles.add(bundle);
-        when(bundleRepository.findAll()).thenReturn(expectedBundles);
+        // Expected
+        List<Bundle> bundleList = new ArrayList<>();
+        bundleList.add(new Bundle("Bundle 1", 5, false, null));
+        bundleList.add(new Bundle("Bundle 2", 5, true, "Sample text"));
 
-        BundleList actualBundles = bundleService.getAllBundles();
+        // Setup repository method findAllByOrderByIdDesc() return value.
+        when(bundleRepository.findAllByOrderByIdDesc()).thenReturn(bundleList);
 
-        assertEquals(expectedBundles.size(), actualBundles.getBundles().size());
+        // Actual
+        BundleList actual = bundleService.getAllBundles();
+
+        // Assert
+        assertEquals(bundleList.size(), actual.getBundles().size());
     }
 
     @Nested
-    @DisplayName("get bundle")
+    @DisplayName("get bundle method")
     class GetBundle {
 
         @Test
-        @DisplayName("invalid bundle id")
-        void testGetBundleWithInvalidBundleID() {
+        @DisplayName("test for invalid bundle id")
+        void testGetBundleForInvalidBundleID() {
 
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                bundleService.getBundle(100);
+                // Mock (invalid bundle id)
+                Bundle bundle = new Bundle("Bundle 1", 5, false, null);
+                bundle.setId(999);
+                when(bundleRepository.findById(bundle.getId())).thenReturn(Optional.empty());
+
+                // Get bundle.
+                bundleService.getBundle(bundle.getId());
             });
-
-
-            // Expected
-            String expected = Strings.BUNDLE_ID_INVALID;
 
             // Actual
             String actual = validationException.getMessage();
 
             // Assert
-            assertEquals(expected, actual);
+            assertEquals(Strings.BUNDLE_ID_INVALID, actual);
         }
 
         @Test
-        @DisplayName("valid bundle id")
-        void testGetBundleWithValidBundleID() throws Exception {
+        @DisplayName("test for valid bundle id")
+        void testGetBundleForValidBundleID() throws Exception {
 
             // Mock
             Bundle bundle = mock(Bundle.class);
@@ -130,25 +138,20 @@ class BundleServiceTest {
     }
 
     @Nested
-    @DisplayName("add bundle")
+    @DisplayName("add bundle method")
     class AddBundle {
 
         @Test
-        @DisplayName("missing bundle name")
-        void testAddBundleWithMissingName() {
-
-            // Expected
-            String expected = Strings.BUNDLE_NAME_CANNOT_BE_NULL;
+        @DisplayName("test for null bundle name")
+        void testAddBundleForNullBundleName() {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
                 BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
                                                                                            "Top Trending",
                                                                                            "Top Trending Products");
-
-                BundleDetail bundleDetail = new BundleDetail(0, null, 2,
-                                                                false, "Test",
-                                                                Arrays.asList(bundleAlgorithmDetail));
+                BundleDetail bundleDetail = new BundleDetail(0, null, 2, false, "Test",
+                        Collections.singletonList(bundleAlgorithmDetail));
 
                 bundleService.addBundle(bundleDetail);
             });
@@ -157,15 +160,12 @@ class BundleServiceTest {
             String actual = exception.getMessage();
 
             // Assert
-            assertEquals(expected, actual);
+            assertEquals(Strings.BUNDLE_NAME_CANNOT_BE_NULL, actual);
         }
 
         @Test
-        @DisplayName("empty bundle name")
-        void testAddBundleWithEmptyName() {
-
-            // Expected
-            String expected = Strings.BUNDLE_NAME_CANNOT_BE_EMPTY;
+        @DisplayName("test for empty bundle name")
+        void testAddBundleForEmptyBundleName() {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -184,15 +184,12 @@ class BundleServiceTest {
             String actual = exception.getMessage();
 
             // Assert
-            assertEquals(expected, actual);
+            assertEquals(Strings.BUNDLE_NAME_CANNOT_BE_EMPTY, actual);
         }
 
         @Test
-        @DisplayName("missing combined display text")
-        void testAddBundleWithMissingCombinedDisplayTextWhenCombinedEnabled() {
-
-            // Expected
-            String expected = Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_NULL;
+        @DisplayName("test for null combined display text when combined enabled is true")
+        void testAddBundleForNullCombinedDisplayTextWhenCombinedEnabled() {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -202,7 +199,7 @@ class BundleServiceTest {
 
                 BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                 true, null,
-                                                                Arrays.asList(bundleAlgorithmDetail));
+                        Collections.singletonList(bundleAlgorithmDetail));
 
                 bundleService.addBundle(bundleDetail);
             });
@@ -211,15 +208,12 @@ class BundleServiceTest {
             String actual = exception.getMessage();
 
             // Assert
-            assertEquals(expected, actual);
+            assertEquals(Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_NULL, actual);
         }
 
         @Test
-        @DisplayName("empty combined display text")
-        void testAddBundleWithEmptyCombinedDisplayTextWhenCombinedEnabled() {
-
-            // Expected
-            String expected = Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_EMPTY;
+        @DisplayName("test for empty combined display text when combined enabled is true")
+        void testAddBundleForEmptyCombinedDisplayTextWhenCombinedEnabled() {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -229,7 +223,7 @@ class BundleServiceTest {
 
                 BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                 true, "",
-                                                                Arrays.asList(bundleAlgorithmDetail));
+                        Collections.singletonList(bundleAlgorithmDetail));
 
                 bundleService.addBundle(bundleDetail);
             });
@@ -238,15 +232,12 @@ class BundleServiceTest {
             String actual = exception.getMessage();
 
             // Assert
-            assertEquals(expected, actual);
+            assertEquals(Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_EMPTY, actual);
         }
 
         @Test
-        @DisplayName("missing algorithms")
-        void testAddBundleWithMissingAlgorithms() {
-
-            // Expected
-            String expected = Strings.ALGORITHMS_CANNOT_BE_NULL;
+        @DisplayName("test for null algorithms")
+        void testAddBundleForNullAlgorithms() {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -261,15 +252,12 @@ class BundleServiceTest {
             String actual = exception.getMessage();
 
             // Assert
-            assertEquals(expected, actual);
+            assertEquals(Strings.ALGORITHMS_CANNOT_BE_NULL, actual);
         }
 
         @Test
-        @DisplayName("empty algorithms")
-        void testAddBundleWithEmptyAlgorithms() {
-
-            // Expected
-            String expected = Strings.ALGORITHMS_CANNOT_BE_EMPTY;
+        @DisplayName("test for empty algorithms")
+        void testAddBundleForEmptyAlgorithms() {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -284,64 +272,14 @@ class BundleServiceTest {
             String actual = exception.getMessage();
 
             // Assert
-            assertEquals(expected, actual);
+            assertEquals(Strings.ALGORITHMS_CANNOT_BE_EMPTY, actual);
         }
 
-        @Test
-        @DisplayName("missing custom display text")
-        void testAddBundleWithMissingCustomDisplayText() {
 
-            // Expected
-            String expected = Strings.BUNDLE_CUSTOM_DISPLAY_TEXT_CANNOT_BE_NULL;
-
-            Exception exception = assertThrows(ValidationException.class, () -> {
-
-                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
-                                                                                           "Top Trending", null);
-
-                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
-                                                                true, "Test 1",
-                                                                Arrays.asList(bundleAlgorithmDetail));
-
-                bundleService.addBundle(bundleDetail);
-            });
-
-            // Actual
-            String actual = exception.getMessage();
-
-            // Assert
-            assertEquals(expected, actual);
-        }
 
         @Test
-        @DisplayName("empty custom display text")
-        void testAddBundleWithEmptyCustomDisplayText() {
-
-            // Expected
-            String expected = Strings.BUNDLE_CUSTOM_DISPLAY_TEXT_CANNOT_BE_EMPTY;
-
-            Exception exception = assertThrows(ValidationException.class, () -> {
-
-                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
-                                                                                           "Top Trending", "");
-
-                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
-                                                                true, "Test 1",
-                                                                Arrays.asList(bundleAlgorithmDetail));
-
-                bundleService.addBundle(bundleDetail);
-            });
-
-            // Actual
-            String actual = exception.getMessage();
-
-            // Assert
-            assertEquals(expected, actual);
-        }
-
-        @Test
-        @DisplayName("invalid algorithm id")
-        void testAddBundleWithInvalidAlgorithmID() {
+        @DisplayName("test for invalid algorithm id")
+        void testAddBundleForInvalidAlgorithmID() {
 
             // Expected
             String expected = Strings.ALGORITHM_ID_DOES_NOT_EXIST + " (1001)";
@@ -353,7 +291,7 @@ class BundleServiceTest {
 
                 BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
                                                                 true, "Test 1",
-                                                                Arrays.asList(bundleAlgorithmDetail));
+                        Collections.singletonList(bundleAlgorithmDetail));
 
                 bundleService.addBundle(bundleDetail);
             });
@@ -366,12 +304,8 @@ class BundleServiceTest {
         }
 
         @Test
-        @DisplayName("correct values")
-        void testAddBundleWithCorrectValues() throws ValidationException, ServerException {
-
-            // Mock
-            Algorithm algorithm = mock(Algorithm.class);
-            when(algorithmRepository.findById(anyInt())).thenReturn(Optional.of(algorithm));
+        @DisplayName("test for correct values")
+        void testAddBundleForCorrectValues() throws ValidationException, ServerException {
 
             // Expected
             CSResponse expected = new CSResponse(SUCCESS, BUNDLE_ADDED_SUCCESSFULLY);
@@ -380,9 +314,25 @@ class BundleServiceTest {
             BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(11, "Top Trending", 0,
                                                                                        "Top Trending", "Custom");
 
-            BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
-                                                            true, "Test 1",
-                                                            Arrays.asList(bundleAlgorithmDetail));
+            BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2, true, "Test 1",
+                    Collections.singletonList(bundleAlgorithmDetail));
+
+            // Mock algorithm.
+            Algorithm algorithm = new Algorithm();
+            when(algorithmRepository.findById(anyInt())).thenReturn(Optional.of(algorithm));
+
+            // Mock bundle.
+            Bundle bundle = new Bundle("Bundle 1", 5, false, null);
+            bundle.setId(123);
+            when(bundleRepository.save(any(Bundle.class))).thenReturn(bundle);
+
+            // Mock bundle algorithm
+            BundleAlgorithm bundleAlgorithm = new BundleAlgorithm(bundle.getId(), 100, "Sample text", 0);
+            bundleAlgorithmRepository.save(bundleAlgorithm);
+
+            // Verify bundle-algorithm save method is called.
+            verify(bundleAlgorithmRepository, times(1)).save(bundleAlgorithm);
+
 
             // Actual
             CSResponse actual = bundleService.addBundle(bundleDetail);
@@ -391,298 +341,282 @@ class BundleServiceTest {
             assertEquals(expected.getStatus(), actual.getStatus());
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
-            verify(bundleRepository, times(1)).save(any());
-            verify(bundleAlgorithmRepository, times(1)).save(any());
             verify(recEngineService, times(1)).updateBundleConfig();
         }
 
-        @Nested
-        @DisplayName("edit bundle")
-        class EditBundle {
 
-            @Test
-            @DisplayName("invalid bundle id")
-            void testEditBundleWithInvalidBundleID() {
+    }
 
-                // Expected
-                String expected = Strings.BUNDLE_ID_INVALID;
 
-                Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
-                                                                                               "Top Trending",
-                                                                                               "Top Trending Products");
+    @Nested
+    @DisplayName("edit bundle method")
+    class EditBundle {
 
-                    BundleDetail bundleDetail = new BundleDetail(0, null, 2,
-                                                                    false, "Test",
-                                                                    Arrays.asList(bundleAlgorithmDetail));
+        @Test
+        @DisplayName("test for invalid bundle id")
+        void testEditBundleForInvalidBundleID() {
 
-                    bundleService.editBundle(1, bundleDetail);
-                });
+            Exception exception = assertThrows(ValidationException.class, () -> {
 
-                // Actual
-                String actual = exception.getMessage();
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
+                        "Top Trending",
+                        "Top Trending Products");
 
-                // Assert
-                assertEquals(expected, actual);
-            }
+                BundleDetail bundleDetail = new BundleDetail(0, null, 2,
+                        false, "Test",
+                        Collections.singletonList(bundleAlgorithmDetail));
 
-            @Test
-            @DisplayName("missing bundle name")
-            void testEditBundleWithMissingName() {
+                bundleService.editBundle(1, bundleDetail);
+            });
 
-                // Expected
-                String expected = Strings.BUNDLE_NAME_CANNOT_BE_NULL;
+            // Actual
+            String actual = exception.getMessage();
 
-                // Mock
-                Bundle bundle = mock(Bundle.class);
-                when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
+            // Assert
+            assertEquals(Strings.BUNDLE_ID_INVALID, actual);
+        }
 
-                Exception exception = assertThrows(ValidationException.class, () -> {
+        @Test
+        @DisplayName("test for null bundle name")
+        void testEditBundleForNullBundleName() {
 
-                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
-                                                                                               "Top Trending",
-                                                                                               "Top Trending Products");
+            // Mock
+            Bundle bundle = mock(Bundle.class);
+            when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
 
-                    BundleDetail bundleDetail = new BundleDetail(0, null, 2,
-                                                                    false, "Test",
-                                                                    Arrays.asList(bundleAlgorithmDetail));
+            Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    bundleService.editBundle(1, bundleDetail);
-                });
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
+                        "Top Trending",
+                        "Top Trending Products");
 
-                // Actual
-                String actual = exception.getMessage();
+                BundleDetail bundleDetail = new BundleDetail(0, null, 2,
+                        false, "Test",
+                        Collections.singletonList(bundleAlgorithmDetail));
 
-                // Assert
-                assertEquals(expected, actual);
-            }
+                bundleService.editBundle(1, bundleDetail);
+            });
 
-            @Test
-            @DisplayName("empty bundle name")
-            void testEditBundleWithEmptyName() {
+            // Actual
+            String actual = exception.getMessage();
 
-                // Expected
-                String expected = Strings.BUNDLE_NAME_CANNOT_BE_EMPTY;
+            // Assert
+            assertEquals(Strings.BUNDLE_NAME_CANNOT_BE_NULL, actual);
+        }
 
-                // Mock
-                Bundle bundle = mock(Bundle.class);
-                when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
+        @Test
+        @DisplayName("test for empty bundle name")
+        void testEditBundleForEmptyBundleName() {
 
-                Exception exception = assertThrows(ValidationException.class, () -> {
+            // Mock
+            Bundle bundle = mock(Bundle.class);
+            when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
 
-                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
-                                                                                               "Top Trending",
-                                                                                               "Top Trending Products");
+            Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    BundleDetail bundleDetail = new BundleDetail(0, "", 2,
-                                                                    false, "Test",
-                                                                    Arrays.asList(bundleAlgorithmDetail));
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
+                        "Top Trending",
+                        "Top Trending Products");
 
-                    bundleService.editBundle(1, bundleDetail);
-                });
+                BundleDetail bundleDetail = new BundleDetail(0, "", 2,
+                        false, "Test",
+                        Collections.singletonList(bundleAlgorithmDetail));
 
-                // Actual
-                String actual = exception.getMessage();
+                bundleService.editBundle(1, bundleDetail);
+            });
 
-                // Assert
-                assertEquals(expected, actual);
-            }
+            // Actual
+            String actual = exception.getMessage();
 
-            @Test
-            @DisplayName("missing combined display text")
-            void testEditBundleWithMissingCombinedDisplayTextWhenCombinedEnabled() {
+            // Assert
+            assertEquals(Strings.BUNDLE_NAME_CANNOT_BE_EMPTY, actual);
+        }
 
-                // Expected
-                String expected = Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_NULL;
+        @Test
+        @DisplayName("test for null combined display text when combine enabled is true")
+        void testEditBundleForNullCombinedDisplayTextWhenCombinedEnabled() {
 
-                // Mock
-                Bundle bundle = mock(Bundle.class);
-                when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
+            // Mock
+            Bundle bundle = mock(Bundle.class);
+            when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
 
-                Exception exception = assertThrows(ValidationException.class, () -> {
+            Exception exception = assertThrows(ValidationException.class, () -> {
 
-                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
-                                                                                               "Top Trending",
-                                                                                               "Top Trending Products");
-
-                    BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
-                                                                    true, null,
-                                                                    Arrays.asList(bundleAlgorithmDetail));
-
-                    bundleService.editBundle(1, bundleDetail);
-                });
-
-                // Actual
-                String actual = exception.getMessage();
-
-                // Assert
-                assertEquals(expected, actual);
-            }
-
-            @Test
-            @DisplayName("empty combined display text")
-            void testEditBundleWithEmptyCombinedDisplayTextWhenCombinedEnabled() {
-
-                // Expected
-                String expected = Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_EMPTY;
-
-                // Mock
-                Bundle bundle = mock(Bundle.class);
-                when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
-
-                Exception exception = assertThrows(ValidationException.class, () -> {
-
-                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
-                                                                                               "Top Trending",
-                                                                                               "Top Trending Products");
-
-                    BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
-                                                                    true, "",
-                                                                    Arrays.asList(bundleAlgorithmDetail));
-
-                    bundleService.editBundle(1, bundleDetail);
-                });
-
-                // Actual
-                String actual = exception.getMessage();
-
-                // Assert
-                assertEquals(expected, actual);
-            }
-
-            @Test
-            @DisplayName("missing algorithms")
-            void testEditBundleWithMissingAlgorithms() {
-
-                // Expected
-                String expected = Strings.ALGORITHMS_CANNOT_BE_NULL;
-
-                // Mock
-                Bundle bundle = mock(Bundle.class);
-                when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
-
-                Exception exception = assertThrows(ValidationException.class, () -> {
-
-                    BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
-                                                                    true, "Test 1",
-                                                                    null);
-
-                    bundleService.editBundle(1, bundleDetail);
-                });
-
-                // Actual
-                String actual = exception.getMessage();
-
-                // Assert
-                assertEquals(expected, actual);
-            }
-
-            @Test
-            @DisplayName("empty algorithms")
-            void testEditBundleWithEmptyAlgorithms() {
-
-                // Expected
-                String expected = Strings.ALGORITHMS_CANNOT_BE_EMPTY;
-
-                // Mock
-                Bundle bundle = mock(Bundle.class);
-                when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
-
-                Exception exception = assertThrows(ValidationException.class, () -> {
-
-                    BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
-                                                                    true, "Test 1",
-                                                                    new ArrayList<>());
-
-                    bundleService.editBundle(1, bundleDetail);
-                });
-
-                // Actual
-                String actual = exception.getMessage();
-
-                // Assert
-                assertEquals(expected, actual);
-            }
-
-            @Test
-            @DisplayName("invalid algorithm id")
-            void testEditBundleWithInvalidAlgorithmID() {
-
-                // Expected
-                String expected = Strings.ALGORITHM_ID_DOES_NOT_EXIST + " (1001)";
-
-                // Mock
-                Bundle bundle = mock(Bundle.class);
-                when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
-
-                Exception exception = assertThrows(ValidationException.class, () -> {
-
-                    BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(1001, "Top Trending", 0,
-                                                                                               "Top Trending", "Custom");
-
-                    BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
-                                                                    true, "Test 1",
-                                                                    Arrays.asList(bundleAlgorithmDetail));
-
-                    bundleService.editBundle(1, bundleDetail);
-                });
-
-                // Actual
-                String actual = exception.getMessage();
-
-                // Assert
-                assertEquals(expected, actual);
-            }
-
-            @Test
-            @DisplayName("correct values")
-            void testEditBundleWithCorrectValues() throws ValidationException, ServerException {
-
-                // Mock
-                Bundle bundle = mock(Bundle.class);
-                when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
-
-                Algorithm algorithm = mock(Algorithm.class);
-                when(algorithmRepository.findById(anyInt())).thenReturn(Optional.of(algorithm));
-
-                List<BundleAlgorithm> allBundleAlgorithms = new ArrayList<>();
-                allBundleAlgorithms.add(mock(BundleAlgorithm.class));
-                when(bundleAlgorithmRepository.findAllByBundleID(anyInt())).thenReturn(allBundleAlgorithms);
-
-                // Expected
-                CSResponse expected = new CSResponse(SUCCESS, BUNDLE_UPDATED_SUCCESSFULLY);
-
-
-                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(11, "Top Trending", 0,
-                                                                                           "Top Trending", "Custom");
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
+                        "Top Trending",
+                        "Top Trending Products");
 
                 BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
-                                                                true, "Test 1",
-                                                                Arrays.asList(bundleAlgorithmDetail));
+                        true, null,
+                        Collections.singletonList(bundleAlgorithmDetail));
 
-                // Actual
-                CSResponse actual = bundleService.editBundle(1, bundleDetail);
+                bundleService.editBundle(1, bundleDetail);
+            });
 
-                // Assert
-                assertEquals(expected.getStatus(), actual.getStatus());
-                assertEquals(expected.getCode(), actual.getCode());
-                assertEquals(expected.getMessage(), actual.getMessage());
-                verify(bundleRepository, times(1)).save(any());
-                verify(bundleAlgorithmRepository, times(1)).delete(any());
-                verify(bundleAlgorithmRepository, times(1)).save(any());
-                verify(recEngineService, times(1)).updateBundleConfig();
-            }
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_NULL, actual);
+        }
+
+        @Test
+        @DisplayName("test for empty combined display text when combine enabled is true")
+        void testEditBundleForEmptyCombinedDisplayTextWhenCombinedEnabled() {
+
+            // Mock
+            Bundle bundle = mock(Bundle.class);
+            when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
+                        "Top Trending",
+                        "Top Trending Products");
+
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
+                        true, "",
+                        Collections.singletonList(bundleAlgorithmDetail));
+
+                bundleService.editBundle(1, bundleDetail);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_EMPTY, actual);
+        }
+
+        @Test
+        @DisplayName("test for null algorithms")
+        void testEditBundleForNullAlgorithms() {
+
+            // Mock
+            Bundle bundle = mock(Bundle.class);
+            when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
+                        true, "Test 1",
+                        null);
+
+                bundleService.editBundle(1, bundleDetail);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(Strings.ALGORITHMS_CANNOT_BE_NULL, actual);
+        }
+
+        @Test
+        @DisplayName("test for empty algorithms")
+        void testEditBundleForEmptyAlgorithms() {
+
+            // Mock
+            Bundle bundle = mock(Bundle.class);
+            when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
+                        true, "Test 1",
+                        new ArrayList<>());
+
+                bundleService.editBundle(1, bundleDetail);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(Strings.ALGORITHMS_CANNOT_BE_EMPTY, actual);
+        }
+
+        @Test
+        @DisplayName("test for invalid algorithm id")
+        void testEditBundleForInvalidAlgorithmID() {
+
+            // Expected
+            String expected = Strings.ALGORITHM_ID_DOES_NOT_EXIST + " (1001)";
+
+            // Mock
+            Bundle bundle = mock(Bundle.class);
+            when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(1001, "Top Trending", 0,
+                        "Top Trending", "Custom");
+
+                BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
+                        true, "Test 1",
+                        Collections.singletonList(bundleAlgorithmDetail));
+
+                bundleService.editBundle(1, bundleDetail);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("test for correct values")
+        void testEditBundleForCorrectValues() throws ValidationException, ServerException {
+
+            // Mock
+            Bundle bundle = mock(Bundle.class);
+            when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
+
+            Algorithm algorithm = mock(Algorithm.class);
+            when(algorithmRepository.findById(anyInt())).thenReturn(Optional.of(algorithm));
+
+            List<BundleAlgorithm> allBundleAlgorithms = new ArrayList<>();
+            allBundleAlgorithms.add(mock(BundleAlgorithm.class));
+            when(bundleAlgorithmRepository.findAllByBundleID(anyInt())).thenReturn(allBundleAlgorithms);
+
+            // Expected
+            CSResponse expected = new CSResponse(SUCCESS, BUNDLE_UPDATED_SUCCESSFULLY);
+
+
+            BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(11, "Top Trending", 0,
+                    "Top Trending", "Custom");
+
+            BundleDetail bundleDetail = new BundleDetail(0, "Bundle 1", 2,
+                    true, "Test 1",
+                    Collections.singletonList(bundleAlgorithmDetail));
+
+            // Actual
+            CSResponse actual = bundleService.editBundle(1, bundleDetail);
+
+            // Assert
+            assertEquals(expected.getStatus(), actual.getStatus());
+            assertEquals(expected.getCode(), actual.getCode());
+            assertEquals(expected.getMessage(), actual.getMessage());
+            verify(bundleRepository, times(1)).save(any());
+            verify(bundleAlgorithmRepository, times(1)).delete(any());
+            verify(bundleAlgorithmRepository, times(1)).save(any());
+            verify(recEngineService, times(1)).updateBundleConfig();
         }
     }
 
+
+
+
     @Nested
-    @DisplayName("delete bundle")
+    @DisplayName("delete bundle method")
     class DeleteBundle {
 
         @Test
-        @DisplayName("invalid bundle id")
-        void testDeleteBundleWithInvalidBundleID() {
+        @DisplayName("test for invalid bundle id")
+        void testDeleteBundleForInvalidBundleID() {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -697,8 +631,8 @@ class BundleServiceTest {
         }
 
         @Test
-        @DisplayName("with correct values")
-        void testDeleteBundleWithCorrectValues() throws ServerException, ValidationException {
+        @DisplayName("test for correct values")
+        void testDeleteBundleForCorrectValues() throws ServerException, ValidationException {
 
             // Mock
             Bundle bundle = mock(Bundle.class);

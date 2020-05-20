@@ -69,7 +69,7 @@ class AlgorithmServiceTest {
                 Algorithm algorithm = new Algorithm(999, "Invalid algorithm", "", "");
                 when(algorithmRepository.findById(algorithm.getId())).thenReturn(Optional.empty());
 
-                // Add algorithm
+                // Get algorithm
                 algorithmService.getAlgorithm(algorithm.getId());
             });
 

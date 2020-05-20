@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -68,9 +68,9 @@ class BundleControllerTest {
     void getBundleDetails() throws Exception {
 
         // Expected
-        String expected = "{\"id\":1,\"name\":\"Bundle 1\",\"defaultLimit\":5,\"combineEnabled\":false," +
-                "\"combineDisplayText\":\"Test\",\"algorithms\":[{\"id\":100,\"name\":\"Top Trending\",\"rank\":0," +
-                "\"defaultDisplayText\":\"Top Trending\",\"customDisplayText\":\"Top Trending Products\"}]}";
+        String expected = "{\"id\":1,\"name\":\"Bundle 1\",\"defaultLimit\":5,\"algorithms\":[{\"rank\":0,\"id\":100," +
+                "\"name\":\"Top Trending\",\"defaultDisplayText\":\"Top Trending\",\"customDisplayText\":\"Top " +
+                "Trending Products\"}],\"combineEnabled\":false,\"combineDisplayText\":\"Test\"}";
 
         // Mock
         BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
@@ -79,7 +79,7 @@ class BundleControllerTest {
 
         BundleDetail bundleDetail = new BundleDetail(1, "Bundle 1", 5,
                                                         false, "Test",
-                                                        Arrays.asList(bundleAlgorithmDetail));
+                Collections.singletonList(bundleAlgorithmDetail));
         Mockito.when(bundleService.getBundle(100)).thenReturn(bundleDetail);
 
         // Actual
