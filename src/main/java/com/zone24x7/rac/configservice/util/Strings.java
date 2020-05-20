@@ -1,6 +1,6 @@
 package com.zone24x7.rac.configservice.util;
 
-public class Strings {
+public final class Strings {
 
     private Strings() {
     }

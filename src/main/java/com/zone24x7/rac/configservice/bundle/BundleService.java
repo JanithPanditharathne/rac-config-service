@@ -7,8 +7,6 @@ import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.util.CSResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.ALGORITHM_ID_DOES_NOT_EXIST;
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ADDED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_DELETED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_UPDATED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 
 @Service
 public class BundleService {
@@ -33,10 +36,6 @@ public class BundleService {
     @Autowired
     private RecEngineService recEngineService;
 
-    // Logger.
-    private static final Logger LOGGER = LoggerFactory.getLogger(BundleService.class);
-
-    private static final String BUNDLE_CONFIG_UPDATE = "Updating bundles for rec engine";
 
     /**
      * Get all bundles.
@@ -56,7 +55,7 @@ public class BundleService {
      */
     public BundleDetail getBundle(int bundleID) throws ValidationException {
 
-        // Find given bundle ID from DB.
+        // Find given bundle id from db.
         Optional<Bundle> bundleOptional = bundleRepository.findById(bundleID);
 
         // If bundle not found in db, return invalid bundle id error.
@@ -137,7 +136,15 @@ public class BundleService {
         // Validate bundle id.
         BundleValidations.validateID(bundleID);
 
-        // Validate bundle detail.
+        // Retrieve bundle for the given id.
+        Optional<Bundle> bundleOptional = bundleRepository.findById(bundleID);
+
+        // Check bundle id is exists.
+        if (!bundleOptional.isPresent()) {
+            throw new ValidationException(BUNDLE_ID_INVALID);
+        }
+
+        // Validate other bundle detail.
         validateBundleDetail(bundleDetail);
 
 
@@ -170,10 +177,55 @@ public class BundleService {
 
 
     /**
+     * Delete bundle for given id.
+     *
+     * @param id Bundle ID
+     * @return   CS Response
+     * @throws ValidationException Exception to throw
+     * @throws ServerException     Server exception to throw
+     */
+    public CSResponse deleteBundle(int id) throws ValidationException, ServerException {
+
+        // Validate bundle id.
+        BundleValidations.validateID(id);
+
+        // Retrieve bundle for the given id.
+        Optional<Bundle> bundleOptional = bundleRepository.findById(id);
+
+        // Check bundle id is exists.
+        if (!bundleOptional.isPresent()) {
+            throw new ValidationException(BUNDLE_ID_INVALID);
+        }
+
+
+        // Get all bundle-algorithms associations for given bundle id.
+        List<BundleAlgorithm> allBundleAlgorithms = bundleAlgorithmRepository.findAllByBundleID(id);
+
+        // Delete bundle-algorithm associations.
+        allBundleAlgorithms.forEach(bundleAlgorithm -> bundleAlgorithmRepository.delete(bundleAlgorithm));
+
+
+        // Delete bundle.
+        Bundle bundle = bundleOptional.get();
+        bundleRepository.delete(bundle);
+
+        // Update rec engine bundle config.
+        recEngineService.updateBundleConfig();
+
+        // Return status.
+        return new CSResponse(SUCCESS, BUNDLE_DELETED_SUCCESSFULLY);
+    }
+
+
+
+
+
+
+    /**
      * Validate bundle details.
      *
-     * @param bundleDetail bundle detail
-     * @throws ValidationException if validation fail
+     * @param bundleDetail bundle detail.
+     * @throws ValidationException if validation failed.
      */
     private void validateBundleDetail(BundleDetail bundleDetail) throws ValidationException {
 
@@ -205,72 +257,5 @@ public class BundleService {
                 throw new ValidationException(ALGORITHM_ID_DOES_NOT_EXIST + " (" + bundleAlgorithmDetail.getId() + ")");
             }
         }
-    }
-
-
-
-
-
-    /**
-     * Save bundle - algorithm associations.
-     *
-     * @param algorithms Algorithms
-     * @param bundleID   Bundle ID
-     */
-    private void saveBundleAlgorithms(List<BundleAlgorithmDetail> algorithms, int bundleID) {
-
-        for (BundleAlgorithmDetail bundleAlgorithmDetail : algorithms) {
-
-            BundleAlgorithm bundleAlgorithm = new BundleAlgorithm();
-            bundleAlgorithm.setBundleID(bundleID);
-            bundleAlgorithm.setAlgorithmID(bundleAlgorithmDetail.getId());
-            bundleAlgorithm.setCustomDisplayText(bundleAlgorithmDetail.getCustomDisplayText());
-            bundleAlgorithm.setRank(bundleAlgorithmDetail.getRank());
-
-            // Save bundle - algorithm associations.
-            bundleAlgorithmRepository.save(bundleAlgorithm);
-        }
-    }
-
-    /**
-     * Delete bundle for given id.
-     *
-     * @param id Bundle ID
-     * @return   CS Response
-     * @throws ValidationException Exception to throw
-     * @throws ServerException     Server exception to throw
-     */
-    public CSResponse deleteBundle(int id) throws ValidationException, ServerException {
-
-        // Retrieve bundle for the given ID.
-        Optional<Bundle> bundleOptional = bundleRepository.findById(id);
-
-        // Validate bundle ID.
-        if (!bundleOptional.isPresent()) {
-            throw new ValidationException(BUNDLE_ID_INVALID);
-        }
-
-        // Get all bundle - algorithms associations by bundle ID.
-        List<BundleAlgorithm> allBundleAlgorithms = bundleAlgorithmRepository.findAllByBundleID(id);
-
-        // Delete bundle - algorithm associations
-        allBundleAlgorithms.forEach(bundleAlgorithm -> bundleAlgorithmRepository.delete(bundleAlgorithm));
-
-        LOGGER.info("Deleted all bundle - algorithm associations");
-
-        // Retrieve bundle.
-        Bundle bundle = bundleOptional.get();
-
-        // Remove bundle from DB.
-        bundleRepository.delete(bundle);
-
-        LOGGER.info("Deleted bundle");
-
-        LOGGER.info(BUNDLE_CONFIG_UPDATE);
-
-        // Update rec engine bundle list.
-        recEngineService.updateBundleConfig();
-
-        return new CSResponse(SUCCESS, BUNDLE_DELETED_SUCCESSFULLY);
     }
 }
