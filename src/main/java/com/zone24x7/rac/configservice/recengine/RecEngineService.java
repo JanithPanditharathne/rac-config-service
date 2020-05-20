@@ -24,6 +24,7 @@ import com.zone24x7.rac.configservice.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,7 @@ public class RecEngineService {
     private RecEngineRepository recEngineRepository;
 
     @Autowired
+    @Lazy
     private BundleService bundleService;
 
     private static final int BUNDLE_CONFIG_ID = 1;
