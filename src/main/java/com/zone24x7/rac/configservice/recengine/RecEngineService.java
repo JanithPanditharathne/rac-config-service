@@ -19,6 +19,8 @@ import com.zone24x7.rac.configservice.recengine.recslot.RecEngineRecSlot;
 import com.zone24x7.rac.configservice.recengine.recslot.RecEngineRecSlotList;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRule;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRuleList;
+import com.zone24x7.rac.configservice.rec.RecDetailList;
+import com.zone24x7.rac.configservice.rec.RecService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.slf4j.Logger;
@@ -51,6 +53,9 @@ public class RecEngineService {
     @Autowired
     @Lazy
     private BundleService bundleService;
+
+    @Autowired
+    private RecService recService;
 
     private static final int BUNDLE_CONFIG_ID = 1;
     private static final int RULE_CONFIG_ID = 2;
@@ -136,20 +141,15 @@ public class RecEngineService {
                             a.getRank(),
                             new RecEngineAlgorithm(a.getId(), a.getName(), "FLAT_ALGO", a.getDefaultDisplayText(), a.getCustomDisplayText())
                     ))
-
                 );
 
                 // Add rec engine bundle config to the list.
                 bundleList.add(new RecEngineBundle(b.getId(), b.getName(), "FLAT", bundleDetail.getDefaultLimit(), algorithms, algorithmCombineInfo));
 
-
             } catch (ValidationException e) {
                 LOGGER.info(e.getMessage(), e);
             }
-
-
         });
-
 
         try {
 
@@ -165,12 +165,7 @@ public class RecEngineService {
             LOGGER.error(e.getMessage(), e);
             throw new ServerException(Strings.REC_ENGINE_BUNDLE_CONFIG_UPDATE_FAILED);
         }
-
     }
-
-
-
-
 
     /**
      * Update rule config json.
@@ -210,13 +205,6 @@ public class RecEngineService {
 
     }
 
-
-
-
-
-
-
-
     /**
      * Update rec config json.
      *
@@ -225,18 +213,34 @@ public class RecEngineService {
     @Async("recTaskExecutor")
     public void updateRecConfig() throws ServerException {
 
+        // Get all recs.
+        RecDetailList allRecommendations = recService.getAllRecs();
 
         List<RecEngineRec> recList = new ArrayList<>();
-        recList.add(new RecEngineRec(1, "Rec 1", "REGULAR", null, new RecEngineRecRegularConfig(11), null));
-        recList.add(new RecEngineRec(2, "Rec 2", "REGULAR", null, new RecEngineRecRegularConfig(22), null));
-        recList.add(new RecEngineRec(3, "Rec 3", "REGULAR", null, new RecEngineRecRegularConfig(33), null));
 
+        allRecommendations.getRecs().forEach(recommendation -> {
 
+            // Rec details.
+            RecEngineRec recEngineRec = new RecEngineRec();
+            recEngineRec.setId(recommendation.getId());
+            recEngineRec.setName(recommendation.getName());
+            recEngineRec.setType("REGULAR");
+            recEngineRec.setMatchingCondition(null);
+
+            // Set regular config.
+            RecEngineRecRegularConfig recEngineRecRegularConfig = new RecEngineRecRegularConfig(recommendation.getBundle().getId());
+            recEngineRec.setRegularConfig(recEngineRecRegularConfig);
+
+            recEngineRec.setTestConfig(null);
+
+            recList.add(recEngineRec);
+        });
 
         try {
 
             // Get rec config string.
             RecEngineRecList recEngineRecList = new RecEngineRecList(recList);
+            recEngineRecList.setRecs(recList);
             ObjectMapper objectMapper = new ObjectMapper();
             String recConfigString = objectMapper.writeValueAsString(recEngineRecList);
 

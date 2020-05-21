@@ -76,4 +76,9 @@ public final class Strings {
     public static final String REC_ENGINE_REC_SLOT_CONFIG_UPDATE_FAILED = "CS-7005:Rec engine rec slot config update failed";
 
 
+    // Recommendation
+    public static final String REC_ID_INVALID = "CS-4000:Invalid recommendation id";
+    public static final String REC_ADD_SUCCESS = "CS-4001:Recommendation added successfully";
+    public static final String REC_NAME_CANN0T_BE_NULL = "CS-4002:Recommendation name field is missing";
+    public static final String REC_NAME_CANN0T_BE_EMPTY = "CS-4003:Recommendation name cannot be empty";
 }
