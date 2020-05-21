@@ -109,11 +109,11 @@ public class BundleService {
                 bundleDetail.isCombineEnabled(), bundleDetail.getCombineDisplayText()));
 
 
-        // Save new bundle-algorithm associations.
-        bundleDetail.getAlgorithms().forEach(a -> {
-            BundleAlgorithm bundleAlgorithm = new BundleAlgorithm(bundle.getId(), a.getId(), a.getCustomDisplayText(), a.getRank());
-            bundleAlgorithmRepository.save(bundleAlgorithm);
-        });
+        // Save all new bundle-algorithm associations.
+        List<BundleAlgorithm> bundleAlgorithms = new ArrayList<>();
+        bundleDetail.getAlgorithms().forEach(a -> bundleAlgorithms.add(new BundleAlgorithm(bundle.getId(), a.getId(),
+                a.getCustomDisplayText(), a.getRank())));
+        bundleAlgorithmRepository.saveAll(bundleAlgorithms);
 
         // Update rec engine bundle config.
         recEngineService.updateBundleConfig();
@@ -155,17 +155,16 @@ public class BundleService {
 
 
         // Find all existing bundle-algorithm associations for given bundle id.
-        List<BundleAlgorithm> allBundleAlgorithms = bundleAlgorithmRepository.findAllByBundleID(bundleID);
+        List<BundleAlgorithm> existingBundleAlgorithms = bundleAlgorithmRepository.findAllByBundleID(bundleID);
 
         // Delete all existing bundle-algorithm associations for given bundle id.
-        allBundleAlgorithms.forEach(bundleAlgorithm -> bundleAlgorithmRepository.delete(bundleAlgorithm));
+        existingBundleAlgorithms.forEach(bundleAlgorithm -> bundleAlgorithmRepository.delete(bundleAlgorithm));
 
 
-        // Save new bundle-algorithm associations.
-        bundleDetail.getAlgorithms().forEach(a -> {
-            BundleAlgorithm bundleAlgorithm = new BundleAlgorithm(bundleID, a.getId(), a.getCustomDisplayText(), a.getRank());
-            bundleAlgorithmRepository.save(bundleAlgorithm);
-        });
+        // Save all new bundle-algorithm associations.
+        List<BundleAlgorithm> newBundleAlgorithms = new ArrayList<>();
+        bundleDetail.getAlgorithms().forEach(a -> newBundleAlgorithms.add(new BundleAlgorithm(bundleID, a.getId(), a.getCustomDisplayText(), a.getRank())));
+        bundleAlgorithmRepository.saveAll(newBundleAlgorithms);
 
 
         // Update rec engine bundle config.
