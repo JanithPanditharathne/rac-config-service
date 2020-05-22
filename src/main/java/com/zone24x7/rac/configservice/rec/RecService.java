@@ -42,7 +42,7 @@ public class RecService {
         RecDetailList recDetailList = new RecDetailList();
 
         // Get all recs from the db.
-        List<Rec> allRecs = recRepository.findAll();
+        List<Rec> allRecs = recRepository.findAllByOrderByIdDesc();
         List<RecDetail> recDetails = new ArrayList<>();
 
         // Iterate the list.

@@ -7,6 +7,8 @@ import com.zone24x7.rac.configservice.bundle.BundleList;
 import com.zone24x7.rac.configservice.bundle.BundleService;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.rec.RecDetailList;
+import com.zone24x7.rac.configservice.rec.RecService;
 import com.zone24x7.rac.configservice.recengine.algorithm.RecEngineAlgorithm;
 import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundle;
 import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleAlgorithm;
@@ -19,14 +21,11 @@ import com.zone24x7.rac.configservice.recengine.recslot.RecEngineRecSlot;
 import com.zone24x7.rac.configservice.recengine.recslot.RecEngineRecSlotList;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRule;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRuleList;
-import com.zone24x7.rac.configservice.rec.RecDetailList;
-import com.zone24x7.rac.configservice.rec.RecService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +50,6 @@ public class RecEngineService {
     private RecEngineRepository recEngineRepository;
 
     @Autowired
-    @Lazy
     private BundleService bundleService;
 
     @Autowired
