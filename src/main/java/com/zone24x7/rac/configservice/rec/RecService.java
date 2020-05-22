@@ -2,6 +2,7 @@ package com.zone24x7.rac.configservice.rec;
 
 import com.zone24x7.rac.configservice.bundle.Bundle;
 import com.zone24x7.rac.configservice.bundle.BundleRepository;
+import com.zone24x7.rac.configservice.bundle.BundleValidations;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
@@ -15,7 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.REC_ADD_SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.REC_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.REC_UPDATED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 
 @Service
 public class RecService {
@@ -138,5 +143,45 @@ public class RecService {
         recEngineService.updateRecConfig();
 
         return new CSResponse(SUCCESS, REC_ADD_SUCCESS);
+    }
+
+    /**
+     * Edit rec.
+     *
+     * @param rec Rec to be saved
+     * @return    CS Response
+     * @throws ValidationException Exception to throw
+     */
+    public CSResponse editRec(int id, Rec rec) throws ValidationException, ServerException {
+
+        // Validate ID.
+        Optional<Rec> recOptional = recRepository.findById(id);
+
+        if (!recOptional.isPresent()) {
+            throw new ValidationException(REC_ID_INVALID);
+        }
+
+        // Validate name.
+        RecValidations.validateRecName(rec.getName());
+
+        // Validate bundle ID.
+        BundleValidations.validateID(rec.getBundleID());
+
+        Optional<Bundle> bundleOptional = bundleRepository.findById(rec.getBundleID());
+
+        if (!bundleOptional.isPresent()) {
+            throw new ValidationException(BUNDLE_ID_INVALID);
+        }
+
+        // Set ID.
+        rec.setId(id);
+
+        // Save rec.
+        recRepository.save(rec);
+
+        // Update recs config for rec engine.
+        recEngineService.updateRecConfig();
+
+        return new CSResponse(SUCCESS, REC_UPDATED_SUCCESSFULLY);
     }
 }

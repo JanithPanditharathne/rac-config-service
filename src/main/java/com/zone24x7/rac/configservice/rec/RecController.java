@@ -49,4 +49,15 @@ public class RecController {
     public CSResponse addRec(@RequestBody RecDetail recDetail) throws ValidationException, ServerException {
         return recService.addRec(modelMapper.map(recDetail, Rec.class));
     }
+
+    /**
+     * Edit rec.
+     * @param recDetail Rec details
+     * @return          CS Response
+     * @throws ValidationException Exception to throw
+     */
+    @PutMapping("/recs/{id}")
+    public CSResponse editRec(@PathVariable int id, @RequestBody RecDetail recDetail) throws ValidationException, ServerException {
+        return recService.editRec(id, modelMapper.map(recDetail, Rec.class));
+    }
 }

@@ -52,6 +52,13 @@ public final class Strings {
     public static final String BUNDLE_DELETED_SUCCESSFULLY = "CS-2011:Bundle deleted successfully";
 
 
+    // Recommendation
+    public static final String REC_ID_INVALID = "CS-4000:Invalid recommendation id";
+    public static final String REC_ADD_SUCCESS = "CS-4001:Recommendation added successfully";
+    public static final String REC_NAME_CANN0T_BE_NULL = "CS-4002:Recommendation name field is missing";
+    public static final String REC_NAME_CANN0T_BE_EMPTY = "CS-4003:Recommendation name cannot be empty";
+    public static final String REC_UPDATED_SUCCESSFULLY = "CS-4004:Recommendation updated successfully";
+
     // Metadata
     public static final String CHANNEL_NAME_CANNOT_BE_NULL = "CS-6000:Channel name cannot be null";
     public static final String CHANNEL_NAME_CANNOT_BE_EMPTY = "CS-6001:Channel name cannot be empty";
@@ -74,11 +81,4 @@ public final class Strings {
     public static final String REC_ENGINE_RULE_CONFIG_UPDATE_FAILED = "CS-7003:Rec engine rule config update failed";
     public static final String REC_ENGINE_REC_CONFIG_UPDATE_FAILED = "CS-7004:Rec engine rec config update failed";
     public static final String REC_ENGINE_REC_SLOT_CONFIG_UPDATE_FAILED = "CS-7005:Rec engine rec slot config update failed";
-
-
-    // Recommendation
-    public static final String REC_ID_INVALID = "CS-4000:Invalid recommendation id";
-    public static final String REC_ADD_SUCCESS = "CS-4001:Recommendation added successfully";
-    public static final String REC_NAME_CANN0T_BE_NULL = "CS-4002:Recommendation name field is missing";
-    public static final String REC_NAME_CANN0T_BE_EMPTY = "CS-4003:Recommendation name cannot be empty";
 }

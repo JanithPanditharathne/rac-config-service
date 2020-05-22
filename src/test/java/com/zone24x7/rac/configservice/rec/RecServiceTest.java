@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.zone24x7.rac.configservice.util.Strings.REC_ADD_SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.REC_UPDATED_SUCCESSFULLY;
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -54,7 +55,7 @@ public class RecServiceTest {
         List<Rec> expectedRec = new ArrayList<>();
         Rec rec = new Rec();
         expectedRec.add(rec);
-        when(recRepository.findAll()).thenReturn(expectedRec);
+        when(recRepository.findAllByOrderByIdDesc()).thenReturn(expectedRec);
 
         RecDetail recDetail = new RecDetail();
         when(modelMapper.map(any(), any())).thenReturn(recDetail);
@@ -209,6 +210,106 @@ public class RecServiceTest {
 
             // Expected
             CSResponse expected = new CSResponse(SUCCESS, REC_ADD_SUCCESS);
+
+            // Assert
+            assertEquals(expected.getCode(), actual.getCode());
+            assertEquals(expected.getStatus(), actual.getStatus());
+            assertEquals(expected.getMessage(), actual.getMessage());
+            verify(recRepository, times(1)).save(any());
+            verify(recEngineService, times(1)).updateRecConfig();
+        }
+    }
+
+
+    @Nested
+    @DisplayName("edit rec method")
+    class EditRec {
+
+        @Test
+        @DisplayName("test for invalid id")
+        void testEditRecForInvalidID() {
+
+            // Expected
+            String expected = Strings.REC_ID_INVALID;
+
+            Rec rec = new Rec();
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                recService.editRec(1, rec);
+            });
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("test for missing rec name")
+        void testAddRecForMissingName() {
+
+            // Expected
+            String expected = Strings.REC_NAME_CANN0T_BE_NULL;
+
+            // Mock
+            Rec rec = new Rec();
+            when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
+
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                recService.editRec(1, rec);
+            });
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("test for invalid bundle id")
+        void testEditRecForInvalidBundleID() {
+
+            // Mock
+            Rec rec = new Rec();
+            rec.setName("Test 1");
+            rec.setBundleID(1);
+
+            when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
+
+            // Actual
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                recService.editRec(1, rec);
+            });
+
+            String actual = validationException.getMessage();
+
+            // Expected
+            String expected = Strings.BUNDLE_ID_INVALID;
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("test for correct values")
+        void testEditRecForCorrectValues() throws ServerException, ValidationException {
+
+            // Mock
+            Rec rec = new Rec();
+            rec.setName("Test 1");
+            rec.setBundleID(1);
+
+            when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
+
+            Bundle bundle = mock(Bundle.class);
+            when(bundleRepository.findById(1)).thenReturn(Optional.of(bundle));
+
+            // Actual
+            CSResponse actual = recService.editRec(1, rec);
+
+            // Expected
+            CSResponse expected = new CSResponse(SUCCESS, REC_UPDATED_SUCCESSFULLY);
 
             // Assert
             assertEquals(expected.getCode(), actual.getCode());

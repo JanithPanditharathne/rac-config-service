@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 
 import static com.zone24x7.rac.configservice.util.Strings.REC_ADD_SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.REC_UPDATED_SUCCESSFULLY;
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -99,6 +100,38 @@ public class RecControllerTest {
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/v1/recs")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(recJson)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+
+
+    @Test
+    @DisplayName("edit rec method")
+    void editRec() throws Exception {
+
+        // Expected
+        CSResponse csResponse = new CSResponse(SUCCESS, REC_UPDATED_SUCCESSFULLY);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        // Mock
+        RecDetail recDetail = new RecDetail();
+        Mockito.when(recService.editRec(anyInt(), any())).thenReturn(csResponse);
+
+        String recJson = "{\"name\":\"Test Rec Name 1\",\"bundleId\":32}";
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put("/v1/recs/1")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(recJson)
                 .contentType(MediaType.APPLICATION_JSON);

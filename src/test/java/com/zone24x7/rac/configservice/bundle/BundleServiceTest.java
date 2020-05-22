@@ -602,7 +602,7 @@ class BundleServiceTest {
             assertEquals(expected.getMessage(), actual.getMessage());
             verify(bundleRepository, times(1)).save(any());
             verify(bundleAlgorithmRepository, times(1)).delete(any());
-            verify(bundleAlgorithmRepository, times(1)).save(any());
+            verify(bundleAlgorithmRepository, times(1)).saveAll(any());
             verify(recEngineService, times(1)).updateBundleConfig();
         }
     }
