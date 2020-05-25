@@ -60,4 +60,19 @@ public class RecController {
     public CSResponse editRec(@PathVariable int id, @RequestBody RecDetail recDetail) throws ValidationException, ServerException {
         return recService.editRec(id, modelMapper.map(recDetail, Rec.class));
     }
+
+
+
+    /**
+     * Delete rec.
+     *
+     * @param id Rec ID
+     * @return   CS Response
+     * @throws ValidationException Exception to throw
+     * @throws ServerException     Service exception to throw
+     */
+    @DeleteMapping("/recs/{id}")
+    public CSResponse deleteRec(@PathVariable int id) throws ValidationException, ServerException {
+        return recService.deleteRec(id);
+    }
 }

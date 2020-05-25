@@ -430,7 +430,7 @@ class AlgorithmServiceTest {
 
         @Test
         @DisplayName("test for correct algorithm id")
-        void testDeleteAlgorithm() throws Exception {
+        void testDeleteAlgorithmForValidID() throws Exception {
 
             // Expected
             CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.ALGORITHM_DELETED_SUCCESSFULLY);

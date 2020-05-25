@@ -27,7 +27,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class RecServiceTest {
@@ -315,5 +318,69 @@ public class RecServiceTest {
             verify(recRepository, times(1)).save(any());
             verify(recEngineService, times(1)).updateRecConfig();
         }
+    }
+
+
+
+
+    @Nested
+    @DisplayName("delete rec method")
+    class DeleteRec {
+
+        @Test
+        @DisplayName("test for invalid rec id")
+        void testDeleteRecForInvalidRecID() {
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+                // Mock (invalid rec id)
+                Rec rec = new Rec(999, "Invalid rec", 0);
+
+                // Setup repository method findById() return value.
+                when(recRepository.findById(rec.getId())).thenReturn(Optional.empty());
+
+                // Delete rec.
+                recService.deleteRec(rec.getId());
+            });
+
+            // Expected
+            String expected = Strings.REC_ID_INVALID;
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+
+        @Test
+        @DisplayName("test for correct rec id")
+        void testDeleteRecForCorrectRecID() throws Exception {
+
+            // Expected
+            CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.REC_DELETED_SUCCESSFULLY);
+
+            // Mock
+            Rec rec = new Rec(1, "Test rec", 1);
+            when(recRepository.findById(rec.getId())).thenReturn(Optional.of(rec));
+
+            // Call deleteById method.
+            recRepository.deleteById(rec.getId());
+
+            // Verify deleteById method is actually called.
+            verify(recRepository, times(1)).deleteById(rec.getId());
+
+            // Actual
+            CSResponse actual = recService.deleteRec(rec.getId());
+
+            // Assert
+            assertEquals(expected.getStatus(), actual.getStatus());
+            assertEquals(expected.getCode(), actual.getCode());
+            assertEquals(expected.getMessage(), actual.getMessage());
+
+        }
+
+
+
     }
 }

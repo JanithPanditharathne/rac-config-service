@@ -59,6 +59,7 @@ public final class Strings {
     public static final String REC_NAME_CANNOT_BE_EMPTY = "CS-4003:Rec name cannot be empty";
     public static final String REC_UPDATED_SUCCESSFULLY = "CS-4004:Rec updated successfully";
     public static final String REC_BUNDLE_DETAILS_NOT_FOUND = "CS-4005:Rec bundle details not found";
+    public static final String REC_DELETED_SUCCESSFULLY = "CS-4006:Rec deleted successfully";
 
     // Metadata
     public static final String CHANNEL_NAME_CANNOT_BE_NULL = "CS-6000:Channel name cannot be null";

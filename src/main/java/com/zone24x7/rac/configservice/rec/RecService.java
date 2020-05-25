@@ -8,7 +8,6 @@ import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -31,9 +30,6 @@ public class RecService {
 
     @Autowired
     private BundleRepository bundleRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Autowired
     @Lazy
@@ -68,7 +64,7 @@ public class RecService {
      * Get rec by ID.
      *
      * @param id Rec ID
-     * @return   Recommendation
+     * @return Recommendation
      * @throws ValidationException Exception to throw
      */
     public RecDetail getRec(int id) throws ValidationException {
@@ -100,7 +96,7 @@ public class RecService {
      * Add new rec.
      *
      * @param rec Rec to be saved
-     * @return    CS Response
+     * @return CS Response
      * @throws ValidationException Exception to throw
      */
     public CSResponse addRec(Rec rec) throws ValidationException, ServerException {
@@ -129,7 +125,7 @@ public class RecService {
      * Edit rec.
      *
      * @param rec Rec to be saved
-     * @return    CS Response
+     * @return CS Response
      * @throws ValidationException Exception to throw
      */
     public CSResponse editRec(int id, Rec rec) throws ValidationException, ServerException {
@@ -163,4 +159,38 @@ public class RecService {
         // Return status.
         return new CSResponse(SUCCESS, REC_UPDATED_SUCCESSFULLY);
     }
+
+
+    /**
+     * Delete rec for given id.
+     *
+     * @param id Rec ID
+     * @return CS Response
+     * @throws ValidationException Exception to throw
+     * @throws ServerException     Server exception to throw
+     */
+    public CSResponse deleteRec(int id) throws ValidationException, ServerException {
+
+        // Validate id.
+        RecValidations.validateID(id);
+        Optional<Rec> recOptional = recRepository.findById(id);
+        if (!recOptional.isPresent()) {
+            throw new ValidationException(REC_ID_INVALID);
+        }
+
+
+        // Delete rec.
+        recRepository.deleteById(id);
+
+        // Update recs config for rec engine.
+        recEngineService.updateRecConfig();
+
+
+        // Return status.
+        return new CSResponse(SUCCESS, Strings.REC_DELETED_SUCCESSFULLY);
+    }
+
+
+
+
 }
