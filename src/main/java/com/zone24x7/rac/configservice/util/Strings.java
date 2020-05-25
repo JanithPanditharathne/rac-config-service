@@ -52,12 +52,13 @@ public final class Strings {
     public static final String BUNDLE_DELETED_SUCCESSFULLY = "CS-2011:Bundle deleted successfully";
 
 
-    // Recommendation
-    public static final String REC_ID_INVALID = "CS-4000:Invalid recommendation id";
-    public static final String REC_ADD_SUCCESS = "CS-4001:Recommendation added successfully";
-    public static final String REC_NAME_CANN0T_BE_NULL = "CS-4002:Recommendation name field is missing";
-    public static final String REC_NAME_CANN0T_BE_EMPTY = "CS-4003:Recommendation name cannot be empty";
-    public static final String REC_UPDATED_SUCCESSFULLY = "CS-4004:Recommendation updated successfully";
+    // Rec
+    public static final String REC_ID_INVALID = "CS-4000:Invalid rec id";
+    public static final String REC_ADD_SUCCESS = "CS-4001:Rec added successfully";
+    public static final String REC_NAME_CANNOT_BE_NULL = "CS-4002:Rec name cannot be null";
+    public static final String REC_NAME_CANNOT_BE_EMPTY = "CS-4003:Rec name cannot be empty";
+    public static final String REC_UPDATED_SUCCESSFULLY = "CS-4004:Rec updated successfully";
+    public static final String REC_BUNDLE_DETAILS_NOT_FOUND = "CS-4005:Rec bundle details not found";
 
     // Metadata
     public static final String CHANNEL_NAME_CANNOT_BE_NULL = "CS-6000:Channel name cannot be null";

@@ -7,7 +7,7 @@ import com.zone24x7.rac.configservice.bundle.BundleList;
 import com.zone24x7.rac.configservice.bundle.BundleService;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
-import com.zone24x7.rac.configservice.rec.RecDetailList;
+import com.zone24x7.rac.configservice.rec.RecList;
 import com.zone24x7.rac.configservice.rec.RecService;
 import com.zone24x7.rac.configservice.recengine.algorithm.RecEngineAlgorithm;
 import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundle;
@@ -212,33 +212,22 @@ public class RecEngineService {
     public void updateRecConfig() throws ServerException {
 
         // Get all recs.
-        RecDetailList allRecommendations = recService.getAllRecs();
+        RecList allRecs = recService.getAllRecs();
 
+        // Rec list for rec engine.
         List<RecEngineRec> recList = new ArrayList<>();
 
-        allRecommendations.getRecs().forEach(recommendation -> {
-
-            // Rec details.
-            RecEngineRec recEngineRec = new RecEngineRec();
-            recEngineRec.setId(recommendation.getId());
-            recEngineRec.setName(recommendation.getName());
-            recEngineRec.setType("REGULAR");
-            recEngineRec.setMatchingCondition(null);
-
-            // Set regular config.
-            RecEngineRecRegularConfig recEngineRecRegularConfig = new RecEngineRecRegularConfig(recommendation.getBundle().getId());
-            recEngineRec.setRegularConfig(recEngineRecRegularConfig);
-
-            recEngineRec.setTestConfig(null);
-
-            recList.add(recEngineRec);
+        // Update rec details for each recs.
+        allRecs.getRecs().forEach(r -> {
+            RecEngineRecRegularConfig regularConfig = new RecEngineRecRegularConfig(r.getBundle().getId());
+            recList.add(new RecEngineRec(r.getId(), r.getName(), "REGULAR", null, regularConfig, null));
         });
+
 
         try {
 
             // Get rec config string.
             RecEngineRecList recEngineRecList = new RecEngineRecList(recList);
-            recEngineRecList.setRecs(recList);
             ObjectMapper objectMapper = new ObjectMapper();
             String recConfigString = objectMapper.writeValueAsString(recEngineRecList);
 

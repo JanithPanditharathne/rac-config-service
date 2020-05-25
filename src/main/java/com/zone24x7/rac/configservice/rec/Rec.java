@@ -13,6 +13,15 @@ public class Rec {
     @Column(name = "bundle_id")
     private int bundleID;
 
+    public Rec() {
+    }
+
+    public Rec(int id, String name, int bundleID) {
+        this.id = id;
+        this.name = name;
+        this.bundleID = bundleID;
+    }
+
     public int getId() {
         return id;
     }

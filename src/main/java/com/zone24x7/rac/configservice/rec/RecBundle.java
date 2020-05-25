@@ -5,6 +5,14 @@ public class RecBundle {
     private int id;
     private String name;
 
+    public RecBundle() {
+    }
+
+    public RecBundle(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

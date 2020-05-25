@@ -7,6 +7,7 @@ import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -43,39 +44,24 @@ public class RecService {
      *
      * @return List of recommendations
      */
-    public RecDetailList getAllRecs() {
-        RecDetailList recDetailList = new RecDetailList();
+    public RecList getAllRecs() {
+
+        // Rec details list.
+        List<RecDetail> recDetails = new ArrayList<>();
 
         // Get all recs from the db.
         List<Rec> allRecs = recRepository.findAllByOrderByIdDesc();
-        List<RecDetail> recDetails = new ArrayList<>();
 
-        // Iterate the list.
+        // Get details for each rec.
         allRecs.forEach(rec -> {
-
-            // Map the object.
-            RecDetail recDetail = modelMapper.map(rec, RecDetail.class);
-
-            // Retrieve bundle.
             Optional<Bundle> optionalBundle = bundleRepository.findById(rec.getBundleID());
-
             if (optionalBundle.isPresent()) {
-
-                Bundle bundle = optionalBundle.get();
-                RecBundle recBundle = new RecBundle();
-                recBundle.setId(bundle.getId());
-                recBundle.setName(bundle.getName());
-
-                recDetail.setBundle(recBundle);
-
-                // Add to the list.
-                recDetails.add(recDetail);
+                RecBundle recBundle = new RecBundle(rec.getBundleID(), optionalBundle.get().getName());
+                recDetails.add(new RecDetail(rec.getId(), rec.getName(), recBundle));
             }
         });
 
-        recDetailList.setRecs(recDetails);
-
-        return recDetailList;
+        return new RecList(recDetails);
     }
 
     /**
@@ -87,10 +73,11 @@ public class RecService {
      */
     public RecDetail getRec(int id) throws ValidationException {
 
-        // Find given rec ID from DB.
-        Optional<Rec> recOptional = recRepository.findById(id);
+        // Validate id.
+        RecValidations.validateID(id);
 
-        // If rec not found in db, return invalid rec id error.
+        // Find given rec id from db.
+        Optional<Rec> recOptional = recRepository.findById(id);
         if (!recOptional.isPresent()) {
             throw new ValidationException(REC_ID_INVALID);
         }
@@ -98,23 +85,15 @@ public class RecService {
         // Get rec.
         Rec rec = recOptional.get();
 
-        // Map to object.
-        RecDetail recDetail = modelMapper.map(rec, RecDetail.class);
-
-        // Retrieve bundle.
+        // Get bundle details for given rec id.
         Optional<Bundle> optionalBundle = bundleRepository.findById(rec.getBundleID());
-
         if (optionalBundle.isPresent()) {
-
-            Bundle bundle = optionalBundle.get();
-            RecBundle recBundle = new RecBundle();
-            recBundle.setId(bundle.getId());
-            recBundle.setName(bundle.getName());
-
-            recDetail.setBundle(recBundle);
+            RecBundle recBundle = new RecBundle(rec.getBundleID(), optionalBundle.get().getName());
+            return new RecDetail(rec.getId(), rec.getName(), recBundle);
         }
 
-        return recDetail;
+        // Else, trow server error.
+        throw new ValidationException(Strings.REC_BUNDLE_DETAILS_NOT_FOUND);
     }
 
     /**
@@ -129,9 +108,9 @@ public class RecService {
         // Validate name.
         RecValidations.validateRecName(rec.getName());
 
-        // Validate bundle ID.
+        // Validate bundle id.
+        BundleValidations.validateID(rec.getBundleID());
         Optional<Bundle> bundleOptional = bundleRepository.findById(rec.getBundleID());
-
         if (!bundleOptional.isPresent()) {
             throw new ValidationException(BUNDLE_ID_INVALID);
         }
@@ -142,6 +121,7 @@ public class RecService {
         // Update recs config for rec engine.
         recEngineService.updateRecConfig();
 
+        // Return status.
         return new CSResponse(SUCCESS, REC_ADD_SUCCESS);
     }
 
@@ -154,9 +134,9 @@ public class RecService {
      */
     public CSResponse editRec(int id, Rec rec) throws ValidationException, ServerException {
 
-        // Validate ID.
+        // Validate id.
+        RecValidations.validateID(id);
         Optional<Rec> recOptional = recRepository.findById(id);
-
         if (!recOptional.isPresent()) {
             throw new ValidationException(REC_ID_INVALID);
         }
@@ -164,16 +144,14 @@ public class RecService {
         // Validate name.
         RecValidations.validateRecName(rec.getName());
 
-        // Validate bundle ID.
+        // Validate bundle id.
         BundleValidations.validateID(rec.getBundleID());
-
         Optional<Bundle> bundleOptional = bundleRepository.findById(rec.getBundleID());
-
         if (!bundleOptional.isPresent()) {
             throw new ValidationException(BUNDLE_ID_INVALID);
         }
 
-        // Set ID.
+        // Set id.
         rec.setId(id);
 
         // Save rec.
@@ -182,6 +160,7 @@ public class RecService {
         // Update recs config for rec engine.
         recEngineService.updateRecConfig();
 
+        // Return status.
         return new CSResponse(SUCCESS, REC_UPDATED_SUCCESSFULLY);
     }
 }

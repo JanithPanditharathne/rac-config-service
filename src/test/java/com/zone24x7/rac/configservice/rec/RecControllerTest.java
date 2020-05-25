@@ -34,16 +34,16 @@ public class RecControllerTest {
 
     @Test
     @DisplayName("get all recs method")
-    void getAllRecs() throws Exception {
+    void testGetAllRecs() throws Exception {
 
         // Mock
-        RecDetailList recDetailList = new RecDetailList();
-        recDetailList.setRecs(new ArrayList<>());
-        Mockito.when(recService.getAllRecs()).thenReturn(recDetailList);
+        RecList recList = new RecList();
+        recList.setRecs(new ArrayList<>());
+        Mockito.when(recService.getAllRecs()).thenReturn(recList);
 
         // Expected
         ObjectMapper objectMapper = new ObjectMapper();
-        String expected = objectMapper.writeValueAsString(recDetailList);
+        String expected = objectMapper.writeValueAsString(recList);
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -59,7 +59,7 @@ public class RecControllerTest {
 
     @Test
     @DisplayName("get rec method")
-    void getRec() throws Exception {
+    void testGetRec() throws Exception {
 
         // Mock
         RecDetail recDetail = new RecDetail();
@@ -83,7 +83,7 @@ public class RecControllerTest {
 
     @Test
     @DisplayName("add rec method")
-    void addRec() throws Exception {
+    void testAddRec() throws Exception {
 
         // Expected
         CSResponse csResponse = new CSResponse(SUCCESS, REC_ADD_SUCCESS);
@@ -115,7 +115,7 @@ public class RecControllerTest {
 
     @Test
     @DisplayName("edit rec method")
-    void editRec() throws Exception {
+    void testEditRec() throws Exception {
 
         // Expected
         CSResponse csResponse = new CSResponse(SUCCESS, REC_UPDATED_SUCCESSFULLY);

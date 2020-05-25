@@ -64,7 +64,7 @@ public class RecServiceTest {
         when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
 
         // Actual
-        RecDetailList actualRecs = recService.getAllRecs();
+        RecList actualRecs = recService.getAllRecs();
 
         // Assert
         assertEquals(expectedRec.size(), actualRecs.getRecs().size());
@@ -106,17 +106,14 @@ public class RecServiceTest {
             String expected = objectMapper.writeValueAsString(recDetail);
 
             // Mock
-            Rec rec = mock(Rec.class);
+            Rec rec = new Rec(1, "Test", 0);
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
-
-            when(modelMapper.map(any(), any())).thenReturn(recDetail);
 
             Bundle bundle = mock(Bundle.class);
             when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
 
             // Actual
             RecDetail actualRec = recService.getRec(1);
-
             String actual = objectMapper.writeValueAsString(actualRec);
 
             // Assert
@@ -129,8 +126,8 @@ public class RecServiceTest {
     class AddRec {
 
         @Test
-        @DisplayName("test for missing rec name")
-        void testAddRecForMissingName() {
+        @DisplayName("test for null rec name")
+        void testAddRecForNullRecName() {
 
             Rec rec = new Rec();
 
@@ -139,7 +136,7 @@ public class RecServiceTest {
             });
 
             // Expected
-            String expected = Strings.REC_NAME_CANN0T_BE_NULL;
+            String expected = Strings.REC_NAME_CANNOT_BE_NULL;
 
             // Actual
             String actual = validationException.getMessage();
@@ -150,7 +147,7 @@ public class RecServiceTest {
 
         @Test
         @DisplayName("test for empty rec name")
-        void testAddRecForEmptyName() {
+        void testAddRecForEmptyRecName() {
 
             // Mock
             Rec rec = new Rec();
@@ -164,7 +161,7 @@ public class RecServiceTest {
             String actual = validationException.getMessage();
 
             // Expected
-            String expected = Strings.REC_NAME_CANN0T_BE_EMPTY;
+            String expected = Strings.REC_NAME_CANNOT_BE_EMPTY;
 
             // Assert
             assertEquals(expected, actual);
@@ -245,11 +242,11 @@ public class RecServiceTest {
         }
 
         @Test
-        @DisplayName("test for missing rec name")
-        void testAddRecForMissingName() {
+        @DisplayName("test for null rec name")
+        void testAddRecForNullRecName() {
 
             // Expected
-            String expected = Strings.REC_NAME_CANN0T_BE_NULL;
+            String expected = Strings.REC_NAME_CANNOT_BE_NULL;
 
             // Mock
             Rec rec = new Rec();

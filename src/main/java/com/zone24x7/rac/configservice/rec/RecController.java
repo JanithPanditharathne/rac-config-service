@@ -23,7 +23,7 @@ public class RecController {
      * @return All recs
      */
     @GetMapping("/recs")
-    public RecDetailList getAllRecommendations() {
+    public RecList getAllRecommendations() {
         return recService.getAllRecs();
     }
 

@@ -6,6 +6,15 @@ public class RecDetail {
     private String name;
     private RecBundle bundle;
 
+    public RecDetail() {
+    }
+
+    public RecDetail(int id, String name, RecBundle bundle) {
+        this.id = id;
+        this.name = name;
+        this.bundle = bundle;
+    }
+
     public int getId() {
         return id;
     }
