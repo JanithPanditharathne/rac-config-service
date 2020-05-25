@@ -46,10 +46,9 @@ public final class Strings {
     public static final String BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_EMPTY = "CS-2005:Bundle combine display text cannot be empty";
     public static final String ALGORITHMS_CANNOT_BE_NULL = "CS-2006:Bundle algorithms cannot be null";
     public static final String ALGORITHMS_CANNOT_BE_EMPTY = "CS-2007:Bundle algorithms cannot be empty";
-    public static final String BUNDLE_CUSTOM_DISPLAY_TEXT_CANNOT_BE_NULL = "CS-2008:Bundle custom display text field is missing";
-    public static final String BUNDLE_CUSTOM_DISPLAY_TEXT_CANNOT_BE_EMPTY = "CS-2009:Bundle custom display text cannot be empty";
-    public static final String BUNDLE_UPDATED_SUCCESSFULLY = "CS-2010:Bundle updated successfully";
-    public static final String BUNDLE_DELETED_SUCCESSFULLY = "CS-2011:Bundle deleted successfully";
+    public static final String BUNDLE_UPDATED_SUCCESSFULLY = "CS-2008:Bundle updated successfully";
+    public static final String BUNDLE_DELETED_SUCCESSFULLY = "CS-2009:Bundle deleted successfully";
+    public static final String BUNDLE_ID_ALREADY_USE_IN_RECS = "CS-2010:Bundle id already use in recs";
 
 
     // Rec

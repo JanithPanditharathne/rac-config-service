@@ -7,11 +7,6 @@ import java.util.List;
 
 @Repository
 public interface RecRepository extends JpaRepository<Rec, Integer> {
-
-    /**
-     * Find all recs by descending order of ID.
-     *
-     * @return List of rec
-     */
     List<Rec> findAllByOrderByIdDesc();
+    List<Rec> findAllByBundleID(int id);
 }

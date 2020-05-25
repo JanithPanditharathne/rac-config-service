@@ -5,8 +5,11 @@ import com.zone24x7.rac.configservice.algorithm.AlgorithmRepository;
 import com.zone24x7.rac.configservice.algorithm.AlgorithmValidations;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.rec.Rec;
+import com.zone24x7.rac.configservice.rec.RecRepository;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -33,6 +36,9 @@ public class BundleService {
 
     @Autowired
     private AlgorithmRepository algorithmRepository;
+
+    @Autowired
+    private RecRepository recRepository;
 
     @Autowired
     @Lazy
@@ -190,12 +196,16 @@ public class BundleService {
         // Validate bundle id.
         BundleValidations.validateID(id);
 
-        // Retrieve bundle for the given id.
+        // Check given bundle id is exists.
         Optional<Bundle> bundleOptional = bundleRepository.findById(id);
-
-        // Check bundle id is exists.
         if (!bundleOptional.isPresent()) {
             throw new ValidationException(BUNDLE_ID_INVALID);
+        }
+
+        // Check bundle id already use in recs.
+        List<Rec> recs = recRepository.findAllByBundleID(id);
+        if (!recs.isEmpty()) {
+            throw new ValidationException(Strings.BUNDLE_ID_ALREADY_USE_IN_RECS);
         }
 
 

@@ -173,6 +173,8 @@ public class RecService {
 
         // Validate id.
         RecValidations.validateID(id);
+
+        // Check given rec id is exists.
         Optional<Rec> recOptional = recRepository.findById(id);
         if (!recOptional.isPresent()) {
             throw new ValidationException(REC_ID_INVALID);
