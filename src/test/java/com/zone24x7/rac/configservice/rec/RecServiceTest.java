@@ -333,7 +333,7 @@ public class RecServiceTest {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
                 // Mock (invalid rec id)
-                Rec rec = new Rec(999, "Invalid rec", 0);
+                Rec rec = new Rec(99999, "Invalid rec", 0);
 
                 // Setup repository method findById() return value.
                 when(recRepository.findById(rec.getId())).thenReturn(Optional.empty());

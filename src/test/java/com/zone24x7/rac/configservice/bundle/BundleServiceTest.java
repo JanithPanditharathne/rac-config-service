@@ -5,6 +5,8 @@ import com.zone24x7.rac.configservice.algorithm.Algorithm;
 import com.zone24x7.rac.configservice.algorithm.AlgorithmRepository;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.rec.Rec;
+import com.zone24x7.rac.configservice.rec.RecRepository;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
@@ -38,6 +40,9 @@ class BundleServiceTest {
 
     @Mock
     private AlgorithmRepository algorithmRepository;
+
+    @Mock
+    private RecRepository recRepository;
 
     @Mock
     private RecEngineService recEngineService;
@@ -75,7 +80,7 @@ class BundleServiceTest {
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
                 // Mock (invalid bundle id)
                 Bundle bundle = new Bundle("Bundle 1", 5, false, null);
-                bundle.setId(999);
+                bundle.setId(99999);
                 when(bundleRepository.findById(bundle.getId())).thenReturn(Optional.empty());
 
                 // Get bundle.
@@ -619,8 +624,15 @@ class BundleServiceTest {
         void testDeleteBundleForInvalidBundleID() {
 
             Exception exception = assertThrows(ValidationException.class, () -> {
+                // Mock (invalid bundle id)
+                Bundle bundle = new Bundle("Invalid bundle", 5, false, "");
+                bundle.setId(99999);
 
-                bundleService.deleteBundle(1);
+                // Setup repository method findById() return value.
+                when(bundleRepository.findById(bundle.getId())).thenReturn(Optional.empty());
+
+                // Delete bundle.
+                bundleService.deleteBundle(bundle.getId());
             });
 
             // Actual
@@ -630,20 +642,49 @@ class BundleServiceTest {
             assertEquals(BUNDLE_ID_INVALID, actual);
         }
 
+
         @Test
-        @DisplayName("test for correct values")
-        void testDeleteBundleForCorrectValues() throws ServerException, ValidationException {
+        @DisplayName("test for already used bundle id")
+        void testDeleteBundleForAlreadyUsedBundleID() {
+            Exception exception = assertThrows(ValidationException.class, () -> {
+                // Mock
+                Bundle bundle = new Bundle("Test bundle", 5, false, "");
+                bundle.setId(1);
+
+                // Setup repository method findById() return value.
+                when(bundleRepository.findById(bundle.getId())).thenReturn(Optional.of(bundle));
+
+                // Setup repository method findAllByAlgorithmID() return value.
+                List<Rec> recList = new ArrayList<>();
+                recList.add(new Rec(1, "Test rec", bundle.getId()));
+                when(recRepository.findAllByBundleID(bundle.getId())).thenReturn(recList);
+
+                // Delete algorithm
+                bundleService.deleteBundle(bundle.getId());
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(BUNDLE_ID_ALREADY_USE_IN_RECS, actual);
+        }
+
+        @Test
+        @DisplayName("test for correct bundle id")
+        void testDeleteBundleForCorrectBundleID() throws ServerException, ValidationException {
+
+            // Expected
+            CSResponse expected = new CSResponse(SUCCESS, BUNDLE_DELETED_SUCCESSFULLY);
 
             // Mock
             Bundle bundle = mock(Bundle.class);
             when(bundleRepository.findById(anyInt())).thenReturn(Optional.of(bundle));
+            when(recRepository.findAllByBundleID(bundle.getId())).thenReturn(new ArrayList<>());
 
             List<BundleAlgorithm> allBundleAlgorithms = new ArrayList<>();
             allBundleAlgorithms.add(mock(BundleAlgorithm.class));
             when(bundleAlgorithmRepository.findAllByBundleID(anyInt())).thenReturn(allBundleAlgorithms);
-
-            // Expected
-            CSResponse expected = new CSResponse(SUCCESS, BUNDLE_DELETED_SUCCESSFULLY);
 
             // Actual
             CSResponse actual = bundleService.deleteBundle(1);

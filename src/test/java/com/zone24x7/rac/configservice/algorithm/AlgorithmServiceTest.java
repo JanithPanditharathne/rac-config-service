@@ -66,7 +66,7 @@ class AlgorithmServiceTest {
         void testGetAlgorithmForInvalidAlgorithmID() throws Exception {
             Exception exception = assertThrows(ValidationException.class, () -> {
                 // Mock (invalid algorithm id)
-                Algorithm algorithm = new Algorithm(999, "Invalid algorithm", "", "");
+                Algorithm algorithm = new Algorithm(99999, "Invalid algorithm", "", "");
                 when(algorithmRepository.findById(algorithm.getId())).thenReturn(Optional.empty());
 
                 // Get algorithm
@@ -376,7 +376,7 @@ class AlgorithmServiceTest {
         void testDeleteAlgorithmForInvalidAlgorithmID() {
             Exception exception = assertThrows(ValidationException.class, () -> {
                 // Mock (invalid algorithm id)
-                Algorithm algorithm = new Algorithm(999, "Invalid algorithm", "", "");
+                Algorithm algorithm = new Algorithm(99999, "Invalid algorithm", "", "");
 
                 // Setup repository method findById() return value.
                 when(algorithmRepository.findById(algorithm.getId())).thenReturn(Optional.empty());
