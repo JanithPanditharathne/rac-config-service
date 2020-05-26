@@ -11,7 +11,7 @@ public class RecSlotDetail {
     private Page page;
     private Placeholder placeholder;
     private RecSlotRec rec;
-    private String rules; // TODO: List of rules.
+    private Object rules; // TODO: List of rules.
 
     public RecSlotDetail() {
     }
@@ -65,11 +65,11 @@ public class RecSlotDetail {
         this.rec = rec;
     }
 
-    public String getRules() {
+    public Object getRules() {
         return rules;
     }
 
-    public void setRules(String rules) {
+    public void setRules(Object rules) {
         this.rules = rules;
     }
 }

@@ -377,10 +377,6 @@ public class RecServiceTest {
             assertEquals(expected.getStatus(), actual.getStatus());
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
-
         }
-
-
-
     }
 }

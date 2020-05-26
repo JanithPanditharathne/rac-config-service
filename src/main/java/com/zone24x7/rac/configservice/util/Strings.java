@@ -60,6 +60,10 @@ public final class Strings {
     public static final String REC_BUNDLE_DETAILS_NOT_FOUND = "CS-4005:Rec bundle details not found";
     public static final String REC_DELETED_SUCCESSFULLY = "CS-4006:Rec deleted successfully";
 
+
+    // Rec slot
+    public static final String REC_SLOT_ID_INVALID = "CS-5000:Invalid recommendation slot id";
+
     // Metadata
     public static final String CHANNEL_NAME_CANNOT_BE_NULL = "CS-6000:Channel name cannot be null";
     public static final String CHANNEL_NAME_CANNOT_BE_EMPTY = "CS-6001:Channel name cannot be empty";
