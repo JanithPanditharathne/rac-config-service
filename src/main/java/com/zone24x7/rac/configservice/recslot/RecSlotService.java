@@ -43,10 +43,9 @@ public class RecSlotService {
      * @return Rec slots
      */
     public RecSlotList getAllRecSlots() {
-        RecSlotList recSlotList = new RecSlotList();
 
         // Retrieve all rec slots.
-        List<RecSlot> allRecSlots = recSlotRepository.findAll();
+        List<RecSlot> allRecSlots = recSlotRepository.findAllByOrderByIdDesc();
 
         List<RecSlotDetail> recSlotDetailsList = new ArrayList<>();
 
@@ -73,8 +72,6 @@ public class RecSlotService {
             recSlotDetailsList.add(recSlotDetail);
         });
 
-        recSlotList.setRecSlots(recSlotDetailsList);
-
-        return recSlotList;
+        return new RecSlotList(recSlotDetailsList);
     }
 }

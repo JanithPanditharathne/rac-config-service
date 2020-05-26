@@ -12,6 +12,11 @@ public class RecSlotController {
     @Autowired
     private RecSlotService recSlotService;
 
+    /**
+     * Get all rec slots.
+     *
+     * @return Rec slots list
+     */
     @GetMapping("/recSlots")
     public RecSlotList getAllRecSlots() {
         return recSlotService.getAllRecSlots();

@@ -21,6 +21,14 @@ public class RecSlot {
     @Column(name = "rec_id")
     private int recID;
 
+    public RecSlot(int id, int channelID, int pageID, int placeholderID, int recID) {
+        this.id = id;
+        this.channelID = channelID;
+        this.pageID = pageID;
+        this.placeholderID = placeholderID;
+        this.recID = recID;
+    }
+
     public int getId() {
         return id;
     }

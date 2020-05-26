@@ -6,6 +6,10 @@ public class RecSlotList {
 
     private List<RecSlotDetail> recSlots;
 
+    public RecSlotList(List<RecSlotDetail> recSlots) {
+        this.recSlots = recSlots;
+    }
+
     public List<RecSlotDetail> getRecSlots() {
         return recSlots;
     }
