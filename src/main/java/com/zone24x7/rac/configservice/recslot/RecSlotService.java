@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.REC_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_ID_INVALID;
 
 @Service
 public class RecSlotService {
@@ -65,6 +65,13 @@ public class RecSlotService {
         return new RecSlotList(recSlotDetailsList);
     }
 
+    /**
+     * Get rec slot details.
+     *
+     * @param id Rec slot ID
+     * @return   Rec slot details
+     * @throws ValidationException Exception to throw
+     */
     public RecSlotDetail getRecSlot(int id) throws ValidationException {
 
         // Find given rec slot id from db.
@@ -72,7 +79,7 @@ public class RecSlotService {
 
         // If rec slot not found in db, return invalid rec slot id error.
         if (!recSlotOptional.isPresent()) {
-            throw new ValidationException(REC_ID_INVALID);
+            throw new ValidationException(REC_SLOT_ID_INVALID);
         }
 
         // Fill rec slot details.

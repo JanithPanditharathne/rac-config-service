@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 
 @WebMvcTest(value = RecSlotController.class)
 public class RecSlotControllerTest {
@@ -44,6 +45,34 @@ public class RecSlotControllerTest {
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/v1/recSlots")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test for get rec slot details.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void getRecSlot() throws Exception {
+
+        // Mock
+        RecSlotDetail recSlotDetail = new RecSlotDetail();
+        Mockito.when(recSlotService.getRecSlot(anyInt())).thenReturn(recSlotDetail);
+
+        // Expected
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(recSlotDetail);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/v1/recSlots/1")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
