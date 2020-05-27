@@ -1,6 +1,7 @@
 package com.zone24x7.rac.configservice.recslot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.util.CSResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 
+import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_ADDED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 
 @WebMvcTest(value = RecSlotController.class)
@@ -74,6 +78,38 @@ public class RecSlotControllerTest {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/v1/recSlots/1")
                 .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test for add new rec slot.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void addRecSlot() throws Exception {
+
+        // Mock
+        CSResponse csResponse = new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
+        Mockito.when(recSlotService.addNewRecSlot(any())).thenReturn(csResponse);
+
+        // Expected
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        String recSlotJson = "{\"id\":321,\"channel\":{\"id\":56},\"page\":{\"id\":5},\"placeholder\":{\"id\":2}," +
+                "\"rec\":{\"id\":100},\"rules\":[{\"id\":87},{\"id\":90}]}";
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/v1/recSlots")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(recSlotJson)
+                .contentType(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
