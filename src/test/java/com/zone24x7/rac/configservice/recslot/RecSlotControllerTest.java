@@ -96,7 +96,7 @@ public class RecSlotControllerTest {
 
         // Mock
         CSResponse csResponse = new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
-        Mockito.when(recSlotService.addNewRecSlot(any())).thenReturn(csResponse);
+        Mockito.when(recSlotService.addRecSlot(any())).thenReturn(csResponse);
 
         // Expected
         ObjectMapper objectMapper = new ObjectMapper();

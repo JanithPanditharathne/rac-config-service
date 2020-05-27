@@ -76,8 +76,8 @@ public class RecSlotServiceTest {
 
         // Expected
         List<RecSlot> recSlotsList = new ArrayList<>();
-        recSlotsList.add(new RecSlot(4, 5, 2, 8, 1));
-        recSlotsList.add(new RecSlot(7, 5, 2, 6, 5));
+        recSlotsList.add(new RecSlot(5, 2, 8, 1));
+        recSlotsList.add(new RecSlot(5, 2, 6, 5));
 
         // Mock
         // Setup repository method findAllByOrderByIdDesc() return value.
@@ -174,7 +174,7 @@ public class RecSlotServiceTest {
 
             ValidationException validationException = assertThrows(ValidationException.class, () ->
 
-                recSlotService.addNewRecSlot(new RecSlotDetail())
+                recSlotService.addRecSlot(new RecSlotDetail())
             );
 
             // Actual
@@ -191,7 +191,7 @@ public class RecSlotServiceTest {
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
 
                 RecSlotDetail recSlotDetail = new RecSlotDetail(0, new Channel(), null, null, null, null);
-                recSlotService.addNewRecSlot(recSlotDetail);
+                recSlotService.addRecSlot(recSlotDetail);
             });
 
             // Actual
@@ -212,7 +212,7 @@ public class RecSlotServiceTest {
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
 
                 RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, null, null, null, null);
-                recSlotService.addNewRecSlot(recSlotDetail);
+                recSlotService.addRecSlot(recSlotDetail);
             });
 
             // Actual
@@ -233,7 +233,7 @@ public class RecSlotServiceTest {
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
 
                 RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, new Page(), null, null, null);
-                recSlotService.addNewRecSlot(recSlotDetail);
+                recSlotService.addRecSlot(recSlotDetail);
             });
 
             // Actual
@@ -257,7 +257,7 @@ public class RecSlotServiceTest {
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
 
                 RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, null, null, null);
-                recSlotService.addNewRecSlot(recSlotDetail);
+                recSlotService.addRecSlot(recSlotDetail);
             });
 
             // Actual
@@ -281,7 +281,7 @@ public class RecSlotServiceTest {
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
 
                 RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, new Placeholder(), null, null);
-                recSlotService.addNewRecSlot(recSlotDetail);
+                recSlotService.addRecSlot(recSlotDetail);
             });
 
             // Actual
@@ -308,7 +308,7 @@ public class RecSlotServiceTest {
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
 
                 RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, null, null);
-                recSlotService.addNewRecSlot(recSlotDetail);
+                recSlotService.addRecSlot(recSlotDetail);
             });
 
             // Actual
@@ -335,7 +335,7 @@ public class RecSlotServiceTest {
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
 
                 RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), null);
-                recSlotService.addNewRecSlot(recSlotDetail);
+                recSlotService.addRecSlot(recSlotDetail);
             });
 
             // Actual
@@ -369,7 +369,7 @@ public class RecSlotServiceTest {
 
             // Actual
             RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), new ArrayList<>());
-            CSResponse actual = recSlotService.addNewRecSlot(recSlotDetail);
+            CSResponse actual = recSlotService.addRecSlot(recSlotDetail);
 
             // Assert
             assertEquals(expected.getStatus(), actual.getStatus());
@@ -380,7 +380,7 @@ public class RecSlotServiceTest {
 
         @Test
         @DisplayName("test for correct values with rules")
-        void testAddRecSlotForCorrectValuesRules() throws Exception {
+        void testAddRecSlotForCorrectValuesWithRules() throws Exception {
 
             // Expected
             CSResponse expected = new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
@@ -402,16 +402,18 @@ public class RecSlotServiceTest {
             List<RecSlotRuleDetail> rules = new ArrayList<>();
             rules.add(recSlotRuleDetail);
 
+            RecSlot recSlot = new RecSlot(1,1,1,1);
+            recSlot.setId(123);
+            when(recSlotRepository.save(any(RecSlot.class))).thenReturn(recSlot);
+
             // Actual
             RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), rules);
-            CSResponse actual = recSlotService.addNewRecSlot(recSlotDetail);
+            CSResponse actual = recSlotService.addRecSlot(recSlotDetail);
 
             // Assert
             assertEquals(expected.getStatus(), actual.getStatus());
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
-            verify(recSlotRepository, times(1)).save(any());
-            verify(recSlotRuleRepository, times(1)).save(any());
         }
     }
 }

@@ -5,6 +5,14 @@ public class RecSlotRuleDetail {
     private int id;
     private String name;
 
+    public RecSlotRuleDetail() {
+    }
+
+    public RecSlotRuleDetail(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

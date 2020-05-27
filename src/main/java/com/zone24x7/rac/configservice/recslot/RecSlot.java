@@ -25,8 +25,7 @@ public class RecSlot {
     public RecSlot() {
     }
 
-    public RecSlot(int id, int channelID, int pageID, int placeholderID, int recID) {
-        this.id = id;
+    public RecSlot(int channelID, int pageID, int placeholderID, int recID) {
         this.channelID = channelID;
         this.pageID = pageID;
         this.placeholderID = placeholderID;

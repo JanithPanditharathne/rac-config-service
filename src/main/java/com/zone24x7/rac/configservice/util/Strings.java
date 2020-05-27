@@ -62,8 +62,8 @@ public final class Strings {
 
 
     // Rec slot
-    public static final String REC_SLOT_ID_INVALID = "CS-5000:Invalid recommendation slot id";
-    public static final String REC_SLOT_ADDED_SUCCESSFULLY = "CS-5001:Recommendation slot added successfully";
+    public static final String REC_SLOT_ID_INVALID = "CS-5000:Invalid rec slot id";
+    public static final String REC_SLOT_ADDED_SUCCESSFULLY = "CS-5001:Rec slot added successfully";
     public static final String REC_CANNOT_BE_NULL = "CS-5002:Rec cannot be null";
 
     // Metadata

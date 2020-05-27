@@ -54,73 +54,85 @@ public class RecSlotService {
         // Retrieve all rec slots.
         List<RecSlot> allRecSlots = recSlotRepository.findAllByOrderByIdDesc();
 
-        List<RecSlotDetail> recSlotDetailsList = new ArrayList<>();
+        // Rec slot details.
+        List<RecSlotDetail> recSlotDetailList = new ArrayList<>();
 
-        // Iterate through the models list.
-        allRecSlots.forEach(recSlot -> {
+        // Get detail for each rec slot.
+        allRecSlots.forEach(recSlot -> recSlotDetailList.add(getRecSlotDetail(recSlot)));
 
-            // Fill rec slot details.
-            RecSlotDetail recSlotDetail = fillRecSlotDetails(recSlot);
-
-            // Add to list.
-            recSlotDetailsList.add(recSlotDetail);
-        });
-
-        return new RecSlotList(recSlotDetailsList);
+        // Return list.
+        return new RecSlotList(recSlotDetailList);
     }
 
     /**
-     * Get rec slot details.
+     * Get rec slot detail.
      *
-     * @param id Rec slot ID
+     * @param id Rec slot id
      * @return   Rec slot details
      * @throws ValidationException Exception to throw
      */
     public RecSlotDetail getRecSlot(int id) throws ValidationException {
 
-        // Find given rec slot id from db.
-        Optional<RecSlot> recSlotOptional = recSlotRepository.findById(id);
+        // Validate id.
+        RecSlotValidations.validateID(id);
 
+        // Find given rec slot id from db.
         // If rec slot not found in db, return invalid rec slot id error.
+        Optional<RecSlot> recSlotOptional = recSlotRepository.findById(id);
         if (!recSlotOptional.isPresent()) {
             throw new ValidationException(REC_SLOT_ID_INVALID);
         }
 
-        // Fill rec slot details.
-        return fillRecSlotDetails(recSlotOptional.get());
+        // Return rec slot detail.
+        return getRecSlotDetail(recSlotOptional.get());
     }
 
     /**
-     * Fill rec slot detail object.
+     * Get rec slot detail for given rec slot.
      *
      * @param recSlot Rec slot
      * @return        Rec slot detail
      */
-    private RecSlotDetail fillRecSlotDetails(RecSlot recSlot) {
+    private RecSlotDetail getRecSlotDetail(RecSlot recSlot) {
 
         // Get channel.
-        Optional<Channel> channelOptional = channelRepository.findById(recSlot.getChannelID());
+        Optional<Channel> optionalChannel = channelRepository.findById(recSlot.getChannelID());
+        Channel channel = new Channel();
+        if (optionalChannel.isPresent()) {
+            channel = optionalChannel.get();
+        }
 
         // Get page.
-        Optional<Page> pageOptional = pageRepository.findById(recSlot.getPageID());
+        Optional<Page> optionalPage = pageRepository.findById(recSlot.getPageID());
+        Page page = new Page();
+        if (optionalPage.isPresent()) {
+            page = optionalPage.get();
+        }
 
         // Get placeholder.
-        Optional<Placeholder> placeholderOptional = placeholderRepository.findById(recSlot.getPlaceholderID());
+        Optional<Placeholder> optionalPlaceholder = placeholderRepository.findById(recSlot.getPlaceholderID());
+        Placeholder placeholder = new Placeholder();
+        if (optionalPlaceholder.isPresent()) {
+            placeholder = optionalPlaceholder.get();
+        }
 
         // Get rec.
-        Optional<Rec> recOptional = recRepository.findById(recSlot.getRecID());
-        RecSlotRecDetail recSlotRecDetail = modelMapper.map(recOptional.get(), RecSlotRecDetail.class);
+        Optional<Rec> optionalRec = recRepository.findById(recSlot.getRecID());
+        RecSlotRecDetail recSlotRecDetail = new RecSlotRecDetail();
+        if (optionalRec.isPresent()) {
+            recSlotRecDetail = new RecSlotRecDetail(optionalRec.get().getId(), optionalRec.get().getName());
+        }
 
-        // Get all rec slot - rule associations by rec slot ID.
-        List<RecSlotRule> recSlotRuleList = recSlotRuleRepository.findAllByRecSlotID(recSlot.getId());
-
-        // Iterate list.
-        recSlotRuleList.forEach(recSlotRule -> {
-//            recSlotRule.getRuleID(); TODO: Get rule details from rules table.
+        // Get all rec_slot-rule associations for given rec slot id.
+        List<RecSlotRule> recSlotRules = recSlotRuleRepository.findAllByRecSlotID(recSlot.getId());
+        List<RecSlotRuleDetail> recSlotRuleDetails = new ArrayList<>();
+        recSlotRules.forEach(rsr -> {
+            //TODO: Add rule details to the "recSlotRuleDetails" list.
         });
 
-        return new RecSlotDetail(recSlot.getId(), channelOptional.get(), pageOptional.get(),
-                                 placeholderOptional.get(), recSlotRecDetail, null); // TODO: Set rules
+
+        // Return rec slot detail.
+        return new RecSlotDetail(recSlot.getId(), channel, page, placeholder, recSlotRecDetail, recSlotRuleDetails);
     }
 
     /**
@@ -130,7 +142,52 @@ public class RecSlotService {
      * @return              CS Response
      * @throws ValidationException Exception to throw
      */
-    public CSResponse addNewRecSlot(RecSlotDetail recSlotDetail) throws ValidationException {
+    public CSResponse addRecSlot(RecSlotDetail recSlotDetail) throws ValidationException {
+
+        // Validate rec slot detail.
+        validateRecSlotDetail(recSlotDetail);
+
+        // Save rec slot.
+        RecSlot recSlot = recSlotRepository.save(new RecSlot(recSlotDetail.getChannel().getId(),
+                recSlotDetail.getPage().getId(), recSlotDetail.getPlaceholder().getId(), recSlotDetail.getRec().getId()));
+
+        // Get detail for each rec slot rule.
+        List<RecSlotRule> recSlotRules = new ArrayList<>();
+        recSlotDetail.getRules().forEach(rule -> recSlotRules.add(new RecSlotRule(recSlot.getId(), rule.getId())));
+
+        // Save all new rec_slot-rule associations.
+        if (!recSlotRules.isEmpty()) {
+            recSlotRuleRepository.saveAll(recSlotRules);
+        }
+
+        // Return status.
+        return new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Validate given rec slot detail are correct.
+     *
+     * @param recSlotDetail rec slot detail.
+     * @throws ValidationException if validation failed.
+     */
+    private void validateRecSlotDetail(RecSlotDetail recSlotDetail) throws ValidationException {
 
         // Channel should exist.
         Channel channel = recSlotDetail.getChannel();
@@ -138,10 +195,9 @@ public class RecSlotService {
             throw new ValidationException(CHANNEL_CANNOT_BE_NULL);
         }
 
-        // Validate channel ID.
-        Optional<Channel> channelOptional = channelRepository.findById(channel.getId());
-
-        if (!channelOptional.isPresent()) {
+        // Validate channel id.
+        Optional<Channel> optionalChannel = channelRepository.findById(channel.getId());
+        if (!optionalChannel.isPresent()) {
             throw new ValidationException(CHANNEL_ID_INVALID);
         }
 
@@ -151,10 +207,9 @@ public class RecSlotService {
             throw new ValidationException(PAGE_CANNOT_BE_NULL);
         }
 
-        // Validate page ID.
-        Optional<Page> pageOptional = pageRepository.findById(page.getId());
-
-        if (!pageOptional.isPresent()) {
+        // Validate page id.
+        Optional<Page> optionalPage = pageRepository.findById(page.getId());
+        if (!optionalPage.isPresent()) {
             throw new ValidationException(PAGE_ID_INVALID);
         }
 
@@ -164,10 +219,9 @@ public class RecSlotService {
             throw new ValidationException(PLACEHOLDER_CANNOT_BE_NULL);
         }
 
-        // Validate placeholder ID.
-        Optional<Placeholder> placeholderOptional = placeholderRepository.findById(placeholder.getId());
-
-        if (!placeholderOptional.isPresent()) {
+        // Validate placeholder id.
+        Optional<Placeholder> optionalPlaceholder = placeholderRepository.findById(placeholder.getId());
+        if (!optionalPlaceholder.isPresent()) {
             throw new ValidationException(PLACEHOLDER_ID_INVALID);
         }
 
@@ -177,47 +231,22 @@ public class RecSlotService {
             throw new ValidationException(REC_CANNOT_BE_NULL);
         }
 
-        // Validate rec ID.
-        Optional<Rec> recOptional = recRepository.findById(rec.getId());
-
-        if (!recOptional.isPresent()) {
+        // Validate rec id.
+        Optional<Rec> optionalRec = recRepository.findById(rec.getId());
+        if (!optionalRec.isPresent()) {
             throw new ValidationException(REC_ID_INVALID);
         }
 
-        // If rules exist.
+        // Check whether rule ids are valid.
         List<RecSlotRuleDetail> rules = recSlotDetail.getRules();
-        if (rules != null) {
+        rules.forEach(rule -> {
+            // TODO: Check whether rule IDs are valid.
+        });
 
-            // Check whether rule IDs are valid.
-            rules.forEach(rule -> {
-                // TODO: Check whether rule IDs are valid.
-            });
-        }
 
-        // Set values to rec slot model.
-        RecSlot recSlot = new RecSlot();
-        recSlot.setChannelID(channel.getId());
-        recSlot.setPageID(page.getId());
-        recSlot.setPlaceholderID(placeholder.getId());
-        recSlot.setRecID(rec.getId());
 
-        // Save rec slot.
-        recSlotRepository.save(recSlot);
-
-        // If rules exist iterate through the rule list.
-        if (rules != null) {
-
-            rules.forEach(rule -> {
-
-                RecSlotRule recSlotRule = new RecSlotRule();
-                recSlotRule.setRecSlotID(recSlot.getId());
-                recSlotRule.setRuleID(rule.getId());
-
-                // Save rec slot - rule association.
-                recSlotRuleRepository.save(recSlotRule);
-            });
-        }
-
-        return new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
     }
+
+
+
 }

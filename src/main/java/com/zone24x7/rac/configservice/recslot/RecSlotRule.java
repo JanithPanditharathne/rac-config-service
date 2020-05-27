@@ -16,6 +16,14 @@ public class RecSlotRule {
     @Column(name = "rule_id")
     private int ruleID;
 
+    public RecSlotRule() {
+    }
+
+    public RecSlotRule(int recSlotID, int ruleID) {
+        this.recSlotID = recSlotID;
+        this.ruleID = ruleID;
+    }
+
     public int getId() {
         return id;
     }

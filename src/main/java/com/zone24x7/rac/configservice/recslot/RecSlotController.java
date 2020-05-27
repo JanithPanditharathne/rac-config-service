@@ -23,7 +23,7 @@ public class RecSlotController {
     }
 
     /**
-     * Get rec slot by ID.
+     * Get rec slot by id.
      *
      * @return Rec slot
      * @throws ValidationException Exception to throw
@@ -41,7 +41,7 @@ public class RecSlotController {
      * @throws ValidationException Exception to throw
      */
     @PostMapping("/recSlots")
-    public CSResponse addNewRecSlot(@RequestBody RecSlotDetail recSlotDetail) throws ValidationException {
-        return recSlotService.addNewRecSlot(recSlotDetail);
+    public CSResponse addRecSlot(@RequestBody RecSlotDetail recSlotDetail) throws ValidationException {
+        return recSlotService.addRecSlot(recSlotDetail);
     }
 }
