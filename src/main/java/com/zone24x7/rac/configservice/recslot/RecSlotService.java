@@ -113,6 +113,14 @@ public class RecSlotService {
         Optional<Rec> recOptional = recRepository.findById(recSlot.getRecID());
         RecSlotRec recSlotRec = modelMapper.map(recOptional.get(), RecSlotRec.class);
 
+        // Get all rec slot - rule associations by rec slot ID.
+        List<RecSlotRule> recSlotRuleList = recSlotRuleRepository.findAllByRecSlotID(recSlot.getId());
+
+        // Iterate list.
+        recSlotRuleList.forEach(recSlotRule -> {
+//            recSlotRule.getRuleID(); TODO: Get rule details from rules table.
+        });
+
         return new RecSlotDetail(recSlot.getId(), channelOptional.get(), pageOptional.get(),
                                           placeholderOptional.get(), recSlotRec, null); // TODO: Set rules
     }
