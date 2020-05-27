@@ -1,11 +1,9 @@
 package com.zone24x7.rac.configservice.recslot;
 
 import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.util.CSResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1")
@@ -33,5 +31,17 @@ public class RecSlotController {
     @GetMapping("/recSlots/{id}")
     public RecSlotDetail getRecSlot(@PathVariable int id) throws ValidationException {
         return recSlotService.getRecSlot(id);
+    }
+
+    /**
+     * Add new rec slot.
+     *
+     * @param recSlotSummary Rec slot summary
+     * @return               CS Response
+     * @throws ValidationException Exception to throw
+     */
+    @PostMapping("/recSlots")
+    public CSResponse addNewRecSlot(@RequestBody RecSlotSummary recSlotSummary) throws ValidationException {
+        return recSlotService.addNewRecSlot(recSlotSummary);
     }
 }
