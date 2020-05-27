@@ -36,12 +36,12 @@ public class RecSlotController {
     /**
      * Add new rec slot.
      *
-     * @param recSlotSummary Rec slot summary
-     * @return               CS Response
+     * @param recSlotDetail Rec slot detail
+     * @return              CS Response
      * @throws ValidationException Exception to throw
      */
     @PostMapping("/recSlots")
-    public CSResponse addNewRecSlot(@RequestBody RecSlotSummary recSlotSummary) throws ValidationException {
-        return recSlotService.addNewRecSlot(recSlotSummary);
+    public CSResponse addNewRecSlot(@RequestBody RecSlotDetail recSlotDetail) throws ValidationException {
+        return recSlotService.addNewRecSlot(recSlotDetail);
     }
 }

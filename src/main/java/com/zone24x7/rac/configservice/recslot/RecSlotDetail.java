@@ -4,19 +4,21 @@ import com.zone24x7.rac.configservice.metadata.channel.Channel;
 import com.zone24x7.rac.configservice.metadata.page.Page;
 import com.zone24x7.rac.configservice.metadata.placeholder.Placeholder;
 
+import java.util.List;
+
 public class RecSlotDetail {
 
     private int id;
     private Channel channel;
     private Page page;
     private Placeholder placeholder;
-    private RecSlotRec rec;
-    private Object rules; // TODO: List of rules.
+    private RecSlotRecDetail rec;
+    private List<RecSlotRuleDetail> rules;
 
     public RecSlotDetail() {
     }
 
-    public RecSlotDetail(int id, Channel channel, Page page, Placeholder placeholder, RecSlotRec rec, String rules) {
+    public RecSlotDetail(int id, Channel channel, Page page, Placeholder placeholder, RecSlotRecDetail rec, List<RecSlotRuleDetail> rules) {
         this.id = id;
         this.channel = channel;
         this.page = page;
@@ -57,19 +59,19 @@ public class RecSlotDetail {
         this.placeholder = placeholder;
     }
 
-    public RecSlotRec getRec() {
+    public RecSlotRecDetail getRec() {
         return rec;
     }
 
-    public void setRec(RecSlotRec rec) {
+    public void setRec(RecSlotRecDetail rec) {
         this.rec = rec;
     }
 
-    public Object getRules() {
+    public List<RecSlotRuleDetail> getRules() {
         return rules;
     }
 
-    public void setRules(Object rules) {
+    public void setRules(List<RecSlotRuleDetail> rules) {
         this.rules = rules;
     }
 }

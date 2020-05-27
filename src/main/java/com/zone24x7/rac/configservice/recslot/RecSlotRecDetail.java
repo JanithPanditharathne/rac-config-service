@@ -1,14 +1,14 @@
 package com.zone24x7.rac.configservice.recslot;
 
-public class RecSlotRec {
+public class RecSlotRecDetail {
 
     private int id;
     private String name;
 
-    public RecSlotRec() {
+    public RecSlotRecDetail() {
     }
 
-    public RecSlotRec(int id, String name) {
+    public RecSlotRecDetail(int id, String name) {
         this.id = id;
         this.name = name;
     }

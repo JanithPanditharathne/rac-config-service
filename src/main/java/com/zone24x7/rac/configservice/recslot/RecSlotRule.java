@@ -1,4 +1,4 @@
-package com.zone24x7.rac.configservice.recslot.recslotrule;
+package com.zone24x7.rac.configservice.recslot;
 
 import javax.persistence.*;
 

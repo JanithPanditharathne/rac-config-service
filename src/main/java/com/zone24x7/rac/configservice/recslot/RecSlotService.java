@@ -9,8 +9,6 @@ import com.zone24x7.rac.configservice.metadata.placeholder.Placeholder;
 import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderRepository;
 import com.zone24x7.rac.configservice.rec.Rec;
 import com.zone24x7.rac.configservice.rec.RecRepository;
-import com.zone24x7.rac.configservice.recslot.recslotrule.RecSlotRule;
-import com.zone24x7.rac.configservice.recslot.recslotrule.RecSlotRuleRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,7 +109,7 @@ public class RecSlotService {
 
         // Get rec.
         Optional<Rec> recOptional = recRepository.findById(recSlot.getRecID());
-        RecSlotRec recSlotRec = modelMapper.map(recOptional.get(), RecSlotRec.class);
+        RecSlotRecDetail recSlotRecDetail = modelMapper.map(recOptional.get(), RecSlotRecDetail.class);
 
         // Get all rec slot - rule associations by rec slot ID.
         List<RecSlotRule> recSlotRuleList = recSlotRuleRepository.findAllByRecSlotID(recSlot.getId());
@@ -122,81 +120,103 @@ public class RecSlotService {
         });
 
         return new RecSlotDetail(recSlot.getId(), channelOptional.get(), pageOptional.get(),
-                                          placeholderOptional.get(), recSlotRec, null); // TODO: Set rules
+                                 placeholderOptional.get(), recSlotRecDetail, null); // TODO: Set rules
     }
 
     /**
      * Add new rec slot.
      *
-     * @param recSlotSummary Rec slot summary
-     * @return               CS Response
+     * @param recSlotDetail Rec slot detail
+     * @return              CS Response
      * @throws ValidationException Exception to throw
      */
-    public CSResponse addNewRecSlot(RecSlotSummary recSlotSummary) throws ValidationException {
+    public CSResponse addNewRecSlot(RecSlotDetail recSlotDetail) throws ValidationException {
+
+        // Channel should exist.
+        Channel channel = recSlotDetail.getChannel();
+        if (channel == null) {
+            throw new ValidationException(CHANNEL_CANNOT_BE_NULL);
+        }
 
         // Validate channel ID.
-        Optional<Channel> channelOptional = channelRepository.findById(recSlotSummary.getChannelId());
+        Optional<Channel> channelOptional = channelRepository.findById(channel.getId());
 
         if (!channelOptional.isPresent()) {
             throw new ValidationException(CHANNEL_ID_INVALID);
         }
 
+        // Page should exist.
+        Page page = recSlotDetail.getPage();
+        if (page == null) {
+            throw new ValidationException(PAGE_CANNOT_BE_NULL);
+        }
+
         // Validate page ID.
-        Optional<Page> pageOptional = pageRepository.findById(recSlotSummary.getPageId());
+        Optional<Page> pageOptional = pageRepository.findById(page.getId());
 
         if (!pageOptional.isPresent()) {
             throw new ValidationException(PAGE_ID_INVALID);
         }
 
+        // Placeholder should exist.
+        Placeholder placeholder = recSlotDetail.getPlaceholder();
+        if (placeholder == null) {
+            throw new ValidationException(PLACEHOLDER_CANNOT_BE_NULL);
+        }
+
         // Validate placeholder ID.
-        Optional<Placeholder> placeholderOptional = placeholderRepository.findById(recSlotSummary.getPlaceholderId());
+        Optional<Placeholder> placeholderOptional = placeholderRepository.findById(placeholder.getId());
 
         if (!placeholderOptional.isPresent()) {
             throw new ValidationException(PLACEHOLDER_ID_INVALID);
         }
 
+        // Rec should exist.
+        RecSlotRecDetail rec = recSlotDetail.getRec();
+        if (rec == null) {
+            throw new ValidationException(REC_CANNOT_BE_NULL);
+        }
+
         // Validate rec ID.
-        Optional<Rec> recOptional = recRepository.findById(recSlotSummary.getRecId());
+        Optional<Rec> recOptional = recRepository.findById(rec.getId());
 
         if (!recOptional.isPresent()) {
             throw new ValidationException(REC_ID_INVALID);
         }
 
-        // Check whether rule IDs exist.
-        List<Integer> ruleIds = recSlotSummary.getRuleIds();
-        if (ruleIds == null) {
-            throw new ValidationException(REC_SLOT_RULE_IDS_CANNOT_BE_NULL);
-        }
+        // If rules exist.
+        List<RecSlotRuleDetail> rules = recSlotDetail.getRules();
+        if (rules != null) {
 
-        if (ruleIds.isEmpty()) {
-            throw new ValidationException(REC_SLOT_RULE_IDS_CANNOT_BE_EMPTY);
+            // Check whether rule IDs are valid.
+            rules.forEach(rule -> {
+                // TODO: Check whether rule IDs are valid.
+            });
         }
-
-        // Check whether rule IDs are valid.
-        ruleIds.forEach(ruleID -> {
-            // TODO: Check whether rule IDs are valid.
-        });
 
         // Set values to rec slot model.
         RecSlot recSlot = new RecSlot();
-        recSlot.setChannelID(recSlotSummary.getChannelId());
-        recSlot.setPageID(recSlotSummary.getPageId());
-        recSlot.setPlaceholderID(recSlotSummary.getPlaceholderId());
-        recSlot.setRecID(recSlotSummary.getRecId());
+        recSlot.setChannelID(channel.getId());
+        recSlot.setPageID(page.getId());
+        recSlot.setPlaceholderID(placeholder.getId());
+        recSlot.setRecID(rec.getId());
 
         // Save rec slot.
         recSlotRepository.save(recSlot);
 
-        // Iterate rule list.
-        ruleIds.forEach(ruleID -> {
+        // If rules exist iterate through the rule list.
+        if (rules != null) {
 
-            RecSlotRule recSlotRule = new RecSlotRule();
-            recSlotRule.setRecSlotID(recSlot.getId());
-            recSlotRule.setRuleID(ruleID);
+            rules.forEach(rule -> {
 
-            // Save rec slot - rule association.
-            recSlotRuleRepository.save(recSlotRule);
-        });
+                RecSlotRule recSlotRule = new RecSlotRule();
+                recSlotRule.setRecSlotID(recSlot.getId());
+                recSlotRule.setRuleID(rule.getId());
+
+                // Save rec slot - rule association.
+                recSlotRuleRepository.save(recSlotRule);
+            });
+        }
 
         return new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
     }
