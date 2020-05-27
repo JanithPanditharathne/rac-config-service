@@ -24,17 +24,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static com.zone24x7.rac.configservice.util.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.CHANNEL_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.CHANNEL_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.PAGE_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.PAGE_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.PLACEHOLDER_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.PLACEHOLDER_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.REC_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.REC_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_ADDED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class RecSlotServiceTest {
@@ -88,7 +95,7 @@ public class RecSlotServiceTest {
         Rec rec = mock(Rec.class);
         when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
 
-        RecSlotRec recSlotRec = new RecSlotRec();
+        RecSlotRecDetail recSlotRec = new RecSlotRecDetail();
         when(modelMapper.map(any(), any())).thenReturn(recSlotRec);
 
         // Actual
@@ -139,7 +146,7 @@ public class RecSlotServiceTest {
             Rec rec = mock(Rec.class);
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
 
-            RecSlotRec recSlotRec = new RecSlotRec();
+            RecSlotRecDetail recSlotRec = new RecSlotRecDetail();
             when(modelMapper.map(any(), any())).thenReturn(recSlotRec);
 
             // Expected

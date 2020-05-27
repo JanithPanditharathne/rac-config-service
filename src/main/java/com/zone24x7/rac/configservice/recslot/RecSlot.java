@@ -3,6 +3,7 @@ package com.zone24x7.rac.configservice.recslot;
 import javax.persistence.*;
 
 @Entity
+@SuppressWarnings("all")
 public class RecSlot {
 
     @Id
