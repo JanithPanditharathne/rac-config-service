@@ -7,6 +7,7 @@ import javax.persistence.Id;
 
 
 @Entity
+@SuppressWarnings("all")
 public class Page {
 
     @Id

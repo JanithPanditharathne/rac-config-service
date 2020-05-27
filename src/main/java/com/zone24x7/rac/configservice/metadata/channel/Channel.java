@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@SuppressWarnings("all")
 public class Channel {
 
     @Id
