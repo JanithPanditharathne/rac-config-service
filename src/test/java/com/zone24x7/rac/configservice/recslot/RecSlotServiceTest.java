@@ -65,10 +65,10 @@ public class RecSlotServiceTest {
     private RecRepository recRepository;
 
     @Mock
-    private RecSlotRuleRepository recSlotRuleRepository;
+    private ModelMapper modelMapper;
 
     @Mock
-    private ModelMapper modelMapper;
+    private RecSlotRuleRepository recSlotRuleRepository;
 
     @Test
     @DisplayName("get all rec slots method")
@@ -150,7 +150,7 @@ public class RecSlotServiceTest {
             when(modelMapper.map(any(), any())).thenReturn(recSlotRec);
 
             // Expected
-            RecSlotDetail expectedRecSlotDetail = new RecSlotDetail(1, channel, page, placeholder, recSlotRec, null);
+            RecSlotDetail expectedRecSlotDetail = new RecSlotDetail(1, channel, page, placeholder, recSlotRec, new ArrayList<>());
 
             ObjectMapper objectMapper = new ObjectMapper();
             String expected = objectMapper.writeValueAsString(expectedRecSlotDetail);
@@ -405,6 +405,10 @@ public class RecSlotServiceTest {
             RecSlot recSlot = new RecSlot(1,1,1,1);
             recSlot.setId(123);
             when(recSlotRepository.save(any(RecSlot.class))).thenReturn(recSlot);
+
+            List<RecSlotRule> recSlotRules = new ArrayList<>();
+            recSlotRules.add(new RecSlotRule(1,1));
+            when(recSlotRuleRepository.saveAll(any())).thenReturn(recSlotRules);
 
             // Actual
             RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), rules);
