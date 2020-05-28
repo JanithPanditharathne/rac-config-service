@@ -184,37 +184,30 @@ public class RecSlotService {
 
         // Find given rec slot id from db.
         // If rec slot not found in db, return invalid rec slot id error.
-        Optional<RecSlot> recSlotOptional = recSlotRepository.findById(id);
-        if (!recSlotOptional.isPresent()) {
+        Optional<RecSlot> optionalRecSlot = recSlotRepository.findById(id);
+        if (!optionalRecSlot.isPresent()) {
             throw new ValidationException(REC_SLOT_ID_INVALID);
         }
 
         // Validate rec slot detail.
         validateRecSlotDetail(recSlotDetail);
 
-        // Update details.
-        RecSlot recSlot = recSlotOptional.get();
+        // Update rec slot detail in db.
+        RecSlot recSlot = new RecSlot(recSlotDetail.getChannel().getId(), recSlotDetail.getPage().getId(),
+                recSlotDetail.getPlaceholder().getId(), recSlotDetail.getRec().getId());
         recSlot.setId(id);
-        recSlot.setChannelID(recSlotDetail.getChannel().getId());
-        recSlot.setPageID(recSlotDetail.getPage().getId());
-        recSlot.setPlaceholderID(recSlotDetail.getPlaceholder().getId());
-        recSlot.setRecID(recSlotDetail.getRec().getId());
-
-        // Update in db.
         recSlotRepository.save(recSlot);
 
-        // Retrieve existing rec slot - rule associations.
-        List<RecSlotRule> recSlotRuleList = recSlotRuleRepository.findAllByRecSlotID(id);
 
-        // Iterate through the list and delete associations.
-        recSlotRuleList.forEach(recSlotRule -> recSlotRuleRepository.delete(recSlotRule));
+        // Find all existing rec_slot-rule associations for given rec_slot id and delete them.
+        List<RecSlotRule> existingRecSlotRules = recSlotRuleRepository.findAllByRecSlotID(id);
+        recSlotRuleRepository.deleteAll(existingRecSlotRules);
 
-        // Iterate through the new associations list.
-        recSlotDetail.getRules().forEach(recSlotRule ->
+        // Save all new rec_slot-rule associations.
+        List<RecSlotRule> newRecSlotRules = new ArrayList<>();
+        recSlotDetail.getRules().forEach(recSlotRule -> newRecSlotRules.add(new RecSlotRule(id, recSlotRule.getId())));
+        recSlotRuleRepository.saveAll(newRecSlotRules);
 
-                // Save to db.
-                recSlotRuleRepository.save((new RecSlotRule(id, recSlotRule.getId())))
-        );
 
         // Update rec engine rec slot config.
         recEngineService.updateRecSlotConfig();

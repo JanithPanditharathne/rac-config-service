@@ -65,7 +65,7 @@ public final class Strings {
     public static final String REC_SLOT_ID_INVALID = "CS-5000:Invalid rec slot id";
     public static final String REC_SLOT_ADDED_SUCCESSFULLY = "CS-5001:Rec slot added successfully";
     public static final String REC_CANNOT_BE_NULL = "CS-5002:Rec cannot be null";
-    public static final String REC_SLOT_UPDATED_SUCCESSFULLY = "CS-5003:Recommendation slot updated successfully";
+    public static final String REC_SLOT_UPDATED_SUCCESSFULLY = "CS-5003:Rec slot updated successfully";
 
     // Metadata
     public static final String CHANNEL_NAME_CANNOT_BE_NULL = "CS-6000:Channel name cannot be null";

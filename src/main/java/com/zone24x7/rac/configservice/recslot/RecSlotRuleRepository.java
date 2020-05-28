@@ -9,9 +9,9 @@ import java.util.List;
 public interface RecSlotRuleRepository extends JpaRepository<RecSlotRule, Integer> {
 
     /**
-     * Get all rec slot rule associations by rec slot ID.
+     * Get all rec slot rule associations by rec slot id.
      *
-     * @param recSlotID Rec slot ID
+     * @param recSlotID Rec slot id
      * @return          List of RecSlotRule
      */
     List<RecSlotRule> findAllByRecSlotID(int recSlotID);

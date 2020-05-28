@@ -18,16 +18,24 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ADDED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_DELETED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ID_ALREADY_USE_IN_RECS;
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_UPDATED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class BundleServiceTest {
@@ -128,7 +136,7 @@ class BundleServiceTest {
 
             BundleDetail expectedBundleDetail = new BundleDetail(1, "Bundle1", 2,
                                                                     false, "Test",
-                                                                    Arrays.asList(bundleAlgorithmDetail));
+                    Collections.singletonList(bundleAlgorithmDetail));
 
             ObjectMapper objectMapper = new ObjectMapper();
             String expected = objectMapper.writeValueAsString(expectedBundleDetail);
@@ -180,7 +188,7 @@ class BundleServiceTest {
 
                 BundleDetail bundleDetail = new BundleDetail(0, "", 2,
                                                                 false, "Test",
-                                                                Arrays.asList(bundleAlgorithmDetail));
+                        Collections.singletonList(bundleAlgorithmDetail));
 
                 bundleService.addBundle(bundleDetail);
             });
@@ -606,7 +614,7 @@ class BundleServiceTest {
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
             verify(bundleRepository, times(1)).save(any());
-            verify(bundleAlgorithmRepository, times(1)).delete(any());
+            verify(bundleAlgorithmRepository, times(1)).deleteAll(any());
             verify(bundleAlgorithmRepository, times(1)).saveAll(any());
             verify(recEngineService, times(1)).updateBundleConfig();
         }

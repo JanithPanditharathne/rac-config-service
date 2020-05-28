@@ -162,12 +162,9 @@ public class BundleService {
         bundleRepository.save(bundle);
 
 
-        // Find all existing bundle-algorithm associations for given bundle id.
+        // Find all existing bundle-algorithm associations for given bundle id and delete them.
         List<BundleAlgorithm> existingBundleAlgorithms = bundleAlgorithmRepository.findAllByBundleID(bundleID);
-
-        // Delete all existing bundle-algorithm associations for given bundle id.
-        existingBundleAlgorithms.forEach(bundleAlgorithm -> bundleAlgorithmRepository.delete(bundleAlgorithm));
-
+        bundleAlgorithmRepository.deleteAll(existingBundleAlgorithms);
 
         // Save all new bundle-algorithm associations.
         List<BundleAlgorithm> newBundleAlgorithms = new ArrayList<>();

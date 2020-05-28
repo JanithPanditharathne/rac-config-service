@@ -477,8 +477,8 @@ public class RecSlotServiceTest {
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
             verify(recSlotRepository, times(1)).save(any());
-            verify(recSlotRuleRepository, times(1)).delete(any());
-            verify(recSlotRuleRepository, times(1)).save(any());
+            verify(recSlotRuleRepository, times(1)).deleteAll(any());
+            verify(recSlotRuleRepository, times(1)).saveAll(any());
             verify(recEngineService, times(1)).updateRecSlotConfig();
         }
     }

@@ -260,23 +260,24 @@ public class RecEngineService {
         // Get all rec slots.
         RecSlotList allRecSlots = recSlotService.getAllRecSlots();
 
+        // Rec slot list for rec engine.
         List<RecEngineRecSlot> recSlotList = new ArrayList<>();
 
         // Update rec slot details for each rec slot.
-        allRecSlots.getRecSlots().forEach(recSlot -> {
+        allRecSlots.getRecSlots().forEach(rs -> {
 
-            // Rules.
+            // Rule ids.
             List<Integer> ruleIds = new ArrayList<>();
-            recSlot.getRules().forEach(recSlotRuleDetail -> ruleIds.add(recSlotRuleDetail.getId()));
+            rs.getRules().forEach(rule -> ruleIds.add(rule.getId()));
 
-            // Recs.
+            // Rec ids.
             List<Integer> recIds = new ArrayList<>();
-            recIds.add(recSlot.getRec().getId());
+            recIds.add(rs.getRec().getId());
 
-            // Add to list.
-            recSlotList.add(new RecEngineRecSlot(recSlot.getChannel().getName(), recSlot.getPage().getName(),
-                                                 recSlot.getPlaceholder().getName(), ruleIds, recIds));
+            // Add rec_engine rec_slot to list.
+            recSlotList.add(new RecEngineRecSlot(rs.getChannel().getName(), rs.getPage().getName(), rs.getPlaceholder().getName(), ruleIds, recIds));
         });
+
 
         try {
 

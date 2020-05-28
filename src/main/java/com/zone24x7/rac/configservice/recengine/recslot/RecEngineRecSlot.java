@@ -7,8 +7,8 @@ public class RecEngineRecSlot {
     private String channel;
     private String page;
     private String placeholder;
-    private List<Integer> ruleIds;
     private List<Integer> recIds;
+    private List<Integer> ruleIds;
 
 
     public RecEngineRecSlot() {
