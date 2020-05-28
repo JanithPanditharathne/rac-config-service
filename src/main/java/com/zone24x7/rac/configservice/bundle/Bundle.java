@@ -30,43 +30,43 @@ public class Bundle {
         this.combineDisplayText = combineDisplayText;
     }
 
-    public int getId() {
+    public int getId() {    // NOSONAR
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id) {     // NOSONAR
         this.id = id;
     }
 
-    public String getName() {
+    public String getName() {   // NOSONAR
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) {  // NOSONAR
         this.name = name;
     }
 
-    public int getDefaultLimit() {
+    public int getDefaultLimit() {      // NOSONAR
         return defaultLimit;
     }
 
-    public void setDefaultLimit(int defaultLimit) {
+    public void setDefaultLimit(int defaultLimit) {     // NOSONAR
         this.defaultLimit = defaultLimit;
     }
 
-    public boolean isCombineEnabled() {
+    public boolean isCombineEnabled() {     // NOSONAR
         return combineEnabled;
     }
 
-    public void setCombineEnabled(boolean combineEnabled) {
+    public void setCombineEnabled(boolean combineEnabled) {     // NOSONAR
         this.combineEnabled = combineEnabled;
     }
 
-    public String getCombineDisplayText() {
+    public String getCombineDisplayText() {     // NOSONAR
         return combineDisplayText;
     }
 
-    public void setCombineDisplayText(String combineDisplayText) {
+    public void setCombineDisplayText(String combineDisplayText) {      // NOSONAR
         this.combineDisplayText = combineDisplayText;
     }
 }
