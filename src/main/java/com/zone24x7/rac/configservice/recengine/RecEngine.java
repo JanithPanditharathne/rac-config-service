@@ -7,7 +7,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-@SuppressWarnings("all")
 public class RecEngine {
 
     @Id

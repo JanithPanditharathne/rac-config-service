@@ -3,7 +3,6 @@ package com.zone24x7.rac.configservice.bundle;
 import javax.persistence.*;
 
 @Entity
-@SuppressWarnings("all")
 public class Bundle {
 
     @Id
