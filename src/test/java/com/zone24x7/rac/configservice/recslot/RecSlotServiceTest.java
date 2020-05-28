@@ -150,7 +150,7 @@ public class RecSlotServiceTest {
             when(modelMapper.map(any(), any())).thenReturn(recSlotRec);
 
             // Expected
-            RecSlotDetail expectedRecSlotDetail = new RecSlotDetail(1, channel, page, placeholder, recSlotRec, new ArrayList<>());
+            RecSlotDetail expectedRecSlotDetail = new RecSlotDetail(1, channel, page, placeholder, recSlotRecDetail, new ArrayList<>());
 
             ObjectMapper objectMapper = new ObjectMapper();
             String expected = objectMapper.writeValueAsString(expectedRecSlotDetail);

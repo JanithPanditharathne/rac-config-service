@@ -164,6 +164,49 @@ public class RecSlotService {
         return new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
     }
 
+    public CSResponse editRecSlot(int id, RecSlotDetail recSlotDetail) throws ValidationException {
+
+        // Validate id.
+        RecSlotValidations.validateID(id);
+
+        // Find given rec slot id from db.
+        // If rec slot not found in db, return invalid rec slot id error.
+        Optional<RecSlot> recSlotOptional = recSlotRepository.findById(id);
+        if (!recSlotOptional.isPresent()) {
+            throw new ValidationException(REC_SLOT_ID_INVALID);
+        }
+
+        // Validate rec slot detail.
+        validateRecSlotDetail(recSlotDetail);
+
+        // Update details.
+        RecSlot recSlot = recSlotOptional.get();
+        recSlot.setId(id);
+        recSlot.setChannelID(recSlotDetail.getChannel().getId());
+        recSlot.setPageID(recSlotDetail.getPage().getId());
+        recSlot.setPlaceholderID(recSlotDetail.getPlaceholder().getId());
+        recSlot.setRecID(recSlotDetail.getRec().getId());
+
+        // Update in db.
+        recSlotRepository.save(recSlot);
+
+        // Retrieve existing rec slot - rule associations.
+        List<RecSlotRule> recSlotRuleList = recSlotRuleRepository.findAllByRecSlotID(id);
+
+        // Iterate through the list and delete associations.
+        recSlotRuleList.forEach(recSlotRule -> recSlotRuleRepository.delete(recSlotRule));
+
+        // Iterate through the new associations list.
+        recSlotDetail.getRules().forEach(recSlotRule ->
+
+                // Save to db.
+                recSlotRuleRepository.save((new RecSlotRule(id, recSlotRule.getId())))
+        );
+
+        // Return status.
+        return new CSResponse(SUCCESS, REC_SLOT_UPDATED_SUCCESSFULLY);
+    }
+
 
 
 
@@ -242,11 +285,5 @@ public class RecSlotService {
         rules.forEach(rule -> {
             // TODO: Check whether rule IDs are valid.
         });
-
-
-
     }
-
-
-
 }

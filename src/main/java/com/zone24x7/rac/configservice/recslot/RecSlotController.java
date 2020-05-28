@@ -44,4 +44,16 @@ public class RecSlotController {
     public CSResponse addRecSlot(@RequestBody RecSlotDetail recSlotDetail) throws ValidationException {
         return recSlotService.addRecSlot(recSlotDetail);
     }
+
+    /**
+     * Edit rec slot.
+     *
+     * @param recSlotDetail Rec slot detail
+     * @return              CS Response
+     * @throws ValidationException Exception to throw
+     */
+    @PutMapping("/recSlots/{id}")
+    public CSResponse editRecSlot(@PathVariable int id, @RequestBody RecSlotDetail recSlotDetail) throws ValidationException {
+        return recSlotService.editRecSlot(id, recSlotDetail);
+    }
 }
