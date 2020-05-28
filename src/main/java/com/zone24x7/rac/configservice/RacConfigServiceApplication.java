@@ -29,7 +29,7 @@ public class RacConfigServiceApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(RacConfigServiceApplication.class);
+        SpringApplication.run(RacConfigServiceApplication.class, args);
     }
 
 }
