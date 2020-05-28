@@ -15,8 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 
-import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_ADDED_SUCCESSFULLY;
-import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -107,6 +106,38 @@ public class RecSlotControllerTest {
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/v1/recSlots")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(recSlotJson)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test for edit rec slot.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void editRecSlot() throws Exception {
+
+        // Mock
+        CSResponse csResponse = new CSResponse(SUCCESS, REC_SLOT_UPDATED_SUCCESSFULLY);
+        Mockito.when(recSlotService.editRecSlot(anyInt(), any())).thenReturn(csResponse);
+
+        // Expected
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        String recSlotJson = "{\"id\":321,\"channel\":{\"id\":56},\"page\":{\"id\":5},\"placeholder\":{\"id\":2}," +
+                "\"rec\":{\"id\":100},\"rules\":[{\"id\":87},{\"id\":90}]}";
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put("/v1/recSlots/1")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(recSlotJson)
                 .contentType(MediaType.APPLICATION_JSON);

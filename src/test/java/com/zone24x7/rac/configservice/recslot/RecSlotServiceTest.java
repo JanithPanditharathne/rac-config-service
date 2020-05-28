@@ -25,16 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.CHANNEL_CANNOT_BE_NULL;
-import static com.zone24x7.rac.configservice.util.Strings.CHANNEL_ID_INVALID;
-import static com.zone24x7.rac.configservice.util.Strings.PAGE_CANNOT_BE_NULL;
-import static com.zone24x7.rac.configservice.util.Strings.PAGE_ID_INVALID;
-import static com.zone24x7.rac.configservice.util.Strings.PLACEHOLDER_CANNOT_BE_NULL;
-import static com.zone24x7.rac.configservice.util.Strings.PLACEHOLDER_ID_INVALID;
-import static com.zone24x7.rac.configservice.util.Strings.REC_CANNOT_BE_NULL;
-import static com.zone24x7.rac.configservice.util.Strings.REC_ID_INVALID;
-import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_ADDED_SUCCESSFULLY;
-import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -423,6 +414,71 @@ public class RecSlotServiceTest {
             assertEquals(expected.getStatus(), actual.getStatus());
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
+            verify(recEngineService, times(1)).updateRecSlotConfig();
+        }
+    }
+
+    @Nested
+    @DisplayName("edit rec slot method")
+    class EditRecSlot {
+
+        @Test
+        @DisplayName("test for invalid rec slot id")
+        void testEditRecSlotForInvalidID() {
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    recSlotService.editRecSlot(1, new RecSlotDetail())
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(REC_SLOT_ID_INVALID, actual);
+        }
+
+        @Test
+        @DisplayName("test for correct values")
+        void testEditRecSlotForCorrectValues() throws Exception {
+
+            // Expected
+            CSResponse expected = new CSResponse(SUCCESS, REC_SLOT_UPDATED_SUCCESSFULLY);
+
+            // Mock
+            Channel channel = mock(Channel.class);
+            when(channelRepository.findById(anyInt())).thenReturn(Optional.of(channel));
+
+            Page page = mock(Page.class);
+            when(pageRepository.findById(anyInt())).thenReturn(Optional.of(page));
+
+            Placeholder placeholder = mock(Placeholder.class);
+            when(placeholderRepository.findById(anyInt())).thenReturn(Optional.of(placeholder));
+
+            Rec rec = mock(Rec.class);
+            when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
+
+            RecSlot recSlot = mock(RecSlot.class);
+            when(recSlotRepository.findById(anyInt())).thenReturn(Optional.of(recSlot));
+
+            List<RecSlotRule> recSlotRuleList = new ArrayList<>();
+            recSlotRuleList.add(new RecSlotRule());
+            when(recSlotRuleRepository.findAllByRecSlotID(anyInt())).thenReturn(recSlotRuleList);
+
+            List<RecSlotRuleDetail> recSlotRuleDetails = new ArrayList<>();
+            recSlotRuleDetails.add(new RecSlotRuleDetail());
+
+            // Actual
+            RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), recSlotRuleDetails);
+            CSResponse actual = recSlotService.editRecSlot(1, recSlotDetail);
+
+            // Assert
+            assertEquals(expected.getStatus(), actual.getStatus());
+            assertEquals(expected.getCode(), actual.getCode());
+            assertEquals(expected.getMessage(), actual.getMessage());
+            verify(recSlotRepository, times(1)).save(any());
+            verify(recSlotRuleRepository, times(1)).delete(any());
+            verify(recSlotRuleRepository, times(1)).save(any());
             verify(recEngineService, times(1)).updateRecSlotConfig();
         }
     }
