@@ -21,6 +21,8 @@ import com.zone24x7.rac.configservice.recengine.recslot.RecEngineRecSlot;
 import com.zone24x7.rac.configservice.recengine.recslot.RecEngineRecSlotList;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRule;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRuleList;
+import com.zone24x7.rac.configservice.recslot.RecSlotList;
+import com.zone24x7.rac.configservice.recslot.RecSlotService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.slf4j.Logger;
@@ -30,14 +32,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static com.zone24x7.rac.configservice.util.Strings.BUNDLES;
-import static com.zone24x7.rac.configservice.util.Strings.RECS;
-import static com.zone24x7.rac.configservice.util.Strings.REC_SLOTS;
-import static com.zone24x7.rac.configservice.util.Strings.RULES;
-import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.*;
 
 /**
  * Service class relating to Rec Engine.
@@ -54,6 +51,9 @@ public class RecEngineService {
 
     @Autowired
     private RecService recService;
+
+    @Autowired
+    private RecSlotService recSlotService;
 
     private static final int BUNDLE_CONFIG_ID = 1;
     private static final int RULE_CONFIG_ID = 2;
@@ -257,12 +257,26 @@ public class RecEngineService {
     @Async("recSlotTaskExecutor")
     public void updateRecSlotConfig() throws ServerException {
 
+        // Get all rec slots.
+        RecSlotList allRecSlots = recSlotService.getAllRecSlots();
 
         List<RecEngineRecSlot> recSlotList = new ArrayList<>();
-        recSlotList.add(new RecEngineRecSlot("Web", "Home", "Horizontal", new ArrayList<>(Arrays.asList(700, 701)), new ArrayList<>(Arrays.asList(43))));
-        recSlotList.add(new RecEngineRecSlot("Mobile", "Home", "Horizontal", new ArrayList<>(Arrays.asList(700, 701)), new ArrayList<>(Arrays.asList(43))));
-        recSlotList.add(new RecEngineRecSlot("Web", "PDP", "Horizontal2", new ArrayList<>(Arrays.asList(700, 701)), new ArrayList<>(Arrays.asList(43))));
 
+        // Update rec slot details for each rec slot.
+        allRecSlots.getRecSlots().forEach(recSlot -> {
+
+            // Rules.
+            List<Integer> ruleIds = new ArrayList<>();
+            recSlot.getRules().forEach(recSlotRuleDetail -> ruleIds.add(recSlotRuleDetail.getId()));
+
+            // Recs.
+            List<Integer> recIds = new ArrayList<>();
+            recIds.add(recSlot.getRec().getId());
+
+            // Add to list.
+            recSlotList.add(new RecEngineRecSlot(recSlot.getChannel().getName(), recSlot.getPage().getName(),
+                                                 recSlot.getPlaceholder().getName(), ruleIds, recIds));
+        });
 
         try {
 

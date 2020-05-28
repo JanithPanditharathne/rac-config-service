@@ -10,6 +10,7 @@ import com.zone24x7.rac.configservice.metadata.placeholder.Placeholder;
 import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderRepository;
 import com.zone24x7.rac.configservice.rec.Rec;
 import com.zone24x7.rac.configservice.rec.RecRepository;
+import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.DisplayName;
@@ -69,6 +70,9 @@ public class RecSlotServiceTest {
 
     @Mock
     private RecSlotRuleRepository recSlotRuleRepository;
+
+    @Mock
+    private RecEngineService recEngineService;
 
     @Test
     @DisplayName("get all rec slots method")
@@ -150,7 +154,7 @@ public class RecSlotServiceTest {
             when(modelMapper.map(any(), any())).thenReturn(recSlotRec);
 
             // Expected
-            RecSlotDetail expectedRecSlotDetail = new RecSlotDetail(1, channel, page, placeholder, recSlotRecDetail, new ArrayList<>());
+            RecSlotDetail expectedRecSlotDetail = new RecSlotDetail(1, channel, page, placeholder, recSlotRec, new ArrayList<>());
 
             ObjectMapper objectMapper = new ObjectMapper();
             String expected = objectMapper.writeValueAsString(expectedRecSlotDetail);
@@ -376,6 +380,7 @@ public class RecSlotServiceTest {
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
             verify(recSlotRepository, times(1)).save(any());
+            verify(recEngineService, times(1)).updateRecSlotConfig();
         }
 
         @Test
@@ -418,6 +423,7 @@ public class RecSlotServiceTest {
             assertEquals(expected.getStatus(), actual.getStatus());
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
+            verify(recEngineService, times(1)).updateRecSlotConfig();
         }
     }
 }

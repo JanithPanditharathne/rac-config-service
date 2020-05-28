@@ -1,5 +1,6 @@
 package com.zone24x7.rac.configservice.recslot;
 
+import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class RecSlotController {
      * @throws ValidationException Exception to throw
      */
     @PostMapping("/recSlots")
-    public CSResponse addRecSlot(@RequestBody RecSlotDetail recSlotDetail) throws ValidationException {
+    public CSResponse addRecSlot(@RequestBody RecSlotDetail recSlotDetail) throws ValidationException, ServerException {
         return recSlotService.addRecSlot(recSlotDetail);
     }
 
@@ -53,7 +54,7 @@ public class RecSlotController {
      * @throws ValidationException Exception to throw
      */
     @PutMapping("/recSlots/{id}")
-    public CSResponse editRecSlot(@PathVariable int id, @RequestBody RecSlotDetail recSlotDetail) throws ValidationException {
+    public CSResponse editRecSlot(@PathVariable int id, @RequestBody RecSlotDetail recSlotDetail) throws ValidationException, ServerException {
         return recSlotService.editRecSlot(id, recSlotDetail);
     }
 }

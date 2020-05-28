@@ -1,5 +1,6 @@
 package com.zone24x7.rac.configservice.recslot;
 
+import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.metadata.channel.Channel;
 import com.zone24x7.rac.configservice.metadata.channel.ChannelRepository;
@@ -9,9 +10,10 @@ import com.zone24x7.rac.configservice.metadata.placeholder.Placeholder;
 import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderRepository;
 import com.zone24x7.rac.configservice.rec.Rec;
 import com.zone24x7.rac.configservice.rec.RecRepository;
+import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.util.CSResponse;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,7 +44,8 @@ public class RecSlotService {
     private RecSlotRuleRepository recSlotRuleRepository;
 
     @Autowired
-    private ModelMapper modelMapper;
+    @Lazy
+    private RecEngineService recEngineService;
 
     /**
      * Get all rec slots.
@@ -130,7 +133,6 @@ public class RecSlotService {
             //TODO: Add rule details to the "recSlotRuleDetails" list.
         });
 
-
         // Return rec slot detail.
         return new RecSlotDetail(recSlot.getId(), channel, page, placeholder, recSlotRecDetail, recSlotRuleDetails);
     }
@@ -142,7 +144,7 @@ public class RecSlotService {
      * @return              CS Response
      * @throws ValidationException Exception to throw
      */
-    public CSResponse addRecSlot(RecSlotDetail recSlotDetail) throws ValidationException {
+    public CSResponse addRecSlot(RecSlotDetail recSlotDetail) throws ValidationException, ServerException {
 
         // Validate rec slot detail.
         validateRecSlotDetail(recSlotDetail);
@@ -160,11 +162,22 @@ public class RecSlotService {
             recSlotRuleRepository.saveAll(recSlotRules);
         }
 
+        // Update rec engine rec slot config.
+        recEngineService.updateRecSlotConfig();
+
         // Return status.
         return new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
     }
 
-    public CSResponse editRecSlot(int id, RecSlotDetail recSlotDetail) throws ValidationException {
+    /**
+     * Edit rec slot.
+     *
+     * @param id            Rec slot ID
+     * @param recSlotDetail Rec slot details
+     * @return              CS Response
+     * @throws ValidationException Exception to throw
+     */
+    public CSResponse editRecSlot(int id, RecSlotDetail recSlotDetail) throws ValidationException, ServerException {
 
         // Validate id.
         RecSlotValidations.validateID(id);
@@ -202,6 +215,9 @@ public class RecSlotService {
                 // Save to db.
                 recSlotRuleRepository.save((new RecSlotRule(id, recSlotRule.getId())))
         );
+
+        // Update rec engine rec slot config.
+        recEngineService.updateRecSlotConfig();
 
         // Return status.
         return new CSResponse(SUCCESS, REC_SLOT_UPDATED_SUCCESSFULLY);
