@@ -6,6 +6,7 @@ import com.zone24x7.rac.configservice.bundle.BundleRepository;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
+import com.zone24x7.rac.configservice.recslot.RecSlotRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.DisplayName;
@@ -40,6 +41,9 @@ public class RecServiceTest {
 
     @Mock
     private RecRepository recRepository;
+
+    @Mock
+    private RecSlotRepository recSlotRepository;
 
     @Mock
     private BundleRepository bundleRepository;
@@ -81,9 +85,7 @@ public class RecServiceTest {
         @DisplayName("test for invalid rec id")
         void testGetRecForInvalidRecID() {
 
-            ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                recService.getRec(100);
-            });
+            ValidationException validationException = assertThrows(ValidationException.class, () -> recService.getRec(100));
 
             // Expected
             String expected = Strings.REC_ID_INVALID;
@@ -134,9 +136,7 @@ public class RecServiceTest {
 
             Rec rec = new Rec();
 
-            ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                recService.addRec(rec);
-            });
+            ValidationException validationException = assertThrows(ValidationException.class, () -> recService.addRec(rec));
 
             // Expected
             String expected = Strings.REC_NAME_CANNOT_BE_NULL;
@@ -157,9 +157,7 @@ public class RecServiceTest {
             rec.setName("");
 
             // Actual
-            ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                recService.addRec(rec);
-            });
+            ValidationException validationException = assertThrows(ValidationException.class, () -> recService.addRec(rec));
 
             String actual = validationException.getMessage();
 
@@ -180,9 +178,7 @@ public class RecServiceTest {
             rec.setBundleID(1);
 
             // Actual
-            ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                recService.addRec(rec);
-            });
+            ValidationException validationException = assertThrows(ValidationException.class, () -> recService.addRec(rec));
 
             String actual = validationException.getMessage();
 
@@ -233,9 +229,7 @@ public class RecServiceTest {
             String expected = Strings.REC_ID_INVALID;
 
             Rec rec = new Rec();
-            ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                recService.editRec(1, rec);
-            });
+            ValidationException validationException = assertThrows(ValidationException.class, () -> recService.editRec(1, rec));
 
             // Actual
             String actual = validationException.getMessage();
@@ -255,9 +249,7 @@ public class RecServiceTest {
             Rec rec = new Rec();
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
 
-            ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                recService.editRec(1, rec);
-            });
+            ValidationException validationException = assertThrows(ValidationException.class, () -> recService.editRec(1, rec));
 
             // Actual
             String actual = validationException.getMessage();
@@ -278,9 +270,7 @@ public class RecServiceTest {
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
 
             // Actual
-            ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                recService.editRec(1, rec);
-            });
+            ValidationException validationException = assertThrows(ValidationException.class, () -> recService.editRec(1, rec));
 
             String actual = validationException.getMessage();
 
@@ -361,8 +351,9 @@ public class RecServiceTest {
             CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.REC_DELETED_SUCCESSFULLY);
 
             // Mock
-            Rec rec = new Rec(1, "Test rec", 1);
-            when(recRepository.findById(rec.getId())).thenReturn(Optional.of(rec));
+            Rec rec = mock(Rec.class);
+            when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
+            when(recSlotRepository.findAllByRecID(anyInt())).thenReturn(new ArrayList<>());
 
             // Call deleteById method.
             recRepository.deleteById(rec.getId());
@@ -371,7 +362,7 @@ public class RecServiceTest {
             verify(recRepository, times(1)).deleteById(rec.getId());
 
             // Actual
-            CSResponse actual = recService.deleteRec(rec.getId());
+            CSResponse actual = recService.deleteRec(1);
 
             // Assert
             assertEquals(expected.getStatus(), actual.getStatus());

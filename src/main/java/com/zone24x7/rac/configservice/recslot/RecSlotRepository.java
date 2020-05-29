@@ -7,11 +7,6 @@ import java.util.List;
 
 @Repository
 public interface RecSlotRepository extends JpaRepository<RecSlot, Integer> {
-
-    /**
-     * Get all rec slots in descending order.
-     *
-     * @return List of rec slots
-     */
     List<RecSlot> findAllByOrderByIdDesc();
+    List<RecSlot> findAllByRecID(int id);
 }

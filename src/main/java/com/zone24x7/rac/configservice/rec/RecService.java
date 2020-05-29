@@ -6,6 +6,8 @@ import com.zone24x7.rac.configservice.bundle.BundleValidations;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
+import com.zone24x7.rac.configservice.recslot.RecSlot;
+import com.zone24x7.rac.configservice.recslot.RecSlotRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class RecService {
 
     @Autowired
     private RecRepository recRepository;
+
+    @Autowired
+    private RecSlotRepository recSlotRepository;
 
     @Autowired
     private BundleRepository bundleRepository;
@@ -178,6 +183,12 @@ public class RecService {
         Optional<Rec> recOptional = recRepository.findById(id);
         if (!recOptional.isPresent()) {
             throw new ValidationException(REC_ID_INVALID);
+        }
+
+        // Check rec id already use in rec slots.
+        List<RecSlot> recSlots = recSlotRepository.findAllByRecID(id);
+        if (!recSlots.isEmpty()) {
+            throw new ValidationException(Strings.REC_ID_ALREADY_USE_IN_REC_SLOTS);
         }
 
 

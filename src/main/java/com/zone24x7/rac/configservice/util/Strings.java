@@ -59,6 +59,7 @@ public final class Strings {
     public static final String REC_UPDATED_SUCCESSFULLY = "CS-4004:Rec updated successfully";
     public static final String REC_BUNDLE_DETAILS_NOT_FOUND = "CS-4005:Rec bundle details not found";
     public static final String REC_DELETED_SUCCESSFULLY = "CS-4006:Rec deleted successfully";
+    public static final String REC_ID_ALREADY_USE_IN_REC_SLOTS = "CS-4007:Rec id already use in rec slots";
 
 
     // Rec slot
