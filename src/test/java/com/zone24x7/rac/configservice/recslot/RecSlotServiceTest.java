@@ -482,4 +482,52 @@ public class RecSlotServiceTest {
             verify(recEngineService, times(1)).updateRecSlotConfig();
         }
     }
+
+    @Nested
+    @DisplayName("delete rec slot method")
+    class DeleteRecSlot {
+
+        @Test
+        @DisplayName("test for invalid rec slot id")
+        void testDeleteRecSlotForInvalidID() {
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    recSlotService.deleteRecSlot(1)
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(REC_SLOT_ID_INVALID, actual);
+        }
+
+        @Test
+        @DisplayName("test for correct values")
+        void testDeleteRecSlotForCorrectValues() throws Exception {
+
+            // Expected
+            CSResponse expected = new CSResponse(SUCCESS, REC_SLOT_DELETED_SUCCESSFULLY);
+
+            // Mock
+            RecSlot recSlot = mock(RecSlot.class);
+            when(recSlotRepository.findById(anyInt())).thenReturn(Optional.of(recSlot));
+
+            List<RecSlotRule> recSlotRuleList = new ArrayList<>();
+            recSlotRuleList.add(new RecSlotRule());
+            when(recSlotRuleRepository.findAllByRecSlotID(anyInt())).thenReturn(recSlotRuleList);
+
+            // Actual
+            CSResponse actual = recSlotService.deleteRecSlot(1);
+
+            // Assert
+            assertEquals(expected.getStatus(), actual.getStatus());
+            assertEquals(expected.getCode(), actual.getCode());
+            assertEquals(expected.getMessage(), actual.getMessage());
+            verify(recSlotRuleRepository, times(1)).deleteAll(any());
+            verify(recSlotRepository, times(1)).delete(any());
+            verify(recEngineService, times(1)).updateRecSlotConfig();
+        }
+    }
 }

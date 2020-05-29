@@ -148,4 +148,32 @@ public class RecSlotControllerTest {
         // Assert
         assertEquals(expected, actual);
     }
+
+    /**
+     * Unit test for delete rec slot.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void deleteRecSlot() throws Exception {
+
+        // Mock
+        CSResponse csResponse = new CSResponse(SUCCESS, REC_DELETED_SUCCESSFULLY);
+        Mockito.when(recSlotService.deleteRecSlot(anyInt())).thenReturn(csResponse);
+
+        // Expected
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete("/v1/recSlots/1")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 }
