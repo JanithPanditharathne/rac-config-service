@@ -526,7 +526,7 @@ public class RecSlotServiceTest {
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
             verify(recSlotRuleRepository, times(1)).deleteAll(any());
-            verify(recSlotRepository, times(1)).delete(any());
+            verify(recSlotRepository, times(1)).deleteById(any());
             verify(recEngineService, times(1)).updateRecSlotConfig();
         }
     }

@@ -29,7 +29,7 @@ public class RecEngineController {
      *
      * @return Bundle config
      */
-    @GetMapping(path = "/recEngine/bundles", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/rec-engine/bundles", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getBundleConfig() {
         return recEngineService.getBundleConfig();
     }
@@ -39,7 +39,7 @@ public class RecEngineController {
      *
      * @return Rule config
      */
-    @GetMapping(path = "/recEngine/rules", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/rec-engine/rules", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getRuleConfig() {
         return recEngineService.getRuleConfig();
     }
@@ -49,7 +49,7 @@ public class RecEngineController {
      *
      * @return Recs config
      */
-    @GetMapping(path = "/recEngine/recs", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/rec-engine/recs", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getRecConfig() {
         return recEngineService.getRecsConfig();
     }
@@ -59,7 +59,7 @@ public class RecEngineController {
      *
      * @return Rec slots config
      */
-    @GetMapping(path = "/recEngine/recSlots", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/rec-engine/rec-slots", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getRecSlotConfig() {
         return recEngineService.getRecSlotsConfig();
     }
@@ -78,7 +78,7 @@ public class RecEngineController {
      * @return update process status.
      * @throws ServerException if any server errors occurs.
      */
-    @PutMapping("/recEngine/update/all")
+    @PutMapping("/rec-engine/update/all")
     public CSResponse updateAllConfigs() throws ServerException {
 
         // Update bundle configs.
@@ -111,7 +111,7 @@ public class RecEngineController {
      * @param config Bundle config json
      * @return Response
      */
-    @PostMapping("/recEngine/bundles")
+    @PostMapping("/rec-engine/bundles")
     public CSResponse addBundleConfig(@RequestBody String config) {
         return recEngineService.addBundleConfig(config);
     }
@@ -122,7 +122,7 @@ public class RecEngineController {
      * @param ruleJson Rule config json
      * @return Response
      */
-    @PostMapping("/recEngine/rules")
+    @PostMapping("/rec-engine/rules")
     public CSResponse addRuleConfig(@RequestBody String ruleJson) {
         return recEngineService.addRuleConfig(ruleJson);
     }
@@ -133,7 +133,7 @@ public class RecEngineController {
      * @param recJson Rec config json
      * @return Response
      */
-    @PostMapping("/recEngine/recs")
+    @PostMapping("/rec-engine/recs")
     public CSResponse addRecConfig(@RequestBody String recJson) {
         return recEngineService.addRecConfig(recJson);
     }
@@ -144,7 +144,7 @@ public class RecEngineController {
      * @param recSlotJson Rec slot config json
      * @return Response
      */
-    @PostMapping("/recEngine/recSlots")
+    @PostMapping("/rec-engine/rec-slots")
     public CSResponse addRecSlotConfig(@RequestBody String recSlotJson) {
         return recEngineService.addRecSlotConfig(recSlotJson);
     }

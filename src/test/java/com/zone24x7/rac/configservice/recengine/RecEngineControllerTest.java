@@ -43,7 +43,7 @@ class RecEngineControllerTest {
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/v1/recEngine/bundles")
+                .get("/v1/rec-engine/bundles")
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
@@ -67,7 +67,7 @@ class RecEngineControllerTest {
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/v1/recEngine/rules")
+                .get("/v1/rec-engine/rules")
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
@@ -89,7 +89,7 @@ class RecEngineControllerTest {
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/v1/recEngine/recs")
+                .get("/v1/rec-engine/recs")
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
@@ -112,7 +112,7 @@ class RecEngineControllerTest {
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/v1/recEngine/recSlots")
+                .get("/v1/rec-engine/rec-slots")
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
@@ -145,7 +145,7 @@ class RecEngineControllerTest {
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/v1/recEngine/bundles")
+                .post("/v1/rec-engine/bundles")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(bundleConfig)
                 .contentType(MediaType.APPLICATION_JSON);
@@ -170,7 +170,7 @@ class RecEngineControllerTest {
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/v1/recEngine/rules")
+                .post("/v1/rec-engine/rules")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(ruleConfig)
                 .contentType(MediaType.APPLICATION_JSON);
@@ -195,7 +195,7 @@ class RecEngineControllerTest {
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/v1/recEngine/recs")
+                .post("/v1/rec-engine/recs")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(recConfig)
                 .contentType(MediaType.APPLICATION_JSON);
@@ -220,7 +220,7 @@ class RecEngineControllerTest {
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/v1/recEngine/recSlots")
+                .post("/v1/rec-engine/rec-slots")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(recSlotConfig)
                 .contentType(MediaType.APPLICATION_JSON);

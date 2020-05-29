@@ -229,19 +229,20 @@ public class RecSlotService {
         // Validate id.
         RecSlotValidations.validateID(id);
 
-        // Find given rec slot id from db.
-        // If rec slot not found in db, return invalid rec slot id error.
+        // Check given rec slot id is exists.
         Optional<RecSlot> optionalRecSlot = recSlotRepository.findById(id);
         if (!optionalRecSlot.isPresent()) {
             throw new ValidationException(REC_SLOT_ID_INVALID);
         }
 
+
         // Delete rec slot - rule associations.
-        List<RecSlotRule> recSlotRuleList = recSlotRuleRepository.findAllByRecSlotID(id);
-        recSlotRuleRepository.deleteAll(recSlotRuleList);
+        List<RecSlotRule> recSlotRules = recSlotRuleRepository.findAllByRecSlotID(id);
+        recSlotRuleRepository.deleteAll(recSlotRules);
+
 
         // Delete rec slot.
-        recSlotRepository.delete(optionalRecSlot.get());
+        recSlotRepository.deleteById(id);
 
         // Update rec engine rec slot config.
         recEngineService.updateRecSlotConfig();

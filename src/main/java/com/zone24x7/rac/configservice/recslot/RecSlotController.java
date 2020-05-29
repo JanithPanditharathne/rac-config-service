@@ -18,7 +18,7 @@ public class RecSlotController {
      *
      * @return Rec slots list
      */
-    @GetMapping("/recSlots")
+    @GetMapping("/rec-slots")
     public RecSlotList getAllRecSlots() {
         return recSlotService.getAllRecSlots();
     }
@@ -29,7 +29,7 @@ public class RecSlotController {
      * @return Rec slot
      * @throws ValidationException Exception to throw
      */
-    @GetMapping("/recSlots/{id}")
+    @GetMapping("/rec-slots/{id}")
     public RecSlotDetail getRecSlot(@PathVariable int id) throws ValidationException {
         return recSlotService.getRecSlot(id);
     }
@@ -41,7 +41,7 @@ public class RecSlotController {
      * @return              CS Response
      * @throws ValidationException Exception to throw
      */
-    @PostMapping("/recSlots")
+    @PostMapping("/rec-slots")
     public CSResponse addRecSlot(@RequestBody RecSlotDetail recSlotDetail) throws ValidationException, ServerException {
         return recSlotService.addRecSlot(recSlotDetail);
     }
@@ -53,7 +53,7 @@ public class RecSlotController {
      * @return              CS Response
      * @throws ValidationException Exception to throw
      */
-    @PutMapping("/recSlots/{id}")
+    @PutMapping("/rec-slots/{id}")
     public CSResponse editRecSlot(@PathVariable int id, @RequestBody RecSlotDetail recSlotDetail) throws ValidationException, ServerException {
         return recSlotService.editRecSlot(id, recSlotDetail);
     }
@@ -61,12 +61,12 @@ public class RecSlotController {
     /**
      * Delete rec slot.
      *
-     * @param id Rec slot ID
-     * @return   CS Response
+     * @param id Rec slot id.
+     * @return   CS response.
      * @throws ValidationException Validation exception to throw
      * @throws ServerException     Server exception to throw
      */
-    @DeleteMapping("/recSlots/{id}")
+    @DeleteMapping("/rec-slots/{id}")
     public CSResponse deleteRecSlot(@PathVariable int id) throws ServerException, ValidationException {
         return recSlotService.deleteRecSlot(id);
     }

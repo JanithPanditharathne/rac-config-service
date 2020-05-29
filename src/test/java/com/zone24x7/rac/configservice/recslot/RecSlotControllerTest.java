@@ -47,7 +47,7 @@ public class RecSlotControllerTest {
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/v1/recSlots")
+                .get("/v1/rec-slots")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
@@ -75,7 +75,7 @@ public class RecSlotControllerTest {
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/v1/recSlots/1")
+                .get("/v1/rec-slots/1")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
@@ -105,7 +105,7 @@ public class RecSlotControllerTest {
                 "\"rec\":{\"id\":100},\"rules\":[{\"id\":87},{\"id\":90}]}";
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/v1/recSlots")
+                .post("/v1/rec-slots")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(recSlotJson)
                 .contentType(MediaType.APPLICATION_JSON);
@@ -137,7 +137,7 @@ public class RecSlotControllerTest {
                 "\"rec\":{\"id\":100},\"rules\":[{\"id\":87},{\"id\":90}]}";
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .put("/v1/recSlots/1")
+                .put("/v1/rec-slots/1")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(recSlotJson)
                 .contentType(MediaType.APPLICATION_JSON);
@@ -167,7 +167,7 @@ public class RecSlotControllerTest {
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .delete("/v1/recSlots/1")
+                .delete("/v1/rec-slots/1")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
