@@ -57,4 +57,17 @@ public class RecSlotController {
     public CSResponse editRecSlot(@PathVariable int id, @RequestBody RecSlotDetail recSlotDetail) throws ValidationException, ServerException {
         return recSlotService.editRecSlot(id, recSlotDetail);
     }
+
+    /**
+     * Delete rec slot.
+     *
+     * @param id Rec slot ID
+     * @return   CS Response
+     * @throws ValidationException Validation exception to throw
+     * @throws ServerException     Server exception to throw
+     */
+    @DeleteMapping("/recSlots/{id}")
+    public CSResponse deleteRecSlot(@PathVariable int id) throws ServerException, ValidationException {
+        return recSlotService.deleteRecSlot(id);
+    }
 }

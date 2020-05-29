@@ -216,7 +216,39 @@ public class RecSlotService {
         return new CSResponse(SUCCESS, REC_SLOT_UPDATED_SUCCESSFULLY);
     }
 
+    /**
+     * Delete rec slot.
+     *
+     * @param id Rec slot ID
+     * @return   CS Response
+     * @throws ValidationException Validation exception to throw
+     * @throws ServerException     Server exception to throw
+     */
+    public CSResponse deleteRecSlot(int id) throws ValidationException, ServerException {
 
+        // Validate id.
+        RecSlotValidations.validateID(id);
+
+        // Find given rec slot id from db.
+        // If rec slot not found in db, return invalid rec slot id error.
+        Optional<RecSlot> optionalRecSlot = recSlotRepository.findById(id);
+        if (!optionalRecSlot.isPresent()) {
+            throw new ValidationException(REC_SLOT_ID_INVALID);
+        }
+
+        // Delete rec slot - rule associations.
+        List<RecSlotRule> recSlotRuleList = recSlotRuleRepository.findAllByRecSlotID(id);
+        recSlotRuleRepository.deleteAll(recSlotRuleList);
+
+        // Delete rec slot.
+        recSlotRepository.delete(optionalRecSlot.get());
+
+        // Update rec engine rec slot config.
+        recEngineService.updateRecSlotConfig();
+
+        // Return status.
+        return new CSResponse(SUCCESS, REC_SLOT_DELETED_SUCCESSFULLY);
+    }
 
 
 
