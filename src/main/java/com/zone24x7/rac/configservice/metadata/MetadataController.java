@@ -14,6 +14,7 @@ import com.zone24x7.rac.configservice.util.CSResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,46 @@ public class MetadataController {
 
 
     /**
+     * Get all pages.
+     *
+     * @return All pages
+     */
+    @GetMapping("/metadata/pages")
+    public PageList getPages() {
+        return metadataService.getAllPages();
+    }
+
+
+    /**
+     * Get all placeholders.
+     *
+     * @return All placeholders
+     */
+    @GetMapping("/metadata/placeholders")
+    public PlaceholderList getPlaceholders() {
+        return metadataService.getAllPlaceholders();
+    }
+
+
+    /**
+     * Get metadata list of the given type.
+     *
+     * @param type metadata type (brands, departments...etc).
+     * @return metadata list.
+     */
+    @GetMapping("/metadata/{type}")
+    public MetadataList getMetadata(@PathVariable String type) {
+        return metadataService.getMetadata(type);
+    }
+
+
+
+
+
+
+
+
+    /**
      * Add channel.
      *
      * @param channelDTO Channel DTO
@@ -56,18 +97,6 @@ public class MetadataController {
     }
 
 
-
-
-    /**
-     * Get all pages.
-     *
-     * @return All pages
-     */
-    @GetMapping("/metadata/pages")
-    public PageList getPages() {
-        return metadataService.getAllPages();
-    }
-
     /**
      * Add page.
      *
@@ -78,20 +107,6 @@ public class MetadataController {
     @PostMapping("/metadata/pages")
     public CSResponse addPage(@RequestBody PageDTO pageDTO) throws ValidationException {
         return metadataService.addPage(modelMapper.map(pageDTO, Page.class));
-    }
-
-
-
-
-
-    /**
-     * Get all placeholders.
-     *
-     * @return All placeholders
-     */
-    @GetMapping("/metadata/placeholders")
-    public PlaceholderList getPlaceholders() {
-        return metadataService.getAllPlaceholders();
     }
 
 

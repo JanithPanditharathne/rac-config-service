@@ -31,6 +31,9 @@ public class MetadataService {
     @Autowired
     private PlaceholderRepository placeholderRepository;
 
+    @Autowired
+    private MetadataRepository metadataRepository;
+
 
 
 
@@ -44,6 +47,48 @@ public class MetadataService {
         List<Channel> channels = new ArrayList<>(channelRepository.findAll());
         return new ChannelList(channels);
     }
+
+    /**
+     * Get all pages.
+     *
+     * @return Page list DTO
+     */
+    PageList getAllPages() {
+        List<Page> pages = new ArrayList<>(pageRepository.findAll());
+        return new PageList(pages);
+    }
+
+    /**
+     * Get all placeholders.
+     *
+     * @return Placeholder list DTO
+     */
+    PlaceholderList getAllPlaceholders() {
+        List<Placeholder> placeholders = new ArrayList<>(placeholderRepository.findAll());
+        return new PlaceholderList(placeholders);
+    }
+
+
+    /**
+     * Get metadata list of the given type.
+     *
+     * @param type metadata type (brands, departments...etc).
+     * @return metadata list.
+     */
+    MetadataList getMetadata(String type) {
+        List<Metadata> metadata = metadataRepository.findAllByType(type);
+        return new MetadataList(metadata);
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     /**
@@ -81,22 +126,6 @@ public class MetadataService {
     }
 
 
-
-
-
-
-
-    /**
-     * Get all pages.
-     *
-     * @return Page list DTO
-     */
-    PageList getAllPages() {
-        List<Page> pages = new ArrayList<>(pageRepository.findAll());
-        return new PageList(pages);
-    }
-
-
     /**
      * Add page.
      *
@@ -130,22 +159,6 @@ public class MetadataService {
         // Return status response.
         return new CSResponse(Strings.SUCCESS, Strings.PAGE_ADDED_SUCCESSFULLY);
     }
-
-
-
-
-
-    /**
-     * Get all placeholders.
-     *
-     * @return Placeholder list DTO
-     */
-    PlaceholderList getAllPlaceholders() {
-        List<Placeholder> placeholders = new ArrayList<>(placeholderRepository.findAll());
-        return new PlaceholderList(placeholders);
-    }
-
-
 
 
     /**

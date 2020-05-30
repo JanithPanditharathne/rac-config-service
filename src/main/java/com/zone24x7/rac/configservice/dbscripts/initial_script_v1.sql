@@ -150,6 +150,17 @@ PRIMARY KEY(`id`)
 
 
 
+-- create metadata table --
+CREATE TABLE `metadata` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`type` varchar(255) DEFAULT NULL,
+`name` varchar(255) DEFAULT NULL,
+PRIMARY KEY(`id`)
+);
+
+
+
+
 
 
 
