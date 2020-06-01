@@ -9,4 +9,5 @@ import java.util.List;
 public interface RecSlotRepository extends JpaRepository<RecSlot, Integer> {
     List<RecSlot> findAllByOrderByIdDesc();
     List<RecSlot> findAllByRecID(int id);
+    List<RecSlot> findAllByChannelIDAndPageIDAndPlaceholderID(int channelID, int pageID, int placeholderID);
 }

@@ -149,6 +149,13 @@ public class RecSlotService {
         // Validate rec slot detail.
         validateRecSlotDetail(recSlotDetail);
 
+        // Check whether given channel, page, placeholder combination is already exists.
+        List<RecSlot> recSlots = recSlotRepository.findAllByChannelIDAndPageIDAndPlaceholderID(recSlotDetail.getChannel().getId(),
+                recSlotDetail.getPage().getId(), recSlotDetail.getPlaceholder().getId());
+        if (!recSlots.isEmpty()) {
+            throw new ValidationException(SIMILAR_REC_SLOT_ALREADY_EXISTS);
+        }
+
         // Save rec slot.
         RecSlot recSlot = recSlotRepository.save(new RecSlot(recSlotDetail.getChannel().getId(),
                 recSlotDetail.getPage().getId(), recSlotDetail.getPlaceholder().getId(), recSlotDetail.getRec().getId()));
@@ -188,6 +195,14 @@ public class RecSlotService {
         if (!optionalRecSlot.isPresent()) {
             throw new ValidationException(REC_SLOT_ID_INVALID);
         }
+
+        // Check whether given channel, page, placeholder combination is already exists.
+        List<RecSlot> recSlots = recSlotRepository.findAllByChannelIDAndPageIDAndPlaceholderID(recSlotDetail.getChannel().getId(),
+                recSlotDetail.getPage().getId(), recSlotDetail.getPlaceholder().getId());
+        if (!recSlots.isEmpty() && (recSlots.size() > 1 || recSlots.get(0).getId() != id)) {
+            throw new ValidationException(SIMILAR_REC_SLOT_ALREADY_EXISTS);
+        }
+
 
         // Validate rec slot detail.
         validateRecSlotDetail(recSlotDetail);

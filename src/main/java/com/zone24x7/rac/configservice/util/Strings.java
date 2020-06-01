@@ -68,6 +68,8 @@ public final class Strings {
     public static final String REC_CANNOT_BE_NULL = "CS-5002:Rec cannot be null";
     public static final String REC_SLOT_UPDATED_SUCCESSFULLY = "CS-5003:Rec slot updated successfully";
     public static final String REC_SLOT_DELETED_SUCCESSFULLY = "CS-5004:Rec slot deleted successfully";
+    public static final String SIMILAR_REC_SLOT_ALREADY_EXISTS = "CS-5005:Similar rec slot already exists with given channel, page, placeholder values. " +
+            "Please specify different channel, page, placeholder combination.";
 
     // Metadata
     public static final String CHANNEL_NAME_CANNOT_BE_NULL = "CS-6000:Channel name cannot be null";
