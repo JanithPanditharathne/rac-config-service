@@ -51,6 +51,12 @@ public final class Strings {
     public static final String BUNDLE_ID_ALREADY_USE_IN_RECS = "CS-2010:Bundle id already use in recs";
 
 
+    // Rules
+    public static final String RULE_ID_INVALID = "CS-3000:Invalid rule id";
+
+
+
+
     // Rec
     public static final String REC_ID_INVALID = "CS-4000:Invalid rec id";
     public static final String REC_ADD_SUCCESS = "CS-4001:Rec added successfully";

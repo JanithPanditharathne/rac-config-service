@@ -11,7 +11,11 @@ import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderRepository
 import com.zone24x7.rac.configservice.rec.Rec;
 import com.zone24x7.rac.configservice.rec.RecRepository;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
+import com.zone24x7.rac.configservice.rule.Rule;
+import com.zone24x7.rac.configservice.rule.RuleRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -44,8 +48,13 @@ public class RecSlotService {
     private RecSlotRuleRepository recSlotRuleRepository;
 
     @Autowired
+    private RuleRepository ruleRepository;
+
+    @Autowired
     @Lazy
     private RecEngineService recEngineService;
+
+    Logger LOGGER = LoggerFactory.getLogger(RecSlotService.class);
 
     /**
      * Get all rec slots.
@@ -71,7 +80,7 @@ public class RecSlotService {
      * Get rec slot detail.
      *
      * @param id Rec slot id
-     * @return   Rec slot details
+     * @return Rec slot details
      * @throws ValidationException Exception to throw
      */
     public RecSlotDetail getRecSlot(int id) throws ValidationException {
@@ -94,7 +103,7 @@ public class RecSlotService {
      * Get rec slot detail for given rec slot.
      *
      * @param recSlot Rec slot
-     * @return        Rec slot detail
+     * @return Rec slot detail
      */
     private RecSlotDetail getRecSlotDetail(RecSlot recSlot) {
 
@@ -130,7 +139,14 @@ public class RecSlotService {
         List<RecSlotRule> recSlotRules = recSlotRuleRepository.findAllByRecSlotID(recSlot.getId());
         List<RecSlotRuleDetail> recSlotRuleDetails = new ArrayList<>();
         recSlotRules.forEach(rsr -> {
-            //TODO: Add rule details to the "recSlotRuleDetails" list.
+
+            // Get rule by ID.
+            Optional<Rule> optionalRule = ruleRepository.findById(rsr.getRuleID());
+            if (optionalRule.isPresent()) {
+
+                RecSlotRuleDetail recSlotRuleDetail = new RecSlotRuleDetail(rsr.getRuleID(), optionalRule.get().getName());
+                recSlotRuleDetails.add(recSlotRuleDetail);
+            }
         });
 
         // Return rec slot detail.
@@ -141,7 +157,7 @@ public class RecSlotService {
      * Add new rec slot.
      *
      * @param recSlotDetail Rec slot detail
-     * @return              CS Response
+     * @return CS Response
      * @throws ValidationException Exception to throw
      */
     public CSResponse addRecSlot(RecSlotDetail recSlotDetail) throws ValidationException, ServerException {
@@ -160,7 +176,7 @@ public class RecSlotService {
 
         // Save rec slot.
         RecSlot recSlot = recSlotRepository.save(new RecSlot(recSlotDetail.getChannel().getId(),
-                recSlotDetail.getPage().getId(), recSlotDetail.getPlaceholder().getId(), recSlotDetail.getRec().getId()));
+                                                             recSlotDetail.getPage().getId(), recSlotDetail.getPlaceholder().getId(), recSlotDetail.getRec().getId()));
 
         // Get detail for each rec slot rule.
         List<RecSlotRule> recSlotRules = new ArrayList<>();
@@ -183,7 +199,7 @@ public class RecSlotService {
      *
      * @param id            Rec slot ID
      * @param recSlotDetail Rec slot details
-     * @return              CS Response
+     * @return CS Response
      * @throws ValidationException Exception to throw
      */
     public CSResponse editRecSlot(int id, RecSlotDetail recSlotDetail) throws ValidationException, ServerException {
@@ -200,7 +216,7 @@ public class RecSlotService {
 
         // Check whether given channel, page, placeholder combination is already exists.
         List<RecSlot> recSlots = recSlotRepository.findAllByChannelIDAndPageIDAndPlaceholderID(recSlotDetail.getChannel().getId(),
-                recSlotDetail.getPage().getId(), recSlotDetail.getPlaceholder().getId());
+                                                                                               recSlotDetail.getPage().getId(), recSlotDetail.getPlaceholder().getId());
         if (!recSlots.isEmpty() && (recSlots.size() > 1 || recSlots.get(0).getId() != id)) {
             throw new ValidationException(SIMILAR_REC_SLOT_ALREADY_EXISTS);
         }
@@ -211,7 +227,7 @@ public class RecSlotService {
 
         // Update rec slot detail in db.
         RecSlot recSlot = new RecSlot(recSlotDetail.getChannel().getId(), recSlotDetail.getPage().getId(),
-                recSlotDetail.getPlaceholder().getId(), recSlotDetail.getRec().getId());
+                                      recSlotDetail.getPlaceholder().getId(), recSlotDetail.getRec().getId());
         recSlot.setId(id);
         recSlotRepository.save(recSlot);
 
@@ -237,7 +253,7 @@ public class RecSlotService {
      * Delete rec slot.
      *
      * @param id Rec slot ID
-     * @return   CS Response
+     * @return CS Response
      * @throws ValidationException Validation exception to throw
      * @throws ServerException     Server exception to throw
      */
@@ -269,25 +285,11 @@ public class RecSlotService {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Validate given rec slot detail are correct.
      *
-     * @param recSlotDetail rec slot detail.
-     * @throws ValidationException if validation failed.
+     * @param recSlotDetail Rec slot detail
+     * @throws ValidationException If validation failed
      */
     private void validateRecSlotDetail(RecSlotDetail recSlotDetail) throws ValidationException {
 
@@ -341,8 +343,17 @@ public class RecSlotService {
 
         // Check whether rule ids are valid.
         List<RecSlotRuleDetail> rules = recSlotDetail.getRules();
+        List<Integer> invalidRuleIDsList = new ArrayList<>();
         rules.forEach(rule -> {
-            // TODO: Check whether rule IDs are valid.
+
+            Optional<Rule> optionalRule = ruleRepository.findById(rule.getId());
+            if (!optionalRule.isPresent()) {
+                invalidRuleIDsList.add(rule.getId());
+            }
         });
+
+        if (!invalidRuleIDsList.isEmpty()) {
+            throw new ValidationException(RULE_ID_INVALID + " " + invalidRuleIDsList.toString());
+        }
     }
 }
