@@ -16,9 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 
-import static com.zone24x7.rac.configservice.util.Strings.REC_ADD_SUCCESS;
-import static com.zone24x7.rac.configservice.util.Strings.REC_UPDATED_SUCCESSFULLY;
-import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -124,7 +122,6 @@ public class RecControllerTest {
         String expected = objectMapper.writeValueAsString(csResponse);
 
         // Mock
-        RecDetail recDetail = new RecDetail();
         Mockito.when(recService.editRec(anyInt(), any())).thenReturn(csResponse);
 
         String recJson = "{\"name\":\"Test Rec Name 1\",\"bundleId\":32}";
@@ -135,6 +132,31 @@ public class RecControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .content(recJson)
                 .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("delete rec method")
+    void testDeleteRec() throws Exception {
+
+        // Expected
+        CSResponse csResponse = new CSResponse(SUCCESS, REC_DELETED_SUCCESSFULLY);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        // Mock
+        Mockito.when(recService.deleteRec(anyInt())).thenReturn(csResponse);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete("/v1/recs/1")
+                .accept(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();

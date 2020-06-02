@@ -151,7 +151,9 @@ public class RecSlotService {
 
         // Check whether given channel, page, placeholder combination is already exists.
         List<RecSlot> recSlots = recSlotRepository.findAllByChannelIDAndPageIDAndPlaceholderID(recSlotDetail.getChannel().getId(),
-                recSlotDetail.getPage().getId(), recSlotDetail.getPlaceholder().getId());
+                                                                                               recSlotDetail.getPage().getId(),
+                                                                                               recSlotDetail.getPlaceholder().getId());
+
         if (!recSlots.isEmpty()) {
             throw new ValidationException(SIMILAR_REC_SLOT_ALREADY_EXISTS);
         }

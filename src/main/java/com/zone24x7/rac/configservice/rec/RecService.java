@@ -93,7 +93,7 @@ public class RecService {
             return new RecDetail(rec.getId(), rec.getName(), recBundle);
         }
 
-        // Else, trow server error.
+        // Else, throw server error.
         throw new ValidationException(Strings.REC_BUNDLE_DETAILS_NOT_FOUND);
     }
 

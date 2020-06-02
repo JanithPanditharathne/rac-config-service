@@ -30,10 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class RecSlotServiceTest {
@@ -343,6 +340,42 @@ public class RecSlotServiceTest {
         // TODO: Add unit test for invalid rules IDs once rules are done.
 
         @Test
+        @DisplayName("test for existing similar rec slots")
+        void testAddRecSlotForExistingSimilarRecSlots() {
+
+            // Mock
+            Channel channel = mock(Channel.class);
+            when(channelRepository.findById(anyInt())).thenReturn(Optional.of(channel));
+
+            Page page = mock(Page.class);
+            when(pageRepository.findById(anyInt())).thenReturn(Optional.of(page));
+
+            Placeholder placeholder = mock(Placeholder.class);
+            when(placeholderRepository.findById(anyInt())).thenReturn(Optional.of(placeholder));
+
+            Rec rec = mock(Rec.class);
+            when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
+
+            RecSlot recSlot = new RecSlot();
+            List<RecSlot> recSlotList = new ArrayList<>();
+            recSlotList.add(recSlot);
+            when(recSlotRepository.findAllByChannelIDAndPageIDAndPlaceholderID(anyInt(), anyInt(), anyInt())).thenReturn(recSlotList);
+
+            // Actual
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), new ArrayList<>());
+                recSlotService.addRecSlot(recSlotDetail);
+            });
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(SIMILAR_REC_SLOT_ALREADY_EXISTS, actual);
+        }
+
+        @Test
         @DisplayName("test for correct values without rules")
         void testAddRecSlotForCorrectValuesWithoutRules() throws Exception {
 
@@ -436,6 +469,44 @@ public class RecSlotServiceTest {
 
             // Assert
             assertEquals(REC_SLOT_ID_INVALID, actual);
+        }
+
+        @Test
+        @DisplayName("test for existing similar rec slots")
+        void testEditRecSlotForExistingSimilarRecSlots() {
+
+            // Mock
+            Channel channel = mock(Channel.class);
+            when(channelRepository.findById(anyInt())).thenReturn(Optional.of(channel));
+
+            Page page = mock(Page.class);
+            when(pageRepository.findById(anyInt())).thenReturn(Optional.of(page));
+
+            Placeholder placeholder = mock(Placeholder.class);
+            when(placeholderRepository.findById(anyInt())).thenReturn(Optional.of(placeholder));
+
+            Rec rec = mock(Rec.class);
+            when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
+
+            RecSlot recSlot = mock(RecSlot.class);
+            when(recSlotRepository.findById(anyInt())).thenReturn(Optional.of(recSlot));
+
+            List<RecSlot> recSlotList = new ArrayList<>();
+            recSlotList.add(recSlot);
+            when(recSlotRepository.findAllByChannelIDAndPageIDAndPlaceholderID(anyInt(), anyInt(), anyInt())).thenReturn(recSlotList);
+
+            // Actual
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), new ArrayList<>());
+                recSlotService.editRecSlot(1, recSlotDetail);
+            });
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(SIMILAR_REC_SLOT_ALREADY_EXISTS, actual);
         }
 
         @Test

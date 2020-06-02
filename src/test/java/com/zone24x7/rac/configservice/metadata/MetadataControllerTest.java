@@ -25,6 +25,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 
 @WebMvcTest(value = MetadataController.class)
 class MetadataControllerTest {
@@ -195,6 +196,37 @@ class MetadataControllerTest {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                                                       .get("/v1/metadata/placeholders")
                                                       .accept(MediaType.APPLICATION_JSON)).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test when metadata by type.
+     *
+     * @throws Exception Exception to throw
+     */
+    @Test
+    void getMetadataByType() throws Exception {
+
+        // Mock
+        List<Metadata> metadata = new ArrayList<>();
+        metadata.add(new Metadata("brands", "Nike"));
+        metadata.add(new Metadata("brands", "PUMA"));
+        MetadataList metadataList = new MetadataList(metadata);
+        Mockito.when(metadataService.getMetadata(anyString())).thenReturn(metadataList);
+
+        // Expected
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(metadataList);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/v1/metadata/brands")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
 
         // Assert

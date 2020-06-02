@@ -6,6 +6,7 @@ import com.zone24x7.rac.configservice.bundle.BundleRepository;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
+import com.zone24x7.rac.configservice.recslot.RecSlot;
 import com.zone24x7.rac.configservice.recslot.RecSlotRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
@@ -120,6 +121,29 @@ public class RecServiceTest {
             // Actual
             RecDetail actualRec = recService.getRec(1);
             String actual = objectMapper.writeValueAsString(actualRec);
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("test for not found bundle details")
+        void testGetRecForNotFoundBundleDetails() throws Exception {
+
+            // Mock
+            Rec rec = new Rec(1, "Test", 0);
+            when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
+
+            when(bundleRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+            // Actual
+            ValidationException validationException = assertThrows(ValidationException.class, () -> recService.getRec(100));
+
+            // Expected
+            String expected = Strings.REC_BUNDLE_DETAILS_NOT_FOUND;
+
+            // Actual
+            String actual = validationException.getMessage();
 
             // Assert
             assertEquals(expected, actual);
@@ -334,6 +358,35 @@ public class RecServiceTest {
 
             // Expected
             String expected = Strings.REC_ID_INVALID;
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("test for in use rec id")
+        void testDeleteRecForInuseRecID() {
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                // Mock
+                Rec rec = mock(Rec.class);
+                when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
+
+                RecSlot recSlot = new RecSlot();
+                List<RecSlot> recSlotList = new ArrayList<>();
+                recSlotList.add(recSlot);
+                when(recSlotRepository.findAllByRecID(anyInt())).thenReturn(recSlotList);
+
+                // Delete rec.
+                recService.deleteRec(1);
+            });
+
+            // Expected
+            String expected = Strings.REC_ID_ALREADY_USE_IN_REC_SLOTS;
 
             // Actual
             String actual = exception.getMessage();

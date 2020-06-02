@@ -47,6 +47,9 @@ class MetadataServiceTest {
     @Mock
     private ModelMapper modelMapper;
 
+    @Mock
+    private MetadataRepository metadataRepository;
+
     @InjectMocks
     private MetadataService metadataService;
 
@@ -345,5 +348,19 @@ class MetadataServiceTest {
         PlaceholderList actualPlaceholders = metadataService.getAllPlaceholders();
 
         assertEquals(expectedPlcehoders.size(), actualPlaceholders.getPlaceholders().size());
+    }
+
+    @Test
+    @DisplayName("get metadata by type")
+    void getMetadata() {
+        List<Metadata> expectedMetadata = new ArrayList<>();
+        Metadata metadata = new Metadata();
+        expectedMetadata.add(metadata);
+
+        when(metadataRepository.findAllByType(anyString())).thenReturn(expectedMetadata);
+
+        MetadataList actualMetadata = metadataService.getMetadata("brands");
+
+        assertEquals(expectedMetadata.size(), actualMetadata.getMetadata().size());
     }
 }
