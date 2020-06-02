@@ -14,8 +14,6 @@ import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.rule.Rule;
 import com.zone24x7.rac.configservice.rule.RuleRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -53,8 +51,6 @@ public class RecSlotService {
     @Autowired
     @Lazy
     private RecEngineService recEngineService;
-
-    Logger LOGGER = LoggerFactory.getLogger(RecSlotService.class);
 
     /**
      * Get all rec slots.

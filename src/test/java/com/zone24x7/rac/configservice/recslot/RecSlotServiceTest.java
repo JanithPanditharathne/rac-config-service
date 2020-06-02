@@ -1,6 +1,7 @@
 package com.zone24x7.rac.configservice.recslot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.metadata.channel.Channel;
 import com.zone24x7.rac.configservice.metadata.channel.ChannelRepository;
@@ -11,6 +12,8 @@ import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderRepository
 import com.zone24x7.rac.configservice.rec.Rec;
 import com.zone24x7.rac.configservice.rec.RecRepository;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
+import com.zone24x7.rac.configservice.rule.Rule;
+import com.zone24x7.rac.configservice.rule.RuleRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.DisplayName;
@@ -26,8 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.zone24x7.rac.configservice.util.Strings.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -62,6 +64,9 @@ public class RecSlotServiceTest {
     @Mock
     private RecEngineService recEngineService;
 
+    @Mock
+    private RuleRepository ruleRepository;
+
     @Test
     @DisplayName("get all rec slots method")
     void testGetAllRecSlots() {
@@ -87,6 +92,14 @@ public class RecSlotServiceTest {
         Rec rec = mock(Rec.class);
         when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
 
+        RecSlotRule recSlotRule = new RecSlotRule();
+        List<RecSlotRule> recSlotRules = new ArrayList<>();
+        recSlotRules.add(recSlotRule);
+        when(recSlotRuleRepository.findAllByRecSlotID(anyInt())).thenReturn(recSlotRules);
+
+        Rule rule = mock(Rule.class);
+        when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
+
         RecSlotRecDetail recSlotRec = new RecSlotRecDetail();
         when(modelMapper.map(any(), any())).thenReturn(recSlotRec);
 
@@ -108,8 +121,8 @@ public class RecSlotServiceTest {
             // Actual
             ValidationException validationException = assertThrows(ValidationException.class, () ->
 
-                // Get bundle.
-                recSlotService.getRecSlot(1));
+                    // Get bundle.
+                    recSlotService.getRecSlot(1));
 
             String actual = validationException.getMessage();
 
@@ -166,7 +179,7 @@ public class RecSlotServiceTest {
 
             ValidationException validationException = assertThrows(ValidationException.class, () ->
 
-                recSlotService.addRecSlot(new RecSlotDetail())
+                    recSlotService.addRecSlot(new RecSlotDetail())
             );
 
             // Actual
@@ -408,8 +421,52 @@ public class RecSlotServiceTest {
         }
 
         @Test
+        @DisplayName("test for invalid rule ID")
+        void testAddRecSlotForInvalidRuleID() {
+
+            // Mock
+            Channel channel = mock(Channel.class);
+            when(channelRepository.findById(anyInt())).thenReturn(Optional.of(channel));
+
+            Page page = mock(Page.class);
+            when(pageRepository.findById(anyInt())).thenReturn(Optional.of(page));
+
+            Placeholder placeholder = mock(Placeholder.class);
+            when(placeholderRepository.findById(anyInt())).thenReturn(Optional.of(placeholder));
+
+            Rec rec = mock(Rec.class);
+            when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
+
+            RecSlotRuleDetail recSlotRuleDetail = new RecSlotRuleDetail();
+            recSlotRuleDetail.setId(1);
+            List<RecSlotRuleDetail> rules = new ArrayList<>();
+            rules.add(recSlotRuleDetail);
+
+            RecSlot recSlot = new RecSlot(1, 1, 1, 1);
+            recSlot.setId(123);
+            when(recSlotRepository.save(any(RecSlot.class))).thenReturn(recSlot);
+
+            List<RecSlotRule> recSlotRules = new ArrayList<>();
+            recSlotRules.add(new RecSlotRule(1, 1));
+            when(recSlotRuleRepository.saveAll(any())).thenReturn(recSlotRules);
+
+            // Actual
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), rules);
+                recSlotService.addRecSlot(recSlotDetail);
+            });
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertTrue(actual.contains(RULE_ID_INVALID));
+        }
+
+        @Test
         @DisplayName("test for correct values with rules")
-        void testAddRecSlotForCorrectValuesWithRules() throws Exception {
+        void testAddRecSlotForCorrectValuesWithRules() throws ServerException, ValidationException {
 
             // Expected
             CSResponse expected = new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
@@ -428,15 +485,19 @@ public class RecSlotServiceTest {
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
 
             RecSlotRuleDetail recSlotRuleDetail = new RecSlotRuleDetail();
+            recSlotRuleDetail.setId(1);
             List<RecSlotRuleDetail> rules = new ArrayList<>();
             rules.add(recSlotRuleDetail);
 
-            RecSlot recSlot = new RecSlot(1,1,1,1);
+            Rule rule = mock(Rule.class);
+            when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
+
+            RecSlot recSlot = new RecSlot(1, 1, 1, 1);
             recSlot.setId(123);
             when(recSlotRepository.save(any(RecSlot.class))).thenReturn(recSlot);
 
             List<RecSlotRule> recSlotRules = new ArrayList<>();
-            recSlotRules.add(new RecSlotRule(1,1));
+            recSlotRules.add(new RecSlotRule(1, 1));
             when(recSlotRuleRepository.saveAll(any())).thenReturn(recSlotRules);
 
             // Actual
@@ -447,6 +508,8 @@ public class RecSlotServiceTest {
             assertEquals(expected.getStatus(), actual.getStatus());
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
+            verify(recSlotRepository, times(1)).save(any());
+            verify(recSlotRuleRepository, times(1)).saveAll(any());
             verify(recEngineService, times(1)).updateRecSlotConfig();
         }
     }
@@ -536,11 +599,16 @@ public class RecSlotServiceTest {
             recSlotRuleList.add(new RecSlotRule());
             when(recSlotRuleRepository.findAllByRecSlotID(anyInt())).thenReturn(recSlotRuleList);
 
-            List<RecSlotRuleDetail> recSlotRuleDetails = new ArrayList<>();
-            recSlotRuleDetails.add(new RecSlotRuleDetail());
+            RecSlotRuleDetail recSlotRuleDetail = new RecSlotRuleDetail();
+            recSlotRuleDetail.setId(1);
+            List<RecSlotRuleDetail> rules = new ArrayList<>();
+            rules.add(recSlotRuleDetail);
+
+            Rule rule = mock(Rule.class);
+            when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
 
             // Actual
-            RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), recSlotRuleDetails);
+            RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), rules);
             CSResponse actual = recSlotService.editRecSlot(1, recSlotDetail);
 
             // Assert
