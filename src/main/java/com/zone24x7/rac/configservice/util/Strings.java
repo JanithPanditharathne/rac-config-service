@@ -12,6 +12,7 @@ public final class Strings {
     public static final String RULES = "rules";
     public static final String RECS = "recs";
     public static final String REC_SLOTS = "recSlots";
+    public static final String BRAND = "Brand";
 
 
 

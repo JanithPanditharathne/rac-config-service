@@ -350,8 +350,6 @@ public class RecSlotServiceTest {
             assertEquals(REC_ID_INVALID, actual);
         }
 
-        // TODO: Add unit test for invalid rules IDs once rules are done.
-
         @Test
         @DisplayName("test for existing similar rec slots")
         void testAddRecSlotForExistingSimilarRecSlots() {
