@@ -1,24 +1,22 @@
 package com.zone24x7.rac.configservice.recslot;
 
-import com.zone24x7.rac.configservice.metadata.channel.Channel;
-import com.zone24x7.rac.configservice.metadata.page.Page;
-import com.zone24x7.rac.configservice.metadata.placeholder.Placeholder;
+import com.zone24x7.rac.configservice.metadata.Metadata;
 
 import java.util.List;
 
 public class RecSlotDetail {
 
     private int id;
-    private Channel channel;
-    private Page page;
-    private Placeholder placeholder;
+    private Metadata channel;
+    private Metadata page;
+    private Metadata placeholder;
     private RecSlotRecDetail rec;
     private List<RecSlotRuleDetail> rules;
 
     public RecSlotDetail() {
     }
 
-    public RecSlotDetail(int id, Channel channel, Page page, Placeholder placeholder, RecSlotRecDetail rec, List<RecSlotRuleDetail> rules) {
+    public RecSlotDetail(int id, Metadata channel, Metadata page, Metadata placeholder, RecSlotRecDetail rec, List<RecSlotRuleDetail> rules) {
         this.id = id;
         this.channel = channel;
         this.page = page;
@@ -35,27 +33,27 @@ public class RecSlotDetail {
         this.id = id;
     }
 
-    public Channel getChannel() {
+    public Metadata getChannel() {
         return channel;
     }
 
-    public void setChannel(Channel channel) {
+    public void setChannel(Metadata channel) {
         this.channel = channel;
     }
 
-    public Page getPage() {
+    public Metadata getPage() {
         return page;
     }
 
-    public void setPage(Page page) {
+    public void setPage(Metadata page) {
         this.page = page;
     }
 
-    public Placeholder getPlaceholder() {
+    public Metadata getPlaceholder() {
         return placeholder;
     }
 
-    public void setPlaceholder(Placeholder placeholder) {
+    public void setPlaceholder(Metadata placeholder) {
         this.placeholder = placeholder;
     }
 

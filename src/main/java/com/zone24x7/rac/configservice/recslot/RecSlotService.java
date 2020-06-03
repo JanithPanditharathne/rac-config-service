@@ -2,12 +2,8 @@ package com.zone24x7.rac.configservice.recslot;
 
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
-import com.zone24x7.rac.configservice.metadata.channel.Channel;
-import com.zone24x7.rac.configservice.metadata.channel.ChannelRepository;
-import com.zone24x7.rac.configservice.metadata.page.Page;
-import com.zone24x7.rac.configservice.metadata.page.PageRepository;
-import com.zone24x7.rac.configservice.metadata.placeholder.Placeholder;
-import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderRepository;
+import com.zone24x7.rac.configservice.metadata.Metadata;
+import com.zone24x7.rac.configservice.metadata.MetadataRepository;
 import com.zone24x7.rac.configservice.rec.Rec;
 import com.zone24x7.rac.configservice.rec.RecRepository;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
@@ -30,14 +26,14 @@ public class RecSlotService {
     @Autowired
     private RecSlotRepository recSlotRepository;
 
-    @Autowired
-    private ChannelRepository channelRepository;
+//    @Autowired
+//    private ChannelRepository channelRepository;
 
-    @Autowired
-    private PageRepository pageRepository;
+//    @Autowired
+//    private PageRepository pageRepository;
 
-    @Autowired
-    private PlaceholderRepository placeholderRepository;
+//    @Autowired
+//    private PlaceholderRepository placeholderRepository;
 
     @Autowired
     private RecRepository recRepository;
@@ -51,6 +47,9 @@ public class RecSlotService {
     @Autowired
     @Lazy
     private RecEngineService recEngineService;
+
+    @Autowired
+    private MetadataRepository metadataRepository;
 
     /**
      * Get all rec slots.
@@ -104,25 +103,31 @@ public class RecSlotService {
     private RecSlotDetail getRecSlotDetail(RecSlot recSlot) {
 
         // Get channel.
-        Optional<Channel> optionalChannel = channelRepository.findById(recSlot.getChannelID());
-        Channel channel = new Channel();
-        if (optionalChannel.isPresent()) {
-            channel = optionalChannel.get();
-        }
+//        Optional<Channel> optionalChannel = channelRepository.findById(recSlot.getChannelID());
+//        Channel channel = new Channel();
+//        if (optionalChannel.isPresent()) {
+//            channel = optionalChannel.get();
+//        }
+
+        Metadata channel = metadataRepository.findByTypeAndId(CHANNEL, recSlot.getChannelID());
 
         // Get page.
-        Optional<Page> optionalPage = pageRepository.findById(recSlot.getPageID());
-        Page page = new Page();
-        if (optionalPage.isPresent()) {
-            page = optionalPage.get();
-        }
+//        Optional<Page> optionalPage = pageRepository.findById(recSlot.getPageID());
+//        Page page = new Page();
+//        if (optionalPage.isPresent()) {
+//            page = optionalPage.get();
+//        }
+
+        Metadata page = metadataRepository.findByTypeAndId(PAGE, recSlot.getPageID());
 
         // Get placeholder.
-        Optional<Placeholder> optionalPlaceholder = placeholderRepository.findById(recSlot.getPlaceholderID());
-        Placeholder placeholder = new Placeholder();
-        if (optionalPlaceholder.isPresent()) {
-            placeholder = optionalPlaceholder.get();
-        }
+//        Optional<Placeholder> optionalPlaceholder = placeholderRepository.findById(recSlot.getPlaceholderID());
+//        Placeholder placeholder = new Placeholder();
+//        if (optionalPlaceholder.isPresent()) {
+//            placeholder = optionalPlaceholder.get();
+//        }
+
+        Metadata placeholder = metadataRepository.findByTypeAndId(PLACEHOLDER, recSlot.getPlaceholderID());
 
         // Get rec.
         Optional<Rec> optionalRec = recRepository.findById(recSlot.getRecID());
@@ -284,38 +289,41 @@ public class RecSlotService {
     private void validateRecSlotDetail(RecSlotDetail recSlotDetail) throws ValidationException {
 
         // Channel should exist.
-        Channel channel = recSlotDetail.getChannel();
-        if (channel == null) {
+        Metadata channelMetadata = recSlotDetail.getChannel();
+        if (channelMetadata == null) {
             throw new ValidationException(CHANNEL_CANNOT_BE_NULL);
         }
 
         // Validate channel id.
-        Optional<Channel> optionalChannel = channelRepository.findById(channel.getId());
-        if (!optionalChannel.isPresent()) {
+//        Optional<Channel> optionalChannel = channelRepository.findById(channel.getId());
+        Metadata channel = metadataRepository.findByTypeAndId(CHANNEL, channelMetadata.getId());
+        if (channel == null) {
             throw new ValidationException(CHANNEL_ID_INVALID);
         }
 
         // Page should exist.
-        Page page = recSlotDetail.getPage();
-        if (page == null) {
+        Metadata pageMetadata = recSlotDetail.getPage();
+        if (pageMetadata == null) {
             throw new ValidationException(PAGE_CANNOT_BE_NULL);
         }
 
         // Validate page id.
-        Optional<Page> optionalPage = pageRepository.findById(page.getId());
-        if (!optionalPage.isPresent()) {
+//        Optional<Page> optionalPage = pageRepository.findById(page.getId());
+        Metadata page = metadataRepository.findByTypeAndId(PAGE, pageMetadata.getId());
+        if (page == null) {
             throw new ValidationException(PAGE_ID_INVALID);
         }
 
         // Placeholder should exist.
-        Placeholder placeholder = recSlotDetail.getPlaceholder();
-        if (placeholder == null) {
+        Metadata placeholderMetadata = recSlotDetail.getPlaceholder();
+        if (placeholderMetadata == null) {
             throw new ValidationException(PLACEHOLDER_CANNOT_BE_NULL);
         }
 
         // Validate placeholder id.
-        Optional<Placeholder> optionalPlaceholder = placeholderRepository.findById(placeholder.getId());
-        if (!optionalPlaceholder.isPresent()) {
+//        Optional<Placeholder> optionalPlaceholder = placeholderRepository.findById(placeholder.getId());
+        Metadata placeholder = metadataRepository.findByTypeAndId(PLACEHOLDER, placeholderMetadata.getId());
+        if (placeholder == null) {
             throw new ValidationException(PLACEHOLDER_ID_INVALID);
         }
 

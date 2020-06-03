@@ -1,22 +1,10 @@
 package com.zone24x7.rac.configservice.metadata;
 
 import com.zone24x7.rac.configservice.exception.ValidationException;
-import com.zone24x7.rac.configservice.metadata.channel.Channel;
-import com.zone24x7.rac.configservice.metadata.channel.ChannelDTO;
-import com.zone24x7.rac.configservice.metadata.channel.ChannelList;
-import com.zone24x7.rac.configservice.metadata.page.Page;
-import com.zone24x7.rac.configservice.metadata.page.PageDTO;
-import com.zone24x7.rac.configservice.metadata.page.PageList;
-import com.zone24x7.rac.configservice.metadata.placeholder.Placeholder;
-import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderDTO;
-import com.zone24x7.rac.configservice.metadata.placeholder.PlaceholderList;
-import com.zone24x7.rac.configservice.util.CSResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,10 +26,10 @@ public class MetadataController {
      *
      * @return All channels
      */
-    @GetMapping("/metadata/channels")
-    public ChannelList getChannels() {
-        return metadataService.getAllChannels();
-    }
+//    @GetMapping("/metadata/channels")
+//    public ChannelList getChannels() {
+//        return metadataService.getAllChannels();
+//    }
 
 
     /**
@@ -49,10 +37,10 @@ public class MetadataController {
      *
      * @return All pages
      */
-    @GetMapping("/metadata/pages")
-    public PageList getPages() {
-        return metadataService.getAllPages();
-    }
+//    @GetMapping("/metadata/pages")
+//    public PageList getPages() {
+//        return metadataService.getAllPages();
+//    }
 
 
     /**
@@ -60,10 +48,10 @@ public class MetadataController {
      *
      * @return All placeholders
      */
-    @GetMapping("/metadata/placeholders")
-    public PlaceholderList getPlaceholders() {
-        return metadataService.getAllPlaceholders();
-    }
+//    @GetMapping("/metadata/placeholders")
+//    public PlaceholderList getPlaceholders() {
+//        return metadataService.getAllPlaceholders();
+//    }
 
 
     /**
@@ -83,6 +71,7 @@ public class MetadataController {
 
 
 
+    // TODO: Uncomment after the test
 
     /**
      * Add channel.
@@ -91,10 +80,10 @@ public class MetadataController {
      * @return            CS Response
      * @throws ValidationException Validation exception to throw
      */
-    @PostMapping("/metadata/channels")
-    public CSResponse addChannel(@RequestBody ChannelDTO channelDTO) throws ValidationException {
-        return metadataService.addChannel(modelMapper.map(channelDTO, Channel.class));
-    }
+//    @PostMapping("/metadata/channels")
+//    public CSResponse addChannel(@RequestBody ChannelDTO channelDTO) throws ValidationException {
+//        return metadataService.addChannel(modelMapper.map(channelDTO, Channel.class));
+//    }
 
 
     /**
@@ -104,10 +93,10 @@ public class MetadataController {
      * @return CS Response
      * @throws ValidationException Validation exception to throw
      */
-    @PostMapping("/metadata/pages")
-    public CSResponse addPage(@RequestBody PageDTO pageDTO) throws ValidationException {
-        return metadataService.addPage(modelMapper.map(pageDTO, Page.class));
-    }
+//    @PostMapping("/metadata/pages")
+//    public CSResponse addPage(@RequestBody PageDTO pageDTO) throws ValidationException {
+//        return metadataService.addPage(modelMapper.map(pageDTO, Page.class));
+//    }
 
 
     /**
@@ -117,10 +106,10 @@ public class MetadataController {
      * @return            CS Response
      * @throws ValidationException Validation exception to throw
      */
-    @PostMapping("/metadata/placeholders")
-    public CSResponse addPlaceholder(@RequestBody PlaceholderDTO placeholderDTO) throws ValidationException {
-        return metadataService.addPlaceholder(modelMapper.map(placeholderDTO, Placeholder.class));
-    }
+//    @PostMapping("/metadata/placeholders")
+//    public CSResponse addPlaceholder(@RequestBody PlaceholderDTO placeholderDTO) throws ValidationException {
+//        return metadataService.addPlaceholder(modelMapper.map(placeholderDTO, Placeholder.class));
+//    }
 
 
 }

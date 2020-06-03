@@ -12,6 +12,9 @@ public final class Strings {
     public static final String RULES = "rules";
     public static final String RECS = "recs";
     public static final String REC_SLOTS = "recSlots";
+    public static final String CHANNEL = "channel";
+    public static final String PAGE = "page";
+    public static final String PLACEHOLDER = "placeholder";
     public static final String BRAND = "Brand";
 
 
