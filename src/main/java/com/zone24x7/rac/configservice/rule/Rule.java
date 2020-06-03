@@ -27,6 +27,20 @@ public class Rule {
     @Column(name = "action_condition")
     private String actionCondition;
 
+    public Rule() {
+    }
+
+    public Rule(String name, String type, boolean isGlobal, String matchingCondition, String matchingConditionJson,
+                String actionCondition, String actionConditionJson) {
+        this.name = name;
+        this.type = type;
+        this.isGlobal = isGlobal;
+        this.matchingCondition = matchingCondition;
+        this.matchingConditionJson = matchingConditionJson;
+        this.actionCondition = actionCondition;
+        this.actionConditionJson = actionConditionJson;
+    }
+
     public int getId() {
         return id;
     }
@@ -51,12 +65,12 @@ public class Rule {
         this.type = type;
     }
 
-    public boolean isGlobal() {
+    public boolean getIsGlobal() {
         return isGlobal;
     }
 
-    public void setGlobal(boolean global) {
-        isGlobal = global;
+    public void setIsGlobal(boolean isGlobal) {
+        this.isGlobal = isGlobal;
     }
 
     public String getMatchingConditionJson() {

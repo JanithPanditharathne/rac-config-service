@@ -132,17 +132,11 @@ public class RecSlotService {
         }
 
         // Get all rec_slot-rule associations for given rec slot id.
-        List<RecSlotRule> recSlotRules = recSlotRuleRepository.findAllByRecSlotID(recSlot.getId());
         List<RecSlotRuleDetail> recSlotRuleDetails = new ArrayList<>();
+        List<RecSlotRule> recSlotRules = recSlotRuleRepository.findAllByRecSlotID(recSlot.getId());
         recSlotRules.forEach(rsr -> {
-
-            // Get rule by ID.
             Optional<Rule> optionalRule = ruleRepository.findById(rsr.getRuleID());
-            if (optionalRule.isPresent()) {
-
-                RecSlotRuleDetail recSlotRuleDetail = new RecSlotRuleDetail(rsr.getRuleID(), optionalRule.get().getName());
-                recSlotRuleDetails.add(recSlotRuleDetail);
-            }
+            optionalRule.ifPresent(rule -> recSlotRuleDetails.add(new RecSlotRuleDetail(rsr.getRuleID(), rule.getName())));
         });
 
         // Return rec slot detail.
@@ -339,17 +333,12 @@ public class RecSlotService {
 
         // Check whether rule ids are valid.
         List<RecSlotRuleDetail> rules = recSlotDetail.getRules();
-        List<Integer> invalidRuleIDsList = new ArrayList<>();
-        rules.forEach(rule -> {
-
-            Optional<Rule> optionalRule = ruleRepository.findById(rule.getId());
-            if (!optionalRule.isPresent()) {
-                invalidRuleIDsList.add(rule.getId());
+        for (RecSlotRuleDetail r : rules) {
+            Optional<Rule> ruleOptional = ruleRepository.findById(r.getId());
+            if (!ruleOptional.isPresent()) {
+                throw new ValidationException(RULE_ID_INVALID + " " + r.getId());
             }
-        });
-
-        if (!invalidRuleIDsList.isEmpty()) {
-            throw new ValidationException(RULE_ID_INVALID + " " + invalidRuleIDsList.toString());
         }
+
     }
 }
