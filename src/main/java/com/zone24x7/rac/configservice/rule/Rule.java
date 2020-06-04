@@ -15,17 +15,17 @@ public class Rule {
     @Column(name = "is_global")
     private boolean isGlobal;
 
-    @Column(name = "matching_condition_json")
-    private String matchingConditionJson;
-
-    @Column(name = "action_condition_json")
-    private String actionConditionJson;
-
     @Column(name = "matching_condition")
     private String matchingCondition;
 
+    @Column(name = "matching_condition_json")
+    private String matchingConditionJson;
+
     @Column(name = "action_condition")
     private String actionCondition;
+
+    @Column(name = "action_condition_json")
+    private String actionConditionJson;
 
     public Rule() {
     }
