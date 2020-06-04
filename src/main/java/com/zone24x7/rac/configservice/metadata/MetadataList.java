@@ -4,20 +4,20 @@ import java.util.List;
 
 public class MetadataList {
 
-    private List<Metadata> metadata;
+    private List<Metadata> metadataList;
 
     public MetadataList() {
     }
 
-    public MetadataList(List<Metadata> metadata) {
-        this.metadata = metadata;
+    public MetadataList(List<Metadata> metadataList) {
+        this.metadataList = metadataList;
     }
 
-    public List<Metadata> getMetadata() {
-        return metadata;
+    public List<Metadata> getMetadataList() {
+        return metadataList;
     }
 
-    public void setMetadata(List<Metadata> metadata) {
-        this.metadata = metadata;
+    public void setMetadataList(List<Metadata> metadataList) {
+        this.metadataList = metadataList;
     }
 }

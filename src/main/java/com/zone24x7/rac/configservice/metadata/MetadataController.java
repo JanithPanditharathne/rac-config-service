@@ -1,8 +1,11 @@
 package com.zone24x7.rac.configservice.metadata;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,9 +63,11 @@ public class MetadataController {
      * @param type metadata type (brands, departments...etc).
      * @return metadata list.
      */
-    @GetMapping("/metadata/{type}")
-    public MetadataList getMetadata(@PathVariable String type) {
-        return metadataService.getMetadata(type);
+    @GetMapping(path = "/metadata/{type}", produces= MediaType.APPLICATION_JSON_VALUE)
+    public String getMetadata(@PathVariable String type) throws JsonProcessingException {
+        MetadataList metadataList = metadataService.getMetadata(type);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(metadataList).replace("metadataList", type);
     }
 
 
