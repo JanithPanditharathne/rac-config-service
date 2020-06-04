@@ -61,23 +61,10 @@ CONSTRAINT `fk_bundle_id1` FOREIGN KEY (`bundle_id`) REFERENCES `bundle` (`id`) 
 
 
 
--- create channel table --
-CREATE TABLE `channel` (
+-- create metadata table --
+CREATE TABLE `metadata` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
-`name` varchar(255) DEFAULT NULL,
-PRIMARY KEY(`id`)
-);
-
--- create page table --
-CREATE TABLE `page` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-`name` varchar(255) DEFAULT NULL,
-PRIMARY KEY(`id`)
-);
-
--- create placeholder table --
-CREATE TABLE `placeholder` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
+`type` varchar(255) DEFAULT NULL,
 `name` varchar(255) DEFAULT NULL,
 PRIMARY KEY(`id`)
 );
@@ -98,11 +85,13 @@ KEY `fk_channel_idx` (`channel_id`),
 KEY `fk_page_idx` (`page_id`),
 KEY `fk_placeholder_idx` (`placeholder_id`),
 KEY `fk_rec_idx` (`rec_id`),
-CONSTRAINT `fk_channel_id` FOREIGN KEY (`channel_id`) REFERENCES `channel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-CONSTRAINT `fk_page_id` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-CONSTRAINT `fk_placeholder_id` FOREIGN KEY (`placeholder_id`) REFERENCES `placeholder` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+CONSTRAINT `fk_channel_id` FOREIGN KEY (`channel_id`) REFERENCES `metadata` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+CONSTRAINT `fk_page_id` FOREIGN KEY (`page_id`) REFERENCES `metadata` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+CONSTRAINT `fk_placeholder_id` FOREIGN KEY (`placeholder_id`) REFERENCES `metadata` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 CONSTRAINT `fk_rec_id` FOREIGN KEY (`rec_id`) REFERENCES `rec` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+
 
 
 
@@ -146,18 +135,6 @@ CREATE TABLE `action_trace` (
 `timestamp` datetime DEFAULT NULL,
 PRIMARY KEY(`id`)
 );
-
-
-
-
--- create metadata table --
-CREATE TABLE `metadata` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-`type` varchar(255) DEFAULT NULL,
-`name` varchar(255) DEFAULT NULL,
-PRIMARY KEY(`id`)
-);
-
 
 
 
