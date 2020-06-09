@@ -63,23 +63,39 @@ class BundleServiceTest {
     void testGetAllBundles() {
 
         // Expected
-        List<Bundle> bundleList = new ArrayList<>();
-        bundleList.add(new Bundle("Bundle 1", 5, false, null));
-        bundleList.add(new Bundle("Bundle 2", 5, true, "Sample text"));
+        List<Bundle> bundles = new ArrayList<>();
+        bundles.add(new Bundle("Bundle 1", 5, false, null));
+        bundles.add(new Bundle("Bundle 2", 5, true, "Sample text"));
+        BundleList bundleList = new BundleList();
+        bundleList.setBundles(bundles);
 
         // Setup repository method findAllByOrderByIdDesc() return value.
-        when(bundleRepository.findAllByOrderByIdDesc()).thenReturn(bundleList);
+        when(bundleRepository.findAllByOrderByIdDesc()).thenReturn(bundles);
 
         // Actual
         BundleList actual = bundleService.getAllBundles();
 
         // Assert
-        assertEquals(bundleList.size(), actual.getBundles().size());
+        assertEquals(bundleList.getBundles().size(), actual.getBundles().size());
     }
 
     @Nested
     @DisplayName("get bundle method")
     class GetBundle {
+
+        @Test
+        @DisplayName("test for negative bundle id")
+        void testGetBundleForNegativeBundleID() {
+
+            ValidationException validationException = assertThrows(ValidationException.class, () -> bundleService.getBundle(-1));
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(Strings.BUNDLE_ID_INVALID, actual);
+        }
+
 
         @Test
         @DisplayName("test for invalid bundle id")
@@ -107,18 +123,24 @@ class BundleServiceTest {
         void testGetBundleForValidBundleID() throws Exception {
 
             // Mock
-            Bundle bundle = mock(Bundle.class);
-            when(bundle.getId()).thenReturn(100);
-            when(bundle.getName()).thenReturn("Bundle1");
-            when(bundle.getDefaultLimit()).thenReturn(2);
-            when(bundle.isCombineEnabled()).thenReturn(false);
-            when(bundle.getCombineDisplayText()).thenReturn("Test");
+            Bundle bundle = new Bundle();
+            bundle.setId(100);
+            bundle.setName("Bundle1");
+            bundle.setDefaultLimit(2);
+            bundle.setCombineEnabled(false);
+            bundle.setCombineDisplayText("Test");
             when(bundleRepository.findById(1)).thenReturn(Optional.of(bundle));
 
             BundleAlgorithm bundleAlgorithm = new BundleAlgorithm();
+            bundleAlgorithm.setId(1);
             bundleAlgorithm.setBundleID(1);
             bundleAlgorithm.setAlgorithmID(100);
             bundleAlgorithm.setCustomDisplayText("Top Trending Products");
+            bundleAlgorithm.setRank(0);
+
+            // Assert bundle algorithm getId() and getBundleID() methods.
+            assertEquals(1, bundleAlgorithm.getId());
+            assertEquals(1, bundleAlgorithm.getBundleID());
 
             List<BundleAlgorithm> bundleAlgorithmList = new ArrayList<>();
             bundleAlgorithmList.add(bundleAlgorithm);
@@ -134,9 +156,9 @@ class BundleServiceTest {
                                                                                        "Top Trending",
                                                                                        "Top Trending Products");
 
-            BundleDetail expectedBundleDetail = new BundleDetail(1, "Bundle1", 2,
-                                                                    false, "Test",
-                    Collections.singletonList(bundleAlgorithmDetail));
+            BundleDetail expectedBundleDetail = new BundleDetail(0, "Bundle1", 2, false,
+                    "Test", Collections.singletonList(bundleAlgorithmDetail));
+            expectedBundleDetail.setId(1);
 
             ObjectMapper objectMapper = new ObjectMapper();
             String expected = objectMapper.writeValueAsString(expectedBundleDetail);
@@ -335,12 +357,20 @@ class BundleServiceTest {
             when(algorithmRepository.findById(anyInt())).thenReturn(Optional.of(algorithm));
 
             // Mock bundle.
-            Bundle bundle = new Bundle("Bundle 1", 5, false, null);
+            Bundle bundle = new Bundle("", 0, false, null);
             bundle.setId(123);
+            bundle.setName("Bundle 1");
+            bundle.setDefaultLimit(5);
+            bundle.setCombineDisplayText("");
             when(bundleRepository.save(any(Bundle.class))).thenReturn(bundle);
 
             // Mock bundle algorithm
-            BundleAlgorithm bundleAlgorithm = new BundleAlgorithm(bundle.getId(), 100, "Sample text", 0);
+            BundleAlgorithm bundleAlgorithm = new BundleAlgorithm(0, 0, "", 0);
+            bundleAlgorithm.setId(0);
+            bundleAlgorithm.setBundleID(bundle.getId());
+            bundleAlgorithm.setAlgorithmID(100);
+            bundleAlgorithm.setCustomDisplayText("Sample text");
+            bundleAlgorithm.setRank(0);
             bundleAlgorithmRepository.save(bundleAlgorithm);
 
             // Verify bundle-algorithm save method is called.

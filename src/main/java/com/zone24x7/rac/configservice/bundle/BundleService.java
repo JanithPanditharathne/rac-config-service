@@ -63,6 +63,9 @@ public class BundleService {
      */
     public BundleDetail getBundle(int bundleID) throws ValidationException {
 
+        // Validate bundle id.
+        BundleValidations.validateID(bundleID);
+
         // Find given bundle id from db.
         Optional<Bundle> bundleOptional = bundleRepository.findById(bundleID);
 
