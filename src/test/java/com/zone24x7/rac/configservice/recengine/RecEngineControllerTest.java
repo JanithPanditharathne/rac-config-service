@@ -31,11 +31,11 @@ class RecEngineControllerTest {
     void getBundleConfig() throws Exception {
 
         // Expected
-        String expected = "{\"bundles\":[{\"id\":\"1\",\"name\":\"Bundle 1\",\"price\":null,\"defaultLimit\":5," +
+        String expected = "{\"bundles\":[{\"id\":\"1\",\"name\":\"Bundle 1\",\"type\":null,\"defaultLimit\":5," +
                 "\"algorithms\":[{\"rank\":0,\"algorithm\":{\"id\":\"100\",\"name\":\"TopTrending\"," +
-                "\"price\":\"FLAT_ALGO\",\"defaultDisplayText\":\"Top Trending\",\"customDisplayText\":\"Top Trending " +
+                "\"type\":\"FLAT_ALGO\",\"defaultDisplayText\":\"Top Trending\",\"customDisplayText\":\"Top Trending " +
                 "Products\"}},{\"rank\":1,\"algorithm\":{\"id\":\"101\",\"name\":\"BestSellers\"," +
-                "\"price\":\"FLAT_ALGO\",\"defaultDisplayText\":\"Best Sellers\",\"customDisplayText\":null}}]," +
+                "\"type\":\"FLAT_ALGO\",\"defaultDisplayText\":\"Best Sellers\",\"customDisplayText\":null}}]," +
                 "\"algoCombineInfo\":{\"enableCombine\":false,\"combineDisplayText\":null}}]}";
 
         // Mock service call.

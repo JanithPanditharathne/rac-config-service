@@ -13,9 +13,9 @@ public class MetadataService {
     private MetadataRepository metadataRepository;
 
     /**
-     * Get metadata list of the given price.
+     * Get metadata list of the given type.
      *
-     * @param type metadata price (brands, departments...etc).
+     * @param type metadata type (brands, departments...etc).
      * @return metadata list.
      */
     MetadataList getMetadata(String type) {

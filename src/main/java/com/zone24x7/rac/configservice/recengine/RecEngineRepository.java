@@ -13,7 +13,7 @@ public interface RecEngineRepository extends JpaRepository<RecEngine, Integer> {
     /**
      * Get rec_engine model by key.
      *
-     * @param configType Config price
+     * @param configType Config type
      * @return rec_engine model
      */
     RecEngine findByConfigType(String configType);
