@@ -4,20 +4,20 @@ import java.util.List;
 
 public class RuleList {
 
-    private List<RuleDTO> rules;
+    private List<RuleDetail> rules;
 
     public RuleList() {
     }
 
-    public RuleList(List<RuleDTO> rules) {
+    public RuleList(List<RuleDetail> rules) {
         this.rules = rules;
     }
 
-    public List<RuleDTO> getRules() {
+    public List<RuleDetail> getRules() {
         return rules;
     }
 
-    public void setRules(List<RuleDTO> rules) {
+    public void setRules(List<RuleDetail> rules) {
         this.rules = rules;
     }
 }

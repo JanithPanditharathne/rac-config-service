@@ -4,7 +4,7 @@ import com.zone24x7.rac.configservice.rule.expression.BaseExpr;
 
 import java.util.List;
 
-public class RuleDTO {
+public class RuleDetail {
 
     private int id;
     private String name;
@@ -15,11 +15,11 @@ public class RuleDTO {
     private String actionCondition;
     private List<BaseExpr> actionConditionJson;
 
-    public RuleDTO() {
+    public RuleDetail() {
     }
 
-    public RuleDTO(int id, String name, String type, boolean isGlobal, String matchingCondition,
-                   List<BaseExpr> matchingConditionJson, String actionCondition, List<BaseExpr> actionConditionJson) {
+    public RuleDetail(int id, String name, String type, boolean isGlobal, String matchingCondition,
+                      List<BaseExpr> matchingConditionJson, String actionCondition, List<BaseExpr> actionConditionJson) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -54,12 +54,12 @@ public class RuleDTO {
         this.type = type;
     }
 
-    public boolean isGlobal() {
+    public boolean getIsGlobal() {
         return isGlobal;
     }
 
-    public void setGlobal(boolean global) {
-        isGlobal = global;
+    public void setIsGlobal(boolean isGlobal) {
+        this.isGlobal = isGlobal;
     }
 
     public String getMatchingCondition() {

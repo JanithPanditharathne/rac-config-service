@@ -8,7 +8,7 @@ import com.zone24x7.rac.configservice.rule.expression.productnumber.ProductNumbe
 
 import static com.zone24x7.rac.configservice.util.Strings.*;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = BrandExpr.class, name = BRAND),
         @JsonSubTypes.Type(value = ProductNumberExpr.class, name = PRODUCT_NUMBER),
