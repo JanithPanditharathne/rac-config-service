@@ -44,6 +44,8 @@ class AlgorithmServiceTest {
         algorithmList.add(new Algorithm(100, "Top Trending", "TT algorithm description", ""));
         algorithmList.add(new Algorithm(101, "View View", "VV algorithm description", ""));
         algorithmList.add(new Algorithm(103, "Best Sellers", "BS algorithm description", ""));
+        AlgorithmList expected = new AlgorithmList();
+        expected.setAlgorithms(algorithmList);
 
         // Setup repository method findAll() return value.
         when(algorithmRepository.findAll()).thenReturn(algorithmList);
@@ -52,7 +54,7 @@ class AlgorithmServiceTest {
         AlgorithmList actual = algorithmService.getAllAlgorithms();
 
         // Assert
-        assertEquals(3, actual.getAlgorithms().size());
+        assertEquals(expected.getAlgorithms().size(), actual.getAlgorithms().size());
     }
 
 
@@ -63,7 +65,7 @@ class AlgorithmServiceTest {
 
         @Test
         @DisplayName("test for invalid algorithm id")
-        void testGetAlgorithmForInvalidAlgorithmID() throws Exception {
+        void testGetAlgorithmForInvalidAlgorithmID() {
             Exception exception = assertThrows(ValidationException.class, () -> {
                 // Mock (invalid algorithm id)
                 Algorithm algorithm = new Algorithm(99999, "Invalid algorithm", "", "");

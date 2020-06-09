@@ -90,8 +90,8 @@ class AlgorithmControllerTest {
 
         // Mock service call
         Mockito.when(algorithmService.addAlgorithm(Mockito.any())).thenReturn(csResponse);
-        String algorithmJson = "{\"id\":100,\"name\":\"Top Trending\",\"description\":\"TT description\"," +
-                "\"defaultDisplayText\":\"Top Trending\"}";
+        AlgorithmDTO algorithmDTO = new AlgorithmDTO(100, "Top Trending", "TT description", "Top Trending");
+        String algorithmJson = objectMapper.writeValueAsString(algorithmDTO);
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
