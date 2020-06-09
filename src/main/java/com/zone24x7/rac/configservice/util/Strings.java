@@ -15,6 +15,9 @@ public final class Strings {
     public static final String CHANNELS = "channels";
     public static final String PAGES = "pages";
     public static final String PLACEHOLDERS = "placeholders";
+    public static final String BRAND = "Brand";
+    public static final String PRODUCT_NUMBER = "ProductNumber";
+    public static final String PRICE = "Price";
 
 
 

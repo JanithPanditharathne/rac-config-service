@@ -31,11 +31,11 @@ class RecEngineControllerTest {
     void getBundleConfig() throws Exception {
 
         // Expected
-        String expected = "{\"bundles\":[{\"id\":\"1\",\"name\":\"Bundle 1\",\"type\":null,\"defaultLimit\":5," +
+        String expected = "{\"bundles\":[{\"id\":\"1\",\"name\":\"Bundle 1\",\"price\":null,\"defaultLimit\":5," +
                 "\"algorithms\":[{\"rank\":0,\"algorithm\":{\"id\":\"100\",\"name\":\"TopTrending\"," +
-                "\"type\":\"FLAT_ALGO\",\"defaultDisplayText\":\"Top Trending\",\"customDisplayText\":\"Top Trending " +
+                "\"price\":\"FLAT_ALGO\",\"defaultDisplayText\":\"Top Trending\",\"customDisplayText\":\"Top Trending " +
                 "Products\"}},{\"rank\":1,\"algorithm\":{\"id\":\"101\",\"name\":\"BestSellers\"," +
-                "\"type\":\"FLAT_ALGO\",\"defaultDisplayText\":\"Best Sellers\",\"customDisplayText\":null}}]," +
+                "\"price\":\"FLAT_ALGO\",\"defaultDisplayText\":\"Best Sellers\",\"customDisplayText\":null}}]," +
                 "\"algoCombineInfo\":{\"enableCombine\":false,\"combineDisplayText\":null}}]}";
 
         // Mock service call.
@@ -58,9 +58,9 @@ class RecEngineControllerTest {
     void getRuleConfig() throws Exception {
 
         // Expected
-        String expected = "{\"rules\":[{\"id\":\"133\",\"name\":\"Test Rule 1\",\"type\":\"BOOST\"," +
+        String expected = "{\"rules\":[{\"id\":\"133\",\"name\":\"Test Rule 1\",\"price\":\"BOOST\"," +
                 "\"isGlobal\":false,\"matchingCondition\":\"(department == \\\"Shoes\\\" || (department == " +
-                "\\\"Clothing\\\" && brand == \\\"Tommy\\\"))\",\"actionCondition\":\"(brand == \\\"Nike\\\")\"}]}";
+                "\\\"Clothing\\\" && price == \\\"Tommy\\\"))\",\"actionCondition\":\"(price == \\\"Nike\\\")\"}]}";
 
         // Mock service call.
         Mockito.when(recEngineService.getRuleConfig()).thenReturn(expected);
@@ -81,7 +81,7 @@ class RecEngineControllerTest {
     void getRecConfig() throws Exception {
 
         // Expected
-        String expected = "{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"type\":\"REGULAR\"," +
+        String expected = "{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"price\":\"REGULAR\"," +
                 "\"matchingCondition\":null,\"regularConfig\":{\"bundleId\":\"1201\"},\"testConfig\":null}]}";
 
         // Mock service call.

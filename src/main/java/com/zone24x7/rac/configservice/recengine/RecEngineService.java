@@ -177,10 +177,10 @@ public class RecEngineService {
 
         // rule list
         List<RecEngineRule> ruleList = new ArrayList<>();
-        ruleList.add(new RecEngineRule(1, "Rule 1", "BOOST", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
-        ruleList.add(new RecEngineRule(2, "Rule 2", "BURY", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
-        ruleList.add(new RecEngineRule(3, "Rule 3", "ONLY_RECOMMEND", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
-        ruleList.add(new RecEngineRule(4, "Rule 4", "DO_NOT_RECOMMEND", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
+        ruleList.add(new RecEngineRule(1, "Rule 1", "BOOST", false, "(department == \\\"Shoes\\\")", "(price == \\\"Nike\\\")"));
+        ruleList.add(new RecEngineRule(2, "Rule 2", "BURY", false, "(department == \\\"Shoes\\\")", "(price == \\\"Nike\\\")"));
+        ruleList.add(new RecEngineRule(3, "Rule 3", "ONLY_RECOMMEND", false, "(department == \\\"Shoes\\\")", "(price == \\\"Nike\\\")"));
+        ruleList.add(new RecEngineRule(4, "Rule 4", "DO_NOT_RECOMMEND", false, "(department == \\\"Shoes\\\")", "(price == \\\"Nike\\\")"));
 
 
 
