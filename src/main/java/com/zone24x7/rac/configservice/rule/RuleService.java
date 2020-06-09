@@ -1,16 +1,13 @@
 package com.zone24x7.rac.configservice.rule;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zone24x7.rac.configservice.exception.ValidationException;
-import com.zone24x7.rac.configservice.rule.expression.BaseExpr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +19,8 @@ public class RuleService {
     @Autowired
     private RuleRepository ruleRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
 
+    // Logger
     private static final Logger LOGGER = LoggerFactory.getLogger(RuleService.class);
 
     /**
@@ -34,59 +30,48 @@ public class RuleService {
      */
     RuleList getAllRules() {
 
-        List<Rule> rulesList = ruleRepository.findAll();
-
         List<RuleDetail> ruleDetailList = new ArrayList<>();
-        rulesList.forEach(rule -> {
-
-            RuleDetail ruleDetail = getRuleDTO(rule);
-            ruleDetailList.add(ruleDetail);
-        });
-
+        List<Rule> rules = ruleRepository.findAll();
+        rules.forEach(r -> ruleDetailList.add(getRuleDetail(r)));
         return new RuleList(ruleDetailList);
     }
 
     /**
-     * Get rule by ID.
+     * Get rule detail by id.
      *
-     * @param id Rule ID
-     * @return   Rule DTO
+     * @param id Rule id
+     * @return   Rule detail
      * @throws ValidationException Exception to throw
      */
     RuleDetail getRule(int id) throws ValidationException {
 
-        // Retrieve rule by ID.
-        Optional<Rule> optionalRule = ruleRepository.findById(id);
+        // Validate rule id.
+        RuleValidations.validateID(id);
 
+        // Find the given rule.
+        Optional<Rule> optionalRule = ruleRepository.findById(id);
         if (!optionalRule.isPresent()) {
             throw new ValidationException(RULE_ID_INVALID);
         }
 
-        // Fill rule details and return.
-        return getRuleDTO(optionalRule.get());
+        // Return rule details.
+        return getRuleDetail(optionalRule.get());
     }
 
     /**
-     * Method to fill rule DTO from rule entity.
+     * Method to get rule detail from rule entity.
      *
      * @param rule Rule entity
-     * @return     Rule DTO
+     * @return     Rule detail
      */
-    private RuleDetail getRuleDTO(Rule rule) {
+    private static RuleDetail getRuleDetail(Rule rule) {
         try {
-            BaseExpr matchingCondition = objectMapper.readValue(rule.getMatchingConditionJson(), BaseExpr.class);
-            List<BaseExpr> matchingConditionList = Arrays.asList(matchingCondition);
-
-            BaseExpr actionCondition = objectMapper.readValue(rule.getActionConditionJson(), BaseExpr.class);
-            List<BaseExpr> actionConditionList = Arrays.asList(actionCondition);
-
-            return new RuleDetail(rule.getId(), rule.getName(), rule.getType(), rule.getIsGlobal(), rule.getMatchingCondition(),
-                                  matchingConditionList, rule.getActionCondition(), actionConditionList);
-
+            return new RuleDetail(rule.getId(), rule.getName(), rule.getType(), rule.getIsGlobal(),
+                    rule.getMatchingCondition(), rule.getMatchingConditionJsonAsList(),
+                    rule.getActionCondition(), rule.getActionConditionJsonAsList());
         } catch (JsonProcessingException e) {
-            LOGGER.error("Unable to parse expression ", e);
+            LOGGER.error("Unable to parse rule expression. ", e);
         }
-
         return null;
     }
 }

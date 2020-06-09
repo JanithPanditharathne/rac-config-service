@@ -25,10 +25,10 @@ public class RuleController {
     }
 
     /**
-     * Get rule by ID.
+     * Get rule detail by id.
      *
-     * @param id Rule ID
-     * @return   Rule DTO
+     * @param id Rule id
+     * @return   Rule detail.
      * @throws ValidationException Exception to throw
      */
     @GetMapping("/rules/{id}")

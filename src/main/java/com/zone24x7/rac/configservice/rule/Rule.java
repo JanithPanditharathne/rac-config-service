@@ -1,6 +1,16 @@
 package com.zone24x7.rac.configservice.rule;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.rule.expression.BaseExpr;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 public class Rule {
@@ -103,5 +113,15 @@ public class Rule {
 
     public void setActionCondition(String actionCondition) {
         this.actionCondition = actionCondition;
+    }
+
+    public List<BaseExpr> getMatchingConditionJsonAsList() throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return Collections.singletonList(objectMapper.readValue(this.matchingConditionJson, BaseExpr.class));
+    }
+
+    public List<BaseExpr> getActionConditionJsonAsList() throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return Collections.singletonList(objectMapper.readValue(this.actionConditionJson, BaseExpr.class));
     }
 }
