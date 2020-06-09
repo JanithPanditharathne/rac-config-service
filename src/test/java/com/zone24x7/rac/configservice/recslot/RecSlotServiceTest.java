@@ -1,5 +1,6 @@
 package com.zone24x7.rac.configservice.recslot;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.metadata.Metadata;
@@ -23,24 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.CHANNELS;
-import static com.zone24x7.rac.configservice.util.Strings.CHANNEL_CANNOT_BE_NULL;
-import static com.zone24x7.rac.configservice.util.Strings.PAGES;
-import static com.zone24x7.rac.configservice.util.Strings.PLACEHOLDERS;
-import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_DELETED_SUCCESSFULLY;
-import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_ID_INVALID;
-import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.zone24x7.rac.configservice.util.Strings.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class RecSlotServiceTest {
@@ -50,9 +38,6 @@ public class RecSlotServiceTest {
 
     @Mock
     private RecSlotRepository recSlotRepository;
-
-    @Mock
-    private MetadataRepository metadataRepository;
 
     @Mock
     private RecRepository recRepository;
@@ -69,6 +54,9 @@ public class RecSlotServiceTest {
     @Mock
     private RuleRepository ruleRepository;
 
+    @Mock
+    private MetadataRepository metadataRepository;
+
     @Test
     @DisplayName("get all rec slots method")
     void testGetAllRecSlots() {
@@ -78,23 +66,27 @@ public class RecSlotServiceTest {
         recSlotsList.add(new RecSlot(5, 2, 8, 1));
         recSlotsList.add(new RecSlot(5, 2, 6, 5));
 
+        // Mock
         // Setup repository method findAllByOrderByIdDesc() return value.
         when(recSlotRepository.findAllByOrderByIdDesc()).thenReturn(recSlotsList);
 
-        // Mock metadata.
-        Metadata metadata = mock(Metadata.class);
-        when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
+        Metadata channel = mock(Metadata.class);
+        when(metadataRepository.findByTypeAndId(CHANNELS, 5)).thenReturn(channel);
 
-        // Mock rec.
+        Metadata page = mock(Metadata.class);
+        when(metadataRepository.findByTypeAndId(PAGES, 2)).thenReturn(page);
+
+        Metadata placeholder = mock(Metadata.class);
+        when(metadataRepository.findByTypeAndId(PLACEHOLDERS, 8)).thenReturn(placeholder);
+
         Rec rec = mock(Rec.class);
         when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
 
-        // Mock rec slot rule.
+        RecSlotRule recSlotRule = new RecSlotRule();
         List<RecSlotRule> recSlotRules = new ArrayList<>();
-        recSlotRules.add(new RecSlotRule());
+        recSlotRules.add(recSlotRule);
         when(recSlotRuleRepository.findAllByRecSlotID(anyInt())).thenReturn(recSlotRules);
 
-        // Mock rule.
         Rule rule = mock(Rule.class);
         when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
 
@@ -133,43 +125,40 @@ public class RecSlotServiceTest {
         void testGetRecSlotForValidRecSlotID() throws Exception {
 
             // Mock
-            RecSlot recSlot = mock(RecSlot.class);
-            when(recSlot.getId()).thenReturn(1);
-            when(recSlotRepository.findById(recSlot.getId())).thenReturn(Optional.of(recSlot));
+            RecSlot recSlot = new RecSlot(1, 1, 1, 1);
+            recSlot.setId(1);
+            when(recSlotRepository.findById(1)).thenReturn(Optional.of(recSlot));
 
-            // Mock metadata.
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
+            Metadata channel = new Metadata();
+            channel.setId(1);
+            when(metadataRepository.findByTypeAndId(CHANNELS, 1)).thenReturn(channel);
 
-            // Mock rec.
+            Metadata page = new Metadata();
+            page.setId(1);
+            when(metadataRepository.findByTypeAndId(PAGES, 1)).thenReturn(page);
+
+            Metadata placeholder = new Metadata();
+            placeholder.setId(1);
+            when(metadataRepository.findByTypeAndId(PLACEHOLDERS, 1)).thenReturn(placeholder);
+
             Rec rec = mock(Rec.class);
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
-
-            // Mock rec slot rule.
-            List<RecSlotRule> recSlotRules = new ArrayList<>();
-            recSlotRules.add(new RecSlotRule());
-            when(recSlotRuleRepository.findAllByRecSlotID(anyInt())).thenReturn(recSlotRules);
-
-            // Mock rule.
-            when(ruleRepository.findById(anyInt())).thenReturn(Optional.empty());
 
             RecSlotRecDetail recSlotRec = new RecSlotRecDetail();
             when(modelMapper.map(any(), any())).thenReturn(recSlotRec);
 
             // Expected
-            RecSlotDetail expectedRecSlotDetail = new RecSlotDetail(1, new Metadata(CHANNELS, "web"),
-                    new Metadata(PAGES, "PDP"), new Metadata(PLACEHOLDERS, "H1"), recSlotRec, new ArrayList<>());
+            RecSlotDetail expectedRecSlotDetail = new RecSlotDetail(1, channel, page, placeholder, recSlotRec, new ArrayList<>());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String expected = objectMapper.writeValueAsString(expectedRecSlotDetail);
 
             // Actual
-            RecSlotDetail actualRecSlotDetail = recSlotService.getRecSlot(recSlot.getId());
+            RecSlotDetail actualRecSlotDetail = recSlotService.getRecSlot(1);
+            String actual = objectMapper.writeValueAsString(actualRecSlotDetail);
 
             // Assert
-            assertEquals(expectedRecSlotDetail.getId(), actualRecSlotDetail.getId());
-            assertEquals(expectedRecSlotDetail.getChannel().getId(), actualRecSlotDetail.getChannel().getId());
-            assertEquals(expectedRecSlotDetail.getPage().getId(), actualRecSlotDetail.getPage().getId());
-            assertEquals(expectedRecSlotDetail.getPlaceholder().getId(), actualRecSlotDetail.getPlaceholder().getId());
-            assertEquals(expectedRecSlotDetail.getRec().getId(), actualRecSlotDetail.getRec().getId());
-            assertEquals(expectedRecSlotDetail.getRules().size(), actualRecSlotDetail.getRules().size());
+            assertEquals(expected, actual);
         }
     }
 
@@ -198,8 +187,28 @@ public class RecSlotServiceTest {
         void testAddRecSlotForInvalidChannelID() {
 
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                Metadata channel = new Metadata(CHANNELS, "web");
-                channel.setId(99999);
+
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, new Metadata(), null, null, null, null);
+                recSlotService.addRecSlot(recSlotDetail);
+            });
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(CHANNEL_ID_INVALID, actual);
+        }
+
+        @Test
+        @DisplayName("test for missing page")
+        void testAddRecSlotForMissingPage() {
+
+            // Mock
+            Metadata channel = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(channel);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+
                 RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, null, null, null, null);
                 recSlotService.addRecSlot(recSlotDetail);
             });
@@ -208,41 +217,21 @@ public class RecSlotServiceTest {
             String actual = validationException.getMessage();
 
             // Assert
-            assertEquals(Strings.CHANNEL_ID_INVALID, actual);
-        }
-
-        @Test
-        @DisplayName("test for missing page")
-        void testAddRecSlotForMissingPage() {
-
-            // Mock
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
-
-            ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                RecSlotDetail recSlotDetail = new RecSlotDetail(0, metadata, null, null, null, null);
-                recSlotService.addRecSlot(recSlotDetail);
-            });
-
-            // Actual
-            String actual = validationException.getMessage();
-
-            // Assert
-            assertEquals(Strings.PAGE_CANNOT_BE_NULL, actual);
+            assertEquals(PAGE_CANNOT_BE_NULL, actual);
         }
 
         @Test
         @DisplayName("test for invalid page id")
         void testAddRecSlotForInvalidPageID() {
 
-            // Mock channel.
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(eq(CHANNELS), anyInt())).thenReturn(metadata);
+            // Mock
+            Metadata channel = new Metadata();
+            channel.setId(1);
+            when(metadataRepository.findByTypeAndId(CHANNELS, 1)).thenReturn(channel);
 
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                Metadata page = new Metadata();
-                page.setId(99999);
-                RecSlotDetail recSlotDetail = new RecSlotDetail(0, metadata, page, null, null, null);
+
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, new Metadata(), null, null, null);
                 recSlotService.addRecSlot(recSlotDetail);
             });
 
@@ -250,7 +239,7 @@ public class RecSlotServiceTest {
             String actual = validationException.getMessage();
 
             // Assert
-            assertEquals(Strings.PAGE_ID_INVALID, actual);
+            assertEquals(PAGE_ID_INVALID, actual);
         }
 
         @Test
@@ -258,11 +247,15 @@ public class RecSlotServiceTest {
         void testAddRecSlotForMissingPlaceholder() {
 
             // Mock
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
+            Metadata channel = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(channel);
+
+            Metadata page = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(page);
 
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                RecSlotDetail recSlotDetail = new RecSlotDetail(0, metadata, metadata, null, null, null);
+
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, null, null, null);
                 recSlotService.addRecSlot(recSlotDetail);
             });
 
@@ -270,24 +263,51 @@ public class RecSlotServiceTest {
             String actual = validationException.getMessage();
 
             // Assert
-            assertEquals(Strings.PLACEHOLDER_CANNOT_BE_NULL, actual);
+            assertEquals(PLACEHOLDER_CANNOT_BE_NULL, actual);
         }
 
         @Test
         @DisplayName("test for invalid placeholder id")
         void testAddRecSlotForInvalidPlaceholderID() {
 
-            // Mock channel.
-            Metadata channel = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(eq(CHANNELS), anyInt())).thenReturn(channel);
+            // Mock
+            Metadata channel = new Metadata();
+            channel.setId(1);
+            when(metadataRepository.findByTypeAndId(CHANNELS, 1)).thenReturn(channel);
 
-            // Mock page.
-            Metadata page = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(eq(PAGES), anyInt())).thenReturn(page);
+            Metadata page = new Metadata();
+            page.setId(1);
+            when(metadataRepository.findByTypeAndId(PAGES, 1)).thenReturn(page);
 
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                Metadata placeholder = new Metadata();
-                placeholder.setId(99999);
+
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, new Metadata(), null, null);
+                recSlotService.addRecSlot(recSlotDetail);
+            });
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(PLACEHOLDER_ID_INVALID, actual);
+        }
+
+        @Test
+        @DisplayName("test for missing rec")
+        void testAddRecSlotForMissingRec() {
+
+            // Mock
+            Metadata channel = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(channel);
+
+            Metadata page = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(page);
+
+            Metadata placeholder = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(placeholder);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+
                 RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, null, null);
                 recSlotService.addRecSlot(recSlotDetail);
             });
@@ -296,27 +316,7 @@ public class RecSlotServiceTest {
             String actual = validationException.getMessage();
 
             // Assert
-            assertEquals(Strings.PLACEHOLDER_ID_INVALID, actual);
-        }
-
-        @Test
-        @DisplayName("test for missing rec")
-        void testAddRecSlotForMissingRec() {
-
-            // Mock
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
-
-            ValidationException validationException = assertThrows(ValidationException.class, () -> {
-                RecSlotDetail recSlotDetail = new RecSlotDetail(0, metadata, metadata, metadata, null, null);
-                recSlotService.addRecSlot(recSlotDetail);
-            });
-
-            // Actual
-            String actual = validationException.getMessage();
-
-            // Assert
-            assertEquals(Strings.REC_CANNOT_BE_NULL, actual);
+            assertEquals(REC_CANNOT_BE_NULL, actual);
         }
 
         @Test
@@ -324,12 +324,18 @@ public class RecSlotServiceTest {
         void testAddRecSlotForInvalidRecID() {
 
             // Mock
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
+            Metadata channel = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(channel);
+
+            Metadata page = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(page);
+
+            Metadata placeholder = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(placeholder);
 
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
 
-                RecSlotDetail recSlotDetail = new RecSlotDetail(0, metadata, metadata, metadata, new RecSlotRecDetail(), null);
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), null);
                 recSlotService.addRecSlot(recSlotDetail);
             });
 
@@ -337,7 +343,7 @@ public class RecSlotServiceTest {
             String actual = validationException.getMessage();
 
             // Assert
-            assertEquals(Strings.REC_ID_INVALID, actual);
+            assertEquals(REC_ID_INVALID, actual);
         }
 
         @Test
@@ -345,8 +351,14 @@ public class RecSlotServiceTest {
         void testAddRecSlotForExistingSimilarRecSlots() {
 
             // Mock
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
+            Metadata channel = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(channel);
+
+            Metadata page = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(page);
+
+            Metadata placeholder = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(placeholder);
 
             Rec rec = mock(Rec.class);
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
@@ -359,7 +371,7 @@ public class RecSlotServiceTest {
             // Actual
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
 
-                RecSlotDetail recSlotDetail = new RecSlotDetail(0, metadata, metadata, metadata, new RecSlotRecDetail(), new ArrayList<>());
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), new ArrayList<>());
                 recSlotService.addRecSlot(recSlotDetail);
             });
 
@@ -367,7 +379,7 @@ public class RecSlotServiceTest {
             String actual = validationException.getMessage();
 
             // Assert
-            assertEquals(Strings.SIMILAR_REC_SLOT_ALREADY_EXISTS, actual);
+            assertEquals(SIMILAR_REC_SLOT_ALREADY_EXISTS, actual);
         }
 
         @Test
@@ -375,17 +387,23 @@ public class RecSlotServiceTest {
         void testAddRecSlotForCorrectValuesWithoutRules() throws Exception {
 
             // Expected
-            CSResponse expected = new CSResponse(SUCCESS, Strings.REC_SLOT_ADDED_SUCCESSFULLY);
+            CSResponse expected = new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
 
             // Mock
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
+            Metadata channel = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(channel);
+
+            Metadata page = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(page);
+
+            Metadata placeholder = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(placeholder);
 
             Rec rec = mock(Rec.class);
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
 
             // Actual
-            RecSlotDetail recSlotDetail = new RecSlotDetail(0, metadata, metadata, metadata, new RecSlotRecDetail(), new ArrayList<>());
+            RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), new ArrayList<>());
             CSResponse actual = recSlotService.addRecSlot(recSlotDetail);
 
             // Assert
@@ -401,8 +419,14 @@ public class RecSlotServiceTest {
         void testAddRecSlotForInvalidRuleID() {
 
             // Mock
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
+            Metadata channel = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(channel);
+
+            Metadata page = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(page);
+
+            Metadata placeholder = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(placeholder);
 
             Rec rec = mock(Rec.class);
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
@@ -423,7 +447,7 @@ public class RecSlotServiceTest {
             // Actual
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
 
-                RecSlotDetail recSlotDetail = new RecSlotDetail(0, metadata, metadata, metadata, new RecSlotRecDetail(), rules);
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), rules);
                 recSlotService.addRecSlot(recSlotDetail);
             });
 
@@ -431,19 +455,25 @@ public class RecSlotServiceTest {
             String actual = validationException.getMessage();
 
             // Assert
-            assertTrue(actual.contains(Strings.RULE_ID_INVALID));
+            assertTrue(actual.contains(RULE_ID_INVALID));
         }
 
         @Test
         @DisplayName("test for correct values with rules")
-        void testAddRecSlotForCorrectValuesWithRules() throws ValidationException, ServerException {
+        void testAddRecSlotForCorrectValuesWithRules() throws ServerException, ValidationException {
 
             // Expected
-            CSResponse expected = new CSResponse(SUCCESS, Strings.REC_SLOT_ADDED_SUCCESSFULLY);
+            CSResponse expected = new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
 
             // Mock
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
+            Metadata channel = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(channel);
+
+            Metadata page = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(page);
+
+            Metadata placeholder = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(placeholder);
 
             Rec rec = mock(Rec.class);
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
@@ -465,7 +495,7 @@ public class RecSlotServiceTest {
             when(recSlotRuleRepository.saveAll(any())).thenReturn(recSlotRules);
 
             // Actual
-            RecSlotDetail recSlotDetail = new RecSlotDetail(0, metadata, metadata, metadata, new RecSlotRecDetail(), rules);
+            RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), rules);
             CSResponse actual = recSlotService.addRecSlot(recSlotDetail);
 
             // Assert
@@ -503,8 +533,14 @@ public class RecSlotServiceTest {
         void testEditRecSlotForExistingSimilarRecSlots() {
 
             // Mock
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
+            Metadata channel = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(channel);
+
+            Metadata page = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(page);
+
+            Metadata placeholder = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(placeholder);
 
             Rec rec = mock(Rec.class);
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
@@ -519,7 +555,7 @@ public class RecSlotServiceTest {
             // Actual
             ValidationException validationException = assertThrows(ValidationException.class, () -> {
 
-                RecSlotDetail recSlotDetail = new RecSlotDetail(0, metadata, metadata, metadata, new RecSlotRecDetail(), new ArrayList<>());
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), new ArrayList<>());
                 recSlotService.editRecSlot(1, recSlotDetail);
             });
 
@@ -527,7 +563,7 @@ public class RecSlotServiceTest {
             String actual = validationException.getMessage();
 
             // Assert
-            assertEquals(Strings.SIMILAR_REC_SLOT_ALREADY_EXISTS, actual);
+            assertEquals(SIMILAR_REC_SLOT_ALREADY_EXISTS, actual);
         }
 
         @Test
@@ -535,11 +571,17 @@ public class RecSlotServiceTest {
         void testEditRecSlotForCorrectValues() throws Exception {
 
             // Expected
-            CSResponse expected = new CSResponse(SUCCESS, Strings.REC_SLOT_UPDATED_SUCCESSFULLY);
+            CSResponse expected = new CSResponse(SUCCESS, REC_SLOT_UPDATED_SUCCESSFULLY);
 
             // Mock
-            Metadata metadata = mock(Metadata.class);
-            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(metadata);
+            Metadata channel = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(channel);
+
+            Metadata page = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(page);
+
+            Metadata placeholder = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(placeholder);
 
             Rec rec = mock(Rec.class);
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
@@ -560,7 +602,7 @@ public class RecSlotServiceTest {
             when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
 
             // Actual
-            RecSlotDetail recSlotDetail = new RecSlotDetail(0, metadata, metadata, metadata, new RecSlotRecDetail(), rules);
+            RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), rules);
             CSResponse actual = recSlotService.editRecSlot(1, recSlotDetail);
 
             // Assert
