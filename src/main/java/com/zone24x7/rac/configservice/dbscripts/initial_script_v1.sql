@@ -145,9 +145,20 @@ PRIMARY KEY(`id`)
 
 
 -- insert initial data in to rec_engine table --
-INSERT INTO `rec_engine`(`id`, `config_type`)
-VALUES (1, 'bundles'), (2, 'rules'), (3, 'recs'), (4, 'recSlots');
+INSERT INTO `rec_engine`(`id`, `config_type`, `config_json`)
+VALUES (1, 'bundles', '{"bundles":[]}'), (2, 'rules', '{"rules":[]}'), (3, 'recs', '{"recs":[]}'), (4, 'recSlots', '{"recSlots":[]}');
 
+
+
+-- insert initial data in to algorithm table --
+INSERT INTO `algorithm`(`id`, `name`, `description`, `default_display_text`)
+VALUES (100, 'Top Trending', 'Top trending algorithm.', 'Top Trending'),
+(101, 'Best Sellers', 'Best sellers algorithm.', 'Best Sellers'),
+(102, 'Best Sellers By Store', 'Best sellers by store algorithm.', 'Best Sellers By Store'),
+(103, 'Best Sellers By Category', 'Best sellers by category algorithm.', 'Best Sellers By Category'),
+(104, 'Trending By Category', 'Trending by category algorithm.', 'Trending By Category'),
+(105, 'View View', 'View view algorithm.', 'View View'),
+(106, 'Frequently Bought', 'Frequently bought algorithm.', 'Frequently Bought');
 
 
 
