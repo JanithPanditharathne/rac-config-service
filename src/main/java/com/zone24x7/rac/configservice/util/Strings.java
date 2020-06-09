@@ -18,6 +18,16 @@ public final class Strings {
     public static final String BRAND = "Brand";
     public static final String PRODUCT_NUMBER = "ProductNumber";
     public static final String PRICE = "Price";
+    public static final String AND = "AND";
+    public static final String OR = "OR";
+    public static final String RE_BRAND = "brand";
+    public static final String RE_PRODUCT_NUMBER = "productNumber";
+    public static final String RE_PRICE = "price";
+    public static final String EQ = "eq";
+    public static final String LT = "lt";
+    public static final String GT = "gt";
+    public static final String LTEQ = "lteq";
+    public static final String GTEQ = "gteq";
 
 
 
