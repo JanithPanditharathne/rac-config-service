@@ -100,18 +100,12 @@ public final class Strings {
     public static final String METADATA_ADDED_SUCCESSFULLY = "CS-6003:Metadata added successfully";
     public static final String CHANNEL_ID_INVALID = "CS-6004:Invalid channel id";
     public static final String CHANNEL_CANNOT_BE_NULL = "CS-6005:Channel cannot be null";
-    public static final String PAGE_NAME_CANNOT_BE_NULL = "CS-6006:Page name field cannot be null";
-    public static final String METADATA_TYPE_CANNOT_BE_EMPTY = "CS-6007:Metadata type cannot be empty";
-    public static final String PAGE_NAME_ALREADY_EXISTS = "CS-6008:Page name already exists";
-    public static final String PAGE_ADDED_SUCCESSFULLY = "CS-6009:Page added successfully";
-    public static final String PAGE_ID_INVALID = "CS-6010:Invalid page id";
-    public static final String PAGE_CANNOT_BE_NULL = "CS-6011:Page cannot be null";
-    public static final String PLACEHOLDER_NAME_CANNOT_BE_NULL = "CS-6012:Placeholder name cannot be null";
-    public static final String PLACEHOLDER_NAME_CANNOT_BE_EMPTY = "CS-6013:Placeholder name cannot be empty";
-    public static final String PLACEHOLDER_NAME_ALREADY_EXISTS = "CS-6014:Placeholder name already exists";
-    public static final String PLACEHOLDER_ADDED_SUCCESSFULLY = "CS-6015:Placeholder added successfully";
-    public static final String PLACEHOLDER_ID_INVALID = "CS-6016:Invalid placeholder id";
-    public static final String PLACEHOLDER_CANNOT_BE_NULL = "CS-6017:Placeholder cannot be null";
+    public static final String METADATA_TYPE_CANNOT_BE_EMPTY = "CS-6006:Metadata type cannot be empty";
+    public static final String PAGE_ID_INVALID = "CS-6007:Invalid page id";
+    public static final String PAGE_CANNOT_BE_NULL = "CS-6008:Page cannot be null";
+    public static final String PLACEHOLDER_ID_INVALID = "CS-6009:Invalid placeholder id";
+    public static final String PLACEHOLDER_CANNOT_BE_NULL = "CS-6010:Placeholder cannot be null";
+    public static final String SIMILAR_METADATA_ALREADY_EXISTS = "CS-6011:Similar metadata already exists";
 
 
 

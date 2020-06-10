@@ -44,7 +44,7 @@ public class MetadataController {
      * @throws ValidationException if validation failed.
      */
     @PostMapping("/metadata/{type}")
-    public CSResponse addMetadata(@PathVariable String type, MetadataDTO metadata) throws ValidationException {
+    public CSResponse addMetadata(@PathVariable String type, @RequestBody MetadataDTO metadata) throws ValidationException {
         metadata.setType(type);
         return metadataService.addMetadata(modelMapper.map(metadata, Metadata.class));
     }

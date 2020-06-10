@@ -1,6 +1,5 @@
 package com.zone24x7.rac.configservice.metadata;
 
-import com.zone24x7.rac.configservice.algorithm.AlgorithmValidations;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
@@ -41,6 +40,12 @@ public class MetadataService {
 
         // Validate metadata name.
         MetadataValidations.validateName(metadata.getName());
+
+        // Find for similar metadata.
+        List<Metadata> metadataList = metadataRepository.findByTypeAndName(metadata.getType(), metadata.getName());
+        if (metadataList != null && !metadataList.isEmpty()) {
+            throw new ValidationException(Strings.SIMILAR_METADATA_ALREADY_EXISTS);
+        }
 
         // Save new metadata.
         metadataRepository.save(metadata);
