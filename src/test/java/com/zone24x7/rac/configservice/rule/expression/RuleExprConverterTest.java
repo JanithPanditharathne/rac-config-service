@@ -109,7 +109,7 @@ public class RuleExprConverterTest {
             List<BaseExpr> exprJson = new ArrayList<>();
             exprJson.add(objectMapper.readValue(json, BaseExpr.class));
             String actualResult = RuleExprConverter.convertJsonExprToString(exprJson);
-            String expectedResult = "(price = 23.45)";
+            String expectedResult = "(regularPrice = 23.45)";
             assertEquals(expectedResult, actualResult);
         }
 
