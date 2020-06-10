@@ -23,6 +23,8 @@ import com.zone24x7.rac.configservice.recengine.rule.RecEngineRule;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRuleList;
 import com.zone24x7.rac.configservice.recslot.RecSlotList;
 import com.zone24x7.rac.configservice.recslot.RecSlotService;
+import com.zone24x7.rac.configservice.rule.RuleList;
+import com.zone24x7.rac.configservice.rule.RuleService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.slf4j.Logger;
@@ -54,6 +56,9 @@ public class RecEngineService {
 
     @Autowired
     private RecSlotService recSlotService;
+
+    @Autowired
+    private RuleService ruleService;
 
     private static final int BUNDLE_CONFIG_ID = 1;
     private static final int RULE_CONFIG_ID = 2;
@@ -173,18 +178,16 @@ public class RecEngineService {
     @Async("ruleTaskExecutor")
     public void updateRuleConfig() throws ServerException {
 
-
+        // Get all bundles.
+        RuleList allRules = ruleService.getAllRules();
 
         // rule list
         List<RecEngineRule> ruleList = new ArrayList<>();
-        ruleList.add(new RecEngineRule(1, "Rule 1", "BOOST", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
-        ruleList.add(new RecEngineRule(2, "Rule 2", "BURY", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
-        ruleList.add(new RecEngineRule(3, "Rule 3", "ONLY_RECOMMEND", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
-        ruleList.add(new RecEngineRule(4, "Rule 4", "DO_NOT_RECOMMEND", false, "(department == \\\"Shoes\\\")", "(brand == \\\"Nike\\\")"));
 
-
-
-
+        // Update rule details for each rule.
+        allRules.getRules().forEach(rule ->
+            ruleList.add(new RecEngineRule(rule.getId(), rule.getName(), rule.getType(), rule.getIsGlobal(),
+                                           rule.getMatchingCondition(), rule.getActionCondition())));
 
         try {
 
@@ -200,7 +203,6 @@ public class RecEngineService {
             LOGGER.error(e.getMessage(), e);
             throw new ServerException(Strings.REC_ENGINE_RULE_CONFIG_UPDATE_FAILED);
         }
-
     }
 
     /**

@@ -29,6 +29,10 @@ public final class Strings {
     public static final String GT = "gt";
     public static final String LTEQ = "lteq";
     public static final String GTEQ = "gteq";
+    public static final String BOOST = "BOOST";
+    public static final String BURY = "BURY";
+    public static final String ONLY_RECOMMEND = "ONLY_RECOMMEND";
+    public static final String DO_NOT_RECOMMEND = "DO_NOT_RECOMMEND";
 
 
 
@@ -70,7 +74,12 @@ public final class Strings {
 
     // Rules
     public static final String RULE_ID_INVALID = "CS-3000:Invalid rule id";
-
+    public static final String RULE_ADDED_SUCCESSFULLY = "CS-3001:Rule added successfully";
+    public static final String RULE_NAME_CANNOT_BE_NULL = "CS-3002:Rule name cannot be null";
+    public static final String RULE_NAME_CANNOT_BE_EMPTY = "CS-3003:Rule name cannot be empty";
+    public static final String RULE_TYPE_CANNOT_BE_NULL = "CS-3004:Rule type cannot be null";
+    public static final String RULE_TYPE_CANNOT_BE_EMPTY = "CS-3005:Rule type cannot be empty";
+    public static final String RULE_TYPE_INVALID = "CS-3006:Rule type is invalid. Value should be either BOOST, BURY, ONLY_RECOMMEND or DO_NOT_RECOMMEND";
 
 
 

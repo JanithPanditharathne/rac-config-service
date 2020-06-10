@@ -1,23 +1,34 @@
 package com.zone24x7.rac.configservice.rule;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.recengine.RecEngineService;
+import com.zone24x7.rac.configservice.rule.expression.BaseExpr;
+import com.zone24x7.rac.configservice.rule.expression.RuleExprConverter;
+import com.zone24x7.rac.configservice.util.CSResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.RULE_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.*;
 
 @Service
 public class RuleService {
 
     @Autowired
     private RuleRepository ruleRepository;
+
+    @Autowired
+    @Lazy
+    private RecEngineService recEngineService;
 
 
     // Logger
@@ -28,10 +39,10 @@ public class RuleService {
      *
      * @return List of rules
      */
-    RuleList getAllRules() {
+    public RuleList getAllRules() {
 
         List<RuleDetail> ruleDetailList = new ArrayList<>();
-        List<Rule> rules = ruleRepository.findAll();
+        List<Rule> rules = ruleRepository.findAllByOrderByIdDesc();
         rules.forEach(rule -> ruleDetailList.add(getRuleDetail(rule)));
         return new RuleList(ruleDetailList);
     }
@@ -43,7 +54,7 @@ public class RuleService {
      * @return   Rule detail
      * @throws ValidationException Exception to throw
      */
-    RuleDetail getRule(int id) throws ValidationException {
+    public RuleDetail getRule(int id) throws ValidationException {
 
         // Validate rule id.
         RuleValidations.validateID(id);
@@ -73,6 +84,65 @@ public class RuleService {
             LOGGER.error("Unable to parse rule expression. ", e);
         }
         return null;
+    }
+
+    /**
+     * Add rule.
+     *
+     * @param ruleDetail Rule details
+     * @return           CS Response
+     * @throws ValidationException     Validation exception to throw
+     * @throws JsonProcessingException Parsing exception to throw
+     * @throws ServerException         Server exception to throw
+     */
+    public CSResponse addRule(RuleDetail ruleDetail) throws ValidationException, JsonProcessingException, ServerException {
+
+        // Validate rule details.
+        validateRuleDetails(ruleDetail);
+
+        // Convert to matching condition.
+        List<BaseExpr> matchingConditionJsonList = ruleDetail.getMatchingConditionJson();
+        String matchingCondition = RuleExprConverter.convertJsonExprToString(matchingConditionJsonList);
+
+        // Convert to action condition.
+        List<BaseExpr> actionConditionJsonList = ruleDetail.getActionConditionJson();
+        String actionCondition = RuleExprConverter.convertJsonExprToString(actionConditionJsonList);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // Convert to matching condition json string.
+        String matchingConditionJson = objectMapper.writeValueAsString(matchingConditionJsonList);
+
+        // Convert to action condition json string.
+        String actionConditionJson = objectMapper.writeValueAsString(actionConditionJsonList);
+
+        // Set values to rule entity.
+        Rule rule = new Rule(ruleDetail.getName(), ruleDetail.getType(), ruleDetail.getIsGlobal(), matchingCondition,
+                             matchingConditionJson, actionCondition, actionConditionJson);
+
+        // Save rule.
+        ruleRepository.save(rule);
+
+        // Update rec engine rule config.
+        recEngineService.updateRuleConfig();
+
+        // Return status.
+        return new CSResponse(SUCCESS, RULE_ADDED_SUCCESSFULLY);
+    }
+
+    /**
+     * Validate rule details.
+     *
+     * @param ruleDetail Rule details
+     * @throws ValidationException
+     */
+    private static void validateRuleDetails(RuleDetail ruleDetail) throws ValidationException {
+
+        // Validate rule name.
+        RuleValidations.validateName(ruleDetail.getName());
+
+        // Validate rule type.
+        RuleValidations.validateType(ruleDetail.getType());
     }
 }
 
