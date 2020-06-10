@@ -79,7 +79,11 @@ public final class Strings {
     public static final String RULE_NAME_CANNOT_BE_EMPTY = "CS-3003:Rule name cannot be empty";
     public static final String RULE_TYPE_CANNOT_BE_NULL = "CS-3004:Rule type cannot be null";
     public static final String RULE_TYPE_CANNOT_BE_EMPTY = "CS-3005:Rule type cannot be empty";
-    public static final String RULE_TYPE_INVALID = "CS-3006:Rule type is invalid. Value should be either BOOST, BURY, ONLY_RECOMMEND or DO_NOT_RECOMMEND";
+    public static final String RULE_TYPE_INVALID = "CS-3006:Rule type is invalid. Value should be either BOOST, BURY, ONLY_RECOMMEND or DO_NOT_RECOMMEND.";
+    public static final String RULE_MATCHING_CONDITION_JSON_CANNOT_BE_NULL = "CS-3007:Rule matching condition json cannot be null";
+    public static final String RULE_MATCHING_CONDITION_JSON_CANNOT_BE_EMPTY = "CS-3008:Rule matching condition json cannot be empty";
+    public static final String RULE_ACTION_CONDITION_JSON_CANNOT_BE_NULL = "CS-3009:Rule action condition json cannot be null";
+    public static final String RULE_ACTION_CONDITION_JSON_CANNOT_BE_EMPTY = "CS-3010:Rule action condition json cannot be empty";
 
 
 

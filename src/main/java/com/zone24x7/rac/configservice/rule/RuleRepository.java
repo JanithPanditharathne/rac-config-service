@@ -7,11 +7,5 @@ import java.util.List;
 
 @Repository
 public interface RuleRepository extends JpaRepository<Rule, Integer> {
-
-    /**
-     * Find all rules ordered by ID in descending order.
-     *
-     * @return List of rules
-     */
     List<Rule> findAllByOrderByIdDesc();
 }

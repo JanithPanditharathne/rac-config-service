@@ -187,7 +187,7 @@ public class RecEngineService {
         // Update rule details for each rule.
         allRules.getRules().forEach(rule ->
             ruleList.add(new RecEngineRule(rule.getId(), rule.getName(), rule.getType(), rule.getIsGlobal(),
-                                           rule.getMatchingCondition(), rule.getActionCondition())));
+                    rule.getMatchingCondition(), rule.getActionCondition())));
 
         try {
 

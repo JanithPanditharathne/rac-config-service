@@ -1,5 +1,6 @@
 package com.zone24x7.rac.configservice.rule;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -111,12 +112,14 @@ public class Rule {
         this.actionCondition = actionCondition;
     }
 
+    @JsonIgnore
     public List<BaseExpr> getMatchingConditionJsonAsList() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(this.matchingConditionJson, new TypeReference<List<BaseExpr>>() {});
 
     }
 
+    @JsonIgnore
     public List<BaseExpr> getActionConditionJsonAsList() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(this.actionConditionJson, new TypeReference<List<BaseExpr>>() {});

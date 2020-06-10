@@ -1,11 +1,9 @@
 package com.zone24x7.rac.configservice.rule;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
-import com.zone24x7.rac.configservice.rule.expression.BaseExpr;
 import com.zone24x7.rac.configservice.rule.expression.RuleExprConverter;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.slf4j.Logger;
@@ -18,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ADDED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 
 @Service
 public class RuleService {
@@ -100,27 +100,17 @@ public class RuleService {
         // Validate rule details.
         validateRuleDetails(ruleDetail);
 
-        // Convert to matching condition.
-        List<BaseExpr> matchingConditionJsonList = ruleDetail.getMatchingConditionJson();
-        String matchingCondition = RuleExprConverter.convertJsonExprToString(matchingConditionJsonList);
+        // Get matching condition string.
+        String matchingCondition = RuleExprConverter.convertJsonExprToString(ruleDetail.getMatchingConditionJson());
 
-        // Convert to action condition.
-        List<BaseExpr> actionConditionJsonList = ruleDetail.getActionConditionJson();
-        String actionCondition = RuleExprConverter.convertJsonExprToString(actionConditionJsonList);
+        // Get action condition string.
+        String actionCondition = RuleExprConverter.convertJsonExprToString(ruleDetail.getActionConditionJson());
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        // Convert to matching condition json string.
-        String matchingConditionJson = objectMapper.writeValueAsString(matchingConditionJsonList);
-
-        // Convert to action condition json string.
-        String actionConditionJson = objectMapper.writeValueAsString(actionConditionJsonList);
-
-        // Set values to rule entity.
+        // Create a new rule.
         Rule rule = new Rule(ruleDetail.getName(), ruleDetail.getType(), ruleDetail.getIsGlobal(), matchingCondition,
-                             matchingConditionJson, actionCondition, actionConditionJson);
+                ruleDetail.getMatchingConditionJsonAsString(), actionCondition, ruleDetail.getActionConditionJsonAsString());
 
-        // Save rule.
+        // Save new rule.
         ruleRepository.save(rule);
 
         // Update rec engine rule config.
@@ -134,7 +124,7 @@ public class RuleService {
      * Validate rule details.
      *
      * @param ruleDetail Rule details
-     * @throws ValidationException
+     * @throws ValidationException if validation fail.
      */
     private static void validateRuleDetails(RuleDetail ruleDetail) throws ValidationException {
 
@@ -143,6 +133,13 @@ public class RuleService {
 
         // Validate rule type.
         RuleValidations.validateType(ruleDetail.getType());
+
+        // Validate matching condition json.
+        RuleValidations.validateMatchingConditionJson(ruleDetail.getMatchingConditionJson());
+
+        // Validate action condition json.
+        RuleValidations.validateActionConditionJson(ruleDetail.getActionConditionJson());
+
     }
 }
 

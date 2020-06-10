@@ -50,10 +50,10 @@ public class RuleServiceTest {
                              "{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[{\"id\":1,\"name\":\"Nike\"}]}");
         rule.setId(1);
         rules.add(rule);
-        when(ruleRepository.findAll()).thenReturn(rules);
+        when(ruleRepository.findAllByOrderByIdDesc()).thenReturn(rules);
 
         BaseExpr baseExpr = mock(BaseExpr.class);
-        when(objectMapper.readValue(anyString(), any(Class.class))).thenReturn(baseExpr);
+        when(objectMapper.readValue(anyString(), eq(BaseExpr.class))).thenReturn(baseExpr);
 
         // Actual
         RuleList actual = ruleService.getAllRules();
@@ -88,9 +88,9 @@ public class RuleServiceTest {
 
             // Mock
             Rule rule = new Rule("Rule 1", "BOOST", true, "(brand == \"1 by 8\")",
-                                 "{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[{\"id\":6,\"name\":\"1 by 8\"}]}",
+                                 "[{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[{\"id\":6,\"name\":\"1 by 8\"}]}]",
                                  "(brand == \"Nike\")",
-                                 "{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[{\"id\":1,\"name\":\"Nike\"}]}");
+                                 "[{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[{\"id\":1,\"name\":\"Nike\"}]}]");
             rule.setId(1);
             when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
 
@@ -102,7 +102,7 @@ public class RuleServiceTest {
                     "\"Nike\"}]}]}";
 
             // Actual
-            RuleDetail actualRuleDetail = ruleService.getRule(1);
+            RuleDetail actualRuleDetail = ruleService.getRule(rule.getId());
             ObjectMapper objectMapper = new ObjectMapper();
             String actual = objectMapper.writeValueAsString(actualRuleDetail);
 
@@ -112,7 +112,7 @@ public class RuleServiceTest {
 
         @Test
         @DisplayName("test for unable to parse rule expression")
-        void testGetRuleForParsingException() throws ValidationException, JsonProcessingException {
+        void testGetRuleForParsingException() throws ValidationException {
 
             // Mock
             Rule rule = new Rule("Rule 1", "BOOST", true, "(brand == \"1 by 8\")",
