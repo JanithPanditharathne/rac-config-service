@@ -94,14 +94,14 @@ public final class Strings {
             "Please specify different channel, page, placeholder combination.";
 
     // Metadata
-    public static final String CHANNEL_NAME_CANNOT_BE_NULL = "CS-6000:Channel name cannot be null";
-    public static final String CHANNEL_NAME_CANNOT_BE_EMPTY = "CS-6001:Channel name cannot be empty";
-    public static final String CHANNEL_NAME_ALREADY_EXISTS = "CS-6002:Channel name already exists";
-    public static final String CHANNEL_ADDED_SUCCESSFULLY = "CS-6003:Channel added successfully";
+    public static final String METADATA_NAME_CANNOT_BE_NULL = "CS-6000:Metadata name cannot be null";
+    public static final String METADATA_NAME_CANNOT_BE_EMPTY = "CS-6001:Metadata name cannot be empty";
+    public static final String METADATA_TYPE_CANNOT_BE_NULL = "CS-6002:Metadata type cannot be null";
+    public static final String METADATA_ADDED_SUCCESSFULLY = "CS-6003:Metadata added successfully";
     public static final String CHANNEL_ID_INVALID = "CS-6004:Invalid channel id";
     public static final String CHANNEL_CANNOT_BE_NULL = "CS-6005:Channel cannot be null";
     public static final String PAGE_NAME_CANNOT_BE_NULL = "CS-6006:Page name field cannot be null";
-    public static final String PAGE_NAME_CANNOT_BE_EMPTY = "CS-6007:Page name field cannot be empty";
+    public static final String METADATA_TYPE_CANNOT_BE_EMPTY = "CS-6007:Metadata type cannot be empty";
     public static final String PAGE_NAME_ALREADY_EXISTS = "CS-6008:Page name already exists";
     public static final String PAGE_ADDED_SUCCESSFULLY = "CS-6009:Page added successfully";
     public static final String PAGE_ID_INVALID = "CS-6010:Invalid page id";

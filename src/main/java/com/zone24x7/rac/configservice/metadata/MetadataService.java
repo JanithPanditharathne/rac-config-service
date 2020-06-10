@@ -1,5 +1,9 @@
 package com.zone24x7.rac.configservice.metadata;
 
+import com.zone24x7.rac.configservice.algorithm.AlgorithmValidations;
+import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.util.CSResponse;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +22,31 @@ public class MetadataService {
      * @param type metadata type (brands, departments...etc).
      * @return metadata list.
      */
-    MetadataList getMetadata(String type) {
+    public MetadataList getMetadata(String type) {
         List<Metadata> metadata = metadataRepository.findAllByType(type);
         return new MetadataList(metadata);
+    }
+
+
+    /**
+     * Add given metadata to the db.
+     *
+     * @param metadata metadata.
+     * @return status response.
+     */
+    public CSResponse addMetadata(Metadata metadata) throws ValidationException {
+
+        // Validate metadata type.
+        MetadataValidations.validateType(metadata.getType());
+
+        // Validate metadata name.
+        MetadataValidations.validateName(metadata.getName());
+
+        // Save new metadata.
+        metadataRepository.save(metadata);
+
+        // Return status response.
+        return new CSResponse(Strings.SUCCESS, Strings.METADATA_ADDED_SUCCESSFULLY);
     }
 
 }

@@ -10,4 +10,5 @@ public interface MetadataRepository extends JpaRepository<Metadata, Integer> {
 
     List<Metadata> findAllByType(String type);
     Metadata findByTypeAndId(String type, int id);
+    List<Metadata> findByTypeAndName(String type, String name);
 }
