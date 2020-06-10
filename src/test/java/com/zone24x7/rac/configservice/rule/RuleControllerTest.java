@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 
 @WebMvcTest(value = RuleController.class)
 public class RuleControllerTest {
@@ -44,6 +45,33 @@ public class RuleControllerTest {
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/v1/rules")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Unit test for get rule by ID.
+     *
+     * @throws Exception Exceptions to throw
+     */
+    @Test
+    void getRule() throws Exception {
+
+        RuleDetail ruleDetail = new RuleDetail();
+        Mockito.when(ruleService.getRule(anyInt())).thenReturn(ruleDetail);
+
+        // Expected
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(ruleDetail);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/v1/rules/1")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();

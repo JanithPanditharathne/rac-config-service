@@ -13,10 +13,10 @@ public final class RuleValidations {
      * Validate rule id.
      *
      * @param id rule id
-     * @throws ValidationException for invalid id.
+     * @throws ValidationException for invalid id
      */
     public static void validateID(int id) throws ValidationException {
-        if(id < 1) {
+        if (id < 1) {
             throw new ValidationException(Strings.RULE_ID_INVALID);
         }
     }

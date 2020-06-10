@@ -32,7 +32,7 @@ public class RuleService {
 
         List<RuleDetail> ruleDetailList = new ArrayList<>();
         List<Rule> rules = ruleRepository.findAll();
-        rules.forEach(r -> ruleDetailList.add(getRuleDetail(r)));
+        rules.forEach(rule -> ruleDetailList.add(getRuleDetail(rule)));
         return new RuleList(ruleDetailList);
     }
 
