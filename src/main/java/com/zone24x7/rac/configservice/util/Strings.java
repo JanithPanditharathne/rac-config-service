@@ -24,6 +24,7 @@ public final class Strings {
     public static final String RE_PRODUCT_NUMBER = "productNumber";
     public static final String RE_PRICE = "regularPrice";
     public static final String EQ = "eq";
+    public static final String EQIC = "eqic";
     public static final String LT = "lt";
     public static final String GT = "gt";
     public static final String LTEQ = "lteq";

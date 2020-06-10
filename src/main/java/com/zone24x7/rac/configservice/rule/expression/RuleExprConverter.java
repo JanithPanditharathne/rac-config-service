@@ -82,10 +82,10 @@ public final class RuleExprConverter {
 
             PriceExpr priceExpr = (PriceExpr)baseExpr;
 
-            // eg: "(price <= 2222)"
+            // eg: "(price <= 2222.34)"
             exprString.append(getExpr(Strings.RE_PRICE,
                     getOperatorSign(priceExpr.getValue().getOperator()),
-                    String.valueOf(priceExpr.getValue().getPrice())));
+                    priceExpr.getValue().getPrice()));
 
             // condition: "&&" or "||"
             exprString.append(condition);
@@ -118,14 +118,15 @@ public final class RuleExprConverter {
 
     /**
      * Return expression.
-     * Eg: (departmentName = Clothes)
+     * Eg: (regularPrice = 25.99)
      *
      * @param name key name.
-     * @param value  key value.
+     * @param operator operator.
+     * @param value key value.
      * @return expression string.
      */
-    private static String getExpr(String name, String value) {
-        return "(" + name + " = \"" + value + "\")";
+    private static String getExpr(String name, String operator, double value) {
+        return "(" + name + " " + operator + " " + value + ")";
     }
 
 
@@ -139,7 +140,7 @@ public final class RuleExprConverter {
      * @return expression string.
      */
     private static String getExpr(String name, String operator, String value) {
-        return "(" + name + " " + operator + " " + value + ")";
+        return "(" + name + " " + operator + " \"" + value + "\")";
     }
 
 
@@ -162,7 +163,7 @@ public final class RuleExprConverter {
 
         // Add brands to the list.
         List<String> brandList = new ArrayList<>();
-        brandExpr.getValue().forEach(b -> brandList.add(getExpr(Strings.RE_BRAND, b.getName())));
+        brandExpr.getValue().forEach(b -> brandList.add(getExpr(Strings.RE_BRAND, getOperatorSign(Strings.EQ), b.getName())));
 
         if(!brandList.isEmpty()) {
 
@@ -195,7 +196,7 @@ public final class RuleExprConverter {
         // Add product numbers to the list.
         List<String> productNumberList = new ArrayList<>();
         for (String productNumber : productNumberExpr.getValue()) {
-            productNumberList.add(getExpr(Strings.RE_PRODUCT_NUMBER, productNumber));
+            productNumberList.add(getExpr(Strings.RE_PRODUCT_NUMBER, getOperatorSign(Strings.EQ), productNumber));
         }
 
         if(!productNumberList.isEmpty()) {
@@ -262,6 +263,9 @@ public final class RuleExprConverter {
 
         // Equals.
         map.put(Strings.EQ, "=");
+
+        // Equals ignore case.
+        map.put(Strings.EQIC, "#=");
 
         // Greater than.
         map.put(Strings.GT, ">");
