@@ -49,4 +49,19 @@ public class RuleController {
     public CSResponse addRule(@RequestBody RuleDetail ruleDetail) throws ValidationException, JsonProcessingException, ServerException {
         return ruleService.addRule(ruleDetail);
     }
+
+    /**
+     * Edit rule.
+     *
+     * @param id         Rule ID
+     * @param ruleDetail Rule details
+     * @return           CS Response
+     * @throws ValidationException     Validation exception to throw
+     * @throws JsonProcessingException Parsing exception to throw
+     * @throws ServerException         Server exception to throw
+     */
+    @PutMapping("/rules/{id}")
+    public CSResponse editRule(@PathVariable int id, @RequestBody RuleDetail ruleDetail) throws ValidationException, JsonProcessingException, ServerException {
+        return ruleService.editRule(id, ruleDetail);
+    }
 }

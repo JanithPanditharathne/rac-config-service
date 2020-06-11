@@ -16,9 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.RULE_ADDED_SUCCESSFULLY;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_ID_INVALID;
-import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.*;
 
 @Service
 public class RuleService {
@@ -118,6 +116,50 @@ public class RuleService {
 
         // Return status.
         return new CSResponse(SUCCESS, RULE_ADDED_SUCCESSFULLY);
+    }
+
+    /**
+     * Edit rule.
+     *
+     * @param id         Rule ID
+     * @param ruleDetail Rule details
+     * @return           CS Response
+     * @throws ValidationException     Validation exception to throw
+     * @throws JsonProcessingException Parsing exception to throw
+     * @throws ServerException         Server exception to throw
+     */
+    public CSResponse editRule(int id, RuleDetail ruleDetail) throws ValidationException, JsonProcessingException, ServerException {
+
+        // Validate rule ID.
+        RuleValidations.validateID(id);
+
+        Optional<Rule> optionalRule = ruleRepository.findById(id);
+        if (!optionalRule.isPresent()) {
+            throw new ValidationException(RULE_ID_INVALID);
+        }
+
+        // Validate rule details.
+        validateRuleDetails(ruleDetail);
+
+        // Get matching condition string.
+        String matchingCondition = RuleExprConverter.convertJsonExprToString(ruleDetail.getMatchingConditionJson());
+
+        // Get action condition string.
+        String actionCondition = RuleExprConverter.convertJsonExprToString(ruleDetail.getActionConditionJson());
+
+        // Create a new rule.
+        Rule rule = new Rule(ruleDetail.getName(), ruleDetail.getType(), ruleDetail.getIsGlobal(), matchingCondition,
+                             ruleDetail.getMatchingConditionJsonAsString(), actionCondition, ruleDetail.getActionConditionJsonAsString());
+        rule.setId(id);
+
+        // Save new rule.
+        ruleRepository.save(rule);
+
+        // Update rec engine rule config.
+        recEngineService.updateRuleConfig();
+
+        // Return status.
+        return new CSResponse(SUCCESS, RULE_UPDATED_SUCCESSFULLY);
     }
 
     /**
