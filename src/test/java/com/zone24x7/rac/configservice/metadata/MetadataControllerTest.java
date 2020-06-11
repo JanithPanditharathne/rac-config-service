@@ -1,6 +1,8 @@
 package com.zone24x7.rac.configservice.metadata;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.util.CSResponse;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 
@@ -53,6 +56,34 @@ class MetadataControllerTest {
                 .get("/v1/metadata/brands")
                 .accept(MediaType.APPLICATION_JSON);
 
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+
+
+    @Test
+    void testAddMetadata() throws Exception {
+
+        // Expected
+        CSResponse csResponse = new CSResponse(SUCCESS, Strings.METADATA_ADDED_SUCCESSFULLY);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        // Mock service call
+        Mockito.when(metadataService.addMetadata(Mockito.any())).thenReturn(csResponse);
+        MetadataDTO metadataDTO = new MetadataDTO("brand1", "brands");
+        String metadataJson = objectMapper.writeValueAsString(metadataDTO);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/v1/metadata/brands")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(metadataJson)
+                .contentType(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String actual = mvcResult.getResponse().getContentAsString();
 
