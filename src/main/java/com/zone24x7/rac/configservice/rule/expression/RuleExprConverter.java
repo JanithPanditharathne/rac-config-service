@@ -150,8 +150,8 @@ public final class RuleExprConverter {
     /**
      * Get brand expression.
      * Eg:
-     * Single: (brandName = "AAA")
-     * Multiple: ((brandName = "AAA") || (brandName = "BBB") || (brandName = "CCC"))
+     * Single: (brandName == "AAA")
+     * Multiple: ((brandName == "AAA") || (brandName == "BBB") || (brandName == "CCC"))
      *
      * @param baseExpr rule expression.
      * @return brand expression.
@@ -262,7 +262,7 @@ public final class RuleExprConverter {
         Map<String, String> map = new HashMap<>();
 
         // Equals.
-        map.put(Strings.EQ, "=");
+        map.put(Strings.EQ, "==");
 
         // Equals ignore case.
         map.put(Strings.EQIC, "#=");

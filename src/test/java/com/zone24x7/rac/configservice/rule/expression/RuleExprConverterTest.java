@@ -56,7 +56,7 @@ public class RuleExprConverterTest {
             List<BaseExpr> exprJson = new ArrayList<>();
             exprJson.add(objectMapper.readValue(json, BaseExpr.class));
             String actualResult = RuleExprConverter.convertJsonExprToString(exprJson);
-            String expectedResult = "((brand = \"brandOfSeedProduct\") || (brand = \"brandOfPage\") || (brand = \"ALEX\") || (brand = \"NIKE\"))";
+            String expectedResult = "((brand == \"brandOfSeedProduct\") || (brand == \"brandOfPage\") || (brand == \"ALEX\") || (brand == \"NIKE\"))";
             assertEquals(expectedResult, actualResult);
         }
 
@@ -84,7 +84,7 @@ public class RuleExprConverterTest {
             List<BaseExpr> exprJson = new ArrayList<>();
             exprJson.add(objectMapper.readValue(json, BaseExpr.class));
             String actualResult = RuleExprConverter.convertJsonExprToString(exprJson);
-            String expectedResult = "((productNumber = \"111\") || (productNumber = \"222\") || (productNumber = \"4e5ff\"))";
+            String expectedResult = "((productNumber == \"111\") || (productNumber == \"222\") || (productNumber == \"4e5ff\"))";
             assertEquals(expectedResult, actualResult);
         }
 
@@ -109,7 +109,7 @@ public class RuleExprConverterTest {
             List<BaseExpr> exprJson = new ArrayList<>();
             exprJson.add(objectMapper.readValue(json, BaseExpr.class));
             String actualResult = RuleExprConverter.convertJsonExprToString(exprJson);
-            String expectedResult = "(regularPrice = 23.45)";
+            String expectedResult = "(regularPrice == 23.45)";
             assertEquals(expectedResult, actualResult);
         }
 
