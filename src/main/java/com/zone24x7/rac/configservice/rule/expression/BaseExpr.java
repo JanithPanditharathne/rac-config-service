@@ -19,6 +19,9 @@ public class BaseExpr {
     private String type;
     private String condition;
 
+    public BaseExpr() {
+    }
+
     public BaseExpr(String ruleType) {
         this.type = ruleType;
     }

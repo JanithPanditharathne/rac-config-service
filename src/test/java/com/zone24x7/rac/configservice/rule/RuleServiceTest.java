@@ -2,8 +2,15 @@ package com.zone24x7.rac.configservice.rule;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
+import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.rule.expression.BaseExpr;
+import com.zone24x7.rac.configservice.rule.expression.brand.BrandExpr;
+import com.zone24x7.rac.configservice.rule.expression.brand.BrandValue;
+import com.zone24x7.rac.configservice.rule.expression.price.PriceExpr;
+import com.zone24x7.rac.configservice.rule.expression.price.PriceValue;
+import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,10 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.zone24x7.rac.configservice.util.Strings.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class RuleServiceTest {
@@ -32,6 +39,9 @@ public class RuleServiceTest {
 
     @Mock
     private ObjectMapper objectMapper;
+
+    @Mock
+    private RecEngineService recEngineService;
 
     @Test
     @DisplayName("get all rules method")
@@ -65,6 +75,22 @@ public class RuleServiceTest {
     @Nested
     @DisplayName("get rule method")
     class GetRule {
+
+        @Test
+        @DisplayName("test for negative rule id")
+        void testGetRuleForNegativeRuleID() {
+
+            // Actual
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    // Get bundle.
+                    ruleService.getRule(-1));
+
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(Strings.RULE_ID_INVALID, actual);
+        }
 
         @Test
         @DisplayName("test for invalid rule id")
@@ -125,6 +151,220 @@ public class RuleServiceTest {
 
             // Assert
             assertNull(actualRuleDetail);
+        }
+    }
+
+    @Nested
+    @DisplayName("add rule method")
+    class AddRule {
+
+        @Test
+        @DisplayName("test for missing rule name")
+        void testAddRuleForMissingRuleName() {
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail())
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_NAME_CANNOT_BE_NULL, actual);
+        }
+
+        @Test
+        @DisplayName("test for empty rule name")
+        void testAddRuleForEmptyRuleName() {
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "", "", false, null,
+                                                       null, null, null))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_NAME_CANNOT_BE_EMPTY, actual);
+        }
+
+        @Test
+        @DisplayName("test for missing rule type")
+        void testAddRuleForMissingRuleType() {
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", null, false, null,
+                                                       null, null, null))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_TYPE_CANNOT_BE_NULL, actual);
+        }
+
+        @Test
+        @DisplayName("test for empty rule type")
+        void testAddRuleForEmptyRuleType() {
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "", false, null,
+                                                       null, null, null))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_TYPE_CANNOT_BE_EMPTY, actual);
+        }
+
+        @Test
+        @DisplayName("test for invalid rule type")
+        void testAddRuleForInvalidRuleType() {
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "abc", false, null,
+                                                       null, null, null))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_TYPE_INVALID, actual);
+        }
+
+        @Test
+        @DisplayName("test for missing rule matching condition json")
+        void testAddRuleForMissingRuleMatchingConditionJson() {
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       null, null, null))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_MATCHING_CONDITION_JSON_CANNOT_BE_NULL, actual);
+        }
+
+        @Test
+        @DisplayName("test for empty rule matching condition json")
+        void testAddRuleForEmptyRuleMatchingConditionJson() {
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       new ArrayList<>(), null, null))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_MATCHING_CONDITION_JSON_CANNOT_BE_EMPTY, actual);
+        }
+
+        @Test
+        @DisplayName("test for missing rule action condition json")
+        void testAddRuleForMissingRuleActionConditionJson() {
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
+            BaseExpr baseExpr = new BaseExpr();
+            baseExpr.setType("Brand");
+            baseExpr.setType("AND");
+            matchingConditionJson.add(baseExpr);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       matchingConditionJson, null, null))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_ACTION_CONDITION_JSON_CANNOT_BE_NULL, actual);
+        }
+
+        @Test
+        @DisplayName("test for empty rule action condition json")
+        void testAddRuleForEmptyRuleActionConditionJson() {
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
+            BaseExpr baseExpr = new BaseExpr();
+            baseExpr.setType("Brand");
+            baseExpr.setType("AND");
+            matchingConditionJson.add(baseExpr);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       matchingConditionJson, null, new ArrayList<>()))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_ACTION_CONDITION_JSON_CANNOT_BE_EMPTY, actual);
+        }
+
+        @Test
+        @DisplayName("test for correct values")
+        void testAddRuleForCorrectValues() throws JsonProcessingException, ServerException, ValidationException {
+
+            // Expected.
+            CSResponse expected = new CSResponse(SUCCESS, RULE_ADDED_SUCCESSFULLY);
+
+            // Matching condition json.
+            BrandValue brandValue = new BrandValue(1, "Nike");
+
+            List<BrandValue> value = new ArrayList<>();
+            value.add(brandValue);
+
+            BrandExpr matching = new BrandExpr();
+            matching.setType("Brand");
+            matching.setCondition("AND");
+            matching.setValue(value);
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
+            matchingConditionJson.add(matching);
+
+            // Action condition json.
+            PriceValue priceValue = new PriceValue("eq", 34.0);
+
+            PriceExpr action = new PriceExpr();
+            action.setType("Price");
+            action.setCondition("OR");
+            action.setValue(priceValue);
+
+            List<BaseExpr> actionConditionJson = new ArrayList<>();
+            actionConditionJson.add(action);
+
+            // Actual
+            CSResponse actual = ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false,
+                                                                       null, matchingConditionJson,
+                                                                       null, actionConditionJson));
+
+            // Assert
+            assertEquals(expected.getStatus(), actual.getStatus());
+            assertEquals(expected.getCode(), actual.getCode());
+            assertEquals(expected.getMessage(), actual.getMessage());
+            verify(ruleRepository, times(1)).save(any());
+            verify(recEngineService, times(1)).updateRuleConfig();
         }
     }
 }

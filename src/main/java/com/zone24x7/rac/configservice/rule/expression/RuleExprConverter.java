@@ -165,7 +165,7 @@ public final class RuleExprConverter {
         List<String> brandList = new ArrayList<>();
         brandExpr.getValue().forEach(b -> brandList.add(getExpr(Strings.RE_BRAND, getOperatorSign(Strings.EQ), b.getName())));
 
-        if(!brandList.isEmpty()) {
+        if (!brandList.isEmpty()) {
 
             // Join the list.
             exprString.append(joinStringList(brandList, OPERATOR_OR));

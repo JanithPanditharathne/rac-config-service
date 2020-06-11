@@ -5,6 +5,14 @@ public class BrandValue {
     private int id;
     private String name;
 
+    public BrandValue() {
+    }
+
+    public BrandValue(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
