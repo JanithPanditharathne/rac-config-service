@@ -26,7 +26,6 @@ import java.util.Optional;
 import static com.zone24x7.rac.configservice.util.Strings.RULE_ACTION_CONDITION_JSON_CANNOT_BE_EMPTY;
 import static com.zone24x7.rac.configservice.util.Strings.RULE_ACTION_CONDITION_JSON_CANNOT_BE_NULL;
 import static com.zone24x7.rac.configservice.util.Strings.RULE_ADDED_SUCCESSFULLY;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_MATCHING_CONDITION_JSON_CANNOT_BE_EMPTY;
 import static com.zone24x7.rac.configservice.util.Strings.RULE_MATCHING_CONDITION_JSON_CANNOT_BE_NULL;
 import static com.zone24x7.rac.configservice.util.Strings.RULE_NAME_CANNOT_BE_EMPTY;
 import static com.zone24x7.rac.configservice.util.Strings.RULE_NAME_CANNOT_BE_NULL;
@@ -277,22 +276,6 @@ public class RuleServiceTest {
             assertEquals(RULE_MATCHING_CONDITION_JSON_CANNOT_BE_NULL, actual);
         }
 
-        @Test
-        @DisplayName("test for empty rule matching condition json")
-        void testAddRuleForEmptyRuleMatchingConditionJson() {
-
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       new ArrayList<>(), null, null))
-            );
-
-            // Actual
-            String actual = validationException.getMessage();
-
-            // Assert
-            assertEquals(RULE_MATCHING_CONDITION_JSON_CANNOT_BE_EMPTY, actual);
-        }
 
         @Test
         @DisplayName("test for missing rule action condition json")

@@ -87,10 +87,10 @@ public final class RuleValidations {
             throw new ValidationException(RULE_MATCHING_CONDITION_JSON_CANNOT_BE_NULL);
         }
 
-        // Validate for empty.
-        if (baseExprs.isEmpty()) {
-            throw new ValidationException(RULE_MATCHING_CONDITION_JSON_CANNOT_BE_EMPTY);
-        }
+
+
+
+
     }
 
 
