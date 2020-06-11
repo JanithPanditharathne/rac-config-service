@@ -33,6 +33,7 @@ public class RuleExprConverterTest {
             String json = "{\n" +
                     "  \"type\": \"Brand\",\n" +
                     "  \"condition\": \"AND\",\n" +
+                    "  \"operator\": \"eq\",\n" +
                     "  \"value\": [\n" +
                     "    \"Nike\",\n" +
                     "    \"Puma\"\n" +
@@ -60,6 +61,7 @@ public class RuleExprConverterTest {
             String json = "{\n" +
                     "  \"type\": \"ProductNumber\",\n" +
                     "  \"condition\": \"AND\",\n" +
+                    "  \"operator\": \"eq\",\n" +
                     "  \"value\": [\n" +
                     "    \"111\",\n" +
                     "    \"222\",\n" +
@@ -86,8 +88,8 @@ public class RuleExprConverterTest {
             String json = "{\n" +
                     "  \"type\": \"Price\",\n" +
                     "  \"condition\": \"AND\",\n" +
+                    "  \"operator\": \"eq\",\n" +
                     "  \"value\": {\n" +
-                    "    \"operator\": \"eq\",\n" +
                     "    \"price\": 23.45\n" +
                     "  }\n" +
                     "}";

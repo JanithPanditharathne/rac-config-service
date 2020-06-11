@@ -18,6 +18,7 @@ public class BaseExpr {
 
     private String type;
     private String condition;
+    private String operator;
 
     public BaseExpr() {
     }
@@ -40,5 +41,13 @@ public class BaseExpr {
 
     public void setCondition(String condition) {
         this.condition = condition;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 }

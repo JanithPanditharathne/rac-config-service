@@ -132,17 +132,17 @@ public class RuleServiceTest {
 
             // Mock
             Rule rule = new Rule("Rule 1", "BOOST", true, "(brand == \"1 by 8\")",
-                                 "[{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[\"1 by 8\"]}]",
+                                 "[{\"type\":\"Brand\",\"condition\":\"AND\",\"operator\":\"eq\",\"value\":[\"1 by 8\"]}]",
                                  "(brand == \"Nike\")",
-                                 "[{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[\"Nike\"]}]");
+                                 "[{\"type\":\"Brand\",\"condition\":\"AND\",\"operator\":\"eq\",\"value\":[\"Nike\"]}]");
             rule.setId(1);
             when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
 
             // Expected
             String expected = "{\"id\":1,\"name\":\"Rule 1\",\"type\":\"BOOST\",\"isGlobal\":true,\"matchingCondition\"" +
                     ":\"(brand == \\\"1 by 8\\\")\",\"matchingConditionJson\":[{\"type\":\"Brand\",\"condition\":\"AND\"" +
-                    ",\"value\":[\"1 by 8\"]}],\"actionCondition\":\"(brand == \\\"Nike\\\")\"," +
-                    "\"actionConditionJson\":[{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[" +
+                    ",\"operator\":\"eq\",\"value\":[\"1 by 8\"]}],\"actionCondition\":\"(brand == \\\"Nike\\\")\"," +
+                    "\"actionConditionJson\":[{\"type\":\"Brand\",\"condition\":\"AND\",\"operator\":\"eq\",\"value\":[" +
                     "\"Nike\"]}]}";
 
             // Actual
@@ -357,7 +357,7 @@ public class RuleServiceTest {
             matchingConditionJson.add(matching);
 
             // Action condition json.
-            PriceValue priceValue = new PriceValue("eq", 34.0);
+            PriceValue priceValue = new PriceValue(34.0);
 
             PriceExpr action = new PriceExpr();
             action.setType("Price");

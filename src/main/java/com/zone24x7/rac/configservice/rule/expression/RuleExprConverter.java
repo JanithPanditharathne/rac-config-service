@@ -83,9 +83,7 @@ public final class RuleExprConverter {
             PriceExpr priceExpr = (PriceExpr)baseExpr;
 
             // eg: "(price <= 2222.34)"
-            exprString.append(getExpr(Strings.RE_PRICE,
-                    getOperatorSign(priceExpr.getValue().getOperator()),
-                    priceExpr.getValue().getPrice()));
+            exprString.append(getExpr(Strings.RE_PRICE, getOperatorSign(priceExpr.getOperator()), priceExpr.getValue().getPrice()));
 
             // condition: "&&" or "||"
             exprString.append(condition);
@@ -163,7 +161,7 @@ public final class RuleExprConverter {
 
         // Add brands to the list.
         List<String> brandList = new ArrayList<>();
-        brandExpr.getValue().forEach(b -> brandList.add(getExpr(Strings.RE_BRAND, getOperatorSign(Strings.EQ), b)));
+        brandExpr.getValue().forEach(b -> brandList.add(getExpr(Strings.RE_BRAND, getOperatorSign(brandExpr.getOperator()), b)));
 
         if (!brandList.isEmpty()) {
 
@@ -196,7 +194,7 @@ public final class RuleExprConverter {
         // Add product numbers to the list.
         List<String> productNumberList = new ArrayList<>();
         for (String productNumber : productNumberExpr.getValue()) {
-            productNumberList.add(getExpr(Strings.RE_PRODUCT_NUMBER, getOperatorSign(Strings.EQ), productNumber));
+            productNumberList.add(getExpr(Strings.RE_PRODUCT_NUMBER, getOperatorSign(productNumberExpr.getOperator()), productNumber));
         }
 
         if(!productNumberList.isEmpty()) {
