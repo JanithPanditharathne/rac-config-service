@@ -130,9 +130,8 @@ public class RuleService {
      */
     public CSResponse editRule(int id, RuleDetail ruleDetail) throws ValidationException, JsonProcessingException, ServerException {
 
-        // Validate rule ID.
+        // Validate rule id.
         RuleValidations.validateID(id);
-
         Optional<Rule> optionalRule = ruleRepository.findById(id);
         if (!optionalRule.isPresent()) {
             throw new ValidationException(RULE_ID_INVALID);

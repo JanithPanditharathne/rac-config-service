@@ -8,17 +8,17 @@ import static com.zone24x7.rac.configservice.util.Strings.BRAND;
 
 public class BrandExpr extends BaseExpr {
 
-    private List<BrandValue> value;
+    private List<String> value;
 
     public BrandExpr() {
         super(BRAND);
     }
 
-    public List<BrandValue> getValue() {
+    public List<String> getValue() {
         return value;
     }
 
-    public void setValue(List<BrandValue> value) {
+    public void setValue(List<String> value) {
         this.value = value;
     }
 }

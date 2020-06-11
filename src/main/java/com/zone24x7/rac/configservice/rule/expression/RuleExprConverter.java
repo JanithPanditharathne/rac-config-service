@@ -163,7 +163,7 @@ public final class RuleExprConverter {
 
         // Add brands to the list.
         List<String> brandList = new ArrayList<>();
-        brandExpr.getValue().forEach(b -> brandList.add(getExpr(Strings.RE_BRAND, getOperatorSign(Strings.EQ), b.getName())));
+        brandExpr.getValue().forEach(b -> brandList.add(getExpr(Strings.RE_BRAND, getOperatorSign(Strings.EQ), b)));
 
         if (!brandList.isEmpty()) {
 

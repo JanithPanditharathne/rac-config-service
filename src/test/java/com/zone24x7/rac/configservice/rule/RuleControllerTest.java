@@ -100,11 +100,40 @@ public class RuleControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String expected = objectMapper.writeValueAsString(csResponse);
 
-        String ruleJson = "{\"name\":\"Test Rule 7\",\"type\":\"BURY\",\"isGlobal\":false,\"matchingConditionJson\":[{" +
-                "\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[{\"id\":6,\"name\":\"1 by 8\"},{\"id\":4983,\"name" +
-                "\":\"100 Facets of Love\"},{\"id\":2,\"name\":\"1010\"}]},{\"type\":\"ProductNumber\",\"condition\":" +
-                "\"AND\",\"value\":[\"244\",\"4523\"]}],\"actionConditionJson\":[{\"type\":\"Price\",\"condition\":\"AND" +
-                "\",\"value\":{\"operator\":\"eq\",\"price\":53}}]}";
+        String ruleJson = "{\n" +
+                "  \"name\": \"Test Rule 1 \",\n" +
+                "  \"type\": \"BOOST\",\n" +
+                "  \"isGlobal\": false,\n" +
+                "  \"matchingCondition\": \"\",\n" +
+                "  \"matchingConditionJson\": [\n" +
+                "    {\n" +
+                "      \"type\": \"Brand\",\n" +
+                "      \"condition\": \"AND\",\n" +
+                "      \"value\": [\n" +
+                "        \"Nike\",\n" +
+                "        \"Puma\"\n" +
+                "      ]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"type\": \"ProductNumber\",\n" +
+                "      \"condition\": \"AND\",\n" +
+                "      \"value\": [\n" +
+                "        \"244\"\n" +
+                "      ]\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"actionCondition\": \"\",\n" +
+                "  \"actionConditionJson\": [\n" +
+                "    {\n" +
+                "      \"type\": \"Price\",\n" +
+                "      \"condition\": \"AND\",\n" +
+                "      \"value\": {\n" +
+                "        \"operator\": \"eq\",\n" +
+                "        \"price\": 53.0\n" +
+                "      }\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders

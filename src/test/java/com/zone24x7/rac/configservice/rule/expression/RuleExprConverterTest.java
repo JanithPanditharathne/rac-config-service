@@ -34,29 +34,15 @@ public class RuleExprConverterTest {
                     "  \"type\": \"Brand\",\n" +
                     "  \"condition\": \"AND\",\n" +
                     "  \"value\": [\n" +
-                    "    {\n" +
-                    "      \"id\": -1,\n" +
-                    "      \"name\": \"brandOfSeedProduct\"\n" +
-                    "    },\n" +
-                    "    {\n" +
-                    "      \"id\": -2,\n" +
-                    "      \"name\": \"brandOfPage\"\n" +
-                    "    },\n" +
-                    "    {\n" +
-                    "      \"id\": 1,\n" +
-                    "      \"name\": \"ALEX\"\n" +
-                    "    },\n" +
-                    "    {\n" +
-                    "      \"id\": 2,\n" +
-                    "      \"name\": \"NIKE\"\n" +
-                    "    }\n" +
+                    "    \"Nike\",\n" +
+                    "    \"Puma\"\n" +
                     "  ]\n" +
                     "}";
 
             List<BaseExpr> exprJson = new ArrayList<>();
             exprJson.add(objectMapper.readValue(json, BaseExpr.class));
             String actualResult = RuleExprConverter.convertJsonExprToString(exprJson);
-            String expectedResult = "((brand == \"brandOfSeedProduct\") || (brand == \"brandOfPage\") || (brand == \"ALEX\") || (brand == \"NIKE\"))";
+            String expectedResult = "((brand == \"Nike\") || (brand == \"Puma\"))";
             assertEquals(expectedResult, actualResult);
         }
 

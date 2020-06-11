@@ -7,7 +7,6 @@ import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.rule.expression.BaseExpr;
 import com.zone24x7.rac.configservice.rule.expression.brand.BrandExpr;
-import com.zone24x7.rac.configservice.rule.expression.brand.BrandValue;
 import com.zone24x7.rac.configservice.rule.expression.price.PriceExpr;
 import com.zone24x7.rac.configservice.rule.expression.price.PriceValue;
 import com.zone24x7.rac.configservice.util.CSResponse;
@@ -20,13 +19,32 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ACTION_CONDITION_JSON_CANNOT_BE_EMPTY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ACTION_CONDITION_JSON_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ADDED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_MATCHING_CONDITION_JSON_CANNOT_BE_EMPTY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_MATCHING_CONDITION_JSON_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_NAME_CANNOT_BE_EMPTY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_NAME_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_TYPE_CANNOT_BE_EMPTY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_TYPE_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_TYPE_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class RuleServiceTest {
@@ -114,18 +132,18 @@ public class RuleServiceTest {
 
             // Mock
             Rule rule = new Rule("Rule 1", "BOOST", true, "(brand == \"1 by 8\")",
-                                 "[{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[{\"id\":6,\"name\":\"1 by 8\"}]}]",
+                                 "[{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[\"1 by 8\"]}]",
                                  "(brand == \"Nike\")",
-                                 "[{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[{\"id\":1,\"name\":\"Nike\"}]}]");
+                                 "[{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[\"Nike\"]}]");
             rule.setId(1);
             when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
 
             // Expected
             String expected = "{\"id\":1,\"name\":\"Rule 1\",\"type\":\"BOOST\",\"isGlobal\":true,\"matchingCondition\"" +
                     ":\"(brand == \\\"1 by 8\\\")\",\"matchingConditionJson\":[{\"type\":\"Brand\",\"condition\":\"AND\"" +
-                    ",\"value\":[{\"id\":6,\"name\":\"1 by 8\"}]}],\"actionCondition\":\"(brand == \\\"Nike\\\")\"," +
-                    "\"actionConditionJson\":[{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[{\"id\":1,\"name\":" +
-                    "\"Nike\"}]}]}";
+                    ",\"value\":[\"1 by 8\"]}],\"actionCondition\":\"(brand == \\\"Nike\\\")\"," +
+                    "\"actionConditionJson\":[{\"type\":\"Brand\",\"condition\":\"AND\",\"value\":[" +
+                    "\"Nike\"]}]}";
 
             // Actual
             RuleDetail actualRuleDetail = ruleService.getRule(rule.getId());
@@ -330,15 +348,10 @@ public class RuleServiceTest {
             CSResponse expected = new CSResponse(SUCCESS, RULE_ADDED_SUCCESSFULLY);
 
             // Matching condition json.
-            BrandValue brandValue = new BrandValue(1, "Nike");
-
-            List<BrandValue> value = new ArrayList<>();
-            value.add(brandValue);
-
             BrandExpr matching = new BrandExpr();
             matching.setType("Brand");
             matching.setCondition("AND");
-            matching.setValue(value);
+            matching.setValue(Collections.singletonList("Nike"));
 
             List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(matching);
