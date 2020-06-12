@@ -147,4 +147,68 @@ public class RuleControllerTest {
         // Assert
         assertEquals(expected, actual);
     }
+
+    /**
+     * Unit test for edit rule.
+     *
+     * @throws Exception Exceptions to throw
+     */
+    @Test
+    void editRule() throws Exception {
+
+        // Mock
+        CSResponse csResponse = new CSResponse(SUCCESS, RULE_UPDATED_SUCCESSFULLY);
+        Mockito.when(ruleService.editRule(anyInt(), any())).thenReturn(csResponse);
+
+        // Expected
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        String ruleJson = "{\n" +
+                "  \"name\": \"Test Rule 1 \",\n" +
+                "  \"type\": \"BOOST\",\n" +
+                "  \"isGlobal\": false,\n" +
+                "  \"matchingCondition\": \"\",\n" +
+                "  \"matchingConditionJson\": [\n" +
+                "    {\n" +
+                "      \"type\": \"Brand\",\n" +
+                "      \"condition\": \"AND\",\n" +
+                "      \"value\": [\n" +
+                "        \"Nike\",\n" +
+                "        \"Puma\"\n" +
+                "      ]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"type\": \"ProductNumber\",\n" +
+                "      \"condition\": \"AND\",\n" +
+                "      \"value\": [\n" +
+                "        \"244\"\n" +
+                "      ]\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"actionCondition\": \"\",\n" +
+                "  \"actionConditionJson\": [\n" +
+                "    {\n" +
+                "      \"type\": \"Price\",\n" +
+                "      \"condition\": \"AND\",\n" +
+                "      \"value\": {\n" +
+                "        \"operator\": \"eq\",\n" +
+                "        \"price\": 53.0\n" +
+                "      }\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put("/v1/rules/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(ruleJson);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 }
