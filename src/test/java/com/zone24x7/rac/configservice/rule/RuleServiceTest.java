@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
+import com.zone24x7.rac.configservice.recslot.RecSlotRule;
+import com.zone24x7.rac.configservice.recslot.RecSlotRuleRepository;
 import com.zone24x7.rac.configservice.rule.expression.BaseExpr;
 import com.zone24x7.rac.configservice.rule.expression.brand.BrandExpr;
 import com.zone24x7.rac.configservice.rule.expression.price.PriceExpr;
@@ -23,15 +25,30 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ACTION_CONDITION_JSON_CANNOT_BE_EMPTY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ACTION_CONDITION_JSON_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ADDED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_MATCHING_CONDITION_JSON_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_NAME_CANNOT_BE_EMPTY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_NAME_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_TYPE_CANNOT_BE_EMPTY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_TYPE_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_TYPE_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_UPDATED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class RuleServiceTest {
@@ -41,6 +58,9 @@ public class RuleServiceTest {
 
     @Mock
     private RuleRepository ruleRepository;
+
+    @Mock
+    private RecSlotRuleRepository recSlotRuleRepository;
 
     @Mock
     private ObjectMapper objectMapper;
@@ -55,7 +75,8 @@ public class RuleServiceTest {
         // Expected
         List<RuleDetail> ruleDetails = new ArrayList<>();
         ruleDetails.add(new RuleDetail());
-        RuleList expected = new RuleList(ruleDetails);
+        RuleList expected = new RuleList();
+        expected.setRules(ruleDetails);
 
         // Mock
         List<Rule> rules = new ArrayList<>();
@@ -126,15 +147,22 @@ public class RuleServiceTest {
             when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
 
             // Expected
-            String expected = "{\"id\":1,\"name\":\"Rule 1\",\"type\":\"BOOST\",\"isGlobal\":true,\"matchingCondition\"" +
-                    ":\"(brand == \\\"1 by 8\\\")\",\"matchingConditionJson\":[{\"type\":\"Brand\",\"condition\":\"AND\"" +
-                    ",\"operator\":\"eq\",\"value\":[\"1 by 8\"]}],\"actionCondition\":\"(brand == \\\"Nike\\\")\"," +
-                    "\"actionConditionJson\":[{\"type\":\"Brand\",\"condition\":\"AND\",\"operator\":\"eq\",\"value\":[" +
-                    "\"Nike\"]}]}";
+            RuleDetail ruleDetail = new RuleDetail();
+            ruleDetail.setId(rule.getId());
+            ruleDetail.setName(rule.getName());
+            ruleDetail.setType(rule.getType());
+            ruleDetail.setIsGlobal(rule.getIsGlobal());
+            ruleDetail.setMatchingCondition(rule.getMatchingCondition());
+            ruleDetail.setMatchingConditionJson(rule.getMatchingConditionJsonAsList());
+            ruleDetail.setActionCondition(rule.getActionCondition());
+            ruleDetail.setActionConditionJson(rule.getActionConditionJsonAsList());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String expected = objectMapper.writeValueAsString(ruleDetail);
+
 
             // Actual
             RuleDetail actualRuleDetail = ruleService.getRule(rule.getId());
-            ObjectMapper objectMapper = new ObjectMapper();
             String actual = objectMapper.writeValueAsString(actualRuleDetail);
 
             // Assert
@@ -361,7 +389,6 @@ public class RuleServiceTest {
         void testEditRuleForNegativeRuleID() {
 
             ValidationException validationException = assertThrows(ValidationException.class, () ->
-
                     ruleService.editRule(-1, new RuleDetail())
             );
 
@@ -377,7 +404,6 @@ public class RuleServiceTest {
         void testEditRuleForInvalidRuleID() {
 
             ValidationException validationException = assertThrows(ValidationException.class, () ->
-
                     ruleService.editRule(1, new RuleDetail())
             );
 
@@ -432,5 +458,104 @@ public class RuleServiceTest {
             verify(ruleRepository, times(1)).save(any());
             verify(recEngineService, times(1)).updateRuleConfig();
         }
+    }
+
+
+
+
+
+
+
+
+    @Nested
+    @DisplayName("delete rule method")
+    class DeleteRule {
+
+
+        @Test
+        @DisplayName("test for negative rule id")
+        void testDeleteRuleForNegativeRuleId() {
+            ValidationException validationException = assertThrows(ValidationException.class, () -> ruleService.deleteRule(-1));
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_ID_INVALID, actual);
+
+        }
+
+
+        @Test
+        @DisplayName("test for invalid rule id")
+        void testDeleteRuleForInvalidRuleId() {
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                when(ruleRepository.findById(anyInt())).thenReturn(Optional.empty());
+                ruleService.deleteRule(99999);
+            });
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_ID_INVALID, actual);
+
+        }
+
+
+        @Test
+        @DisplayName("test for correct rule id")
+        void testDeleteRuleForCorrectRuleId() throws ValidationException {
+
+            // Expected
+            CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.RULE_DELETED_SUCCESSFULLY);
+
+            // Mock
+            Rule rule = new Rule();
+            rule.setId(1);
+            rule.setName("test");
+            rule.setType("BOOST");
+            rule.setIsGlobal(false);
+            rule.setMatchingCondition("");
+            rule.setMatchingConditionJson("");
+            rule.setActionCondition("");
+            rule.setActionConditionJson("");
+
+            // Assert rule get methods.
+            assertEquals(1, rule.getId());
+            assertEquals("test", rule.getName());
+            assertEquals("BOOST", rule.getType());
+            assertFalse(rule.getIsGlobal());
+            assertEquals("", rule.getMatchingCondition());
+            assertEquals("", rule.getMatchingConditionJson());
+            assertEquals("", rule.getActionCondition());
+            assertEquals("", rule.getActionConditionJson());
+
+            // Mock repository methods.
+            when(ruleRepository.findById(rule.getId())).thenReturn(Optional.of(rule));
+            List<RecSlotRule> recSlotRules = new ArrayList<>();
+            recSlotRules.add(new RecSlotRule(1, rule.getId()));
+            when(recSlotRuleRepository.findAllByRuleID(rule.getId())).thenReturn(recSlotRules);
+            recSlotRuleRepository.deleteAll(recSlotRules);
+
+            // Verify deleteAll method is actually called.
+            verify(recSlotRuleRepository, times(1)).deleteAll(recSlotRules);
+
+            // Call deleteById method.
+            ruleRepository.deleteById(rule.getId());
+
+            // Verify deleteById method is actually called.
+            verify(ruleRepository, times(1)).deleteById(rule.getId());
+
+            // Actual
+            CSResponse actual = ruleService.deleteRule(rule.getId());
+
+            // Assert
+            assertEquals(expected.getStatus(), actual.getStatus());
+            assertEquals(expected.getCode(), actual.getCode());
+            assertEquals(expected.getMessage(), actual.getMessage());
+
+        }
+
     }
 }

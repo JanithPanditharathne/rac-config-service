@@ -64,4 +64,17 @@ public class RuleController {
     public CSResponse editRule(@PathVariable int id, @RequestBody RuleDetail ruleDetail) throws ValidationException, JsonProcessingException, ServerException {
         return ruleService.editRule(id, ruleDetail);
     }
+
+
+    /**
+     * Delete rule.
+     *
+     * @param id rule id to delete.
+     * @return status response.
+     * @throws ValidationException for invalid rule id.
+     */
+    @DeleteMapping("/rules/{id}")
+    public CSResponse deleteRule(@PathVariable int id) throws ValidationException {
+        return ruleService.deleteRule(id);
+    }
 }

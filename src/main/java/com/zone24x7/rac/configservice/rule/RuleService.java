@@ -4,8 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
+import com.zone24x7.rac.configservice.recslot.RecSlotRule;
+import com.zone24x7.rac.configservice.recslot.RecSlotRuleRepository;
 import com.zone24x7.rac.configservice.rule.expression.RuleExprConverter;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +19,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ADDED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_DELETED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_UPDATED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 
 @Service
 public class RuleService {
 
     @Autowired
     private RuleRepository ruleRepository;
+
+    @Autowired
+    private RecSlotRuleRepository recSlotRuleRepository;
 
     @Autowired
     @Lazy
@@ -181,6 +191,40 @@ public class RuleService {
         // Validate action condition json.
         RuleValidations.validateActionConditionJson(ruleDetail.getActionConditionJson());
 
+    }
+
+
+    /**
+     * Delete rule.
+     *
+     * @param id rule id to delete.
+     * @return status response.
+     * @throws ValidationException for invalid rule id.
+     */
+    public CSResponse deleteRule(int id) throws ValidationException {
+
+        // Validate rule id.
+        RuleValidations.validateID(id);
+
+        // Validate rule id is already exists.
+        Optional<Rule> optionalRule = ruleRepository.findById(id);
+        if(!optionalRule.isPresent()) {
+            throw new ValidationException(Strings.RULE_ID_INVALID);
+        }
+
+        // Check rule id already use in rec_slots-rule association table.
+        // If so, delete all records from rec_slots-rule association table.
+        List<RecSlotRule> recSlotRules = recSlotRuleRepository.findAllByRuleID(id);
+        if (!recSlotRules.isEmpty()) {
+            recSlotRuleRepository.deleteAll(recSlotRules);
+        }
+
+        // Delete the rule.
+        ruleRepository.deleteById(id);
+
+
+        // Return status.
+        return new CSResponse(SUCCESS, RULE_DELETED_SUCCESSFULLY);
     }
 }
 

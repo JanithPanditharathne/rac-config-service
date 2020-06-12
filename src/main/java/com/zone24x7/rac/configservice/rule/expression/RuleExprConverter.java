@@ -15,12 +15,8 @@ public final class RuleExprConverter {
     private static final String OPERATOR_OR = " || ";
     private static final Integer OPERATOR_CHAR_COUNT = 4;
 
-    /**
-     * Private constructor.
-     *
-     */
+
     private RuleExprConverter() {
-        throw new IllegalStateException("RuleExprConverter");
     }
 
     /**

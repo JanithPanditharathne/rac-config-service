@@ -7,12 +7,6 @@ import java.util.List;
 
 @Repository
 public interface RecSlotRuleRepository extends JpaRepository<RecSlotRule, Integer> {
-
-    /**
-     * Get all rec slot rule associations by rec slot id.
-     *
-     * @param recSlotID Rec slot id
-     * @return          List of RecSlotRule
-     */
-    List<RecSlotRule> findAllByRecSlotID(int recSlotID);
+    List<RecSlotRule> findAllByRecSlotID(int id);
+    List<RecSlotRule> findAllByRuleID(int id);
 }

@@ -211,4 +211,35 @@ public class RuleControllerTest {
         // Assert
         assertEquals(expected, actual);
     }
+
+
+
+
+    /**
+     * Unit test for delete rule.
+     *
+     * @throws Exception Exceptions to throw
+     */
+    @Test
+    void deleteRule() throws Exception {
+
+        // Mock
+        CSResponse csResponse = new CSResponse(SUCCESS, RULE_DELETED_SUCCESSFULLY);
+        Mockito.when(ruleService.deleteRule(anyInt())).thenReturn(csResponse);
+
+        // Expected
+        ObjectMapper objectMapper = new ObjectMapper();
+        String expected = objectMapper.writeValueAsString(csResponse);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete("/v1/rules/1")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 }
