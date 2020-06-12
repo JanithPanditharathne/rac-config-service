@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.zone24x7.rac</groupId>
-    <artifactId>rac-config-service</artifactId>
+    <artifactId>config-service</artifactId>
     <version>1.0.0</version>
-    <name>rac-config-service</name>
-    <description>Configuration Service Microservice for RAC (Spring Boot Application)</description>
+    <name>config-service</name>
+    <description>Configuration Service</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -134,6 +134,43 @@
                     </execution>
                 </executions>
             </plugin>
+
+
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>generateSources</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <exec executable="scripts/package/package.sh">
+                                    <!-- Following are the args to the script. Order SHOULD NOT be changed
+                                     ARG 1 - Target directory
+                                     ARG 2 - Artifact id
+                                     ARG 3 - Artifact version
+                                     ARG 4 - Package type - values should be "zip" or "tar.gz" -->
+                                    <arg value="${project.build.directory}" />
+                                    <arg value="${project.artifactId}" />
+                                    <arg value="${project.version}" />
+                                    <arg value="zip" />
+                                </exec>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+
+
 
 
         </plugins>
