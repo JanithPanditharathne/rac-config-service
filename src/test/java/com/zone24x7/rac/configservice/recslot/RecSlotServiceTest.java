@@ -90,6 +90,10 @@ public class RecSlotServiceTest {
         Rule rule = mock(Rule.class);
         when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
 
+        List<Rule> ruleList = new ArrayList<>();
+        ruleList.add(rule);
+        when(ruleRepository.findAllByIsGlobal(true)).thenReturn(ruleList);
+
         RecSlotRecDetail recSlotRec = new RecSlotRecDetail();
         when(modelMapper.map(any(), any())).thenReturn(recSlotRec);
 
@@ -113,6 +117,22 @@ public class RecSlotServiceTest {
 
                     // Get bundle.
                     recSlotService.getRecSlot(1));
+
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(Strings.REC_SLOT_ID_INVALID, actual);
+        }
+
+        @Test
+        @DisplayName("test for negative rec id")
+        void testGetRecSlotForNegativeRecSlotID() {
+
+            // Actual
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    // Get bundle.
+                    recSlotService.getRecSlot(-1));
 
             String actual = validationException.getMessage();
 

@@ -100,17 +100,5 @@ public class RuleExprConverterTest {
             String expectedResult = "(regularPrice == 23.45)";
             assertEquals(expectedResult, actualResult);
         }
-
-
-
-
-
-
-
     }
-
-
-
-
-
 }

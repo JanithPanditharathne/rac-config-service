@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @WebMvcTest(value = RecEngineController.class)
 class RecEngineControllerTest {
@@ -50,9 +52,7 @@ class RecEngineControllerTest {
 
         // Assert
         assertEquals(expected, actual);
-
     }
-
 
     @Test
     void getRuleConfig() throws Exception {
@@ -119,7 +119,27 @@ class RecEngineControllerTest {
 
         // Assert
         assertEquals(expected, actual);
+    }
 
+    @Test
+    void updateAllConfigs() throws Exception {
+
+        // Expected
+        String expected = "{\"status\":\"SUCCESS\",\"code\":\"CS-7000\",\"message\":\"Rec engine config update process started\"}";
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put("/v1/rec-engine/update/all")
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected, actual);
+        verify(recEngineService, times(1)).updateBundleConfig();
+        verify(recEngineService, times(1)).updateRuleConfig();
+        verify(recEngineService, times(1)).updateRecConfig();
+        verify(recEngineService, times(1)).updateRecSlotConfig();
     }
 
 

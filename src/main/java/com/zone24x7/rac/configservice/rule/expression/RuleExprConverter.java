@@ -228,7 +228,7 @@ public final class RuleExprConverter {
      */
     private static String joinStringList(List<String> list, String delimiter) {
         StringBuilder stringBuilder = new StringBuilder();
-        if(list.size() == 1) {
+        if (list.size() == 1) {
             stringBuilder.append(list.get(0));
 
         } else {
@@ -275,11 +275,5 @@ public final class RuleExprConverter {
 
         // Return result.
         return map.get(sign);
-
     }
-
-
-
-
-
 }

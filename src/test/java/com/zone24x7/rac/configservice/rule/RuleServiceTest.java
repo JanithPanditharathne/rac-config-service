@@ -8,6 +8,7 @@ import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.recslot.RecSlotRule;
 import com.zone24x7.rac.configservice.recslot.RecSlotRuleRepository;
 import com.zone24x7.rac.configservice.rule.expression.BaseExpr;
+import com.zone24x7.rac.configservice.rule.expression.brand.BrandExpr;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -540,9 +542,13 @@ public class RuleServiceTest {
             CSResponse expected = new CSResponse(SUCCESS, RULE_ADDED_SUCCESSFULLY);
 
             // Matching condition json.
-            BaseExpr matching = new BaseExpr();
+            BrandExpr matching = new BrandExpr();
             matching.setCondition(AND);
             matching.setOperator(EQ);
+            matching.setType(BRAND);
+
+            String[] brands = {"ALEX"};
+            matching.setValue(Arrays.asList(brands));
 
             List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(matching);

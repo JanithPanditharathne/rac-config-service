@@ -99,6 +99,22 @@ public class RecServiceTest {
         }
 
         @Test
+        @DisplayName("test for negative rec id")
+        void testGetRecForNegativeRecID() {
+
+            ValidationException validationException = assertThrows(ValidationException.class, () -> recService.getRec(-100));
+
+            // Expected
+            String expected = Strings.REC_ID_INVALID;
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+        @Test
         @DisplayName("test for valid rec id")
         void testGetRecForValidRecID() throws Exception {
 
