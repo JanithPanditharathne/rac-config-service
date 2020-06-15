@@ -8,9 +8,6 @@ import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.recslot.RecSlotRule;
 import com.zone24x7.rac.configservice.recslot.RecSlotRuleRepository;
 import com.zone24x7.rac.configservice.rule.expression.BaseExpr;
-import com.zone24x7.rac.configservice.rule.expression.brand.BrandExpr;
-import com.zone24x7.rac.configservice.rule.expression.price.PriceExpr;
-import com.zone24x7.rac.configservice.rule.expression.price.PriceValue;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.DisplayName;
@@ -21,34 +18,13 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.RULE_ACTION_CONDITION_JSON_CANNOT_BE_EMPTY;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_ACTION_CONDITION_JSON_CANNOT_BE_NULL;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_ADDED_SUCCESSFULLY;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_ID_INVALID;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_MATCHING_CONDITION_JSON_CANNOT_BE_NULL;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_NAME_CANNOT_BE_EMPTY;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_NAME_CANNOT_BE_NULL;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_TYPE_CANNOT_BE_EMPTY;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_TYPE_CANNOT_BE_NULL;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_TYPE_INVALID;
-import static com.zone24x7.rac.configservice.util.Strings.RULE_UPDATED_SUCCESSFULLY;
-import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static com.zone24x7.rac.configservice.util.Strings.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class RuleServiceTest {
@@ -292,15 +268,105 @@ public class RuleServiceTest {
             assertEquals(RULE_MATCHING_CONDITION_JSON_CANNOT_BE_NULL, actual);
         }
 
+        @Test
+        @DisplayName("test for missing condition of matching condition json")
+        void testAddRuleForMissingConditionOfMatchingConditionJson() {
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
+            matchingConditionJson.add(new BaseExpr());
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       matchingConditionJson, null, null))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_MATCHING_CONDITION_JSON_CONDITION_VALUE_CANNOT_BE_NULL, actual);
+        }
+
+        @Test
+        @DisplayName("test for invalid condition value of matching condition json")
+        void testAddRuleForInvalidConditionValueOfMatchingConditionJson() {
+
+            BaseExpr baseExpr = new BaseExpr();
+            baseExpr.setCondition("Test");
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
+            matchingConditionJson.add(baseExpr);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       matchingConditionJson, null, null))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_MATCHING_CONDITION_JSON_CONDITION_VALUE_INVALID, actual);
+        }
+
+        @Test
+        @DisplayName("test for missing operator of matching condition json")
+        void testAddRuleForMissingOperatorOfMatchingConditionJson() {
+
+            BaseExpr baseExpr = new BaseExpr();
+            baseExpr.setCondition(AND);
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
+            matchingConditionJson.add(baseExpr);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       matchingConditionJson, null, null))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_MATCHING_CONDITION_JSON_OPERATOR_VALUE_CANNOT_BE_NULL, actual);
+        }
+
+        @Test
+        @DisplayName("test for invalid operator value of matching condition json")
+        void testAddRuleForInvalidOperatorValueOfMatchingConditionJson() {
+
+            BaseExpr baseExpr = new BaseExpr();
+            baseExpr.setCondition(AND);
+            baseExpr.setOperator("Test");
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
+            matchingConditionJson.add(baseExpr);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       matchingConditionJson, null, null))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_MATCHING_CONDITION_JSON_OPERATOR_VALUE_INVALID, actual);
+        }
 
         @Test
         @DisplayName("test for missing rule action condition json")
         void testAddRuleForMissingRuleActionConditionJson() {
 
-            List<BaseExpr> matchingConditionJson = new ArrayList<>();
             BaseExpr baseExpr = new BaseExpr();
-            baseExpr.setType("Brand");
-            baseExpr.setType("AND");
+            baseExpr.setCondition(AND);
+            baseExpr.setOperator(EQ);
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(baseExpr);
 
             ValidationException validationException = assertThrows(ValidationException.class, () ->
@@ -320,10 +386,11 @@ public class RuleServiceTest {
         @DisplayName("test for empty rule action condition json")
         void testAddRuleForEmptyRuleActionConditionJson() {
 
-            List<BaseExpr> matchingConditionJson = new ArrayList<>();
             BaseExpr baseExpr = new BaseExpr();
-            baseExpr.setType("Brand");
-            baseExpr.setType("AND");
+            baseExpr.setCondition(AND);
+            baseExpr.setOperator(EQ);
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(baseExpr);
 
             ValidationException validationException = assertThrows(ValidationException.class, () ->
@@ -340,6 +407,132 @@ public class RuleServiceTest {
         }
 
         @Test
+        @DisplayName("test for missing condition of rule action condition json")
+        void testAddRuleForMissingConditionOfRuleActionConditionJson() {
+
+            // Matching condition json.
+            BaseExpr baseExpr = new BaseExpr();
+            baseExpr.setCondition(AND);
+            baseExpr.setOperator(EQ);
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
+            matchingConditionJson.add(baseExpr);
+
+            // Action condition json.
+            List<BaseExpr> actionConditionJson = new ArrayList<>();
+            actionConditionJson.add(new BaseExpr());
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       matchingConditionJson, null, actionConditionJson))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_ACTION_CONDITION_JSON_CONDITION_VALUE_CANNOT_BE_NULL, actual);
+        }
+
+        @Test
+        @DisplayName("test for invalid condition value of rule action condition json")
+        void testAddRuleForInvalidConditionValueOfRuleActionConditionJson() {
+
+            // Matching condition json.
+            BaseExpr matching = new BaseExpr();
+            matching.setCondition(AND);
+            matching.setOperator(EQ);
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
+            matchingConditionJson.add(matching);
+
+            // Action condition json.
+            BaseExpr action = new BaseExpr();
+            action.setCondition("Test");
+
+            List<BaseExpr> actionConditionJson = new ArrayList<>();
+            actionConditionJson.add(action);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       matchingConditionJson, null, actionConditionJson))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_ACTION_CONDITION_JSON_CONDITION_VALUE_INVALID, actual);
+        }
+
+        @Test
+        @DisplayName("test for missing operator of rule action condition json")
+        void testAddRuleForMissingOperatorOfRuleActionConditionJson() {
+
+            // Matching condition json.
+            BaseExpr matching = new BaseExpr();
+            matching.setCondition(AND);
+            matching.setOperator(EQ);
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
+            matchingConditionJson.add(matching);
+
+            // Action condition json.
+            BaseExpr action = new BaseExpr();
+            action.setCondition(OR);
+
+            List<BaseExpr> actionConditionJson = new ArrayList<>();
+            actionConditionJson.add(action);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       matchingConditionJson, null, actionConditionJson))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_ACTION_CONDITION_JSON_OPERATOR_VALUE_CANNOT_BE_NULL, actual);
+        }
+
+        @Test
+        @DisplayName("test for invalid operator value of rule action condition json")
+        void testAddRuleForInvalidOperatorValueOfRuleActionConditionJson() {
+
+            // Matching condition json.
+            BaseExpr matching = new BaseExpr();
+            matching.setCondition(AND);
+            matching.setOperator(EQ);
+
+            List<BaseExpr> matchingConditionJson = new ArrayList<>();
+            matchingConditionJson.add(matching);
+
+            // Action condition json.
+            BaseExpr action = new BaseExpr();
+            action.setCondition(OR);
+            action.setOperator("Test");
+
+            List<BaseExpr> actionConditionJson = new ArrayList<>();
+            actionConditionJson.add(action);
+
+            ValidationException validationException = assertThrows(ValidationException.class, () ->
+
+                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
+                                                       matchingConditionJson, null, actionConditionJson))
+            );
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(RULE_ACTION_CONDITION_JSON_OPERATOR_VALUE_INVALID, actual);
+        }
+
+        @Test
         @DisplayName("test for correct values")
         void testAddRuleForCorrectValues() throws JsonProcessingException, ServerException, ValidationException {
 
@@ -347,21 +540,17 @@ public class RuleServiceTest {
             CSResponse expected = new CSResponse(SUCCESS, RULE_ADDED_SUCCESSFULLY);
 
             // Matching condition json.
-            BrandExpr matching = new BrandExpr();
-            matching.setType("Brand");
-            matching.setCondition("AND");
-            matching.setValue(Collections.singletonList("Nike"));
+            BaseExpr matching = new BaseExpr();
+            matching.setCondition(AND);
+            matching.setOperator(EQ);
 
             List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(matching);
 
             // Action condition json.
-            PriceValue priceValue = new PriceValue(34.0);
-
-            PriceExpr action = new PriceExpr();
-            action.setType("Price");
-            action.setCondition("OR");
-            action.setValue(priceValue);
+            BaseExpr action = new BaseExpr();
+            action.setCondition(OR);
+            action.setOperator(EQ);
 
             List<BaseExpr> actionConditionJson = new ArrayList<>();
             actionConditionJson.add(action);
@@ -426,21 +615,17 @@ public class RuleServiceTest {
             when(ruleRepository.findById(anyInt())).thenReturn(Optional.of(rule));
 
             // Matching condition json.
-            BrandExpr matching = new BrandExpr();
-            matching.setType("Brand");
-            matching.setCondition("AND");
-            matching.setValue(Collections.singletonList("Nike"));
+            BaseExpr matching = new BaseExpr();
+            matching.setCondition(AND);
+            matching.setOperator(EQ);
 
             List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(matching);
 
             // Action condition json.
-            PriceValue priceValue = new PriceValue(34.0);
-
-            PriceExpr action = new PriceExpr();
-            action.setType("Price");
-            action.setCondition("OR");
-            action.setValue(priceValue);
+            BaseExpr action = new BaseExpr();
+            action.setCondition(OR);
+            action.setOperator(EQ);
 
             List<BaseExpr> actionConditionJson = new ArrayList<>();
             actionConditionJson.add(action);
