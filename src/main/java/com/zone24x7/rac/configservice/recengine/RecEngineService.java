@@ -260,7 +260,7 @@ public class RecEngineService {
     public void updateRecSlotConfig() throws ServerException {
 
         // Get all rec slots.
-        RecSlotList allRecSlots = recSlotService.getAllRecSlots();
+        RecSlotList allRecSlots = recSlotService.getAllRecSlots(true);
 
         // Rec slot list for rec engine.
         List<RecEngineRecSlot> recSlotList = new ArrayList<>();

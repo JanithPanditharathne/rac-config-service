@@ -47,7 +47,7 @@ public class RecSlotService {
      *
      * @return Rec slots
      */
-    public RecSlotList getAllRecSlots() {
+    public RecSlotList getAllRecSlots(boolean isRecEngineUpdate) {
 
         // Retrieve all rec slots.
         List<RecSlot> allRecSlots = recSlotRepository.findAllByOrderByIdDesc();
@@ -56,7 +56,7 @@ public class RecSlotService {
         List<RecSlotDetail> recSlotDetailList = new ArrayList<>();
 
         // Get detail for each rec slot.
-        allRecSlots.forEach(recSlot -> recSlotDetailList.add(getRecSlotDetail(recSlot)));
+        allRecSlots.forEach(recSlot -> recSlotDetailList.add(getRecSlotDetail(recSlot, isRecEngineUpdate)));
 
         // Return list.
         return new RecSlotList(recSlotDetailList);
@@ -82,7 +82,7 @@ public class RecSlotService {
         }
 
         // Return rec slot detail.
-        return getRecSlotDetail(recSlotOptional.get());
+        return getRecSlotDetail(recSlotOptional.get(), false);
     }
 
     /**
@@ -91,7 +91,7 @@ public class RecSlotService {
      * @param recSlot Rec slot
      * @return Rec slot detail
      */
-    private RecSlotDetail getRecSlotDetail(RecSlot recSlot) {
+    private RecSlotDetail getRecSlotDetail(RecSlot recSlot, boolean isRecEngineUpdate) {
 
         // Get channel.
         Metadata channel = metadataRepository.findByTypeAndId(CHANNELS, recSlot.getChannelID());
@@ -116,6 +116,16 @@ public class RecSlotService {
             Optional<Rule> optionalRule = ruleRepository.findById(rsr.getRuleID());
             optionalRule.ifPresent(rule -> recSlotRuleDetails.add(new RecSlotRuleDetail(rsr.getRuleID(), rule.getName())));
         });
+
+        // Proceed if it's not a rec engine update.
+        if (!isRecEngineUpdate) {
+
+            // Get all global rules and add to rules list.
+            List<Rule> globalRulesList = ruleRepository.findAllByIsGlobal(true);
+            globalRulesList.forEach(globalRule ->
+                                            recSlotRuleDetails.add(new RecSlotRuleDetail(globalRule.getId(), globalRule.getName()))
+            );
+        }
 
         // Return rec slot detail.
         return new RecSlotDetail(recSlot.getId(), channel, page, placeholder, recSlotRecDetail, recSlotRuleDetails);

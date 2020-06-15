@@ -14,4 +14,12 @@ public interface RuleRepository extends JpaRepository<Rule, Integer> {
      * @return List of rules
      */
     List<Rule> findAllByOrderByIdDesc();
+
+    /**
+     * Find all global rules.
+     *
+     * @param isGlobal Global index
+     * @return         List of rules
+     */
+    List<Rule> findAllByIsGlobal(Boolean isGlobal);
 }

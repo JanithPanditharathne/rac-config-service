@@ -94,7 +94,7 @@ public class RecSlotServiceTest {
         when(modelMapper.map(any(), any())).thenReturn(recSlotRec);
 
         // Actual
-        RecSlotList actual = recSlotService.getAllRecSlots();
+        RecSlotList actual = recSlotService.getAllRecSlots(false);
 
         // Assert
         assertEquals(recSlotsList.size(), actual.getRecSlots().size());

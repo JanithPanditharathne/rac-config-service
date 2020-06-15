@@ -17,8 +17,7 @@ import java.util.ArrayList;
 
 import static com.zone24x7.rac.configservice.util.Strings.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 
 @WebMvcTest(value = RecSlotController.class)
 public class RecSlotControllerTest {
@@ -39,7 +38,7 @@ public class RecSlotControllerTest {
 
         // Mock
         RecSlotList recSlotList = new RecSlotList(new ArrayList<>());
-        Mockito.when(recSlotService.getAllRecSlots()).thenReturn(recSlotList);
+        Mockito.when(recSlotService.getAllRecSlots(anyBoolean())).thenReturn(recSlotList);
 
         // Expected
         ObjectMapper objectMapper = new ObjectMapper();
