@@ -20,7 +20,7 @@ public class RecSlotController {
      */
     @GetMapping("/rec-slots")
     public RecSlotList getAllRecSlots() {
-        return recSlotService.getAllRecSlots(false);
+        return recSlotService.getAllRecSlots(true);
     }
 
     /**

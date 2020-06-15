@@ -21,5 +21,5 @@ public interface RuleRepository extends JpaRepository<Rule, Integer> {
      * @param isGlobal Global index
      * @return         List of rules
      */
-    List<Rule> findAllByIsGlobal(Boolean isGlobal);
+    List<Rule> findAllByIsGlobal(boolean isGlobal);
 }

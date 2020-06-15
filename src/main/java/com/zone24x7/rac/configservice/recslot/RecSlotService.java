@@ -47,16 +47,23 @@ public class RecSlotService {
      *
      * @return Rec slots
      */
-    public RecSlotList getAllRecSlots(boolean isRecEngineUpdate) {
+    public RecSlotList getAllRecSlots(boolean includeGlobalRules) {
 
         // Retrieve all rec slots.
         List<RecSlot> allRecSlots = recSlotRepository.findAllByOrderByIdDesc();
+
+        // If "includeGlobalRules" is true, then get all global rules.
+        List<RecSlotRuleDetail> globalRuleList = new ArrayList<>();
+        if (includeGlobalRules) {
+            globalRuleList = getGlobalRuleList();
+        }
 
         // Rec slot details.
         List<RecSlotDetail> recSlotDetailList = new ArrayList<>();
 
         // Get detail for each rec slot.
-        allRecSlots.forEach(recSlot -> recSlotDetailList.add(getRecSlotDetail(recSlot, isRecEngineUpdate)));
+        List<RecSlotRuleDetail> finalGlobalRuleList = globalRuleList;
+        allRecSlots.forEach(recSlot -> recSlotDetailList.add(getRecSlotDetail(recSlot, finalGlobalRuleList)));
 
         // Return list.
         return new RecSlotList(recSlotDetailList);
@@ -82,7 +89,20 @@ public class RecSlotService {
         }
 
         // Return rec slot detail.
-        return getRecSlotDetail(recSlotOptional.get(), false);
+        return getRecSlotDetail(recSlotOptional.get(), getGlobalRuleList());
+    }
+
+
+    /**
+     * Return global rule list.
+     *
+     * @return global rule list.
+     */
+    private List<RecSlotRuleDetail> getGlobalRuleList() {
+        List<RecSlotRuleDetail> globalRuleList = new ArrayList<>();
+        List<Rule> globalRules = ruleRepository.findAllByIsGlobal(true);
+        globalRules.forEach(gr -> globalRuleList.add(new RecSlotRuleDetail(gr.getId(), gr.getName())));
+        return globalRuleList;
     }
 
     /**
@@ -91,7 +111,7 @@ public class RecSlotService {
      * @param recSlot Rec slot
      * @return Rec slot detail
      */
-    private RecSlotDetail getRecSlotDetail(RecSlot recSlot, boolean isRecEngineUpdate) {
+    private RecSlotDetail getRecSlotDetail(RecSlot recSlot,  List<RecSlotRuleDetail> globalRuleList) {
 
         // Get channel.
         Metadata channel = metadataRepository.findByTypeAndId(CHANNELS, recSlot.getChannelID());
@@ -117,14 +137,9 @@ public class RecSlotService {
             optionalRule.ifPresent(rule -> recSlotRuleDetails.add(new RecSlotRuleDetail(rsr.getRuleID(), rule.getName())));
         });
 
-        // Proceed if it's not a rec engine update.
-        if (!isRecEngineUpdate) {
-
-            // Get all global rules and add to rules list.
-            List<Rule> globalRulesList = ruleRepository.findAllByIsGlobal(true);
-            globalRulesList.forEach(globalRule ->
-                                            recSlotRuleDetails.add(new RecSlotRuleDetail(globalRule.getId(), globalRule.getName()))
-            );
+        // Include global rules if available.
+        if (!globalRuleList.isEmpty()) {
+            recSlotRuleDetails.addAll(globalRuleList);
         }
 
         // Return rec slot detail.
