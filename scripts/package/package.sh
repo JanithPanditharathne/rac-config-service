@@ -89,8 +89,12 @@ cp scripts/package/config-service.sh "$PACKAGE_DIR/."
 cp src/main/resources/application.properties "$PACKAGE_DIR/conf/."
 cp src/main/resources/override.properties "$PACKAGE_DIR/conf/override.properties"
 
-
 echoOK "Content copy"
+
+# --------------------------------------------------------
+# Add artifact build version to application.properties file
+# --------------------------------------------------------
+printf "\n\n# ARTIFACT BUILD VERSION\ninfo.application.version=${ARTIFACT_VERSION}\n" >> "$PACKAGE_DIR/conf/application.properties"
 
 
 
