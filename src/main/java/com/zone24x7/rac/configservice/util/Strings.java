@@ -85,7 +85,14 @@ public final class Strings {
     public static final String RULE_ACTION_CONDITION_JSON_CANNOT_BE_NULL = "CS-3009:Rule action condition JSON cannot be null";
     public static final String RULE_ACTION_CONDITION_JSON_CANNOT_BE_EMPTY = "CS-3010:Rule action condition JSON cannot be empty";
     public static final String RULE_UPDATED_SUCCESSFULLY = "CS-3011:Rule updated successfully";
-
+    public static final String RULE_MATCHING_CONDITION_JSON_CONDITION_VALUE_CANNOT_BE_NULL = "CS-3012:Rule matching condition JSON condition value cannot be null";
+    public static final String RULE_MATCHING_CONDITION_JSON_CONDITION_VALUE_INVALID = "CS-3013:Rule matching condition JSON condition value invalid (value should be either AND or OR)";
+    public static final String RULE_MATCHING_CONDITION_JSON_OPERATOR_VALUE_CANNOT_BE_NULL = "CS-3014:Rule matching condition JSON operator value cannot be null";
+    public static final String RULE_MATCHING_CONDITION_JSON_OPERATOR_VALUE_INVALID = "CS-3015:Rule matching condition JSON operator value invalid (value should be either eq, eqic, lt, lteq, gt, or gteq)";
+    public static final String RULE_ACTION_CONDITION_JSON_CONDITION_VALUE_CANNOT_BE_NULL = "CS-3016:Rule action condition JSON condition value cannot be null";
+    public static final String RULE_ACTION_CONDITION_JSON_CONDITION_VALUE_INVALID = "CS-3017:Rule action condition JSON condition value invalid (value should be either AND or OR)";
+    public static final String RULE_ACTION_CONDITION_JSON_OPERATOR_VALUE_CANNOT_BE_NULL = "CS-3018:Rule action condition JSON operator value cannot be null";
+    public static final String RULE_ACTION_CONDITION_JSON_OPERATOR_VALUE_INVALID = "CS-3019:Rule action condition JSON operator value invalid (value should be either eq, eqic, lt, lteq, gt, or gteq)";
 
 
 

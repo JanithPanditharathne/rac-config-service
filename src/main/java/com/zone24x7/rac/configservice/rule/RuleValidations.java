@@ -14,6 +14,8 @@ import static com.zone24x7.rac.configservice.util.Strings.*;
 public final class RuleValidations {
 
     private static final Set<String> RULE_TYPES = new HashSet<>(Arrays.asList(BOOST, BURY, ONLY_RECOMMEND, DO_NOT_RECOMMEND));
+    private static final Set<String> CONDITIONS = new HashSet<>(Arrays.asList(AND, OR));
+    private static final Set<String> OPERATORS = new HashSet<>(Arrays.asList(EQ, EQIC, LT, LTEQ, GT, GTEQ));
 
     private RuleValidations() {
     }
@@ -87,9 +89,10 @@ public final class RuleValidations {
             throw new ValidationException(RULE_MATCHING_CONDITION_JSON_CANNOT_BE_NULL);
         }
 
-
-
-
+        // Validate each base expression.
+        for (BaseExpr baseExpr : baseExprs) {
+            validateMatchingConditionBaseExpr(baseExpr);
+        }
 
     }
 
@@ -111,5 +114,71 @@ public final class RuleValidations {
         if (baseExprs.isEmpty()) {
             throw new ValidationException(RULE_ACTION_CONDITION_JSON_CANNOT_BE_EMPTY);
         }
+
+        // Validate each base expression.
+        for (BaseExpr baseExpr : baseExprs) {
+            validateActionConditionBaseExpr(baseExpr);
+        }
     }
+
+
+    /**
+     * Validate matching condition base expression.
+     *
+     * @param baseExpr base expression.
+     * @throws ValidationException if validation fail.
+     */
+    private static void validateMatchingConditionBaseExpr(BaseExpr baseExpr) throws ValidationException {
+        // Validate condition for null.
+        if (baseExpr.getCondition() == null) {
+            throw new ValidationException(RULE_MATCHING_CONDITION_JSON_CONDITION_VALUE_CANNOT_BE_NULL);
+        }
+
+        // Validate for correct condition value.
+        if (!CONDITIONS.contains(baseExpr.getCondition())) {
+            throw new ValidationException(RULE_MATCHING_CONDITION_JSON_CONDITION_VALUE_INVALID);
+        }
+
+
+        // Validate operator for null.
+        if (baseExpr.getOperator() == null) {
+            throw new ValidationException(RULE_MATCHING_CONDITION_JSON_OPERATOR_VALUE_CANNOT_BE_NULL);
+        }
+
+        // Validate for correct condition value.
+        if (!OPERATORS.contains(baseExpr.getOperator())) {
+            throw new ValidationException(RULE_MATCHING_CONDITION_JSON_OPERATOR_VALUE_INVALID);
+        }
+    }
+
+
+    /**
+     * Validate action condition base expression.
+     *
+     * @param baseExpr base expression.
+     * @throws ValidationException if validation fail.
+     */
+    private static void validateActionConditionBaseExpr(BaseExpr baseExpr) throws ValidationException {
+        // Validate condition for null.
+        if (baseExpr.getCondition() == null) {
+            throw new ValidationException(RULE_ACTION_CONDITION_JSON_CONDITION_VALUE_CANNOT_BE_NULL);
+        }
+
+        // Validate for correct condition value.
+        if (!CONDITIONS.contains(baseExpr.getCondition())) {
+            throw new ValidationException(RULE_ACTION_CONDITION_JSON_CONDITION_VALUE_INVALID);
+        }
+
+
+        // Validate operator for null.
+        if (baseExpr.getOperator() == null) {
+            throw new ValidationException(RULE_ACTION_CONDITION_JSON_OPERATOR_VALUE_CANNOT_BE_NULL);
+        }
+
+        // Validate for correct condition value.
+        if (!OPERATORS.contains(baseExpr.getOperator())) {
+            throw new ValidationException(RULE_ACTION_CONDITION_JSON_OPERATOR_VALUE_INVALID);
+        }
+    }
+
 }
