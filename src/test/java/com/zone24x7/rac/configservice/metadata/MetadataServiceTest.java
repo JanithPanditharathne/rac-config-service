@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
@@ -30,6 +31,30 @@ class MetadataServiceTest {
 
     @InjectMocks
     private MetadataService metadataService;
+
+
+    @Nested
+    @DisplayName("get metadata types method")
+    class GetMetadataTypes {
+
+        @Test
+        @DisplayName("test for correct values")
+        void testGetMetadataTypesForCorrectValues() {
+
+            // Expected
+            List<String> expected = Collections.singletonList("brands");
+
+            // Setup repository method findDistinctTypes() return value.
+            when(metadataRepository.findDistinctTypes()).thenReturn(expected);
+
+            // Actual
+            List<String> actual = metadataService.getMetadataTypes();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+    }
 
 
     @Nested

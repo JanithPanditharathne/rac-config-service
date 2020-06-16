@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
@@ -32,11 +33,30 @@ class MetadataControllerTest {
 
 
 
-    /**
-     * Unit test when metadata by type.
-     *
-     * @throws Exception Exception to throw
-     */
+    @Test
+    void testGetMetadataTypes() throws Exception {
+
+        // Expected
+        List<String> expected = Collections.singletonList("\"brands\"");
+
+        // Mock
+        List<String> str = Collections.singletonList("brands");
+        Mockito.when(metadataService.getMetadataTypes()).thenReturn(str);
+
+        // Actual
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/v1/metadata/types")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        String actual = mvcResult.getResponse().getContentAsString();
+
+        // Assert
+        assertEquals(expected.toString(), actual);
+    }
+
+
+
     @Test
     void testGetMetadata() throws Exception {
 
@@ -49,7 +69,7 @@ class MetadataControllerTest {
 
         // Expected
         ObjectMapper objectMapper = new ObjectMapper();
-        String expected = objectMapper.writeValueAsString(metadataList).replace("metadata", "brands");
+        String expected = objectMapper.writeValueAsString(metadataList);
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders

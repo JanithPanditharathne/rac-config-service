@@ -28,6 +28,16 @@ public class MetadataService {
 
 
     /**
+     * Get metadata types.
+     *
+     * @return metadata type list.
+     */
+    public List<String> getMetadataTypes() {
+        return metadataRepository.findDistinctTypes();
+    }
+
+
+    /**
      * Add given metadata to the db.
      *
      * @param metadata metadata.
