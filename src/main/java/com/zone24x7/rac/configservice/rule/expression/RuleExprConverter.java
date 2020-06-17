@@ -1,6 +1,7 @@
 package com.zone24x7.rac.configservice.rule.expression;
 
 import com.zone24x7.rac.configservice.rule.expression.brand.BrandExpr;
+import com.zone24x7.rac.configservice.rule.expression.custom.CustomExpr;
 import com.zone24x7.rac.configservice.rule.expression.price.PriceExpr;
 import com.zone24x7.rac.configservice.rule.expression.productnumber.ProductNumberExpr;
 import com.zone24x7.rac.configservice.util.Strings;
@@ -14,6 +15,7 @@ public final class RuleExprConverter {
 
     private static final String OPERATOR_OR = " || ";
     private static final Integer OPERATOR_CHAR_COUNT = 4;
+
 
 
     private RuleExprConverter() {
@@ -83,6 +85,17 @@ public final class RuleExprConverter {
 
             // condition: "&&" or "||"
             exprString.append(condition);
+
+
+
+
+            // Type: custom.
+        } else if (Strings.CUSTOM.equals(exprType)) {
+
+            // Get brand expression.
+            exprString.append(getCustomExpression(baseExpr));
+
+
 
         }
 
@@ -207,6 +220,38 @@ public final class RuleExprConverter {
     }
 
 
+
+
+    /**
+     * Get custom expression.
+     * Eg: (assume custom type is "department")
+     * Single: (department == "AAA")
+     * Multiple: ((department == "AAA") || (department == "BBB") || (department == "CCC"))
+     *
+     * @param baseExpr rule expression.
+     * @return brand expression.
+     */
+    private static String getCustomExpression(BaseExpr baseExpr) {
+
+        StringBuilder exprString = new StringBuilder();
+        CustomExpr customExpr = (CustomExpr)baseExpr;
+
+        // Add values to the list.
+        List<String> values = new ArrayList<>();
+        customExpr.getValue().getValues().forEach(v -> values.add(getExpr(customExpr.getValue().getKey(), getOperatorSign(customExpr.getOperator()), v)));
+
+        if (!values.isEmpty()) {
+
+            // Join the list.
+            exprString.append(joinStringList(values, OPERATOR_OR));
+
+            // Add condition: "&&" or "||"
+            exprString.append(getConditionSymbol(baseExpr.getCondition()));
+
+        }
+
+        return exprString.toString();
+    }
 
 
 

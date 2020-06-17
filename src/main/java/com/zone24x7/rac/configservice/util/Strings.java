@@ -18,6 +18,7 @@ public final class Strings {
     public static final String BRAND = "Brand";
     public static final String PRODUCT_NUMBER = "ProductNumber";
     public static final String PRICE = "Price";
+    public static final String CUSTOM = "Custom";
     public static final String AND = "AND";
     public static final String OR = "OR";
     public static final String RE_BRAND = "brand";

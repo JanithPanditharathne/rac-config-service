@@ -100,5 +100,42 @@ public class RuleExprConverterTest {
             String expectedResult = "(regularPrice == 23.45)";
             assertEquals(expectedResult, actualResult);
         }
+
+
+
+        /**
+         * Test: rule expression converter for "Custom".
+         * @throws IOException while parsing JSON.
+         */
+        @Test
+        @DisplayName("test for custom")
+        public void testForCustom() throws IOException {
+            String json = "{\n" +
+                    "  \"type\": \"Custom\",\n" +
+                    "  \"condition\": \"AND\",\n" +
+                    "  \"operator\": \"eq\",\n" +
+                    "  \"value\": {\n" +
+                    "    \"key\": \"department\",\n" +
+                    "    \"values\": [\n" +
+                    "      \"Shoes\",\n" +
+                    "      \"Clothing\"\n" +
+                    "    ]\n" +
+                    "  }\n" +
+                    "}";
+
+            List<BaseExpr> exprJson = new ArrayList<>();
+            exprJson.add(objectMapper.readValue(json, BaseExpr.class));
+            String actualResult = RuleExprConverter.convertJsonExprToString(exprJson);
+            String expectedResult = "((department == \"Shoes\") || (department == \"Clothing\"))";
+            assertEquals(expectedResult, actualResult);
+        }
+
+
+
+
+
+
+
+
     }
 }

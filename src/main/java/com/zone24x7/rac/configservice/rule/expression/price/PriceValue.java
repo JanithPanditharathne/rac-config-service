@@ -5,10 +5,7 @@ public class PriceValue {
     private Double price;
 
     public PriceValue() {
-    }
-
-    public PriceValue(Double price) {
-        this.price = price;
+        // Constructor
     }
 
     public Double getPrice() {
