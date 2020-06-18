@@ -241,6 +241,17 @@ class AlgorithmServiceTest {
             assertEquals(expected.getStatus(), actual.getStatus());
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
+
+
+            // Assert cs response class.
+            CSResponse csResponse = new CSResponse();
+            csResponse.setStatus(Strings.SUCCESS);
+            csResponse.setCode("CS-000");
+            csResponse.setMessage("Test message");
+
+            assertEquals(Strings.SUCCESS, csResponse.getStatus());
+            assertEquals("CS-000", csResponse.getCode());
+            assertEquals("Test message", csResponse.getMessage());
         }
 
     }
