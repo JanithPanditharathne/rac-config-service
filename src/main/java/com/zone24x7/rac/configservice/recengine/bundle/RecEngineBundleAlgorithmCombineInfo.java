@@ -6,12 +6,9 @@ public class RecEngineBundleAlgorithmCombineInfo {
     private String combineDisplayText;
 
     public RecEngineBundleAlgorithmCombineInfo() {
+        // Constructor
     }
 
-    public RecEngineBundleAlgorithmCombineInfo(boolean enableCombine, String combineDisplayText) {
-        this.enableCombine = enableCombine;
-        this.combineDisplayText = combineDisplayText;
-    }
 
     public boolean isEnableCombine() {
         return enableCombine;

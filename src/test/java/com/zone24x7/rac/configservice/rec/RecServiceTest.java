@@ -140,11 +140,19 @@ public class RecServiceTest {
 
             // Assert
             assertEquals(expected, actual);
+
+
+            // Assert rec bundle get/set methods.
+            RecBundle recBundle = new RecBundle();
+            recBundle.setId(1);
+            recBundle.setName("Test");
+            assertEquals(1, recBundle.getId());
+            assertEquals("Test", recBundle.getName());
         }
 
         @Test
         @DisplayName("test for not found bundle details")
-        void testGetRecForNotFoundBundleDetails() throws Exception {
+        void testGetRecForNotFoundBundleDetails() {
 
             // Mock
             Rec rec = new Rec(1, "Test", 0);
