@@ -74,7 +74,7 @@ public class RuleController {
      * @throws ValidationException for invalid rule id.
      */
     @DeleteMapping("/rules/{id}")
-    public CSResponse deleteRule(@PathVariable int id) throws ValidationException {
+    public CSResponse deleteRule(@PathVariable int id) throws ValidationException, ServerException {
         return ruleService.deleteRule(id);
     }
 }

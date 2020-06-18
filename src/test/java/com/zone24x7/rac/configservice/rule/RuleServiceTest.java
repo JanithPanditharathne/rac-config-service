@@ -696,7 +696,7 @@ public class RuleServiceTest {
 
         @Test
         @DisplayName("test for correct rule id")
-        void testDeleteRuleForCorrectRuleId() throws ValidationException {
+        void testDeleteRuleForCorrectRuleId() throws ValidationException, ServerException {
 
             // Expected
             CSResponse expected = new CSResponse(Strings.SUCCESS, Strings.RULE_DELETED_SUCCESSFULLY);
@@ -745,6 +745,7 @@ public class RuleServiceTest {
             assertEquals(expected.getStatus(), actual.getStatus());
             assertEquals(expected.getCode(), actual.getCode());
             assertEquals(expected.getMessage(), actual.getMessage());
+            verify(recEngineService, times(1)).updateRuleConfig();
 
         }
 

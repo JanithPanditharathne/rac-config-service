@@ -201,7 +201,7 @@ public class RuleService {
      * @return status response.
      * @throws ValidationException for invalid rule id.
      */
-    public CSResponse deleteRule(int id) throws ValidationException {
+    public CSResponse deleteRule(int id) throws ValidationException, ServerException {
 
         // Validate rule id.
         RuleValidations.validateID(id);
@@ -221,6 +221,10 @@ public class RuleService {
 
         // Delete the rule.
         ruleRepository.deleteById(id);
+
+
+        // Update rec engine rule config.
+        recEngineService.updateRuleConfig();
 
 
         // Return status.
