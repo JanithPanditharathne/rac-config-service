@@ -7,14 +7,14 @@ public class RecEngineRec {
     private String type;
     private String matchingCondition;
     private RecEngineRecRegularConfig regularConfig;
-    private RecEngineRecTestConfig testConfig;
+    private Object testConfig;
 
 
     public RecEngineRec() {
     }
 
     public RecEngineRec(int id, String name, String type, String matchingCondition,
-                        RecEngineRecRegularConfig regularConfig, RecEngineRecTestConfig testConfig) {
+                        RecEngineRecRegularConfig regularConfig, Object testConfig) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -63,11 +63,11 @@ public class RecEngineRec {
         this.regularConfig = regularConfig;
     }
 
-    public RecEngineRecTestConfig getTestConfig() {
+    public Object getTestConfig() {
         return testConfig;
     }
 
-    public void setTestConfig(RecEngineRecTestConfig testConfig) {
+    public void setTestConfig(Object testConfig) {
         this.testConfig = testConfig;
     }
 }

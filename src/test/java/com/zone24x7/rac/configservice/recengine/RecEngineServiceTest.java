@@ -18,7 +18,6 @@ import com.zone24x7.rac.configservice.recengine.bundle.RecEngineBundleList;
 import com.zone24x7.rac.configservice.recengine.rec.RecEngineRec;
 import com.zone24x7.rac.configservice.recengine.rec.RecEngineRecList;
 import com.zone24x7.rac.configservice.recengine.rec.RecEngineRecRegularConfig;
-import com.zone24x7.rac.configservice.recengine.rec.RecEngineRecTestConfig;
 import com.zone24x7.rac.configservice.recengine.recslot.RecEngineRecSlot;
 import com.zone24x7.rac.configservice.recengine.recslot.RecEngineRecSlotList;
 import com.zone24x7.rac.configservice.recengine.rule.RecEngineRule;
@@ -527,7 +526,7 @@ class RecEngineServiceTest {
             regularConfig.setBundleId(1);
             recEngineRec.setRegularConfig(regularConfig);
 
-            RecEngineRecTestConfig testConfig = new RecEngineRecTestConfig();
+            Object testConfig = new Object();
             recEngineRec.setTestConfig(testConfig);
 
             assertEquals(1, recEngineRec.getId());
