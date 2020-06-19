@@ -333,14 +333,19 @@ public class RecSlotService {
             throw new ValidationException(REC_ID_INVALID);
         }
 
-        // Check whether rule ids are valid.
         List<RecSlotRuleDetail> rules = recSlotDetail.getRules();
+
+        // Rules cannot be null.
+        if (rules == null) {
+            throw new ValidationException(RULES_CANNOT_BE_NULL);
+        }
+
+        // Check whether rule ids are valid.
         for (RecSlotRuleDetail r : rules) {
             Optional<Rule> ruleOptional = ruleRepository.findById(r.getId());
             if (!ruleOptional.isPresent()) {
                 throw new ValidationException(RULE_ID_INVALID + " " + r.getId());
             }
         }
-
     }
 }

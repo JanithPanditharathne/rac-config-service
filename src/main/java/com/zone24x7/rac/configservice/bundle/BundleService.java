@@ -243,6 +243,9 @@ public class BundleService {
         // Validate bundle name.
         BundleValidations.validateName(bundleDetail.getName());
 
+        // Validate default limit.
+        BundleValidations.validateDefaultLimit(bundleDetail.getDefaultLimit());
+
         // Validate combine display text when combine enabled.
         if (bundleDetail.isCombineEnabled()) {
 

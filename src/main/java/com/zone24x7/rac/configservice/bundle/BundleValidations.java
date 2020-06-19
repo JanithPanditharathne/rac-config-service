@@ -5,16 +5,10 @@ import com.zone24x7.rac.configservice.util.Strings;
 
 import java.util.List;
 
-import static com.zone24x7.rac.configservice.util.Strings.ALGORITHMS_CANNOT_BE_EMPTY;
-import static com.zone24x7.rac.configservice.util.Strings.ALGORITHMS_CANNOT_BE_NULL;
-import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_EMPTY;
-import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_COMBINE_DISPLAY_TEXT_CANNOT_BE_NULL;
-import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_NAME_CANNOT_BE_EMPTY;
-import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_NAME_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.*;
 
 /**
  * Class to validate bundle related fields.
- *
  */
 public final class BundleValidations {
 
@@ -29,7 +23,7 @@ public final class BundleValidations {
      * @throws ValidationException for invalid id.
      */
     public static void validateID(int id) throws ValidationException {
-        if(id < 1) {
+        if (id < 1) {
             throw new ValidationException(Strings.BUNDLE_ID_INVALID);
         }
     }
@@ -51,6 +45,20 @@ public final class BundleValidations {
         // Validate for empty.
         if (name.isEmpty()) {
             throw new ValidationException(BUNDLE_NAME_CANNOT_BE_EMPTY);
+        }
+    }
+
+    /**
+     * Validate default limit.
+     *
+     * @param defaultLimit Default limit
+     * @throws ValidationException Exception to throw
+     */
+    public static void validateDefaultLimit(int defaultLimit) throws ValidationException {
+
+        // Validate for negativity.
+        if (defaultLimit < 0) {
+            throw new ValidationException(DEFAULT_LIMIT_INVALID);
         }
     }
 
@@ -91,6 +99,4 @@ public final class BundleValidations {
             throw new ValidationException(ALGORITHMS_CANNOT_BE_EMPTY);
         }
     }
-
-
 }
