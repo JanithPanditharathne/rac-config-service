@@ -125,7 +125,7 @@ public final class RuleExprConverter {
 
     /**
      * Return expression.
-     * Eg: (regularPrice = 25.99)
+     * Eg: (regularPrice == "25.99")
      *
      * @param name key name.
      * @param operator operator.
@@ -133,13 +133,13 @@ public final class RuleExprConverter {
      * @return expression string.
      */
     private static String getExpr(String name, String operator, double value) {
-        return "(" + name + " " + operator + " " + value + ")";
+        return "(" + name + " " + operator + " \"" + value + "\")";
     }
 
 
     /**
      * Return expression.
-     * Eg: (departmentName = Clothes)
+     * Eg: (departmentName == "Clothes")
      *
      * @param name key name.
      * @param operator operator.
