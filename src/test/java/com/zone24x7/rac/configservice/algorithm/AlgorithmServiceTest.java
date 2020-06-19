@@ -244,7 +244,7 @@ class AlgorithmServiceTest {
 
 
             // Assert cs response class.
-            CSResponse csResponse = new CSResponse();
+            CSResponse csResponse = new CSResponse("", "", "");
             csResponse.setStatus(Strings.SUCCESS);
             csResponse.setCode("CS-000");
             csResponse.setMessage("Test message");

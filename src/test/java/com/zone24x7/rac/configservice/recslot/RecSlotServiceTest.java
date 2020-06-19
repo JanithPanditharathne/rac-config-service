@@ -66,6 +66,7 @@ public class RecSlotServiceTest {
         recSlotsList.add(new RecSlot(5, 2, 8, 1));
         recSlotsList.add(new RecSlot(5, 2, 6, 5));
 
+
         // Mock
         // Setup repository method findAllByOrderByIdDesc() return value.
         when(recSlotRepository.findAllByOrderByIdDesc()).thenReturn(recSlotsList);
@@ -82,7 +83,10 @@ public class RecSlotServiceTest {
         Rec rec = mock(Rec.class);
         when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
 
-        RecSlotRule recSlotRule = new RecSlotRule();
+        RecSlotRule recSlotRule = new RecSlotRule(0,0);
+        recSlotRule.setId(1);
+        recSlotRule.setRuleID(1);
+        recSlotRule.setRecSlotID(1);
         List<RecSlotRule> recSlotRules = new ArrayList<>();
         recSlotRules.add(recSlotRule);
         when(recSlotRuleRepository.findAllByRecSlotID(anyInt())).thenReturn(recSlotRules);
@@ -95,13 +99,32 @@ public class RecSlotServiceTest {
         when(ruleRepository.findAllByIsGlobal(true)).thenReturn(ruleList);
 
         RecSlotRecDetail recSlotRec = new RecSlotRecDetail();
+        recSlotRec.setName("test");
         when(modelMapper.map(any(), any())).thenReturn(recSlotRec);
+
 
         // Actual
         RecSlotList actual = recSlotService.getAllRecSlots(true);
 
         // Assert
         assertEquals(recSlotsList.size(), actual.getRecSlots().size());
+
+
+
+        // Assert rec slot list.
+        List<RecSlotDetail> recSlotDetails = new ArrayList<>();
+        recSlotDetails.add(new RecSlotDetail());
+        RecSlotList recSlotList = new RecSlotList();
+        recSlotList.setRecSlots(recSlotDetails);
+
+        assertEquals(recSlotDetails, recSlotList.getRecSlots());
+
+
+
+        // Assert rec slot rule
+        assertEquals(1, recSlotRule.getId());
+        assertEquals(1, recSlotRule.getRuleID());
+        assertEquals(1, recSlotRule.getRecSlotID());
     }
 
     @Nested
@@ -384,6 +407,10 @@ public class RecSlotServiceTest {
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
 
             RecSlot recSlot = new RecSlot();
+            recSlot.setChannelID(channel.getId());
+            recSlot.setPageID(page.getId());
+            recSlot.setPlaceholderID(page.getId());
+            recSlot.setRecID(rec.getId());
             List<RecSlot> recSlotList = new ArrayList<>();
             recSlotList.add(recSlot);
             when(recSlotRepository.findAllByChannelIDAndPageIDAndPlaceholderID(anyInt(), anyInt(), anyInt())).thenReturn(recSlotList);
@@ -453,6 +480,7 @@ public class RecSlotServiceTest {
 
             RecSlotRuleDetail recSlotRuleDetail = new RecSlotRuleDetail();
             recSlotRuleDetail.setId(1);
+            recSlotRuleDetail.setName("test");
             List<RecSlotRuleDetail> rules = new ArrayList<>();
             rules.add(recSlotRuleDetail);
 
@@ -476,6 +504,11 @@ public class RecSlotServiceTest {
 
             // Assert
             assertTrue(actual.contains(RULE_ID_INVALID));
+
+
+            // Assert rec slot rec detail
+            assertEquals(1, recSlotRuleDetail.getId());
+            assertEquals("test", recSlotRuleDetail.getName());
         }
 
         @Test
