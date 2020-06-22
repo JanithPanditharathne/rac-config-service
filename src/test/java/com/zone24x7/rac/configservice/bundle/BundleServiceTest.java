@@ -222,6 +222,30 @@ class BundleServiceTest {
             assertEquals(Strings.BUNDLE_NAME_CANNOT_BE_EMPTY, actual);
         }
 
+
+        @Test
+        @DisplayName("test for negative default limit value")
+        void testAddBundleForNegativeDefaultLimit() {
+
+            Exception exception = assertThrows(ValidationException.class, () -> {
+
+                BundleAlgorithmDetail bundleAlgorithmDetail = new BundleAlgorithmDetail(100, "Top Trending", 0,
+                        "Top Trending",
+                        "Top Trending Products");
+
+                BundleDetail bundleDetail = new BundleDetail(0, "bundle 1", -1, false, "Test",
+                        Collections.singletonList(bundleAlgorithmDetail));
+
+                bundleService.addBundle(bundleDetail);
+            });
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(Strings.BUNDLE_DEFAULT_LIMIT_CANNOT_BE_NEGATIVE, actual);
+        }
+
         @Test
         @DisplayName("test for null combined display text when combined enabled is true")
         void testAddBundleForNullCombinedDisplayTextWhenCombinedEnabled() {

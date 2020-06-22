@@ -71,7 +71,7 @@ public final class Strings {
     public static final String BUNDLE_UPDATED_SUCCESSFULLY = "CS-2008:Bundle updated successfully";
     public static final String BUNDLE_DELETED_SUCCESSFULLY = "CS-2009:Bundle deleted successfully";
     public static final String BUNDLE_ID_ALREADY_USE_IN_RECS = "CS-2010:Bundle id already use in recs";
-    public static final String DEFAULT_LIMIT_INVALID = "CS-2011:Default limit cannot be negative";
+    public static final String BUNDLE_DEFAULT_LIMIT_CANNOT_BE_NEGATIVE = "CS-2011:Bundle default limit cannot be negative";
 
 
     // Rules
@@ -117,7 +117,7 @@ public final class Strings {
     public static final String REC_SLOT_DELETED_SUCCESSFULLY = "CS-5004:Rec slot deleted successfully";
     public static final String SIMILAR_REC_SLOT_ALREADY_EXISTS = "CS-5005:Similar rec slot already exists with given channel, page, placeholder values. " +
             "Please specify different channel, page, placeholder combination.";
-    public static final String RULES_CANNOT_BE_NULL = "CS-5006:Rules cannot be null";
+    public static final String REC_SLOT_RULES_CANNOT_BE_NULL = "CS-5006:Rec slot rules field cannot be null";
 
     // Metadata
     public static final String METADATA_NAME_CANNOT_BE_NULL = "CS-6000:Metadata name cannot be null";

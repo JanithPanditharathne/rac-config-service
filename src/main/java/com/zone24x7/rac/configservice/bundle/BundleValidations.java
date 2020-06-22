@@ -58,7 +58,7 @@ public final class BundleValidations {
 
         // Validate for negativity.
         if (defaultLimit < 0) {
-            throw new ValidationException(DEFAULT_LIMIT_INVALID);
+            throw new ValidationException(BUNDLE_DEFAULT_LIMIT_CANNOT_BE_NEGATIVE);
         }
     }
 

@@ -389,6 +389,38 @@ public class RecSlotServiceTest {
             assertEquals(REC_ID_INVALID, actual);
         }
 
+
+        @Test
+        @DisplayName("test for missing rules field")
+        void testAddRecSlotForMissingRulesField() {
+
+            // Mock
+            Metadata channel = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(channel);
+
+            Metadata page = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(page);
+
+            Metadata placeholder = mock(Metadata.class);
+            when(metadataRepository.findByTypeAndId(anyString(), anyInt())).thenReturn(placeholder);
+
+            Rec rec = mock(Rec.class);
+            when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
+
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+
+                RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), null);
+                recSlotService.addRecSlot(recSlotDetail);
+            });
+
+            // Actual
+            String actual = validationException.getMessage();
+
+            // Assert
+            assertEquals(REC_SLOT_RULES_CANNOT_BE_NULL, actual);
+        }
+
+
         @Test
         @DisplayName("test for existing similar rec slots")
         void testAddRecSlotForExistingSimilarRecSlots() {

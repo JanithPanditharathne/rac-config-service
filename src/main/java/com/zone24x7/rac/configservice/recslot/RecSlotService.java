@@ -333,11 +333,12 @@ public class RecSlotService {
             throw new ValidationException(REC_ID_INVALID);
         }
 
-        List<RecSlotRuleDetail> rules = recSlotDetail.getRules();
+
 
         // Rules cannot be null.
+        List<RecSlotRuleDetail> rules = recSlotDetail.getRules();
         if (rules == null) {
-            throw new ValidationException(RULES_CANNOT_BE_NULL);
+            throw new ValidationException(REC_SLOT_RULES_CANNOT_BE_NULL);
         }
 
         // Check whether rule ids are valid.
