@@ -85,9 +85,17 @@ public class RuleService {
      */
     private static RuleDetail getRuleDetail(Rule rule) {
         try {
-            return new RuleDetail(rule.getId(), rule.getName(), rule.getType(), rule.getIsGlobal(),
-                    rule.getMatchingCondition(), rule.getMatchingConditionJsonAsList(),
-                    rule.getActionCondition(), rule.getActionConditionJsonAsList());
+            RuleDetail ruleDetail = new RuleDetail();
+            ruleDetail.setId(rule.getId());
+            ruleDetail.setName(rule.getName());
+            ruleDetail.setType(rule.getType());
+            ruleDetail.setIsGlobal(rule.getIsGlobal());
+            ruleDetail.setMatchingCondition(rule.getMatchingCondition());
+            ruleDetail.setMatchingConditionJson(rule.getMatchingConditionJsonAsList());
+            ruleDetail.setActionCondition(rule.getActionCondition());
+            ruleDetail.setActionConditionJson(rule.getActionConditionJsonAsList());
+            return ruleDetail;
+
         } catch (JsonProcessingException e) {
             LOGGER.error("Unable to parse rule expression. ", e);
         }

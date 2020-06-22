@@ -119,8 +119,17 @@ class RecEngineRuleServiceTest {
             // Mock
             List<BaseExpr> baseExprs = new ArrayList<>();
             baseExprs.add(new BaseExpr());
+            RuleDetail ruleDetail = new RuleDetail();
+            ruleDetail.setId(1);
+            ruleDetail.setName("test rule");
+            ruleDetail.setType("BOOST");
+            ruleDetail.setIsGlobal(false);
+            ruleDetail.setMatchingCondition("");
+            ruleDetail.setMatchingConditionJson(baseExprs);
+            ruleDetail.setActionCondition("");
+            ruleDetail.setActionConditionJson(baseExprs);
             List<RuleDetail> ruleDetails = new ArrayList<>();
-            ruleDetails.add(new RuleDetail(1, "test rule", "BOOST", false, "", baseExprs, "", baseExprs));
+            ruleDetails.add(ruleDetail);
             when(ruleService.getAllRules()).thenReturn(new RuleList(ruleDetails));
 
 

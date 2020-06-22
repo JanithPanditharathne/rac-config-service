@@ -19,18 +19,7 @@ public class RuleDetail {
     private List<BaseExpr> actionConditionJson;
 
     public RuleDetail() {
-    }
-
-    public RuleDetail(int id, String name, String type, boolean isGlobal, String matchingCondition,
-                      List<BaseExpr> matchingConditionJson, String actionCondition, List<BaseExpr> actionConditionJson) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.isGlobal = isGlobal;
-        this.matchingCondition = matchingCondition;
-        this.matchingConditionJson = matchingConditionJson;
-        this.actionCondition = actionCondition;
-        this.actionConditionJson = actionConditionJson;
+        // Constructor
     }
 
     public int getId() {

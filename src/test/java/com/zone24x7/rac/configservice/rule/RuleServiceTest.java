@@ -189,11 +189,18 @@ public class RuleServiceTest {
         @DisplayName("test for empty rule name")
         void testAddRuleForEmptyRuleName() {
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "", "", false, null,
-                                                       null, null, null))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("");
+                ruleDetail.setType("");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition("");
+                ruleDetail.setMatchingConditionJson(null);
+                ruleDetail.setActionCondition("");
+                ruleDetail.setActionConditionJson(null);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -206,11 +213,18 @@ public class RuleServiceTest {
         @DisplayName("test for missing rule type")
         void testAddRuleForMissingRuleType() {
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", null, false, null,
-                                                       null, null, null))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType(null);
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition("");
+                ruleDetail.setMatchingConditionJson(null);
+                ruleDetail.setActionCondition("");
+                ruleDetail.setActionConditionJson(null);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -223,11 +237,18 @@ public class RuleServiceTest {
         @DisplayName("test for empty rule type")
         void testAddRuleForEmptyRuleType() {
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "", false, null,
-                                                       null, null, null))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition("");
+                ruleDetail.setMatchingConditionJson(null);
+                ruleDetail.setActionCondition("");
+                ruleDetail.setActionConditionJson(null);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -240,11 +261,18 @@ public class RuleServiceTest {
         @DisplayName("test for invalid rule type")
         void testAddRuleForInvalidRuleType() {
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "abc", false, null,
-                                                       null, null, null))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("abc");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition("");
+                ruleDetail.setMatchingConditionJson(null);
+                ruleDetail.setActionCondition("");
+                ruleDetail.setActionConditionJson(null);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -257,11 +285,18 @@ public class RuleServiceTest {
         @DisplayName("test for missing rule matching condition json")
         void testAddRuleForMissingRuleMatchingConditionJson() {
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       null, null, null))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("BOOST");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition(null);
+                ruleDetail.setMatchingConditionJson(null);
+                ruleDetail.setActionCondition(null);
+                ruleDetail.setActionConditionJson(null);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -277,11 +312,18 @@ public class RuleServiceTest {
             List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(new BaseExpr());
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       matchingConditionJson, null, null))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("BOOST");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition(null);
+                ruleDetail.setMatchingConditionJson(matchingConditionJson);
+                ruleDetail.setActionCondition(null);
+                ruleDetail.setActionConditionJson(null);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -300,11 +342,18 @@ public class RuleServiceTest {
             List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(baseExpr);
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       matchingConditionJson, null, null))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("BOOST");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition(null);
+                ruleDetail.setMatchingConditionJson(matchingConditionJson);
+                ruleDetail.setActionCondition(null);
+                ruleDetail.setActionConditionJson(null);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -323,11 +372,18 @@ public class RuleServiceTest {
             List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(baseExpr);
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       matchingConditionJson, null, null))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("BOOST");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition(null);
+                ruleDetail.setMatchingConditionJson(matchingConditionJson);
+                ruleDetail.setActionCondition(null);
+                ruleDetail.setActionConditionJson(null);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -347,11 +403,18 @@ public class RuleServiceTest {
             List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(baseExpr);
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       matchingConditionJson, null, null))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("BOOST");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition(null);
+                ruleDetail.setMatchingConditionJson(matchingConditionJson);
+                ruleDetail.setActionCondition(null);
+                ruleDetail.setActionConditionJson(null);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -371,11 +434,18 @@ public class RuleServiceTest {
             List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(baseExpr);
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       matchingConditionJson, null, null))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("BOOST");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition(null);
+                ruleDetail.setMatchingConditionJson(matchingConditionJson);
+                ruleDetail.setActionCondition(null);
+                ruleDetail.setActionConditionJson(null);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -395,11 +465,18 @@ public class RuleServiceTest {
             List<BaseExpr> matchingConditionJson = new ArrayList<>();
             matchingConditionJson.add(baseExpr);
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       matchingConditionJson, null, new ArrayList<>()))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("BOOST");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition(null);
+                ruleDetail.setMatchingConditionJson(matchingConditionJson);
+                ruleDetail.setActionCondition(null);
+                ruleDetail.setActionConditionJson(new ArrayList<>());
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -424,11 +501,18 @@ public class RuleServiceTest {
             List<BaseExpr> actionConditionJson = new ArrayList<>();
             actionConditionJson.add(new BaseExpr());
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       matchingConditionJson, null, actionConditionJson))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("BOOST");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition(null);
+                ruleDetail.setMatchingConditionJson(matchingConditionJson);
+                ruleDetail.setActionCondition(null);
+                ruleDetail.setActionConditionJson(actionConditionJson);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -456,11 +540,18 @@ public class RuleServiceTest {
             List<BaseExpr> actionConditionJson = new ArrayList<>();
             actionConditionJson.add(action);
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       matchingConditionJson, null, actionConditionJson))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("BOOST");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition(null);
+                ruleDetail.setMatchingConditionJson(matchingConditionJson);
+                ruleDetail.setActionCondition(null);
+                ruleDetail.setActionConditionJson(actionConditionJson);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -488,11 +579,18 @@ public class RuleServiceTest {
             List<BaseExpr> actionConditionJson = new ArrayList<>();
             actionConditionJson.add(action);
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       matchingConditionJson, null, actionConditionJson))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("BOOST");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition(null);
+                ruleDetail.setMatchingConditionJson(matchingConditionJson);
+                ruleDetail.setActionCondition(null);
+                ruleDetail.setActionConditionJson(actionConditionJson);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -521,11 +619,18 @@ public class RuleServiceTest {
             List<BaseExpr> actionConditionJson = new ArrayList<>();
             actionConditionJson.add(action);
 
-            ValidationException validationException = assertThrows(ValidationException.class, () ->
-
-                    ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false, null,
-                                                       matchingConditionJson, null, actionConditionJson))
-            );
+            ValidationException validationException = assertThrows(ValidationException.class, () -> {
+                RuleDetail ruleDetail = new RuleDetail();
+                ruleDetail.setId(0);
+                ruleDetail.setName("Rule 1");
+                ruleDetail.setType("BOOST");
+                ruleDetail.setIsGlobal(false);
+                ruleDetail.setMatchingCondition(null);
+                ruleDetail.setMatchingConditionJson(matchingConditionJson);
+                ruleDetail.setActionCondition(null);
+                ruleDetail.setActionConditionJson(actionConditionJson);
+                ruleService.addRule(ruleDetail);
+            });
 
             // Actual
             String actual = validationException.getMessage();
@@ -561,10 +666,18 @@ public class RuleServiceTest {
             List<BaseExpr> actionConditionJson = new ArrayList<>();
             actionConditionJson.add(action);
 
+            RuleDetail ruleDetail = new RuleDetail();
+            ruleDetail.setId(0);
+            ruleDetail.setName("Rule 1");
+            ruleDetail.setType("BOOST");
+            ruleDetail.setIsGlobal(false);
+            ruleDetail.setMatchingCondition(null);
+            ruleDetail.setMatchingConditionJson(matchingConditionJson);
+            ruleDetail.setActionCondition(null);
+            ruleDetail.setActionConditionJson(actionConditionJson);
+
             // Actual
-            CSResponse actual = ruleService.addRule(new RuleDetail(0, "Rule 1", "BOOST", false,
-                                                                       null, matchingConditionJson,
-                                                                       null, actionConditionJson));
+            CSResponse actual = ruleService.addRule(ruleDetail);
 
             // Assert
             assertEquals(expected.getStatus(), actual.getStatus());
@@ -636,11 +749,18 @@ public class RuleServiceTest {
             List<BaseExpr> actionConditionJson = new ArrayList<>();
             actionConditionJson.add(action);
 
+            RuleDetail ruleDetail = new RuleDetail();
+            ruleDetail.setId(0);
+            ruleDetail.setName("Rule 1");
+            ruleDetail.setType("BOOST");
+            ruleDetail.setIsGlobal(false);
+            ruleDetail.setMatchingCondition(null);
+            ruleDetail.setMatchingConditionJson(matchingConditionJson);
+            ruleDetail.setActionCondition(null);
+            ruleDetail.setActionConditionJson(actionConditionJson);
+
             // Actual
-            CSResponse actual = ruleService.editRule(1, new RuleDetail(0, "Rule 1", "BOOST",
-                                                                       false, null,
-                                                                       matchingConditionJson, null,
-                                                                       actionConditionJson));
+            CSResponse actual = ruleService.editRule(1, ruleDetail);
 
             // Assert
             assertEquals(expected.getStatus(), actual.getStatus());
