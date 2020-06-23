@@ -94,7 +94,8 @@ echoOK "Content copy"
 # --------------------------------------------------------
 # Add artifact build version to application.properties file
 # --------------------------------------------------------
-printf "\n\n# ARTIFACT BUILD VERSION\ninfo.application.version=${ARTIFACT_VERSION}\n" >> "$PACKAGE_DIR/conf/application.properties"
+printf "\n\n\n# BUILD ARTIFACT DETAILS\ninfo.application.name=${ARTIFACT_ID}\n" >> "$PACKAGE_DIR/conf/application.properties"
+printf "info.application.version=${ARTIFACT_VERSION}\n" >> "$PACKAGE_DIR/conf/application.properties"
 
 
 
