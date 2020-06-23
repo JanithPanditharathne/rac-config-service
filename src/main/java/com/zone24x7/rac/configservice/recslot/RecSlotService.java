@@ -341,12 +341,23 @@ public class RecSlotService {
             throw new ValidationException(REC_SLOT_RULES_CANNOT_BE_NULL);
         }
 
+        // Keep rule list without globals.
+        List<RecSlotRuleDetail> rulesWithoutGlobal = new ArrayList<>();
+
         // Check whether rule ids are valid.
         for (RecSlotRuleDetail r : rules) {
             Optional<Rule> ruleOptional = ruleRepository.findById(r.getId());
             if (!ruleOptional.isPresent()) {
                 throw new ValidationException(RULE_ID_INVALID + " " + r.getId());
             }
+
+            // Add rec slot rule detail to the list without global rules.
+            if (!ruleOptional.get().getIsGlobal()) {
+                rulesWithoutGlobal.add(r);
+            }
         }
+
+        // Update the rec slot detail rules without the global ones.
+        recSlotDetail.setRules(rulesWithoutGlobal);
     }
 }
