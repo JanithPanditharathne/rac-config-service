@@ -96,6 +96,12 @@ public class AlgorithmService {
         // Validate algorithm id.
         AlgorithmValidations.validateID(id);
 
+        // Validate algorithm id is already exists.
+        Optional<Algorithm> optionalAlgorithm = algorithmRepository.findById(id);
+        if(!optionalAlgorithm.isPresent()) {
+            throw new ValidationException(Strings.ALGORITHM_ID_INVALID);
+        }
+
         // Set algorithm id.
         algorithm.setId(id);
 

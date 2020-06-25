@@ -287,11 +287,40 @@ class AlgorithmServiceTest {
 
 
         @Test
+        @DisplayName("test for invalid algorithm id")
+        void testUpdateAlgorithmForInvalidAlgorithmID() {
+            Exception exception = assertThrows(ValidationException.class, () -> {
+                // Mock (zero algorithm id)
+                Algorithm algorithm = new Algorithm(9999, "Top Trending", "TT algorithm description", "");
+
+                // Setup repository method findById() return value.
+                when(algorithmRepository.findById(algorithm.getId())).thenReturn(Optional.empty());
+
+                // Update algorithm
+                algorithmService.updateAlgorithm(algorithm, algorithm.getId());
+            });
+
+            // Expected
+            String expected = Strings.ALGORITHM_ID_INVALID;
+
+            // Actual
+            String actual = exception.getMessage();
+
+            // Assert
+            assertEquals(expected, actual);
+        }
+
+
+
+        @Test
         @DisplayName("test for null algorithm name")
         void testUpdateAlgorithmForNullAlgorithmName() {
             Exception exception = assertThrows(ValidationException.class, () -> {
                 // Mock (null algorithm name)
                 Algorithm algorithm = new Algorithm(100, null, "TT algorithm description", "");
+
+                // Setup repository method findById() return value.
+                when(algorithmRepository.findById(algorithm.getId())).thenReturn(Optional.of(algorithm));
 
                 // Update algorithm
                 algorithmService.updateAlgorithm(algorithm, algorithm.getId());
@@ -314,6 +343,9 @@ class AlgorithmServiceTest {
             Exception exception = assertThrows(ValidationException.class, () -> {
                 // Mock (empty algorithm name)
                 Algorithm algorithm = new Algorithm(100, "", "TT algorithm description", "");
+
+                // Setup repository method findById() return value.
+                when(algorithmRepository.findById(algorithm.getId())).thenReturn(Optional.of(algorithm));
 
                 // Update algorithm
                 algorithmService.updateAlgorithm(algorithm, algorithm.getId());
@@ -340,6 +372,11 @@ class AlgorithmServiceTest {
 
             // Mock
             Algorithm algorithm = new Algorithm(100, "Top Trending", "TT algorithm description", "Top Trending");
+
+            // Setup repository method findById() return value.
+            when(algorithmRepository.findById(algorithm.getId())).thenReturn(Optional.of(algorithm));
+
+            // Save
             algorithmRepository.save(algorithm);
 
             // Verify save method is called.
