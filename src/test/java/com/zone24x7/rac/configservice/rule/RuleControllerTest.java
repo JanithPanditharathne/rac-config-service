@@ -109,6 +109,7 @@ public class RuleControllerTest {
                 "    {\n" +
                 "      \"type\": \"Brand\",\n" +
                 "      \"condition\": \"AND\",\n" +
+                "      \"operator\": \"eq\",\n" +
                 "      \"value\": [\n" +
                 "        \"Nike\",\n" +
                 "        \"Puma\"\n" +
@@ -117,6 +118,7 @@ public class RuleControllerTest {
                 "    {\n" +
                 "      \"type\": \"ProductNumber\",\n" +
                 "      \"condition\": \"AND\",\n" +
+                "      \"operator\": \"eq\",\n" +
                 "      \"value\": [\n" +
                 "        \"244\"\n" +
                 "      ]\n" +
@@ -127,8 +129,8 @@ public class RuleControllerTest {
                 "    {\n" +
                 "      \"type\": \"Price\",\n" +
                 "      \"condition\": \"AND\",\n" +
+                "      \"operator\": \"eq\",\n" +
                 "      \"value\": {\n" +
-                "        \"operator\": \"eq\",\n" +
                 "        \"price\": 53.0\n" +
                 "      }\n" +
                 "    }\n" +
@@ -173,6 +175,7 @@ public class RuleControllerTest {
                 "    {\n" +
                 "      \"type\": \"Brand\",\n" +
                 "      \"condition\": \"AND\",\n" +
+                "      \"operator\": \"eq\",\n" +
                 "      \"value\": [\n" +
                 "        \"Nike\",\n" +
                 "        \"Puma\"\n" +
@@ -181,6 +184,7 @@ public class RuleControllerTest {
                 "    {\n" +
                 "      \"type\": \"ProductNumber\",\n" +
                 "      \"condition\": \"AND\",\n" +
+                "      \"operator\": \"eq\",\n" +
                 "      \"value\": [\n" +
                 "        \"244\"\n" +
                 "      ]\n" +
@@ -191,8 +195,8 @@ public class RuleControllerTest {
                 "    {\n" +
                 "      \"type\": \"Price\",\n" +
                 "      \"condition\": \"AND\",\n" +
+                "      \"operator\": \"eq\",\n" +
                 "      \"value\": {\n" +
-                "        \"operator\": \"eq\",\n" +
                 "        \"price\": 53.0\n" +
                 "      }\n" +
                 "    }\n" +

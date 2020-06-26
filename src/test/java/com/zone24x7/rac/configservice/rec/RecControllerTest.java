@@ -93,7 +93,7 @@ public class RecControllerTest {
         RecDetail recDetail = new RecDetail();
         Mockito.when(recService.addRec(any())).thenReturn(csResponse);
 
-        String recJson = "{\"name\":\"Test Rec Name 1\",\"bundleId\":32}";
+        String recJson = "{\"name\":\"Test Rec Name 1\",\"bundle\":{\"id\":32}}";
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -124,7 +124,7 @@ public class RecControllerTest {
         // Mock
         Mockito.when(recService.editRec(anyInt(), any())).thenReturn(csResponse);
 
-        String recJson = "{\"name\":\"Test Rec Name 1\",\"bundleId\":32}";
+        String recJson = "{\"name\":\"Test Rec Name 1\",\"bundle\":{\"id\":32}}";
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders

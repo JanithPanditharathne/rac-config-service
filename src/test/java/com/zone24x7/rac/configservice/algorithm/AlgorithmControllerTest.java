@@ -1,6 +1,7 @@
 package com.zone24x7.rac.configservice.algorithm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.actiontrace.ActionTraceService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,9 @@ class AlgorithmControllerTest {
 
     @MockBean
     private AlgorithmService algorithmService;
+
+    @MockBean
+    private ActionTraceService actionTraceService;
 
 
     @Test
