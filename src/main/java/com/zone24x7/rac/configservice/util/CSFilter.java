@@ -18,7 +18,7 @@ import static com.zone24x7.rac.configservice.util.Strings.URI;
 import static com.zone24x7.rac.configservice.util.Strings.USER;
 
 @Component
-public class MDCFilter extends OncePerRequestFilter {
+public class CSFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
