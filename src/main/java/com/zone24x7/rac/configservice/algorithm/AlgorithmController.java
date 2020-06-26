@@ -1,5 +1,6 @@
 package com.zone24x7.rac.configservice.algorithm;
 
+import com.zone24x7.rac.configservice.actiontrace.ActionTraceService;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.modelmapper.ModelMapper;
@@ -22,6 +23,9 @@ public class AlgorithmController {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private ActionTraceService actionTraceService;
 
 
 
@@ -57,7 +61,9 @@ public class AlgorithmController {
      */
     @PostMapping("/algorithms")
     public CSResponse addAlgorithm(@RequestBody AlgorithmDTO algorithmDTO) throws ValidationException {
-        return algorithmService.addAlgorithm(modelMapper.map(algorithmDTO, Algorithm.class));
+        CSResponse csResponse = algorithmService.addAlgorithm(modelMapper.map(algorithmDTO, Algorithm.class));
+        actionTraceService.add(algorithmDTO);
+        return csResponse;
     }
 
 
@@ -70,7 +76,9 @@ public class AlgorithmController {
      */
     @PutMapping("/algorithms/{id}")
     public CSResponse updateAlgorithm(@PathVariable int id, @RequestBody AlgorithmDTO algorithmDTO) throws ValidationException {
-        return algorithmService.updateAlgorithm(modelMapper.map(algorithmDTO, Algorithm.class), id);
+        CSResponse csResponse = algorithmService.updateAlgorithm(modelMapper.map(algorithmDTO, Algorithm.class), id);
+        actionTraceService.add(algorithmDTO);
+        return csResponse;
     }
 
 
@@ -82,7 +90,9 @@ public class AlgorithmController {
      */
     @DeleteMapping("/algorithms/{id}")
     public CSResponse deleteAlgorithm(@PathVariable int id) throws ValidationException {
-        return algorithmService.deleteAlgorithm(id);
+        CSResponse csResponse = algorithmService.deleteAlgorithm(id);
+        actionTraceService.add();
+        return csResponse;
     }
 
 }

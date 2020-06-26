@@ -1,5 +1,6 @@
 package com.zone24x7.rac.configservice;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,6 +27,11 @@ public class RacConfigServiceApplication {
     @Bean
     public ModelMapper getModelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public ObjectMapper getObjectMapper() {
+        return new ObjectMapper();
     }
 
     public static void main(String[] args) { // NOSONAR
