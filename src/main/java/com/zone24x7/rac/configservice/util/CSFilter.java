@@ -24,11 +24,15 @@ public class CSFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         // Add keys to mdc.
-        MDC.put(REQUEST_ID, UUID.randomUUID().toString());
+        String uuid = UUID.randomUUID().toString();
+        MDC.put(REQUEST_ID, uuid);
         MDC.put(METHOD, request.getMethod());
         MDC.put(URI, request.getServletPath());
         MDC.put(ORIGIN, request.getRemoteAddr());
         MDC.put(USER, request.getHeader("User-ID"));
+
+        // Set uuid to response header for tracking purposes.
+        response.setHeader(REQUEST_ID, uuid);
 
         try {
             filterChain.doFilter(request, response);
