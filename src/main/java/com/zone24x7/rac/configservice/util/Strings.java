@@ -39,7 +39,6 @@ public final class Strings {
     public static final String URI = "uri";
     public static final String ORIGIN = "origin";
     public static final String USER = "user";
-    public static final String HEADER_CS_META = "CS-META";
 
 
 

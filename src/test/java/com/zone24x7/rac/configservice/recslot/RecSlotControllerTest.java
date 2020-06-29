@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,9 +15,14 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.REC_DELETED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_ADDED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_UPDATED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
 
 @WebMvcTest(value = RecSlotController.class)
 public class RecSlotControllerTest {
@@ -104,9 +108,6 @@ public class RecSlotControllerTest {
         String recSlotJson = "{\"id\":321,\"channel\":{\"id\":56},\"page\":{\"id\":5},\"placeholder\":{\"id\":2}," +
                 "\"rec\":{\"id\":100},\"rules\":[{\"id\":87},{\"id\":90}]}";
 
-        // Set rec slot id.
-        MDC.put(HEADER_CS_META, "1");
-
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/v1/rec-slots")
@@ -119,9 +120,6 @@ public class RecSlotControllerTest {
 
         // Assert
         assertEquals(expected, actual);
-
-        // Remove rec slot id.
-        MDC.remove(HEADER_CS_META);
     }
 
     /**

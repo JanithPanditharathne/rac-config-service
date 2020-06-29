@@ -4,7 +4,6 @@ import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.modelmapper.ModelMapper;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-
-import static com.zone24x7.rac.configservice.util.Strings.HEADER_CS_META;
 
 @RestController
 @RequestMapping("/v1")
@@ -59,15 +56,7 @@ public class RecController {
      */
     @PostMapping("/recs")
     public CSResponse addRec(@RequestBody RecDetail recDetail, HttpServletResponse response) throws ValidationException, ServerException {
-        // Add rec.
-        CSResponse csResponse = recService.addRec(modelMapper.map(recDetail, Rec.class));
-
-        // Set new rec id as response header.
-        response.setHeader(HEADER_CS_META, "{\"recID\": " + MDC.get(HEADER_CS_META) + "}");
-        MDC.remove(HEADER_CS_META);
-
-        // Return response.
-        return csResponse;
+        return recService.addRec(modelMapper.map(recDetail, Rec.class));
     }
 
     /**

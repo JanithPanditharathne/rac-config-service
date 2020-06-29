@@ -3,7 +3,6 @@ package com.zone24x7.rac.configservice.recslot;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-
-import static com.zone24x7.rac.configservice.util.Strings.HEADER_CS_META;
 
 @RestController
 @RequestMapping("/v1")
@@ -55,15 +52,7 @@ public class RecSlotController {
      */
     @PostMapping("/rec-slots")
     public CSResponse addRecSlot(@RequestBody RecSlotDetail recSlotDetail, HttpServletResponse response) throws ValidationException, ServerException {
-        // Add rec slot.
-        CSResponse csResponse = recSlotService.addRecSlot(recSlotDetail);
-
-        // Set new bundle id as response header.
-        response.setHeader(HEADER_CS_META, "{\"recSlotID\": " + MDC.get(HEADER_CS_META) + "}");
-        MDC.remove(HEADER_CS_META);
-
-        // Return response.
-        return csResponse;
+        return recSlotService.addRecSlot(recSlotDetail);
     }
 
     /**

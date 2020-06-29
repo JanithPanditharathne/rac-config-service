@@ -10,7 +10,6 @@ import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.rule.Rule;
 import com.zone24x7.rac.configservice.rule.RuleRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.CHANNELS;
+import static com.zone24x7.rac.configservice.util.Strings.CHANNEL_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.CHANNEL_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.PAGES;
+import static com.zone24x7.rac.configservice.util.Strings.PAGE_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.PAGE_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.PLACEHOLDERS;
+import static com.zone24x7.rac.configservice.util.Strings.PLACEHOLDER_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.PLACEHOLDER_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.REC_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.REC_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_ADDED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_DELETED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_RULES_CANNOT_BE_NULL;
+import static com.zone24x7.rac.configservice.util.Strings.REC_SLOT_UPDATED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.RULE_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.SIMILAR_REC_SLOT_ALREADY_EXISTS;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 
 @Service
 public class RecSlotService {
@@ -183,11 +200,9 @@ public class RecSlotService {
         // Update rec engine rec slot config.
         recEngineService.updateRecSlotConfig();
 
-        // Add rec slot id for mdc to use in response header.
-        MDC.put(HEADER_CS_META, String.valueOf(recSlot.getId()));
-
         // Return status.
-        return new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);
+        String[] arr = REC_SLOT_ADDED_SUCCESSFULLY.split(":");
+        return new CSResponse(SUCCESS, arr[0], arr[1], String.valueOf(recSlot.getId()));
     }
 
     /**

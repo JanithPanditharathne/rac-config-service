@@ -5,7 +5,6 @@ import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,7 +17,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static com.zone24x7.rac.configservice.util.Strings.HEADER_CS_META;
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -116,10 +114,6 @@ class BundleControllerTest {
                 "\"Top Trending\",\"customDisplayText\":\"Top Trending Products\"},{\"id\":33,\"name\":\"Best Sellers\"," +
                 "\"rank\":1,\"defaultDisplayText\":\"Best Sellers\",\"customDisplayText\":\"Sample\"}]}";
 
-
-        // Set bundle id.
-        MDC.put(HEADER_CS_META, "1");
-
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/v1/bundles")
@@ -132,9 +126,6 @@ class BundleControllerTest {
 
         // Assert
         assertEquals(expected, actual);
-
-        // Remove bundle id.
-        MDC.remove(HEADER_CS_META);
     }
 
     /**

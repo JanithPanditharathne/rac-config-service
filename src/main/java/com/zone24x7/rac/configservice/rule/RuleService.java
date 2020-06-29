@@ -11,7 +11,6 @@ import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zone24x7.rac.configservice.util.Strings.HEADER_CS_META;
 import static com.zone24x7.rac.configservice.util.Strings.RULE_ADDED_SUCCESSFULLY;
 import static com.zone24x7.rac.configservice.util.Strings.RULE_DELETED_SUCCESSFULLY;
 import static com.zone24x7.rac.configservice.util.Strings.RULE_ID_INVALID;
@@ -134,11 +132,9 @@ public class RuleService {
         // Update rec engine rule config.
         recEngineService.updateRuleConfig();
 
-        // Add rule id for mdc to use in response header.
-        MDC.put(HEADER_CS_META, String.valueOf(rule.getId()));
-
         // Return status.
-        return new CSResponse(SUCCESS, RULE_ADDED_SUCCESSFULLY);
+        String[] arr = RULE_ADDED_SUCCESSFULLY.split(":");
+        return new CSResponse(SUCCESS, arr[0], arr[1], String.valueOf(rule.getId()));
     }
 
     /**

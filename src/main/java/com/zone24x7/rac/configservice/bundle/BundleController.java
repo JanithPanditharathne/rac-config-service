@@ -3,13 +3,15 @@ package com.zone24x7.rac.configservice.bundle;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-
-import static com.zone24x7.rac.configservice.util.Strings.HEADER_CS_META;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1")
@@ -49,17 +51,8 @@ public class BundleController {
      * @throws ServerException     Server exception to throw
      */
     @PostMapping("/bundles")
-    public CSResponse addBundle(@RequestBody BundleDetail bundleDetail, HttpServletResponse response) throws ValidationException, ServerException {
-
-        // Add bundle.
-        CSResponse csResponse = bundleService.addBundle(bundleDetail);
-
-        // Set new bundle id as response header.
-        response.setHeader(HEADER_CS_META, "{\"bundleID\": " + MDC.get(HEADER_CS_META) + "}");
-        MDC.remove(HEADER_CS_META);
-
-        // Return response.
-        return csResponse;
+    public CSResponse addBundle(@RequestBody BundleDetail bundleDetail) throws ValidationException, ServerException {
+        return bundleService.addBundle(bundleDetail);
     }
 
     /**

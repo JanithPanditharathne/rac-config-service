@@ -5,7 +5,6 @@ import com.zone24x7.rac.configservice.util.CSResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,7 +16,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 
-import static com.zone24x7.rac.configservice.util.Strings.*;
+import static com.zone24x7.rac.configservice.util.Strings.REC_ADD_SUCCESS;
+import static com.zone24x7.rac.configservice.util.Strings.REC_DELETED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.REC_UPDATED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -96,9 +98,6 @@ public class RecControllerTest {
 
         String recJson = "{\"name\":\"Test Rec Name 1\",\"bundle\":{\"id\":32}}";
 
-        // Set rec id.
-        MDC.put(HEADER_CS_META, "1");
-
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/v1/recs")
@@ -111,9 +110,6 @@ public class RecControllerTest {
 
         // Assert
         assertEquals(expected, actual);
-
-        // Remove rec id.
-        MDC.remove(HEADER_CS_META);
     }
 
 
