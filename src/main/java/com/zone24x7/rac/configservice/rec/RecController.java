@@ -63,7 +63,7 @@ public class RecController {
         CSResponse csResponse = recService.addRec(modelMapper.map(recDetail, Rec.class));
 
         // Set new rec id as response header.
-        response.setHeader(HEADER_CS_META, "{recID: " + MDC.get(HEADER_CS_META) + "}");
+        response.setHeader(HEADER_CS_META, "{\"recID\": " + MDC.get(HEADER_CS_META) + "}");
         MDC.remove(HEADER_CS_META);
 
         // Return response.

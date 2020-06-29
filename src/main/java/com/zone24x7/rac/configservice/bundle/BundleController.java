@@ -55,7 +55,7 @@ public class BundleController {
         CSResponse csResponse = bundleService.addBundle(bundleDetail);
 
         // Set new bundle id as response header.
-        response.setHeader(HEADER_CS_META, "{bundleID: " + MDC.get(HEADER_CS_META) + "}");
+        response.setHeader(HEADER_CS_META, "{\"bundleID\": " + MDC.get(HEADER_CS_META) + "}");
         MDC.remove(HEADER_CS_META);
 
         // Return response.

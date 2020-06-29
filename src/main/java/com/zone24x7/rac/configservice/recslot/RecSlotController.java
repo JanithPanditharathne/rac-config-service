@@ -59,7 +59,7 @@ public class RecSlotController {
         CSResponse csResponse = recSlotService.addRecSlot(recSlotDetail);
 
         // Set new bundle id as response header.
-        response.setHeader(HEADER_CS_META, "{recSlotID: " + MDC.get(HEADER_CS_META) + "}");
+        response.setHeader(HEADER_CS_META, "{\"recSlotID\": " + MDC.get(HEADER_CS_META) + "}");
         MDC.remove(HEADER_CS_META);
 
         // Return response.

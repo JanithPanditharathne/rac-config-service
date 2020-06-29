@@ -63,7 +63,7 @@ public class RuleController {
         CSResponse csResponse = ruleService.addRule(ruleDetail);
 
         // Set new rule id as response header.
-        response.setHeader(HEADER_CS_META, "{ruleID: " + MDC.get(HEADER_CS_META) + "}");
+        response.setHeader(HEADER_CS_META, "{\"ruleID\": " + MDC.get(HEADER_CS_META) + "}");
         MDC.remove(HEADER_CS_META);
 
         // Return response.
