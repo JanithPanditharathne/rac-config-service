@@ -34,7 +34,7 @@ public final class Strings {
     public static final String BURY = "BURY";
     public static final String ONLY_RECOMMEND = "ONLY_RECOMMEND";
     public static final String DO_NOT_RECOMMEND = "DO_NOT_RECOMMEND";
-    public static final String REQUEST_ID = "requestID";
+    public static final String REQUEST_ID = "Request-ID";
     public static final String METHOD = "method";
     public static final String URI = "uri";
     public static final String ORIGIN = "origin";
