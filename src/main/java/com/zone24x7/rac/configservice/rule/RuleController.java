@@ -4,8 +4,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+
+import static com.zone24x7.rac.configservice.util.Strings.HEADER_CS_META;
 
 @RestController
 @RequestMapping("/v1")
@@ -46,8 +58,16 @@ public class RuleController {
      * @throws ServerException         Server exception to throw
      */
     @PostMapping("/rules")
-    public CSResponse addRule(@RequestBody RuleDetail ruleDetail) throws ValidationException, JsonProcessingException, ServerException {
-        return ruleService.addRule(ruleDetail);
+    public CSResponse addRule(@RequestBody RuleDetail ruleDetail, HttpServletResponse response) throws ValidationException, JsonProcessingException, ServerException {
+        // Add rule.
+        CSResponse csResponse = ruleService.addRule(ruleDetail);
+
+        // Set new rule id as response header.
+        response.setHeader(HEADER_CS_META, "{ruleID: " + MDC.get(HEADER_CS_META) + "}");
+        MDC.remove(HEADER_CS_META);
+
+        // Return response.
+        return csResponse;
     }
 
     /**

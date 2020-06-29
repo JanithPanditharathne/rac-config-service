@@ -482,7 +482,10 @@ public class RecSlotServiceTest {
             when(recRepository.findById(anyInt())).thenReturn(Optional.of(rec));
 
             // Actual
-            RecSlotDetail recSlotDetail = new RecSlotDetail(0, channel, page, placeholder, new RecSlotRecDetail(), new ArrayList<>());
+            RecSlotDetail recSlotDetail = new RecSlotDetail(1, channel, page, placeholder, new RecSlotRecDetail(), new ArrayList<>());
+            RecSlot recSlot = new RecSlot(1,1,1,1);
+            recSlot.setId(1);
+            when(recSlotRepository.save(any())).thenReturn(recSlot);
             CSResponse actual = recSlotService.addRecSlot(recSlotDetail);
 
             // Assert

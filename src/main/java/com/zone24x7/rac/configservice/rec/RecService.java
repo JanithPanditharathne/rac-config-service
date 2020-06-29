@@ -10,6 +10,7 @@ import com.zone24x7.rac.configservice.recslot.RecSlot;
 import com.zone24x7.rac.configservice.recslot.RecSlotRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ID_INVALID;
+import static com.zone24x7.rac.configservice.util.Strings.HEADER_CS_META;
 import static com.zone24x7.rac.configservice.util.Strings.REC_ADD_SUCCESS;
 import static com.zone24x7.rac.configservice.util.Strings.REC_ID_INVALID;
 import static com.zone24x7.rac.configservice.util.Strings.REC_UPDATED_SUCCESSFULLY;
@@ -121,6 +123,9 @@ public class RecService {
 
         // Update recs config for rec engine.
         recEngineService.updateRecConfig();
+
+        // Add rec id for mdc to use in response header.
+        MDC.put(HEADER_CS_META, String.valueOf(rec.getId()));
 
         // Return status.
         return new CSResponse(SUCCESS, REC_ADD_SUCCESS);

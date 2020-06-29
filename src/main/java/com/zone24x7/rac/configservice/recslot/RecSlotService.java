@@ -10,6 +10,7 @@ import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.rule.Rule;
 import com.zone24x7.rac.configservice.rule.RuleRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -181,6 +182,9 @@ public class RecSlotService {
 
         // Update rec engine rec slot config.
         recEngineService.updateRecSlotConfig();
+
+        // Add rec slot id for mdc to use in response header.
+        MDC.put(HEADER_CS_META, String.valueOf(recSlot.getId()));
 
         // Return status.
         return new CSResponse(SUCCESS, REC_SLOT_ADDED_SUCCESSFULLY);

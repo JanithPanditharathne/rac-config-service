@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
-import static com.zone24x7.rac.configservice.util.Strings.HEADER_BUNDLE_ID;
+import static com.zone24x7.rac.configservice.util.Strings.HEADER_CS_META;
 
 @RestController
 @RequestMapping("/v1")
@@ -55,8 +55,8 @@ public class BundleController {
         CSResponse csResponse = bundleService.addBundle(bundleDetail);
 
         // Set new bundle id as response header.
-        response.setHeader(HEADER_BUNDLE_ID, MDC.get(HEADER_BUNDLE_ID));
-        MDC.remove(HEADER_BUNDLE_ID);
+        response.setHeader(HEADER_CS_META, "{bundleID: " + MDC.get(HEADER_CS_META) + "}");
+        MDC.remove(HEADER_CS_META);
 
         // Return response.
         return csResponse;

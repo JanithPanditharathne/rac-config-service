@@ -24,7 +24,7 @@ import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ADDED_SUCCESSFU
 import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_DELETED_SUCCESSFULLY;
 import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ID_INVALID;
 import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_UPDATED_SUCCESSFULLY;
-import static com.zone24x7.rac.configservice.util.Strings.HEADER_BUNDLE_ID;
+import static com.zone24x7.rac.configservice.util.Strings.HEADER_CS_META;
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 
 @Service
@@ -132,7 +132,7 @@ public class BundleService {
         recEngineService.updateBundleConfig();
 
         // Add bundle id for mdc to use in response header.
-        MDC.put(HEADER_BUNDLE_ID, String.valueOf(bundle.getId()));
+        MDC.put(HEADER_CS_META, String.valueOf(bundle.getId()));
 
         // Return status.
         return new CSResponse(SUCCESS, BUNDLE_ADDED_SUCCESSFULLY);

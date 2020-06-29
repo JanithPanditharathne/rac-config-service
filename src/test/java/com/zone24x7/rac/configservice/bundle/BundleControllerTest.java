@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static com.zone24x7.rac.configservice.util.Strings.HEADER_BUNDLE_ID;
+import static com.zone24x7.rac.configservice.util.Strings.HEADER_CS_META;
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -118,7 +118,7 @@ class BundleControllerTest {
 
 
         // Set bundle id.
-        MDC.put(HEADER_BUNDLE_ID, "1");
+        MDC.put(HEADER_CS_META, "1");
 
         // Actual
         RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -134,7 +134,7 @@ class BundleControllerTest {
         assertEquals(expected, actual);
 
         // Remove bundle id.
-        MDC.remove(HEADER_BUNDLE_ID);
+        MDC.remove(HEADER_CS_META);
     }
 
     /**
