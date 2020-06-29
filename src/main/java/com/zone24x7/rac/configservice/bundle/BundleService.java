@@ -10,6 +10,7 @@ import com.zone24x7.rac.configservice.rec.RecRepository;
 import com.zone24x7.rac.configservice.recengine.RecEngineService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ADDED_SUCCESSFU
 import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_DELETED_SUCCESSFULLY;
 import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_ID_INVALID;
 import static com.zone24x7.rac.configservice.util.Strings.BUNDLE_UPDATED_SUCCESSFULLY;
+import static com.zone24x7.rac.configservice.util.Strings.HEADER_BUNDLE_ID;
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 
 @Service
@@ -128,6 +130,9 @@ public class BundleService {
 
         // Update rec engine bundle config.
         recEngineService.updateBundleConfig();
+
+        // Add bundle id for mdc to use in response header.
+        MDC.put(HEADER_BUNDLE_ID, String.valueOf(bundle.getId()));
 
         // Return status.
         return new CSResponse(SUCCESS, BUNDLE_ADDED_SUCCESSFULLY);

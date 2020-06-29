@@ -3,8 +3,13 @@ package com.zone24x7.rac.configservice.bundle;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+
+import static com.zone24x7.rac.configservice.util.Strings.HEADER_BUNDLE_ID;
 
 @RestController
 @RequestMapping("/v1")
@@ -44,8 +49,17 @@ public class BundleController {
      * @throws ServerException     Server exception to throw
      */
     @PostMapping("/bundles")
-    public CSResponse addBundle(@RequestBody BundleDetail bundleDetail) throws ValidationException, ServerException {
-        return bundleService.addBundle(bundleDetail);
+    public CSResponse addBundle(@RequestBody BundleDetail bundleDetail, HttpServletResponse response) throws ValidationException, ServerException {
+
+        // Add bundle.
+        CSResponse csResponse = bundleService.addBundle(bundleDetail);
+
+        // Set new bundle id as response header.
+        response.setHeader(HEADER_BUNDLE_ID, MDC.get(HEADER_BUNDLE_ID));
+        MDC.remove(HEADER_BUNDLE_ID);
+
+        // Return response.
+        return csResponse;
     }
 
     /**
