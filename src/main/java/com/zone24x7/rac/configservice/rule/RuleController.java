@@ -1,6 +1,7 @@
 package com.zone24x7.rac.configservice.rule;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zone24x7.rac.configservice.actiontrace.ActionTraceService;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
@@ -14,14 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-
 @RestController
 @RequestMapping("/v1")
 public class RuleController {
 
     @Autowired
     private RuleService ruleService;
+
+    @Autowired
+    private ActionTraceService actionTraceService;
 
     /**
      * Get all rules.
@@ -42,6 +44,7 @@ public class RuleController {
      */
     @GetMapping("/rules/{id}")
     public RuleDetail getRule(@PathVariable int id) throws ValidationException {
+        actionTraceService.log();
         return ruleService.getRule(id);
     }
 
@@ -55,8 +58,11 @@ public class RuleController {
      * @throws ServerException         Server exception to throw
      */
     @PostMapping("/rules")
-    public CSResponse addRule(@RequestBody RuleDetail ruleDetail, HttpServletResponse response) throws ValidationException, JsonProcessingException, ServerException {
-        return ruleService.addRule(ruleDetail);
+    public CSResponse addRule(@RequestBody RuleDetail ruleDetail) throws ValidationException, JsonProcessingException, ServerException {
+        actionTraceService.log(ruleDetail);
+        CSResponse csResponse = ruleService.addRule(ruleDetail);
+        actionTraceService.add(ruleDetail);
+        return csResponse;
     }
 
     /**
@@ -71,7 +77,10 @@ public class RuleController {
      */
     @PutMapping("/rules/{id}")
     public CSResponse editRule(@PathVariable int id, @RequestBody RuleDetail ruleDetail) throws ValidationException, JsonProcessingException, ServerException {
-        return ruleService.editRule(id, ruleDetail);
+        actionTraceService.log(ruleDetail);
+        CSResponse csResponse = ruleService.editRule(id, ruleDetail);
+        actionTraceService.add(ruleDetail);
+        return csResponse;
     }
 
 
@@ -84,6 +93,9 @@ public class RuleController {
      */
     @DeleteMapping("/rules/{id}")
     public CSResponse deleteRule(@PathVariable int id) throws ValidationException, ServerException {
-        return ruleService.deleteRule(id);
+        actionTraceService.log();
+        CSResponse csResponse = ruleService.deleteRule(id);
+        actionTraceService.add();
+        return csResponse;
     }
 }

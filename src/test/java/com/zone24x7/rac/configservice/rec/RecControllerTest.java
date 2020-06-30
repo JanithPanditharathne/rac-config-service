@@ -1,6 +1,7 @@
 package com.zone24x7.rac.configservice.rec;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.actiontrace.ActionTraceService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,9 @@ public class RecControllerTest {
 
     @MockBean
     private RecService recService;
+
+    @MockBean
+    private ActionTraceService actionTraceService;
 
     @Test
     @DisplayName("get all recs method")

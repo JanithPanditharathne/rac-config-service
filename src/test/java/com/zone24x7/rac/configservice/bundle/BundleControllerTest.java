@@ -1,6 +1,7 @@
 package com.zone24x7.rac.configservice.bundle;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.actiontrace.ActionTraceService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,9 @@ class BundleControllerTest {
 
     @MockBean
     private BundleService bundleService;
+
+    @MockBean
+    private ActionTraceService actionTraceService;
 
     /**
      * Unit test when retrieving all bundles.

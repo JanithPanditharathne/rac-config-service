@@ -1,6 +1,7 @@
 package com.zone24x7.rac.configservice.recslot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.actiontrace.ActionTraceService;
 import com.zone24x7.rac.configservice.util.CSResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -32,6 +33,9 @@ public class RecSlotControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private ActionTraceService actionTraceService;
 
     /**
      * Unit test for get all rec slots.

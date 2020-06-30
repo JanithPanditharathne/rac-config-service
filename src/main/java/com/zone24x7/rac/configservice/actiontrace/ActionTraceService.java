@@ -30,6 +30,29 @@ public class ActionTraceService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ActionTraceService.class);
 
 
+
+    /**
+     * Log request.
+     */
+    public void log() {
+        LOGGER.info("Request: [{}] {}", MDC.get(METHOD), MDC.get(URI));
+    }
+
+
+    /**
+     * Log request with body.
+     *
+     * @param body request body.
+     */
+    public void log(Object body) {
+        try {
+            String s = objectMapper.writeValueAsString(body);
+            LOGGER.info("Request: [{}] {} | body: {}", MDC.get(METHOD), MDC.get(URI), s);
+        } catch (JsonProcessingException jpe) {
+            LOGGER.info("", jpe);
+        }
+    }
+
     /**
      * Add action trace entry with empty the body.
      */

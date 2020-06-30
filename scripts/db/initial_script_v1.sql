@@ -128,12 +128,15 @@ CONSTRAINT `fk_rec_slot_id` FOREIGN KEY (`rec_slot_id`) REFERENCES `rec_slot` (`
 
 -- create action_trace table --
 CREATE TABLE `action_trace` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-`user_id` varchar(255) DEFAULT NULL,
-`action` varchar(255) DEFAULT NULL,
-`value` longtext DEFAULT NULL,
-`timestamp` datetime DEFAULT NULL,
-PRIMARY KEY(`id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `datetime` varchar(255) DEFAULT NULL,
+  `uuid` varchar(255) DEFAULT NULL,
+  `method` varchar(255) DEFAULT NULL,
+  `uri` varchar(255) DEFAULT NULL,
+  `origin` varchar(255) DEFAULT NULL,
+  `body` longtext DEFAULT NULL,
+  `user` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 );
 
 

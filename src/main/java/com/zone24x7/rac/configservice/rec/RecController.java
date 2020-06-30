@@ -1,5 +1,6 @@
 package com.zone24x7.rac.configservice.rec;
 
+import com.zone24x7.rac.configservice.actiontrace.ActionTraceService;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-
 @RestController
 @RequestMapping("/v1")
 public class RecController {
@@ -25,6 +24,9 @@ public class RecController {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private ActionTraceService actionTraceService;
 
     /**
      * Get all recs.
@@ -45,6 +47,7 @@ public class RecController {
      */
     @GetMapping("/recs/{id}")
     public RecDetail getRec(@PathVariable int id) throws ValidationException {
+        actionTraceService.log();
         return recService.getRec(id);
     }
 
@@ -55,8 +58,11 @@ public class RecController {
      * @throws ValidationException Exception to throw
      */
     @PostMapping("/recs")
-    public CSResponse addRec(@RequestBody RecDetail recDetail, HttpServletResponse response) throws ValidationException, ServerException {
-        return recService.addRec(modelMapper.map(recDetail, Rec.class));
+    public CSResponse addRec(@RequestBody RecDetail recDetail) throws ValidationException, ServerException {
+        actionTraceService.log(recDetail);
+        CSResponse csResponse = recService.addRec(modelMapper.map(recDetail, Rec.class));
+        actionTraceService.add(recDetail);
+        return csResponse;
     }
 
     /**
@@ -67,7 +73,10 @@ public class RecController {
      */
     @PutMapping("/recs/{id}")
     public CSResponse editRec(@PathVariable int id, @RequestBody RecDetail recDetail) throws ValidationException, ServerException {
-        return recService.editRec(id, modelMapper.map(recDetail, Rec.class));
+        actionTraceService.log(recDetail);
+        CSResponse csResponse = recService.editRec(id, modelMapper.map(recDetail, Rec.class));
+        actionTraceService.add(recDetail);
+        return csResponse;
     }
 
 
@@ -82,6 +91,9 @@ public class RecController {
      */
     @DeleteMapping("/recs/{id}")
     public CSResponse deleteRec(@PathVariable int id) throws ValidationException, ServerException {
-        return recService.deleteRec(id);
+        actionTraceService.log();
+        CSResponse csResponse = recService.deleteRec(id);
+        actionTraceService.add();
+        return csResponse;
     }
 }

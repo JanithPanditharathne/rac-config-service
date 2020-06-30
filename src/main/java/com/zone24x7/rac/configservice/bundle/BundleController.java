@@ -1,5 +1,6 @@
 package com.zone24x7.rac.configservice.bundle;
 
+import com.zone24x7.rac.configservice.actiontrace.ActionTraceService;
 import com.zone24x7.rac.configservice.exception.ServerException;
 import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.util.CSResponse;
@@ -20,6 +21,9 @@ public class BundleController {
     @Autowired
     private BundleService bundleService;
 
+    @Autowired
+    private ActionTraceService actionTraceService;
+
     /**
      * Get all bundles.
      *
@@ -39,6 +43,7 @@ public class BundleController {
      */
     @GetMapping("/bundles/{id}")
     public BundleDetail getBundle(@PathVariable int id) throws ValidationException {
+        actionTraceService.log();
         return bundleService.getBundle(id);
     }
 
@@ -52,7 +57,10 @@ public class BundleController {
      */
     @PostMapping("/bundles")
     public CSResponse addBundle(@RequestBody BundleDetail bundleDetail) throws ValidationException, ServerException {
-        return bundleService.addBundle(bundleDetail);
+        actionTraceService.log(bundleDetail);
+        CSResponse csResponse = bundleService.addBundle(bundleDetail);
+        actionTraceService.add(bundleDetail);
+        return csResponse;
     }
 
     /**
@@ -65,7 +73,10 @@ public class BundleController {
      */
     @PutMapping("/bundles/{id}")
     public CSResponse editBundle(@PathVariable int id, @RequestBody BundleDetail bundleDetail) throws ValidationException, ServerException {
-        return bundleService.editBundle(id, bundleDetail);
+        actionTraceService.log(bundleDetail);
+        CSResponse csResponse = bundleService.editBundle(id, bundleDetail);
+        actionTraceService.add(bundleDetail);
+        return csResponse;
     }
 
     /**
@@ -78,6 +89,9 @@ public class BundleController {
      */
     @DeleteMapping("/bundles/{id}")
     public CSResponse deleteBundle(@PathVariable int id) throws ValidationException, ServerException {
-        return bundleService.deleteBundle(id);
+        actionTraceService.log();
+        CSResponse csResponse = bundleService.deleteBundle(id);
+        actionTraceService.add();
+        return csResponse;
     }
 }
