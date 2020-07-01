@@ -30,6 +30,9 @@ public class RecEngineRecSlotService {
     @Autowired
     private RecSlotService recSlotService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     private static final int REC_SLOT_CONFIG_ID = 4;
 
 
@@ -84,7 +87,6 @@ public class RecEngineRecSlotService {
 
             // Get rec slot config string.
             RecEngineRecSlotList recEngineRecSlotList = new RecEngineRecSlotList(recSlotList);
-            ObjectMapper objectMapper = new ObjectMapper();
             String recSlotConfigString = objectMapper.writeValueAsString(recEngineRecSlotList);
 
             // Update rec slot config.

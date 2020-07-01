@@ -1,14 +1,19 @@
 package com.zone24x7.rac.configservice.recengine.bundle;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zone24x7.rac.configservice.bundle.Bundle;
 import com.zone24x7.rac.configservice.bundle.BundleAlgorithmDetail;
 import com.zone24x7.rac.configservice.bundle.BundleDetail;
 import com.zone24x7.rac.configservice.bundle.BundleList;
 import com.zone24x7.rac.configservice.bundle.BundleService;
+import com.zone24x7.rac.configservice.exception.ServerException;
+import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.recengine.RecEngine;
 import com.zone24x7.rac.configservice.recengine.RecEngineRepository;
 import com.zone24x7.rac.configservice.recengine.algorithm.RecEngineAlgorithm;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,6 +29,7 @@ import static com.zone24x7.rac.configservice.util.Strings.BUNDLES;
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
@@ -42,6 +48,9 @@ class RecEngineBundleServiceTest {
 
     @Mock
     private BundleService bundleService;
+
+    @Mock
+    private ObjectMapper objectMapper;
 
 
     @Nested
@@ -152,10 +161,10 @@ class RecEngineBundleServiceTest {
             recEngineAlgorithm.setCustomDisplayText("");
 
             assertEquals(100, recEngineAlgorithm.getId());
-            assertEquals(100, recEngineAlgorithm.getId());
-            assertEquals(100, recEngineAlgorithm.getId());
-            assertEquals(100, recEngineAlgorithm.getId());
-            assertEquals(100, recEngineAlgorithm.getId());
+            assertEquals("test", recEngineAlgorithm.getName());
+            assertEquals("type", recEngineAlgorithm.getType());
+            assertEquals("", recEngineAlgorithm.getDefaultDisplayText());
+            assertEquals("", recEngineAlgorithm.getCustomDisplayText());
 
             // Assert rec engine bundle algorithm.
             RecEngineBundleAlgorithm recEngineBundleAlgorithm = new RecEngineBundleAlgorithm();
@@ -195,6 +204,63 @@ class RecEngineBundleServiceTest {
 
             assertEquals(recEngineBundles, recEngineBundleList.getBundles());
 
+
+            // Assert rec engine bundle.
+            assertEquals(1, recEngineBundle.getId());
+            assertEquals("test", recEngineBundle.getName());
+            assertEquals("type", recEngineBundle.getType());
+            assertEquals(5, recEngineBundle.getDefaultLimit());
+            assertEquals(recEngineBundleAlgorithms, recEngineBundle.getAlgorithms());
+            assertEquals(combineInfo, recEngineBundle.getAlgoCombineInfo());
+
+
+        }
+
+
+        @Test
+        @DisplayName("test for ValidationException")
+        void testUpdateBundleConfigForValidationException() throws ServerException, ValidationException {
+
+            // Mock
+            List<Bundle> bundles = new ArrayList<>();
+            bundles.add(new Bundle("b1", 5, false, ""));
+            BundleList bundleList = new BundleList();
+            bundleList.setBundles(bundles);
+            when(bundleService.getAllBundles()).thenReturn(bundleList);
+
+            ValidationException ve = mock(ValidationException.class);
+            when(bundleService.getBundle(anyInt())).thenThrow(ve);
+
+            // Save
+            recEngineBundleService.updateBundleConfig();
+
+        }
+
+
+        @Test
+        @DisplayName("test for JsonProcessingException")
+        void testUpdateBundleConfigForJsonProcessingException() throws JsonProcessingException, ValidationException {
+
+            // Mock
+            List<Bundle> bundles = new ArrayList<>();
+            bundles.add(new Bundle("b1", 5, false, ""));
+            BundleList bundleList = new BundleList();
+            bundleList.setBundles(bundles);
+            when(bundleService.getAllBundles()).thenReturn(bundleList);
+
+            List<BundleAlgorithmDetail> bundleAlgorithmDetails = new ArrayList<>();
+            bundleAlgorithmDetails.add(new BundleAlgorithmDetail(100, "Algo1", 0, "", ""));
+            BundleDetail bundleDetail = new BundleDetail(1, "b1", 5, false, "",  bundleAlgorithmDetails);
+            when(bundleService.getBundle(anyInt())).thenReturn(bundleDetail);
+
+            JsonProcessingException jpe = mock(JsonProcessingException.class);
+            when(objectMapper.writeValueAsString(any())).thenThrow(jpe);
+
+            // Exception
+            Exception exception = assertThrows(ServerException.class, () -> recEngineBundleService.updateBundleConfig());
+
+            // Assert
+            assertEquals(Strings.REC_ENGINE_BUNDLE_CONFIG_UPDATE_FAILED, exception.getMessage());
 
         }
 

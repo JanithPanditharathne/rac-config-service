@@ -33,6 +33,11 @@ public class RecEngineBundleService {
     @Autowired
     private BundleService bundleService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
+
+
     private static final int BUNDLE_CONFIG_ID = 1;
 
     // Logger.
@@ -102,7 +107,6 @@ public class RecEngineBundleService {
 
             // Get bundle config string.
             RecEngineBundleList recEngineBundleList = new RecEngineBundleList(bundleList);
-            ObjectMapper objectMapper = new ObjectMapper();
             String bundleConfigString = objectMapper.writeValueAsString(recEngineBundleList);
 
             // Update bundle config.

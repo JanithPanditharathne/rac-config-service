@@ -17,6 +17,7 @@ import static com.zone24x7.rac.configservice.util.Strings.URI;
 import static com.zone24x7.rac.configservice.util.Strings.USER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -32,6 +33,60 @@ class ActionTraceServiceTest {
 
     @InjectMocks
     private ActionTraceService actionTraceService;
+
+
+    @Nested
+    @DisplayName("log method")
+    class Log {
+
+        @Test
+        @DisplayName("test for requests without body")
+        void testLogMethodForRequestsWithoutBody() {
+
+            // Ad mdc values.
+            MDC.put(METHOD, "GET");
+            MDC.put(URI, "/v1/algorithms");
+
+            // Log
+            actionTraceService.log();
+
+            // Remove mdc values.
+            MDC.remove(METHOD);
+            MDC.remove(URI);
+        }
+
+
+        @Test
+        @DisplayName("test for requests with body")
+        void testLogMethodForRequestsWithBody() {
+
+            // Ad mdc values.
+            MDC.put(METHOD, "GET");
+            MDC.put(URI, "/v1/algorithms");
+
+            // Log
+            String body = "{\"id\":234}";
+            actionTraceService.log(body);
+
+            // Remove mdc values.
+            MDC.remove(METHOD);
+            MDC.remove(URI);
+
+        }
+
+
+        @Test
+        @DisplayName("test for JsonProcessingException")
+        void testLogMethodForJsonProcessingException() throws JsonProcessingException {
+            JsonProcessingException jpe = mock(JsonProcessingException.class);
+            when(objectMapper.writeValueAsString(any())).thenThrow(jpe);
+            actionTraceService.log(any());
+
+        }
+
+
+    }
+
 
 
     @Nested
@@ -125,6 +180,31 @@ class ActionTraceServiceTest {
             assertEquals("/v1/algorithms", actionTrace.getUri());
             assertEquals("0:0:0:0:0:0:0:1", actionTrace.getOrigin());
             assertEquals("test", actionTrace.getUser());
+
+            // Remove mdc values.
+            MDC.remove(REQUEST_ID);
+            MDC.remove(METHOD);
+            MDC.remove(URI);
+            MDC.remove(ORIGIN);
+            MDC.remove(USER);
+
+        }
+
+
+        @Test
+        @DisplayName("test for JsonProcessingException")
+        void testAddMethodForJsonProcessingException() throws JsonProcessingException {
+            // Add mdc values.
+            MDC.put(REQUEST_ID, "123");
+            MDC.put(METHOD, "GET");
+            MDC.put(URI, "/v1/algorithms");
+            MDC.put(ORIGIN, "0:0:0:0:0:0:0:1");
+            MDC.put(USER, "test");
+
+            // Mock
+            JsonProcessingException jpe = mock(JsonProcessingException.class);
+            when(objectMapper.writeValueAsString(any())).thenThrow(jpe);
+            actionTraceService.add(any());
 
             // Remove mdc values.
             MDC.remove(REQUEST_ID);

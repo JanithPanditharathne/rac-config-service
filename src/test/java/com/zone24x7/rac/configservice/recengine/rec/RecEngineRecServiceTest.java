@@ -1,5 +1,9 @@
 package com.zone24x7.rac.configservice.recengine.rec;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zone24x7.rac.configservice.exception.ServerException;
+import com.zone24x7.rac.configservice.exception.ValidationException;
 import com.zone24x7.rac.configservice.rec.RecBundle;
 import com.zone24x7.rac.configservice.rec.RecDetail;
 import com.zone24x7.rac.configservice.rec.RecList;
@@ -7,6 +11,7 @@ import com.zone24x7.rac.configservice.rec.RecService;
 import com.zone24x7.rac.configservice.recengine.RecEngine;
 import com.zone24x7.rac.configservice.recengine.RecEngineRepository;
 import com.zone24x7.rac.configservice.util.CSResponse;
+import com.zone24x7.rac.configservice.util.Strings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,6 +26,7 @@ import java.util.List;
 import static com.zone24x7.rac.configservice.util.Strings.RECS;
 import static com.zone24x7.rac.configservice.util.Strings.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -38,6 +44,9 @@ class RecEngineRecServiceTest {
 
     @Mock
     private RecService recService;
+
+    @Mock
+    private ObjectMapper objectMapper;
 
 
 
@@ -156,6 +165,28 @@ class RecEngineRecServiceTest {
             RecEngineRecList recEngineRecList = new RecEngineRecList();
             recEngineRecList.setRecs(recEngineRecs);
             assertEquals(recEngineRecs, recEngineRecList.getRecs());
+
+        }
+
+
+
+        @Test
+        @DisplayName("test for JsonProcessingException")
+        void testUpdateRecConfigForJsonProcessingException() throws JsonProcessingException {
+
+            // Mock
+            List<RecDetail> recDetails = new ArrayList<>();
+            recDetails.add(new RecDetail(1, "Test rec", new RecBundle(1, "Test Bundle")));
+            when(recService.getAllRecs()).thenReturn(new RecList(recDetails));
+
+            JsonProcessingException jpe = mock(JsonProcessingException.class);
+            when(objectMapper.writeValueAsString(any())).thenThrow(jpe);
+
+            // Exception
+            Exception exception = assertThrows(ServerException.class, () -> recEngineRecService.updateRecConfig());
+
+            // Assert
+            assertEquals(Strings.REC_ENGINE_REC_CONFIG_UPDATE_FAILED, exception.getMessage());
 
         }
 

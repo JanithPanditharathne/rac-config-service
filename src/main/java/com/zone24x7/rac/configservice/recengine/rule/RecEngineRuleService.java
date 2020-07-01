@@ -30,6 +30,9 @@ public class RecEngineRuleService {
     @Autowired
     private RuleService ruleService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     private static final int RULE_CONFIG_ID = 2;
 
     // Logger.
@@ -70,7 +73,6 @@ public class RecEngineRuleService {
 
             // Get rule config string.
             RecEngineRuleList recEngineRuleList = new RecEngineRuleList(ruleList);
-            ObjectMapper objectMapper = new ObjectMapper();
             String ruleConfigString = objectMapper.writeValueAsString(recEngineRuleList);
 
             // Update rule config.

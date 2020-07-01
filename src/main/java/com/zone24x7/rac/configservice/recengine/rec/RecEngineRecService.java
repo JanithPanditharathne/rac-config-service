@@ -30,6 +30,9 @@ public class RecEngineRecService {
     @Autowired
     private RecService recService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     private static final int REC_CONFIG_ID = 3;
 
     // Logger.
@@ -74,7 +77,6 @@ public class RecEngineRecService {
 
             // Get rec config string.
             RecEngineRecList recEngineRecList = new RecEngineRecList(recList);
-            ObjectMapper objectMapper = new ObjectMapper();
             String recConfigString = objectMapper.writeValueAsString(recEngineRecList);
 
             // Update rec config.
