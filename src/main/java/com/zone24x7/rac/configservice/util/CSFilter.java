@@ -28,7 +28,7 @@ public class CSFilter extends OncePerRequestFilter {
         MDC.put(REQUEST_ID, uuid);
         MDC.put(METHOD, request.getMethod());
         MDC.put(URI, request.getServletPath());
-        MDC.put(ORIGIN, request.getServerName());
+        MDC.put(ORIGIN, request.getRemoteHost());
         MDC.put(USER, request.getHeader("User-ID"));
 
         // Set uuid to response header for tracking purposes.
