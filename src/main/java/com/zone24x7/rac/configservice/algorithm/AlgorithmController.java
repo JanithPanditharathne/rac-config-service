@@ -49,7 +49,6 @@ public class AlgorithmController {
      */
     @GetMapping("/algorithms/{id}")
     public AlgorithmDTO getAlgorithm(@PathVariable int id) throws ValidationException {
-        actionTraceService.log();
         return modelMapper.map(algorithmService.getAlgorithm(id), AlgorithmDTO.class);
     }
 
@@ -62,7 +61,7 @@ public class AlgorithmController {
      */
     @PostMapping("/algorithms")
     public CSResponse addAlgorithm(@RequestBody AlgorithmDTO algorithmDTO) throws ValidationException {
-        actionTraceService.log(algorithmDTO);
+        actionTraceService.logRequestDetails(algorithmDTO);
         CSResponse csResponse = algorithmService.addAlgorithm(modelMapper.map(algorithmDTO, Algorithm.class));
         actionTraceService.add(algorithmDTO);
         return csResponse;
@@ -78,7 +77,7 @@ public class AlgorithmController {
      */
     @PutMapping("/algorithms/{id}")
     public CSResponse updateAlgorithm(@PathVariable int id, @RequestBody AlgorithmDTO algorithmDTO) throws ValidationException {
-        actionTraceService.log(algorithmDTO);
+        actionTraceService.logRequestDetails(algorithmDTO);
         CSResponse csResponse = algorithmService.updateAlgorithm(modelMapper.map(algorithmDTO, Algorithm.class), id);
         actionTraceService.add(algorithmDTO);
         return csResponse;
@@ -93,7 +92,6 @@ public class AlgorithmController {
      */
     @DeleteMapping("/algorithms/{id}")
     public CSResponse deleteAlgorithm(@PathVariable int id) throws ValidationException {
-        actionTraceService.log();
         CSResponse csResponse = algorithmService.deleteAlgorithm(id);
         actionTraceService.add();
         return csResponse;

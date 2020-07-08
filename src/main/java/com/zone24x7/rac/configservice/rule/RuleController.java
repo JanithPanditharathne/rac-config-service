@@ -44,7 +44,6 @@ public class RuleController {
      */
     @GetMapping("/rules/{id}")
     public RuleDetail getRule(@PathVariable int id) throws ValidationException {
-        actionTraceService.log();
         return ruleService.getRule(id);
     }
 
@@ -59,7 +58,7 @@ public class RuleController {
      */
     @PostMapping("/rules")
     public CSResponse addRule(@RequestBody RuleDetail ruleDetail) throws ValidationException, JsonProcessingException, ServerException {
-        actionTraceService.log(ruleDetail);
+        actionTraceService.logRequestDetails(ruleDetail);
         CSResponse csResponse = ruleService.addRule(ruleDetail);
         actionTraceService.add(ruleDetail);
         return csResponse;
@@ -77,7 +76,7 @@ public class RuleController {
      */
     @PutMapping("/rules/{id}")
     public CSResponse editRule(@PathVariable int id, @RequestBody RuleDetail ruleDetail) throws ValidationException, JsonProcessingException, ServerException {
-        actionTraceService.log(ruleDetail);
+        actionTraceService.logRequestDetails(ruleDetail);
         CSResponse csResponse = ruleService.editRule(id, ruleDetail);
         actionTraceService.add(ruleDetail);
         return csResponse;
@@ -93,7 +92,6 @@ public class RuleController {
      */
     @DeleteMapping("/rules/{id}")
     public CSResponse deleteRule(@PathVariable int id) throws ValidationException, ServerException {
-        actionTraceService.log();
         CSResponse csResponse = ruleService.deleteRule(id);
         actionTraceService.add();
         return csResponse;

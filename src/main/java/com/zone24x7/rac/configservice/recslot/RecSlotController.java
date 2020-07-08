@@ -42,7 +42,6 @@ public class RecSlotController {
      */
     @GetMapping("/rec-slots/{id}")
     public RecSlotDetail getRecSlot(@PathVariable int id) throws ValidationException {
-        actionTraceService.log();
         return recSlotService.getRecSlot(id);
     }
 
@@ -55,7 +54,7 @@ public class RecSlotController {
      */
     @PostMapping("/rec-slots")
     public CSResponse addRecSlot(@RequestBody RecSlotDetail recSlotDetail) throws ValidationException, ServerException {
-        actionTraceService.log(recSlotDetail);
+        actionTraceService.logRequestDetails(recSlotDetail);
         CSResponse csResponse = recSlotService.addRecSlot(recSlotDetail);
         actionTraceService.add(recSlotDetail);
         return csResponse;
@@ -70,7 +69,7 @@ public class RecSlotController {
      */
     @PutMapping("/rec-slots/{id}")
     public CSResponse editRecSlot(@PathVariable int id, @RequestBody RecSlotDetail recSlotDetail) throws ValidationException, ServerException {
-        actionTraceService.log(recSlotDetail);
+        actionTraceService.logRequestDetails(recSlotDetail);
         CSResponse csResponse = recSlotService.editRecSlot(id, recSlotDetail);
         actionTraceService.add(recSlotDetail);
         return csResponse;
@@ -86,7 +85,6 @@ public class RecSlotController {
      */
     @DeleteMapping("/rec-slots/{id}")
     public CSResponse deleteRecSlot(@PathVariable int id) throws ServerException, ValidationException {
-        actionTraceService.log();
         CSResponse csResponse = recSlotService.deleteRecSlot(id);
         actionTraceService.add();
         return csResponse;

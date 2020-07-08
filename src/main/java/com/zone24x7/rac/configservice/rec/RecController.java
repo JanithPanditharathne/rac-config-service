@@ -47,7 +47,6 @@ public class RecController {
      */
     @GetMapping("/recs/{id}")
     public RecDetail getRec(@PathVariable int id) throws ValidationException {
-        actionTraceService.log();
         return recService.getRec(id);
     }
 
@@ -59,7 +58,7 @@ public class RecController {
      */
     @PostMapping("/recs")
     public CSResponse addRec(@RequestBody RecDetail recDetail) throws ValidationException, ServerException {
-        actionTraceService.log(recDetail);
+        actionTraceService.logRequestDetails(recDetail);
         CSResponse csResponse = recService.addRec(modelMapper.map(recDetail, Rec.class));
         actionTraceService.add(recDetail);
         return csResponse;
@@ -73,7 +72,7 @@ public class RecController {
      */
     @PutMapping("/recs/{id}")
     public CSResponse editRec(@PathVariable int id, @RequestBody RecDetail recDetail) throws ValidationException, ServerException {
-        actionTraceService.log(recDetail);
+        actionTraceService.logRequestDetails(recDetail);
         CSResponse csResponse = recService.editRec(id, modelMapper.map(recDetail, Rec.class));
         actionTraceService.add(recDetail);
         return csResponse;
@@ -91,7 +90,6 @@ public class RecController {
      */
     @DeleteMapping("/recs/{id}")
     public CSResponse deleteRec(@PathVariable int id) throws ValidationException, ServerException {
-        actionTraceService.log();
         CSResponse csResponse = recService.deleteRec(id);
         actionTraceService.add();
         return csResponse;

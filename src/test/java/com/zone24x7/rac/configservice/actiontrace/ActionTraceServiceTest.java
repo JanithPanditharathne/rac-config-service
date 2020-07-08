@@ -39,22 +39,6 @@ class ActionTraceServiceTest {
     @DisplayName("log method")
     class Log {
 
-        @Test
-        @DisplayName("test for requests without body")
-        void testLogMethodForRequestsWithoutBody() {
-
-            // Ad mdc values.
-            MDC.put(METHOD, "GET");
-            MDC.put(URI, "/v1/algorithms");
-
-            // Log
-            actionTraceService.log();
-
-            // Remove mdc values.
-            MDC.remove(METHOD);
-            MDC.remove(URI);
-        }
-
 
         @Test
         @DisplayName("test for requests with body")
@@ -66,7 +50,7 @@ class ActionTraceServiceTest {
 
             // Log
             String body = "{\"id\":234}";
-            actionTraceService.log(body);
+            actionTraceService.logRequestDetails(body);
 
             // Remove mdc values.
             MDC.remove(METHOD);
@@ -80,7 +64,7 @@ class ActionTraceServiceTest {
         void testLogMethodForJsonProcessingException() throws JsonProcessingException {
             JsonProcessingException jpe = mock(JsonProcessingException.class);
             when(objectMapper.writeValueAsString(any())).thenThrow(jpe);
-            actionTraceService.log(any());
+            actionTraceService.logRequestDetails(any());
 
         }
 

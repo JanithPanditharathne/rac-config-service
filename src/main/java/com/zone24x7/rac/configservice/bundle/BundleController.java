@@ -43,7 +43,6 @@ public class BundleController {
      */
     @GetMapping("/bundles/{id}")
     public BundleDetail getBundle(@PathVariable int id) throws ValidationException {
-        actionTraceService.log();
         return bundleService.getBundle(id);
     }
 
@@ -57,7 +56,7 @@ public class BundleController {
      */
     @PostMapping("/bundles")
     public CSResponse addBundle(@RequestBody BundleDetail bundleDetail) throws ValidationException, ServerException {
-        actionTraceService.log(bundleDetail);
+        actionTraceService.logRequestDetails(bundleDetail);
         CSResponse csResponse = bundleService.addBundle(bundleDetail);
         actionTraceService.add(bundleDetail);
         return csResponse;
@@ -73,7 +72,7 @@ public class BundleController {
      */
     @PutMapping("/bundles/{id}")
     public CSResponse editBundle(@PathVariable int id, @RequestBody BundleDetail bundleDetail) throws ValidationException, ServerException {
-        actionTraceService.log(bundleDetail);
+        actionTraceService.logRequestDetails(bundleDetail);
         CSResponse csResponse = bundleService.editBundle(id, bundleDetail);
         actionTraceService.add(bundleDetail);
         return csResponse;
@@ -89,7 +88,6 @@ public class BundleController {
      */
     @DeleteMapping("/bundles/{id}")
     public CSResponse deleteBundle(@PathVariable int id) throws ValidationException, ServerException {
-        actionTraceService.log();
         CSResponse csResponse = bundleService.deleteBundle(id);
         actionTraceService.add();
         return csResponse;

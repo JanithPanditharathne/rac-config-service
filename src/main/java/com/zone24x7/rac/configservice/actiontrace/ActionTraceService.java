@@ -31,23 +31,16 @@ public class ActionTraceService {
 
 
 
-    /**
-     * Log request.
-     */
-    public void log() {
-        LOGGER.info("Request: [{}] {}", MDC.get(METHOD), MDC.get(URI));
-    }
-
 
     /**
      * Log request with body.
      *
      * @param body request body.
      */
-    public void log(Object body) {
+    public void logRequestDetails(Object body) {
         try {
             String s = objectMapper.writeValueAsString(body);
-            LOGGER.info("Request: [{}] {} | body: {}", MDC.get(METHOD), MDC.get(URI), s);
+            LOGGER.info("Request details: {}", s);
         } catch (JsonProcessingException jpe) {
             LOGGER.info("", jpe);
         }
