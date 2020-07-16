@@ -23,6 +23,7 @@ public final class Strings {
     public static final String OR = "OR";
     public static final String RE_BRAND = "brand";
     public static final String RE_PRODUCT_NUMBER = "productNumber";
+    public static final String RE_PRODUCT_ID = "productId";
     public static final String RE_PRICE = "regularPrice";
     public static final String EQ = "eq";
     public static final String EQIC = "eqic";

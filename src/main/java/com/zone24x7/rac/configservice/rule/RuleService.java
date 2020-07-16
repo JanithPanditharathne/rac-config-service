@@ -120,7 +120,7 @@ public class RuleService {
         String matchingCondition = RuleExprConverter.convertJsonExprToString(ruleDetail.getMatchingConditionJson());
 
         // Get action condition string.
-        String actionCondition = RuleExprConverter.convertJsonExprToString(ruleDetail.getActionConditionJson());
+        String actionCondition = RuleExprConverter.convertJsonExprToString(ruleDetail.getActionConditionJson()).replace(Strings.RE_PRODUCT_NUMBER, Strings.RE_PRODUCT_ID);
 
         // Create a new rule.
         Rule rule = new Rule(ruleDetail.getName(), ruleDetail.getType(), ruleDetail.getIsGlobal(), matchingCondition,
@@ -163,7 +163,7 @@ public class RuleService {
         String matchingCondition = RuleExprConverter.convertJsonExprToString(ruleDetail.getMatchingConditionJson());
 
         // Get action condition string.
-        String actionCondition = RuleExprConverter.convertJsonExprToString(ruleDetail.getActionConditionJson());
+        String actionCondition = RuleExprConverter.convertJsonExprToString(ruleDetail.getActionConditionJson()).replace(Strings.RE_PRODUCT_NUMBER, Strings.RE_PRODUCT_ID);
 
         // Create a new rule.
         Rule rule = new Rule(ruleDetail.getName(), ruleDetail.getType(), ruleDetail.getIsGlobal(), matchingCondition,
